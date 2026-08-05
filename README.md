@@ -1,8 +1,8 @@
  UAS Flight Checklists
 
-A free, mobile-friendly Part 107 preflight checklist web app with live weather conditions built in. No app to download, no subscription required — just open it in any browser and fly.
+A free, mobile-friendly Part 107 preflight checklist (can be used for recreational pilots too) web app with live weather conditions built in. No app to download, no subscription required — just open it in any browser and fly.
 
-**Live Demo:** [fisherofmen58.github.io/uas-flight-checklist](https://fisherofmen58.github.io/uas-flight-checklist)
+**Live Demo:** [checklist.johnstonaerial.com](https://checklist.johnstonaerial.com)
 
 ---
 
@@ -36,16 +36,21 @@ The checklist works without any API keys, but the live weather and Preflight Con
    - Free tier provides METAR cloud ceiling data
    - Key activates immediately
 
-### Step 2 — Add your keys to the file
+### Step 2 — Add your keys
 
-Open `index.html` in a text editor and find these two lines near the bottom:
+**Recommended: use a proxy so your keys stay private.** This deployment proxies weather requests through a free Cloudflare Worker, so the API keys never appear in the client-side code. If you fork this repo:
+
+1. Deploy a Cloudflare Worker (free tier) that accepts requests and forwards them to OpenWeatherMap and CheckWX with your keys attached server-side
+2. Point the app's fetch calls at your Worker's `/weather` and `/metar` routes instead of the APIs directly
+
+**Simpler alternative (keys visible in source):** Open `index.html` in a text editor and find these two lines near the bottom:
 
 ```javascript
 const OWM_KEY = 'YOUR_OWM_KEY_HERE';
 const CHECKWX_KEY = 'YOUR_CHECKWX_KEY_HERE';
 ```
 
-Replace `YOUR_OWM_KEY_HERE` and `YOUR_CHECKWX_KEY_HERE` with your actual keys.
+Replace `YOUR_OWM_KEY_HERE` and `YOUR_CHECKWX_KEY_HERE` with your actual keys. Note: if you host this on a public GitHub repo this way, your keys will be visible in the source code. Both OpenWeatherMap and CheckWX free tiers have no billing attached, so the risk is limited to someone using up your quota — but the Worker proxy approach avoids this entirely.
 
 ### Step 3 — Host it
 
@@ -75,9 +80,8 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 - **No cross-device sync** — checked items only persist on the device and browser you're using. If you start the checklist on your computer at home and then open it on your phone in the field, it will start fresh. Plan to use a single device per flight.
 - **No account or login** — by design. Keeps it simple, private, and free.
 - **Weather is location-based** — the Preflight Conditions panel pulls data for your current GPS location when you open it. It does not pull weather for a planned job site in a different location. Use the **Radar — NWS** button to check conditions at a distant destination.
-- **Weather requires API keys** — the panel will show a setup prompt until keys are added.
+- **Weather requires API keys** — the panel will show a setup prompt until keys (or a proxy) are configured.
 - **Altitude and speed limits** — defaults shown are US FAA limits. Always verify the regulations for your country and airspace class.
-- **API key visibility** — if you host this on a public GitHub repo, your API keys will be visible in the source code. Both OpenWeatherMap and CheckWX free tiers have no billing, so the risk is limited to someone using your quota. Consider a private repo if this concerns you.
 
 ---
 
@@ -100,6 +104,7 @@ This is a single HTML file — everything is in `index.html`. You can:
 - [NOAA Space Weather](https://services.swpc.noaa.gov) — KP Index (no key required)
 - [aviationweather.gov](https://aviationweather.gov) — TFR and NOTAM links
 - Hosted free on [GitHub Pages](https://pages.github.com)
+- Weather proxy via [Cloudflare Workers](https://workers.cloudflare.com)
 
 ---
 
