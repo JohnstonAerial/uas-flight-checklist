@@ -1,5 +1,4 @@
-[README.md](https://github.com/user-attachments/files/32864824/README.md)
- UAS Flight Checklists
+# UAS Flight Checklists
 
 A free, mobile-friendly Part 107 preflight checklist (can be used for recreational pilots too) web app with live weather conditions built in. No app to download, no subscription required — just open it in any browser and fly.
 
@@ -11,13 +10,14 @@ A free, mobile-friendly Part 107 preflight checklist (can be used for recreation
 
 - **3 mission-specific tabs** — General, Mapping, and Commercial
 - **Live Preflight Conditions panel** showing:
-  - Wind speed, gusts, and direction arrow
+  - Wind speed, gusts, and direction arrow, plus wind at 400 ft
   - Cloud ceiling in feet AGL from nearest METAR station
   - Temperature and visibility
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar
 - **Progress tracker** — percentage complete per tab
+- **Flag items that need attention** — press and hold any item to mark it amber; flagged items don't count as complete until you resolve them
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
 - **Completely free** to host and run
 
@@ -52,9 +52,10 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 1. Open the checklist on your device before your flight
 2. Select the tab that matches your mission type
 3. Review the **Preflight Conditions** panel — tap **↻ Refresh** to update weather
-4. Check off each item as you complete it
-5. The progress bar tracks your completion percentage
-6. Tap **Reset** to clear all checks for your next flight
+4. Tap each item to check it off as you complete it
+5. Press and hold an item to flag it as **needs attention** (amber). Tap a flagged item once it's resolved to check it off
+6. The progress bar tracks your completion percentage and shows how many items need attention
+7. Tap **Reset** (next to the progress bar) to clear all checks and flags on the current tab — it asks you to confirm first
 
 ---
 
