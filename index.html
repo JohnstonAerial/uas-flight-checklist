@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -199,7 +199,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Part 107 Preflight Checklist · v1.6</p>
+      <p>Free Part 107 Preflight Checklist · v1.7</p>
     </div>
     <button class="reset-all" onclick="resetCurrent()">Reset</button>
   </div>
@@ -215,13 +215,6 @@
 
 
 <!-- WEATHER STATUS PANEL -->
-
-<div style="background:#1a3a5c;color:#e6f1fb;padding:12px 16px;font-size:12px;text-align:center;line-height:1.6;">
-  <strong>⚙️ Optional:</strong> Live weather works with no setup. For real cloud-ceiling data, add a free
-  <a href="https://checkwx.com" target="_blank" style="color:#64b5f6;">CheckWX</a> key,
-  then open this file and replace <code>YOUR_CHECKWX_KEY_HERE</code>.
-</div>
-
 <div class="wx-panel" id="wx-panel">
   <div class="wx-header">
     <span class="wx-title">📡 Preflight Conditions</span>
@@ -637,26 +630,36 @@ async function fetchKP() {
   return null;
 }
 
-const CHECKWX_KEY = 'YOUR_CHECKWX_KEY_HERE'; // Sign up free at checkwx.com
+// Keyless METAR via a small Cloudflare Worker that forwards to aviationweather.gov
+const METAR_PROXY = 'https://uas-metar.fisherofmen58.workers.dev';
+
+function distMi(lat1, lon1, lat2, lon2) {
+  const R = 3958.8, r = Math.PI / 180;
+  const dLat = (lat2 - lat1) * r, dLon = (lon2 - lon1) * r;
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * r) * Math.cos(lat2 * r) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(a));
+}
 
 async function fetchMetar(lat, lon) {
   try {
-    const res = await fetch(`https://api.checkwx.com/metar/lat/${lat}/lon/${lon}/decoded`, {
-      headers: { 'X-API-Key': CHECKWX_KEY }
-    });
-    if (!res.ok) throw new Error('CheckWX error: ' + res.status);
-    const data = await res.json();
-    if (!data.data || data.data.length === 0) return null;
-    const m = data.data[0];
-    return { metar: m, station: m.icao || '?' };
+    const res = await fetch(`${METAR_PROXY}/metar?lat=${lat}&lon=${lon}`);
+    if (!res.ok) throw new Error('METAR service error: ' + res.status);
+    const list = await res.json();
+    if (!Array.isArray(list) || list.length === 0) return null;
+    // Nearest reporting station
+    list.sort((a, b) => distMi(lat, lon, a.lat, a.lon) - distMi(lat, lon, b.lat, b.lon));
+    const m = list[0];
+    // Normalize to the shape the ceiling helpers expect
+    m.clouds = (m.clouds || []).map(c => ({ code: c.cover, text: c.cover, base_feet_agl: c.base }));
+    return { metar: m, station: m.icaoId || '?' };
   } catch (e) {
-    console.warn('CheckWX METAR failed:', e.message);
+    console.warn('METAR fetch failed:', e.message);
     return null;
   }
 }
 
 function parseCeiling(metar) {
-  // CheckWX provides a direct ceiling field
+  // Ceiling helper (no direct ceiling field from AWC; scan cloud layers)
   if (metar.ceiling && metar.ceiling.feet_agl != null) {
     return metar.ceiling.feet_agl;
   }
@@ -666,7 +669,7 @@ function parseCeiling(metar) {
   for (const layer of clouds) {
     const cover = layer.code || layer.cover;
     const base = layer.base_feet_agl || (layer.base ? layer.base * 100 : null);
-    if ((cover === 'BKN' || cover === 'OVC') && base != null) {
+    if ((cover === 'BKN' || cover === 'OVC' || cover === 'OVX') && base != null) {
       if (ceiling === null || base < ceiling) ceiling = base;
     }
   }
@@ -695,7 +698,7 @@ function ceilingText(ft, metar) {
 function ceilingNote(ft, metar) {
   if (ft === null) {
     const clouds = metar?.clouds || [];
-    return clouds.length > 0 ? (clouds[0].text || clouds[0].cover || 'Clear') : 'Clear skies';
+    return clouds.length > 0 ? clouds.map(c => (c.text || c.code || '') + (c.base_feet_agl ? ' ' + Number(c.base_feet_agl).toLocaleString() + ' ft' : '')).join(', ').trim() || 'Clear skies' : 'Clear skies';
   }
   if (ft < 500) return '⛔ Cannot fly — below minimums';
   if (ft < 1000) return '⚠️ Very low — use caution';
