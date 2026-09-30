@@ -68,8 +68,9 @@
   .header p { font-size: 11px; opacity: 0.8; margin-top: 2px; }
   .reset-all { background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; font-family: inherit; }
 
-  .tabs { display: flex; gap: 0; }
-  .tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.65); border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; letter-spacing: 0.2px; }
+  .tabs { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex: 1 0 auto; white-space: nowrap; padding: 10px 8px; text-align: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.65); border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; letter-spacing: 0.2px; }
   .tab.active { color: white; border-bottom-color: white; }
 
   .progress-bar-wrap { background: rgba(0,0,0,0.15); height: 3px; }
@@ -145,6 +146,8 @@
   .item.flagged .check-circle { background: var(--amber); border-color: var(--amber); }
   .item.flagged .check-circle::after { content: '!'; color: #fff; font-weight: 800; font-size: 14px; line-height: 1; }
   .attn-count { color: var(--amber); font-weight: 600; }
+  .reset-inline { flex-shrink: 0; background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-family: inherit; cursor: pointer; }
+  .reset-inline:active { background: var(--section-bg); }
   .flag-hint { font-size: 11px; color: var(--text-light); text-align: center; padding: 2px 16px 8px; }
 
   .check-circle {
@@ -209,9 +212,8 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Part 107 Preflight Checklist · v1.8</p>
+      <p>Free Part 107 Preflight Checklist · v1.9</p>
     </div>
-    <button class="reset-all" onclick="resetCurrent()">Reset</button>
   </div>
   <div class="tabs">
     <div class="tab active" onclick="showPanel('general',this)">🏞 General</div>
@@ -607,15 +609,27 @@ function showPanel(panel, tab) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + panel).classList.add('active');
   tab.classList.add('active');
+  tab.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
   updateProgress(panel);
   window.scrollTo(0, 0);
 }
 
 function resetCurrent() {
   const p = document.getElementById('panel-' + current);
+  const n = p.querySelectorAll('.item.checked, .item.flagged').length;
+  if (!n) return;
+  if (!confirm('Reset this checklist? This clears ' + n + ' checked or flagged item' + (n === 1 ? '' : 's') + ' on this tab.')) return;
   p.querySelectorAll('.item').forEach(i => i.classList.remove('checked', 'flagged'));
   updateProgress(current);
 }
+
+document.querySelectorAll('.panel .progress-card').forEach(c => {
+  const r = document.createElement('button');
+  r.className = 'reset-inline';
+  r.textContent = 'Reset';
+  r.onclick = resetCurrent;
+  c.appendChild(r);
+});
 
 document.querySelectorAll('.panel .complete-banner').forEach(b => {
   const h = document.createElement('div');
