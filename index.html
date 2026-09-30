@@ -17,6 +17,8 @@
     --blue-mid: #378ADD;
     --green: #0F6E56;
     --green-light: #E1F5EE;
+    --amber: #B45309;
+    --amber-light: #FFF4E0;
     --text: #1a1a1a;
     --text-muted: #666;
     --text-light: #999;
@@ -39,6 +41,8 @@
       --section-bg: #181818;
       --blue-light: #0c2a45;
       --green-light: #0a2a22;
+      --amber: #F59E0B;
+      --amber-light: #33240a;
       --shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
   }
@@ -136,6 +140,12 @@
   .item:last-child { border-bottom: none; }
   .item:active { background: var(--section-bg); }
   .item.checked { background: var(--section-bg); }
+  .item { -webkit-touch-callout: none; }
+  .item.flagged { background: var(--amber-light); }
+  .item.flagged .check-circle { background: var(--amber); border-color: var(--amber); }
+  .item.flagged .check-circle::after { content: '!'; color: #fff; font-weight: 800; font-size: 14px; line-height: 1; }
+  .attn-count { color: var(--amber); font-weight: 600; }
+  .flag-hint { font-size: 11px; color: var(--text-light); text-align: center; padding: 2px 16px 8px; }
 
   .check-circle {
     width: 24px;
@@ -199,7 +209,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Part 107 Preflight Checklist · v1.7</p>
+      <p>Free Part 107 Preflight Checklist · v1.8</p>
     </div>
     <button class="reset-all" onclick="resetCurrent()">Reset</button>
   </div>
@@ -534,8 +544,26 @@
 <script>
 let current = 'general';
 
+let lpFired = false;
+
 function toggle(el) {
-  el.classList.toggle('checked');
+  if (lpFired) { lpFired = false; return; }
+  if (el.classList.contains('flagged')) {
+    el.classList.remove('flagged');   // tap on a flagged item = resolved
+    el.classList.add('checked');
+  } else {
+    el.classList.toggle('checked');
+  }
+  updateProgress(current);
+}
+
+function toggleFlag(el) {
+  if (el.classList.contains('flagged')) {
+    el.classList.remove('flagged');
+  } else {
+    el.classList.remove('checked');
+    el.classList.add('flagged');
+  }
   updateProgress(current);
 }
 
@@ -543,15 +571,35 @@ function updateProgress(panel) {
   const p = document.getElementById('panel-' + panel);
   const items = p.querySelectorAll('.item');
   const checked = p.querySelectorAll('.item.checked').length;
+  const flagged = p.querySelectorAll('.item.flagged').length;
   const total = items.length;
   const pct = total ? Math.round(checked / total * 100) : 0;
   document.getElementById('pct-' + panel).textContent = pct + '%';
-  document.getElementById('lbl-' + panel).textContent = checked + ' of ' + total + ' items complete';
+  document.getElementById('lbl-' + panel).innerHTML = checked + ' of ' + total + ' items complete' +
+    (flagged ? ' · <span class="attn-count">⚠ ' + flagged + ' need' + (flagged === 1 ? 's' : '') + ' attention</span>' : '');
   document.getElementById('bar-' + panel).style.width = pct + '%';
   document.getElementById('header-bar').style.width = pct + '%';
   const done = document.getElementById('done-' + panel);
   done.classList.toggle('show', checked === total && total > 0);
 }
+
+// Press and hold an item (~0.5 s) to flag it as "needs attention"
+(function () {
+  let timer = null, startX = 0, startY = 0;
+  const clear = () => { clearTimeout(timer); timer = null; };
+  document.addEventListener('pointerdown', (e) => {
+    const el = e.target.closest('.item');
+    if (!el) return;
+    startX = e.clientX; startY = e.clientY;
+    clear();
+    timer = setTimeout(() => { lpFired = true; toggleFlag(el); timer = null; }, 500);
+  });
+  document.addEventListener('pointermove', (e) => {
+    if (timer && Math.hypot(e.clientX - startX, e.clientY - startY) > 10) clear();
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => document.addEventListener(t, clear));
+  document.addEventListener('contextmenu', (e) => { if (e.target.closest('.item')) e.preventDefault(); });
+})();
 
 function showPanel(panel, tab) {
   current = panel;
@@ -565,9 +613,16 @@ function showPanel(panel, tab) {
 
 function resetCurrent() {
   const p = document.getElementById('panel-' + current);
-  p.querySelectorAll('.item').forEach(i => i.classList.remove('checked'));
+  p.querySelectorAll('.item').forEach(i => i.classList.remove('checked', 'flagged'));
   updateProgress(current);
 }
+
+document.querySelectorAll('.panel .complete-banner').forEach(b => {
+  const h = document.createElement('div');
+  h.className = 'flag-hint';
+  h.textContent = 'Tip: press and hold an item to flag it as needs attention';
+  b.after(h);
+});
 
 ['zeitview','mapping','general'].forEach(updateProgress);
 </script>
