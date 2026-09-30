@@ -177,6 +177,13 @@
   .panel.editing .section.collapsed .section-card { display: block; }
   .panel.editing .section.collapsed .add-row { display: flex; }
   .cust-row .sec-all { margin: 0 4px; }
+  .item.region-hidden, .panel.editing .item.region-hidden { display: none !important; }
+  body.intl .wx-tfr-row { display: none; }
+  .region-card { text-align: center; }
+  .region-card .rc-title { font-size: 15px; font-weight: 700; color: var(--text); }
+  .region-card .rc-sub { font-size: 12px; color: var(--text-muted); margin: 4px 0 10px; }
+  .region-card .rc-btns { display: flex; gap: 8px; }
+  .region-card .rc-btns button { flex: 1; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--blue-mid); background: var(--section-bg); border: 1px solid var(--border); border-radius: 12px; padding: 10px 6px; cursor: pointer; }
   .keep-row { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; font-size: 11px; color: var(--text-light); text-align: center; }
   .keep-row select { font-family: inherit; font-size: 11px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 4px 8px; }
   .flag-hint { font-size: 11px; color: var(--text-light); text-align: center; padding: 2px 16px 8px; }
@@ -257,7 +264,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v2.7</p>
+      <p>Free Drone Preflight Checklist · v2.8</p>
     </div>
   </div>
   <div class="tabs">
@@ -624,7 +631,7 @@ function progSet(v) { try { if (v) localStorage.setItem(PROGRESS_KEY, JSON.strin
 function itemKeys(panelEl) {
   const seen = {};
   return [...panelEl.querySelectorAll('.item')].map(it => {
-    const t = (it.querySelector('.item-text') ? it.querySelector('.item-text').textContent : '').trim();
+    const t = it.dataset.orig || (it.querySelector('.item-text') ? it.querySelector('.item-text').textContent : '').trim();
     seen[t] = (seen[t] || 0) + 1;
     return t + '#' + seen[t];
   });
@@ -696,9 +703,9 @@ function toggleFlag(el) {
 
 function updateProgress(panel) {
   const p = document.getElementById('panel-' + panel);
-  const items = p.querySelectorAll('.item:not(.is-hidden)');
-  const checked = p.querySelectorAll('.item.checked:not(.is-hidden)').length;
-  const flagged = p.querySelectorAll('.item.flagged:not(.is-hidden)').length;
+  const items = p.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)');
+  const checked = p.querySelectorAll('.item.checked:not(.is-hidden):not(.region-hidden)').length;
+  const flagged = p.querySelectorAll('.item.flagged:not(.is-hidden):not(.region-hidden)').length;
   const total = items.length;
   const pct = total ? Math.round(checked / total * 100) : 0;
   document.getElementById('pct-' + panel).textContent = pct + '%';
@@ -775,12 +782,47 @@ document.querySelectorAll('.panel .complete-banner').forEach(b => {
 setKeepHours(keepHours());
 
 
+// ── Region: tailor the checklist for the USA or for flying elsewhere ──
+const REGION_KEY = 'uasRegion';
+let region = (function () { try { const v = localStorage.getItem(REGION_KEY); return v === 'us' || v === 'intl' ? v : null; } catch (e) { return null; } })();
+const US_ONLY_ITEMS = [/^Check TFRs at tfr\.faa\.gov$/, /^LAANC —/];               // hidden outside the USA
+const INTL_SWAPS = [                                                               // reworded outside the USA
+  { re: /^Check NOTAMs at notams\.aim\.faa\.gov/, text: "Check NOTAMs — look for notices affecting your flight area (use your country's aviation authority or NOTAM service)" },
+  { re: /^Check airspace — use B4UFLY/, text: "Check airspace — use your country's drone airspace map or app to confirm class and restrictions" }
+];
+document.querySelectorAll('.item').forEach(it => {
+  const te = it.querySelector('.item-text'); if (!te) return;
+  const t = te.textContent.trim();
+  if (US_ONLY_ITEMS.some(r => r.test(t))) it.dataset.region = 'us';
+  const sw = INTL_SWAPS.find(x => x.re.test(t));
+  if (sw) { it.dataset.orig = t; it.dataset.intl = sw.text; }
+});
+
+function applyRegion(r, changeUnits) {
+  const prev = region;
+  region = r;
+  try { localStorage.setItem(REGION_KEY, r); } catch (e) {}
+  const intl = r === 'intl';
+  document.body.classList.toggle('intl', intl);
+  document.querySelectorAll('.item[data-region="us"]').forEach(it => it.classList.toggle('region-hidden', intl));
+  document.querySelectorAll('.item[data-orig]').forEach(it => { it.querySelector('.item-text').textContent = intl ? it.dataset.intl : it.dataset.orig; });
+  const q = document.getElementById('wx-q'); if (q) q.placeholder = intl ? 'Town, postcode, or lat, lon' : 'Town, ZIP, or lat, lon';
+  document.querySelectorAll('.region-sel').forEach(sel => { sel.value = r; });
+  const card = document.getElementById('region-card'); if (card) card.remove();
+  if (changeUnits && (intl || prev === 'intl') && typeof toggleUnits === 'function') {
+    units = intl ? 'metric' : 'imperial'; store('wxUnits', units); updateUnitsButton(); if (lastDraw) lastDraw();
+  }
+  document.querySelectorAll('.panel').forEach(p => { if (typeof refreshCust === 'function') refreshCust(p); });
+}
+if (region === 'intl') applyRegion('intl', false);
+
+
 // ── Customize: hide items that don't apply where you fly, or add your own (saved on this device) ──
 const CUSTOM_KEY = 'uasCustomItems';
 let cust = (function () { try { return JSON.parse(localStorage.getItem(CUSTOM_KEY)) || {}; } catch (e) { return {}; } })();
 function custSave() { try { localStorage.setItem(CUSTOM_KEY, JSON.stringify(cust)); } catch (e) {} }
 function custFor(id) { return cust[id] || (cust[id] = { hidden: [], added: [] }); }
-const itemTextOf = (it) => (it.querySelector('.item-text') ? it.querySelector('.item-text').textContent : '').trim();
+const itemTextOf = (it) => it.dataset.orig || (it.querySelector('.item-text') ? it.querySelector('.item-text').textContent : '').trim();
 function baseKeyMap(panelEl) {            // stable key per built-in item: its text + which occurrence
   const seen = {}, map = new Map();
   panelEl.querySelectorAll('.item:not(.custom)').forEach(it => { const t = itemTextOf(it); seen[t] = (seen[t] || 0) + 1; map.set(it, t + '#' + seen[t]); });
@@ -805,11 +847,12 @@ function addItemButton(it) {
 }
 function labelItemButton(it) {
   const b = it.querySelector('.item-x');
+  if (!b) return;
   b.textContent = it.classList.contains('custom') ? 'Delete' : it.classList.contains('is-hidden') ? 'Show' : 'Hide';
 }
 function refreshCust(panelEl) {
   panelEl.querySelectorAll('.section').forEach(sec => {
-    sec.classList.toggle('all-hidden', !sec.querySelector('.item:not(.is-hidden)'));
+    sec.classList.toggle('all-hidden', !sec.querySelector('.item:not(.is-hidden):not(.region-hidden)'));
   });
   panelEl.querySelectorAll('.item').forEach(labelItemButton);
   updateProgress(panelEl.id.replace('panel-', ''));
@@ -900,9 +943,9 @@ function updateSectionMeta(panelEl) {
   panelEl.querySelectorAll('.section').forEach(sec => {
     const cnt = sec.querySelector('.sec-count');
     if (!cnt) return;
-    const total = sec.querySelectorAll('.item:not(.is-hidden)').length;
-    const done = sec.querySelectorAll('.item.checked:not(.is-hidden)').length;
-    const fl = sec.querySelectorAll('.item.flagged:not(.is-hidden)').length;
+    const total = sec.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').length;
+    const done = sec.querySelectorAll('.item.checked:not(.is-hidden):not(.region-hidden)').length;
+    const fl = sec.querySelectorAll('.item.flagged:not(.is-hidden):not(.region-hidden)').length;
     const complete = total > 0 && done === total;
     cnt.className = 'sec-count' + (fl ? ' attn' : complete ? ' done' : '');
     cnt.textContent = (fl ? '⚠ ' : complete ? '✓ ' : '') + done + '/' + total;
@@ -956,6 +999,22 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   if (first) first.after(all); else row.appendChild(all);
   updateSectionMeta(panelEl); syncAllButton(panelEl);
 });
+
+
+document.querySelectorAll('.panel').forEach(panelEl => {
+  const row = document.createElement('div');
+  row.className = 'keep-row region-row';
+  row.innerHTML = '<span>🌍 Checklist for</span><select class="region-sel" aria-label="Where you fly" onchange="applyRegion(this.value, true)"><option value="us">USA</option><option value="intl">Outside the USA</option></select>';
+  row.querySelector('select').value = region || 'us';
+  panelEl.querySelector('.keep-row').after(row);
+});
+if (!region) {
+  const card = document.createElement('div');
+  card.className = 'wx-panel region-card'; card.id = 'region-card';
+  card.innerHTML = '<div class="rc-title">Where do you fly?</div><div class="rc-sub">This tailors the checklist and the weather units. You can change it any time.</div>' +
+    '<div class="rc-btns"><button type="button" onclick="applyRegion(\'us\', true)">🇺🇸 USA</button><button type="button" onclick="applyRegion(\'intl\', true)">🌍 Outside the USA</button></div>';
+  document.getElementById('wx-panel').before(card);
+}
 
 restoreProgress();
 if (restoredAt) {
