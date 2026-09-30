@@ -1,6 +1,6 @@
 # UAS Flight Checklists
 
-A free, mobile-friendly Part 107 preflight checklist (can be used for recreational pilots too) web app with live weather conditions built in. No app to download, no subscription required — just open it in any browser and fly.
+A free, mobile-friendly drone preflight checklist web app with live weather conditions built in. It works for recreational and commercial pilots in any country — hide the items that don't apply to you and add your own. No app to download, no subscription required — just open it in any browser and fly.
 
 **Live Demo:** [checklist.johnstonaerial.com](https://checklist.johnstonaerial.com)
 
@@ -18,6 +18,7 @@ A free, mobile-friendly Part 107 preflight checklist (can be used for recreation
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar
 - **Progress tracker** — percentage complete per tab
+- **Customize the list** — tap **✎ Customize list** on any tab to hide items that don't apply where you fly (for example, services your country doesn't have) or add your own items to any section. Hidden items don't count toward progress. Your changes are saved on your device, and **Restore original list** puts the tab back to the defaults
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it with the dropdown under the progress bar (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
 - **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
@@ -69,7 +70,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 - **No account or login** — by design. Keeps it simple, private, and free.
 - **Weather defaults to your current GPS location** — to check a different flight site, tap **Change** on the weather panel and search for a town, ZIP code, or coordinates. Place search works best for towns and cities; for a specific job site, use a nearby town or enter coordinates. Cloud ceiling comes from the nearest METAR station, which can be several miles from the site (the station is shown on the panel). The **Radar — NWS** button opens the national map.
 - **Cloud ceiling depends on the METAR proxy** — if it is unreachable the Cloud Ceiling tile shows "No METAR data" and everything else still works.
-- **Altitude and speed limits** — defaults shown are US FAA limits. Always verify the regulations for your country and airspace class.
+- **Altitude and speed limits** — defaults shown are US FAA limits. Always verify the regulations for your country and airspace class, and use Customize to hide or replace items that don't match.
 
 ---
 
@@ -98,7 +99,7 @@ This is a single HTML file — everything is in `index.html`. You can:
 
 ## Credits
 
-Originally built by **Johnston Aerial** — FAA Part 107 certified commercial drone pilot based in Johnston County, North Carolina.
+Originally built by **Johnston Aerial** — FAA-certified commercial drone pilot based in Johnston County, North Carolina.
 
 [www.johnstonaerial.com](https://www.johnstonaerial.com) · [YouTube](https://www.youtube.com/@JohnstonAerial)
 

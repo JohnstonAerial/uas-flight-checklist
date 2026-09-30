@@ -1,7 +1,7 @@
 {
   "name": "UAS Flight Checklists",
   "short_name": "UAS Checklist",
-  "description": "Free Part 107 preflight checklist with live weather conditions.",
+  "description": "Free drone preflight checklist with live weather conditions.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
