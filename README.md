@@ -19,6 +19,7 @@ A free, mobile-friendly Part 107 preflight checklist (can be used for recreation
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar
 - **Progress tracker** — percentage complete per tab
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire after 12 hours so the next flight starts clean
+- **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention** — press and hold any item to mark it amber; flagged items don't count as complete until you resolve them
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen

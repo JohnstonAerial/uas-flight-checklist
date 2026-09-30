@@ -189,6 +189,7 @@
   .wx-panel { background: var(--card); border-radius: 14px; padding: 12px 14px; margin: 12px 12px 0; box-shadow: var(--shadow); max-width: 600px; margin-left: auto; margin-right: auto; }
   .wx-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .wx-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
+  .wx-units { font-size: 11px; color: var(--blue-mid); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 12px; font-family: inherit; padding: 2px 9px; margin-left: auto; margin-right: 6px; }
   .wx-refresh { font-size: 11px; color: var(--blue-mid); cursor: pointer; background: none; border: none; font-family: inherit; padding: 2px 6px; }
   .wx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .wx-item { background: var(--section-bg); border-radius: 10px; padding: 9px 11px; }
@@ -226,7 +227,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Part 107 Preflight Checklist · v2.2</p>
+      <p>Free Part 107 Preflight Checklist · v2.3</p>
     </div>
   </div>
   <div class="tabs">
@@ -244,6 +245,7 @@
 <div class="wx-panel" id="wx-panel">
   <div class="wx-header">
     <span class="wx-title">📡 Preflight Conditions</span>
+    <button class="wx-units" id="wx-units" onclick="toggleUnits()" aria-label="Switch between imperial and metric units"></button>
     <button class="wx-refresh" onclick="loadWeather()">↻ Refresh</button>
   </div>
   <div class="wx-loc">
@@ -854,13 +856,13 @@ function ceilingText(ft, metar) {
     });
     return hasClouds ? 'No ceiling' : 'Clear';
   }
-  return ft.toLocaleString() + ' ft AGL';
+  return fmtAlt(ft) + ' AGL';
 }
 
 function ceilingNote(ft, metar) {
   if (ft === null) {
     const clouds = metar?.clouds || [];
-    return clouds.length > 0 ? clouds.map(c => (c.text || c.code || '') + (c.base_feet_agl ? ' ' + Number(c.base_feet_agl).toLocaleString() + ' ft' : '')).join(', ').trim() || 'Clear skies' : 'Clear skies';
+    return clouds.length > 0 ? clouds.map(c => (c.text || c.code || '') + (c.base_feet_agl ? ' ' + fmtAlt(c.base_feet_agl) : '')).join(', ').trim() || 'Clear skies' : 'Clear skies';
   }
   if (ft < 500) return '⛔ Cannot fly — below minimums';
   if (ft < 1000) return '⚠️ Very low — use caution';
@@ -877,6 +879,27 @@ function recall(key, fallback) {
 }
 function store(key, value) {
   try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+}
+
+// ── Units: readings are fetched in imperial and converted for display, so switching needs no refetch ──
+let units = recall('wxUnits', 'imperial') === 'metric' ? 'metric' : 'imperial';
+let lastDraw = null;
+const isMetric = () => units === 'metric';
+const fmtSpeed = (mph) => isMetric() ? Math.round(mph * 1.609344) + ' km/h' : Math.round(mph) + ' mph';
+const fmtSpeedNum = (mph) => isMetric() ? Math.round(mph * 1.609344) : Math.round(mph);
+const speedUnit = () => isMetric() ? 'km/h' : 'mph';
+const fmtTemp = (f) => isMetric() ? Math.round((f - 32) * 5 / 9) + '°C' : Math.round(f) + '°F';
+const fmtVis = (m) => m == null ? '—' : isMetric() ? (m / 1000).toFixed(1) + ' km' : (m / 1609.34).toFixed(1) + ' mi';
+const fmtAlt = (ft) => isMetric() ? (Math.round(ft * 0.3048 / 10) * 10).toLocaleString() + ' m' : Number(ft).toLocaleString() + ' ft';
+function updateUnitsButton() {
+  const b = document.getElementById('wx-units');
+  if (b) b.textContent = isMetric() ? 'km/h · °C' : 'mph · °F';
+}
+function toggleUnits() {
+  units = isMetric() ? 'imperial' : 'metric';
+  store('wxUnits', units);
+  updateUnitsButton();
+  if (lastDraw) { lastDraw(); }
 }
 
 let site = recall('wxSite', null);       // {name, lat, lon}, or null = use my current location
@@ -989,6 +1012,7 @@ async function loadWeather() {
 async function renderWeather(lat, lon) {
   const body = document.getElementById('wx-body');
   const my = ++wxReq;
+  lastDraw = null;
   try {
       const [wxRes, kpData, metarData] = await Promise.allSettled([
         fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=visibility,wind_speed_120m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=1`),
@@ -1018,21 +1042,16 @@ async function renderWeather(lat, lon) {
 
       const windMph = Math.round(wx.wind.speed);
       const gustMph = wx.wind.gust && Math.round(wx.wind.gust) > windMph ? Math.round(wx.wind.gust) : null;
-      const tempF = Math.round(wx.main.temp);
-      const visMi = wx.visibility != null ? (wx.visibility / 1609.34).toFixed(1) : '—';
-      const wind120Txt = wx.wind120 != null ? ` · 400 ft: ${Math.round(wx.wind120)} mph` : '';
       const fmtT = (iso) => iso ? new Date(iso).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '—';
 
-      // Ceiling from METAR
-      let ceilFt = null, ceilNote = 'No METAR data', ceilClass = 'wx-good', ceilTxt = '—', stationId = '';
+      // Ceiling from METAR (kept in feet; converted for display)
+      let ceilFt = null, stationId = '', m = null;
       if (metarData2) {
         stationId = metarData2.station;
-        const m = metarData2.metar;
+        m = metarData2.metar;
         ceilFt = parseCeiling(m);
-        ceilTxt = ceilingText(ceilFt, m);
-        ceilNote = ceilingNote(ceilFt, m);
-        ceilClass = ceilingColor(ceilFt);
       }
+      const ceilClass = metarData2 ? ceilingColor(ceilFt) : 'wx-good';
 
       const kp = kpData2;
       const kpVal = kp !== null ? kp.toFixed(1) : '—';
@@ -1042,11 +1061,15 @@ async function renderWeather(lat, lon) {
       const now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
       lastWeatherAt = Date.now();
-      body.innerHTML = `
+      const draw = () => {
+        const ceilTxt = metarData2 ? ceilingText(ceilFt, m) : '—';
+        const ceilNote = metarData2 ? ceilingNote(ceilFt, m) : 'No METAR data';
+        const wind120Txt = wx.wind120 != null ? ` · ${isMetric() ? '120 m' : '400 ft'}: ${fmtSpeed(wx.wind120)}` : '';
+        body.innerHTML = `
         <div class="wx-grid">
           <div class="wx-item">
             <div class="wx-label">Wind</div>
-            <div class="wx-value ${windColor(windMph)}">${windMph}${gustMph ? ' / ' + gustMph : ''} mph ${windArrow(wx.wind.deg)}</div>
+            <div class="wx-value ${windColor(windMph)}">${fmtSpeedNum(windMph)}${gustMph ? ' / ' + fmtSpeedNum(gustMph) : ''} ${speedUnit()} ${windArrow(wx.wind.deg)}</div>
             <div class="wx-sub">${gustMph ? 'Sustained / Gusts' : 'No gusts reported'} · ${windCardinal(wx.wind.deg)}${wind120Txt}</div>
           </div>
           <div class="wx-item">
@@ -1056,8 +1079,8 @@ async function renderWeather(lat, lon) {
           </div>
           <div class="wx-item">
             <div class="wx-label">Temperature</div>
-            <div class="wx-value">${tempF}°F</div>
-            <div class="wx-sub">Visibility ${visMi} mi</div>
+            <div class="wx-value">${fmtTemp(wx.main.temp)}</div>
+            <div class="wx-sub">Visibility ${fmtVis(wx.visibility)}</div>
           </div>
           <div class="wx-item">
             <div class="wx-label">KP Index</div>
@@ -1067,9 +1090,11 @@ async function renderWeather(lat, lon) {
         </div>
         <div class="wx-sun">🌅 Sunrise ${fmtT(wx.sunrise)} &nbsp;·&nbsp; 🌇 Sunset ${fmtT(wx.sunset)}</div>
         <div class="wx-updated" id="wx-updated">Updated ${now} · ${stationId ? 'METAR ' + stationId : lat.toFixed(2) + ', ' + lon.toFixed(2)}<span id="wx-age"></span></div>
-
-      `;
-      refreshAge();
+        `;
+        refreshAge();
+      };
+      lastDraw = draw;
+      draw();
   } catch (e) {
     if (my !== wxReq) return;
     body.innerHTML = `<div class="wx-status wx-alert">Weather unavailable: ${e.message}</div>`;
@@ -1095,6 +1120,7 @@ function refreshIfStale() {
   else refreshAge();
 }
 
+updateUnitsButton();
 setInterval(refreshAge, 60000);
 document.addEventListener('visibilitychange', refreshIfStale);
 window.addEventListener('pageshow', (e) => { if (e.persisted) refreshIfStale(); });
