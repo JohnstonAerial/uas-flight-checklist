@@ -18,6 +18,8 @@ A free, mobile-friendly Part 107 preflight checklist (can be used for recreation
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar
 - **Progress tracker** — percentage complete per tab
+- **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire after 12 hours so the next flight starts clean
+- **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention** — press and hold any item to mark it amber; flagged items don't count as complete until you resolve them
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
 - **Completely free** to host and run
@@ -62,7 +64,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 
 ## Limitations
 
-- **No cross-device sync** — checked items only persist on the device and browser you're using. If you start the checklist on your computer at home and then open it on your phone in the field, it will start fresh. Plan to use a single device per flight.
+- **No cross-device sync** — saved progress lives only in the browser on the device you're using (and is cleared after 12 hours or when you tap Reset). If you start on your computer and open the checklist on your phone, it will start fresh. Plan to use a single device per flight.
 - **No account or login** — by design. Keeps it simple, private, and free.
 - **Weather defaults to your current GPS location** — to check a different flight site, tap **Change** on the weather panel and search for a town, ZIP code, or coordinates. Place search works best for towns and cities; for a specific job site, use a nearby town or enter coordinates. Cloud ceiling comes from the nearest METAR station, which can be several miles from the site (the station is shown on the panel). The **Radar — NWS** button opens the national map.
 - **Cloud ceiling depends on the METAR proxy** — if it is unreachable the Cloud Ceiling tile shows "No METAR data" and everything else still works.

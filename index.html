@@ -211,6 +211,7 @@
   .wx-alert { color: #c0392b; } .wx-warn { color: #e67e22; } .wx-good { color: var(--green); }
   .wx-key-prompt { font-size: 12px; color: var(--text-muted); background: var(--section-bg); border-radius: 8px; padding: 8px 10px; text-align: center; }
   .wx-key-prompt a { color: var(--blue-mid); }
+  .wx-updated.wx-stale { color: var(--amber); font-weight: 600; }
   .wx-updated { font-size: 10px; color: var(--text-light); text-align: right; margin-top: 8px; }
   .wx-sun { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 8px; }
   .wx-tfr-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
@@ -225,7 +226,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Part 107 Preflight Checklist · v2.1</p>
+      <p>Free Part 107 Preflight Checklist · v2.2</p>
     </div>
   </div>
   <div class="tabs">
@@ -571,6 +572,61 @@
 <script>
 let current = 'general';
 
+// ── Save progress on this device so a reload or phone lock doesn't wipe the checklist ──
+const PROGRESS_KEY = 'uasChecklistProgress';
+const PROGRESS_TTL = 12 * 60 * 60 * 1000;   // saved progress expires after 12 hours
+let restoredAt = null;
+
+function progGet() { try { const v = localStorage.getItem(PROGRESS_KEY); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
+function progSet(v) { try { if (v) localStorage.setItem(PROGRESS_KEY, JSON.stringify(v)); else localStorage.removeItem(PROGRESS_KEY); } catch (e) {} }
+
+// Stable key per item: its text plus which occurrence of that text it is in the panel
+function itemKeys(panelEl) {
+  const seen = {};
+  return [...panelEl.querySelectorAll('.item')].map(it => {
+    const t = (it.querySelector('.item-text') ? it.querySelector('.item-text').textContent : '').trim();
+    seen[t] = (seen[t] || 0) + 1;
+    return t + '#' + seen[t];
+  });
+}
+
+function saveProgress() {
+  const data = { savedAt: Date.now(), panels: {} };
+  document.querySelectorAll('.panel').forEach(p => {
+    const keys = itemKeys(p), checked = [], flagged = [];
+    p.querySelectorAll('.item').forEach((it, i) => {
+      if (it.classList.contains('checked')) checked.push(keys[i]);
+      else if (it.classList.contains('flagged')) flagged.push(keys[i]);
+    });
+    if (checked.length || flagged.length) data.panels[p.id.replace('panel-', '')] = { checked, flagged };
+  });
+  progSet(Object.keys(data.panels).length ? data : null);
+}
+
+function restoreProgress() {
+  const data = progGet();
+  if (!data || !data.savedAt || Date.now() - data.savedAt > PROGRESS_TTL) { progSet(null); return; }
+  let n = 0;
+  document.querySelectorAll('.panel').forEach(p => {
+    const d = data.panels && data.panels[p.id.replace('panel-', '')];
+    if (!d) return;
+    const keys = itemKeys(p), c = new Set(d.checked || []), f = new Set(d.flagged || []);
+    p.querySelectorAll('.item').forEach((it, i) => {
+      if (c.has(keys[i])) { it.classList.add('checked'); n++; }
+      else if (f.has(keys[i])) { it.classList.add('flagged'); n++; }
+    });
+  });
+  if (n) restoredAt = data.savedAt;
+}
+
+function ageText(ms) {
+  const m = Math.floor(ms / 60000);
+  if (m < 1) return 'just now';
+  if (m < 60) return m + ' min ago';
+  const h = Math.floor(m / 60);
+  return h + ' hr' + (h > 1 ? 's' : '') + ' ago';
+}
+
 let lpFired = false;
 
 function toggle(el) {
@@ -582,6 +638,7 @@ function toggle(el) {
     el.classList.toggle('checked');
   }
   updateProgress(current);
+  saveProgress();
 }
 
 function toggleFlag(el) {
@@ -592,6 +649,7 @@ function toggleFlag(el) {
     el.classList.add('flagged');
   }
   updateProgress(current);
+  saveProgress();
 }
 
 function updateProgress(panel) {
@@ -646,6 +704,9 @@ function resetCurrent() {
   if (!confirm('Reset this checklist? This clears ' + n + ' checked or flagged item' + (n === 1 ? '' : 's') + ' on this tab.')) return;
   p.querySelectorAll('.item').forEach(i => i.classList.remove('checked', 'flagged'));
   updateProgress(current);
+  saveProgress();
+  const h = p.querySelector('.flag-hint');
+  if (h) h.textContent = 'Tip: press and hold an item to flag it as needs attention';
 }
 
 document.querySelectorAll('.panel .progress-card').forEach(c => {
@@ -662,6 +723,13 @@ document.querySelectorAll('.panel .complete-banner').forEach(b => {
   h.textContent = 'Tip: press and hold an item to flag it as needs attention';
   b.after(h);
 });
+
+restoreProgress();
+if (restoredAt) {
+  document.querySelectorAll('.flag-hint').forEach(h => {
+    h.textContent = 'Progress restored (saved ' + ageText(Date.now() - restoredAt) + ') · tap Reset to start fresh';
+  });
+}
 
 ['zeitview','mapping','general'].forEach(updateProgress);
 </script>
@@ -814,6 +882,7 @@ function store(key, value) {
 let site = recall('wxSite', null);       // {name, lat, lon}, or null = use my current location
 let recentSites = recall('wxRecent', []);
 let wxReq = 0;
+let lastWeatherAt = null;
 
 function updateLocLabel() {
   document.getElementById('wx-loc-name').textContent = site ? site.name : 'My location';
@@ -972,6 +1041,7 @@ async function renderWeather(lat, lon) {
 
       const now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
+      lastWeatherAt = Date.now();
       body.innerHTML = `
         <div class="wx-grid">
           <div class="wx-item">
@@ -996,14 +1066,39 @@ async function renderWeather(lat, lon) {
           </div>
         </div>
         <div class="wx-sun">🌅 Sunrise ${fmtT(wx.sunrise)} &nbsp;·&nbsp; 🌇 Sunset ${fmtT(wx.sunset)}</div>
-        <div class="wx-updated">Updated ${now} · ${stationId ? 'METAR ' + stationId : lat.toFixed(2) + ', ' + lon.toFixed(2)}</div>
+        <div class="wx-updated" id="wx-updated">Updated ${now} · ${stationId ? 'METAR ' + stationId : lat.toFixed(2) + ', ' + lon.toFixed(2)}<span id="wx-age"></span></div>
 
       `;
+      refreshAge();
   } catch (e) {
     if (my !== wxReq) return;
     body.innerHTML = `<div class="wx-status wx-alert">Weather unavailable: ${e.message}</div>`;
   }
 }
+
+// ── Weather freshness: show how old the reading is, refresh when you come back to the app ──
+const STALE_MS = 30 * 60 * 1000;      // amber after 30 minutes
+const RETURN_REFRESH_MS = 10 * 60 * 1000;
+
+function refreshAge() {
+  const el = document.getElementById('wx-updated');
+  const span = document.getElementById('wx-age');
+  if (!el || !span || !lastWeatherAt) return;
+  const ms = Date.now() - lastWeatherAt;
+  span.textContent = ' · ' + ageText(ms) + (ms >= STALE_MS ? ' — tap Refresh' : '');
+  el.classList.toggle('wx-stale', ms >= STALE_MS);
+}
+
+function refreshIfStale() {
+  if (document.visibilityState !== 'visible') return;
+  if (!lastWeatherAt || Date.now() - lastWeatherAt > RETURN_REFRESH_MS) loadWeather();
+  else refreshAge();
+}
+
+setInterval(refreshAge, 60000);
+document.addEventListener('visibilitychange', refreshIfStale);
+window.addEventListener('pageshow', (e) => { if (e.persisted) refreshIfStale(); });
+
 
 loadWeather();
 </script>
