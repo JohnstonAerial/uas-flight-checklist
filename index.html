@@ -149,6 +149,8 @@
   .attn-count { color: var(--amber); font-weight: 600; }
   .reset-inline { flex-shrink: 0; background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-family: inherit; cursor: pointer; }
   .reset-inline:active { background: var(--section-bg); }
+  .keep-row { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; font-size: 11px; color: var(--text-light); text-align: center; }
+  .keep-row select { font-family: inherit; font-size: 11px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 4px 8px; }
   .flag-hint { font-size: 11px; color: var(--text-light); text-align: center; padding: 2px 16px 8px; }
 
   .check-circle {
@@ -227,7 +229,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Part 107 Preflight Checklist · v2.3</p>
+      <p>Free Part 107 Preflight Checklist · v2.5</p>
     </div>
   </div>
   <div class="tabs">
@@ -570,13 +572,21 @@
 </div>
 
 </div>
-
 <script>
 let current = 'general';
 
 // ── Save progress on this device so a reload or phone lock doesn't wipe the checklist ──
 const PROGRESS_KEY = 'uasChecklistProgress';
-const PROGRESS_TTL = 12 * 60 * 60 * 1000;   // saved progress expires after 12 hours
+const KEEP_KEY = 'uasProgressHours';
+const KEEP_CHOICES = [1, 4, 12, 24, 72];      // hours the user can pick; default 12
+function keepHours() {
+  try { const h = Number(localStorage.getItem(KEEP_KEY)); return KEEP_CHOICES.includes(h) ? h : 12; } catch (e) { return 12; }
+}
+function progTtl() { return keepHours() * 60 * 60 * 1000; }
+function setKeepHours(v) {
+  try { localStorage.setItem(KEEP_KEY, String(Number(v))); } catch (e) {}
+  document.querySelectorAll('.keep-hours').forEach(sel => { sel.value = String(keepHours()); });
+}
 let restoredAt = null;
 
 function progGet() { try { const v = localStorage.getItem(PROGRESS_KEY); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
@@ -607,7 +617,7 @@ function saveProgress() {
 
 function restoreProgress() {
   const data = progGet();
-  if (!data || !data.savedAt || Date.now() - data.savedAt > PROGRESS_TTL) { progSet(null); return; }
+  if (!data || !data.savedAt || Date.now() - data.savedAt > progTtl()) { progSet(null); return; }
   let n = 0;
   document.querySelectorAll('.panel').forEach(p => {
     const d = data.panels && data.panels[p.id.replace('panel-', '')];
@@ -724,7 +734,14 @@ document.querySelectorAll('.panel .complete-banner').forEach(b => {
   h.className = 'flag-hint';
   h.textContent = 'Tip: press and hold an item to flag it as needs attention';
   b.after(h);
+  const row = document.createElement('div');
+  row.className = 'keep-row';
+  row.innerHTML = '<span>💾 Saved on this device only · clears after</span>' +
+    '<select class="keep-hours" aria-label="How long this device keeps your saved checklist progress" onchange="setKeepHours(this.value)">' +
+    '<option value="1">1 hour</option><option value="4">4 hours</option><option value="12">12 hours</option><option value="24">24 hours</option><option value="72">3 days</option></select>';
+  h.after(row);
 });
+setKeepHours(keepHours());
 
 restoreProgress();
 if (restoredAt) {
