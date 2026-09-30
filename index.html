@@ -194,6 +194,18 @@
   .wx-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
   .wx-value { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.1; }
   .wx-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .wx-loc { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: -4px 0 10px; font-size: 13px; color: var(--text); }
+  .wx-loc-label { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .wx-loc-btn { flex-shrink: 0; font-size: 12px; color: var(--blue-mid); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 14px; font-family: inherit; padding: 3px 10px; }
+  .wx-picker { background: var(--section-bg); border-radius: 10px; padding: 10px; margin-bottom: 10px; }
+  .wx-search { display: flex; gap: 6px; }
+  .wx-search input { flex: 1; min-width: 0; font-size: 16px; font-family: inherit; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--text); }
+  .wx-search button { font-size: 13px; font-family: inherit; padding: 0 12px; border: none; border-radius: 8px; background: var(--blue); color: #fff; cursor: pointer; }
+  .wx-result { display: block; width: 100%; text-align: left; font-family: inherit; font-size: 14px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-top: 6px; cursor: pointer; }
+  .wx-result small { display: block; color: var(--text-muted); font-size: 11px; margin-top: 1px; }
+  .wx-note { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+  .wx-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .wx-chip { font-family: inherit; font-size: 12px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 5px 10px; cursor: pointer; }
   .wx-status { font-size: 12px; color: var(--text-muted); text-align: center; padding: 6px 0 2px; }
   .wx-alert { color: #c0392b; } .wx-warn { color: #e67e22; } .wx-good { color: var(--green); }
   .wx-key-prompt { font-size: 12px; color: var(--text-muted); background: var(--section-bg); border-radius: 8px; padding: 8px 10px; text-align: center; }
@@ -212,7 +224,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Part 107 Preflight Checklist · v1.9</p>
+      <p>Free Part 107 Preflight Checklist · v2.0</p>
     </div>
   </div>
   <div class="tabs">
@@ -231,6 +243,18 @@
   <div class="wx-header">
     <span class="wx-title">📡 Preflight Conditions</span>
     <button class="wx-refresh" onclick="loadWeather()">↻ Refresh</button>
+  </div>
+  <div class="wx-loc">
+    <span class="wx-loc-label">📍 <span id="wx-loc-name">My location</span></span>
+    <button class="wx-loc-btn" onclick="toggleLocPicker()">Change</button>
+  </div>
+  <div class="wx-picker" id="wx-picker" hidden>
+    <form class="wx-search" onsubmit="searchSite(event)">
+      <input id="wx-q" type="search" placeholder="Town, ZIP, or lat, lon" autocomplete="off" autocapitalize="words" enterkeyhint="search">
+      <button type="submit">Search</button>
+    </form>
+    <div id="wx-results"></div>
+    <div class="wx-chips" id="wx-chips"></div>
   </div>
   <div id="wx-body">
     <div class="wx-status">Locating...</div>
@@ -775,24 +799,134 @@ function ceilingNote(ft, metar) {
   return 'Good for ops';
 }
 
+// ── Flight site: weather for the current location or a chosen site ──
+const STATES = {AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',DC:'District of Columbia',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming'};
+const STATE_ABBR = Object.fromEntries(Object.entries(STATES).map(([a, n]) => [n, a]));
+
+function recall(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
+}
+function store(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+}
+
+let site = recall('wxSite', null);       // {name, lat, lon}, or null = use my current location
+let recentSites = recall('wxRecent', []);
+let wxReq = 0;
+
+function updateLocLabel() {
+  document.getElementById('wx-loc-name').textContent = site ? site.name : 'My location';
+}
+
+function toggleLocPicker() {
+  const picker = document.getElementById('wx-picker');
+  picker.hidden = !picker.hidden;
+  if (!picker.hidden) { renderChips(); document.getElementById('wx-q').focus(); }
+}
+
+function renderChips() {
+  const box = document.getElementById('wx-chips');
+  box.innerHTML = '';
+  const add = (label, fn) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'wx-chip'; b.textContent = label; b.onclick = fn;
+    box.appendChild(b);
+  };
+  if (site) add('📍 Use my location', () => chooseSite(null));
+  recentSites.forEach(r => add(r.name, () => chooseSite(r)));
+}
+
+function chooseSite(s) {
+  site = s;
+  store('wxSite', site);
+  if (s) {
+    recentSites = [s, ...recentSites.filter(r => Math.abs(r.lat - s.lat) > 0.01 || Math.abs(r.lon - s.lon) > 0.01)].slice(0, 5);
+    store('wxRecent', recentSites);
+  }
+  document.getElementById('wx-picker').hidden = true;
+  document.getElementById('wx-results').innerHTML = '';
+  document.getElementById('wx-q').value = '';
+  loadWeather();
+}
+
+async function searchSite(e) {
+  e.preventDefault();
+  const q = document.getElementById('wx-q').value.trim();
+  const out = document.getElementById('wx-results');
+  if (!q) return;
+  out.innerHTML = '';
+  const note = (t) => { const d = document.createElement('div'); d.className = 'wx-note'; d.textContent = t; out.appendChild(d); };
+
+  // "35.59, -78.50" style coordinates
+  const c = q.match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);
+  if (c) {
+    const lat = parseFloat(c[1]), lon = parseFloat(c[2]);
+    if (Math.abs(lat) <= 90 && Math.abs(lon) <= 180) {
+      chooseSite({ name: lat.toFixed(3) + ', ' + lon.toFixed(3), lat, lon });
+      return;
+    }
+  }
+
+  // "Angier NC" / "Angier, NC" -> search the town, then prefer that state
+  let name = q, state = null;
+  const m = q.match(/^(.*?)[,\s]+([A-Za-z]{2})$/);
+  if (m && STATES[m[2].toUpperCase()]) { name = m[1].trim(); state = STATES[m[2].toUpperCase()]; }
+
+  note('Searching…');
+  try {
+    const res = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(name) + '&count=10&language=en&format=json');
+    if (!res.ok) throw new Error('search ' + res.status);
+    const data = await res.json();
+    let list = data.results || [];
+    if (state) { const f = list.filter(r => r.admin1 === state); if (f.length) list = f; }
+    list = list.slice(0, 6);
+    out.innerHTML = '';
+    if (!list.length) { note('No matches. Try a nearby town, a ZIP code, or coordinates.'); return; }
+    list.forEach(r => {
+      const region = r.admin1 ? (r.country_code === 'US' && STATE_ABBR[r.admin1] ? STATE_ABBR[r.admin1] : r.admin1) : '';
+      const label = r.name + (region ? ', ' + region : '') + (r.country_code && r.country_code !== 'US' ? ', ' + r.country_code : '');
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'wx-result';
+      b.appendChild(document.createTextNode(label));
+      if (r.admin2) { const sm = document.createElement('small'); sm.textContent = r.admin2; b.appendChild(sm); }
+      b.onclick = () => chooseSite({ name: label, lat: r.latitude, lon: r.longitude });
+      out.appendChild(b);
+    });
+  } catch (err) {
+    out.innerHTML = '';
+    note('Search unavailable right now. You can also enter coordinates like 35.59, -78.50.');
+  }
+}
+
 async function loadWeather() {
   const body = document.getElementById('wx-body');
   body.innerHTML = '<div class="wx-status">Loading...</div>';
+  updateLocLabel();
+
+  if (site) { renderWeather(site.lat, site.lon); return; }
 
   if (!navigator.geolocation) {
-    body.innerHTML = '<div class="wx-status wx-alert">Location not available on this device.</div>';
+    body.innerHTML = '<div class="wx-status wx-alert">Location not available on this device. Tap Change to pick a flight site.</div>';
     return;
   }
 
-  navigator.geolocation.getCurrentPosition(async (pos) => {
-    const { latitude: lat, longitude: lon } = pos.coords;
-    try {
+  navigator.geolocation.getCurrentPosition(
+    (pos) => renderWeather(pos.coords.latitude, pos.coords.longitude),
+    () => { body.innerHTML = '<div class="wx-status wx-warn">Location permission denied — enable it, or tap Change to pick a flight site.</div>'; }
+  );
+}
+
+async function renderWeather(lat, lon) {
+  const body = document.getElementById('wx-body');
+  const my = ++wxReq;
+  try {
       const [wxRes, kpData, metarData] = await Promise.allSettled([
         fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=visibility,wind_speed_120m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=1`),
         fetchKP(),
         fetchMetar(lat, lon)
       ]);
 
+      if (my !== wxReq) return;   // a newer request replaced this one
       if (wxRes.status === 'rejected') throw new Error('Weather API unreachable');
       if (!wxRes.value.ok) throw new Error('Weather service error ' + wxRes.value.status);
       const om = await wxRes.value.json();
@@ -864,12 +998,10 @@ async function loadWeather() {
         <div class="wx-updated">Updated ${now} · ${stationId ? 'METAR ' + stationId : lat.toFixed(2) + ', ' + lon.toFixed(2)}</div>
 
       `;
-    } catch (e) {
-      body.innerHTML = `<div class="wx-status wx-alert">Weather unavailable: ${e.message}</div>`;
-    }
-  }, () => {
-    body.innerHTML = '<div class="wx-status wx-warn">Location permission denied — enable to see conditions.</div>';
-  });
+  } catch (e) {
+    if (my !== wxReq) return;
+    body.innerHTML = `<div class="wx-status wx-alert">Weather unavailable: ${e.message}</div>`;
+  }
 }
 
 loadWeather();

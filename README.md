@@ -15,6 +15,7 @@ A free, mobile-friendly Part 107 preflight checklist (can be used for recreation
   - Temperature and visibility
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times
+- **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar
 - **Progress tracker** — percentage complete per tab
 - **Flag items that need attention** — press and hold any item to mark it amber; flagged items don't count as complete until you resolve them
@@ -51,7 +52,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 
 1. Open the checklist on your device before your flight
 2. Select the tab that matches your mission type
-3. Review the **Preflight Conditions** panel — tap **↻ Refresh** to update weather
+3. Review the **Preflight Conditions** panel — tap **↻ Refresh** to update weather. It shows your current location by default; tap **Change** to look up a different flight site, and **Use my location** to switch back
 4. Tap each item to check it off as you complete it
 5. Press and hold an item to flag it as **needs attention** (amber). Tap a flagged item once it's resolved to check it off
 6. The progress bar tracks your completion percentage and shows how many items need attention
@@ -63,7 +64,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 
 - **No cross-device sync** — checked items only persist on the device and browser you're using. If you start the checklist on your computer at home and then open it on your phone in the field, it will start fresh. Plan to use a single device per flight.
 - **No account or login** — by design. Keeps it simple, private, and free.
-- **Weather is location-based** — the Preflight Conditions panel pulls data for your current GPS location when you open it. It does not pull weather for a planned job site in a different location. Use the **Radar — NWS** button to check conditions at a distant destination.
+- **Weather defaults to your current GPS location** — to check a different flight site, tap **Change** on the weather panel and search for a town, ZIP code, or coordinates. Place search works best for towns and cities; for a specific job site, use a nearby town or enter coordinates. Cloud ceiling comes from the nearest METAR station, which can be several miles from the site (the station is shown on the panel). The **Radar — NWS** button opens the national map.
 - **Cloud ceiling depends on the METAR proxy** — if it is unreachable the Cloud Ceiling tile shows "No METAR data" and everything else still works.
 - **Altitude and speed limits** — defaults shown are US FAA limits. Always verify the regulations for your country and airspace class.
 
