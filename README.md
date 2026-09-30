@@ -1,3 +1,4 @@
+[README.md](https://github.com/user-attachments/files/32864824/README.md)
  UAS Flight Checklists
 
 A free, mobile-friendly Part 107 preflight checklist (can be used for recreational pilots too) web app with live weather conditions built in. No app to download, no subscription required — just open it in any browser and fly.
@@ -24,22 +25,15 @@ A free, mobile-friendly Part 107 preflight checklist (can be used for recreation
 
 ## Setup
 
-**Live weather works out of the box — no account or API key needed.** Wind, gusts, wind at 400 ft, temperature, visibility, sunrise/sunset, and KP index all load automatically.
+**Live weather works out of the box — no account or API key needed.** Wind, gusts, wind at 400 ft, temperature, visibility, sunrise/sunset, cloud ceiling, and KP index all load automatically.
 
-### Optional — real cloud ceiling (CheckWX)
+### Cloud ceiling (optional: run your own proxy)
 
-Cloud ceiling in feet AGL comes from real METAR reports via CheckWX. Without a key, the Cloud Ceiling tile shows "No METAR data" and everything else still works.
+Cloud ceiling comes from real METAR reports from the FAA/NWS [Aviation Weather Center](https://aviationweather.gov), which needs no key but blocks direct browser requests. The checklist reaches it through a tiny Cloudflare Worker (`uas-metar-worker.js` in this repo) that holds no secrets. This deployment already points at one, so a fork works as-is. To run your own:
 
-1. Sign up free at [checkwx.com](https://checkwx.com) (key activates immediately)
-2. Open `index.html` in a text editor and find this line near the bottom:
-
-```javascript
-const CHECKWX_KEY = 'YOUR_CHECKWX_KEY_HERE';
-```
-
-3. Replace `YOUR_CHECKWX_KEY_HERE` with your key.
-
-Note: on a public GitHub repo the key is visible in the source. The CheckWX free tier has no billing attached, so the risk is limited to someone using up your quota. To keep it private, route the METAR request through a free Cloudflare Worker that adds the key server-side.
+1. Create a free [Cloudflare](https://cloudflare.com) account → **Workers & Pages → Create → Hello World**
+2. Paste in the contents of `uas-metar-worker.js` and deploy
+3. In `index.html`, set `METAR_PROXY` to your Worker's URL
 
 ### Host it
 
@@ -69,7 +63,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 - **No cross-device sync** — checked items only persist on the device and browser you're using. If you start the checklist on your computer at home and then open it on your phone in the field, it will start fresh. Plan to use a single device per flight.
 - **No account or login** — by design. Keeps it simple, private, and free.
 - **Weather is location-based** — the Preflight Conditions panel pulls data for your current GPS location when you open it. It does not pull weather for a planned job site in a different location. Use the **Radar — NWS** button to check conditions at a distant destination.
-- **Cloud ceiling needs an optional CheckWX key** — all other weather works with no key.
+- **Cloud ceiling depends on the METAR proxy** — if it is unreachable the Cloud Ceiling tile shows "No METAR data" and everything else still works.
 - **Altitude and speed limits** — defaults shown are US FAA limits. Always verify the regulations for your country and airspace class.
 
 ---
@@ -89,7 +83,7 @@ This is a single HTML file — everything is in `index.html`. You can:
 
 - Vanilla HTML, CSS, and JavaScript — no frameworks or dependencies
 - [Open-Meteo](https://open-meteo.com) — wind, gusts, wind at 400 ft, temperature, visibility, sunrise/sunset (no key required)
-- [CheckWX API](https://checkwx.com) — METAR cloud ceiling data (optional free key)
+- [Aviation Weather Center](https://aviationweather.gov/data/api/) — METAR cloud ceiling (no key, via a small Cloudflare Worker)
 - [NOAA Space Weather](https://services.swpc.noaa.gov) — KP Index (no key required)
 - [aviationweather.gov](https://aviationweather.gov) — TFR and NOTAM links
 - Hosted free on [GitHub Pages](https://pages.github.com)
