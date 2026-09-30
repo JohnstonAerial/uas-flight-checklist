@@ -199,7 +199,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Part 107 Preflight Checklist · v1.4</p>
+      <p>Free Part 107 Preflight Checklist · v1.6</p>
     </div>
     <button class="reset-all" onclick="resetCurrent()">Reset</button>
   </div>
@@ -217,10 +217,9 @@
 <!-- WEATHER STATUS PANEL -->
 
 <div style="background:#1a3a5c;color:#e6f1fb;padding:12px 16px;font-size:12px;text-align:center;line-height:1.6;">
-  <strong>⚙️ Setup Required:</strong> Add your free API keys to enable live weather and Preflight Conditions panel.
-  Get <a href="https://openweathermap.org/api" target="_blank" style="color:#64b5f6;">OpenWeatherMap</a> and
-  <a href="https://checkwx.com" target="_blank" style="color:#64b5f6;">CheckWX</a> keys,
-  then open this file and replace <code>YOUR_OWM_KEY_HERE</code> and <code>YOUR_CHECKWX_KEY_HERE</code>.
+  <strong>⚙️ Optional:</strong> Live weather works with no setup. For real cloud-ceiling data, add a free
+  <a href="https://checkwx.com" target="_blank" style="color:#64b5f6;">CheckWX</a> key,
+  then open this file and replace <code>YOUR_CHECKWX_KEY_HERE</code>.
 </div>
 
 <div class="wx-panel" id="wx-panel">
@@ -581,10 +580,6 @@ function resetCurrent() {
 </script>
 
 <script>
-// ── PASTE YOUR OPENWEATHERMAP API KEY HERE ──────────────────────────
-const OWM_KEY = 'YOUR_OWM_KEY_HERE'; // Sign up free at openweathermap.org/api
-// ────────────────────────────────────────────────────────────────────
-
 function kpColor(kp) {
   if (kp >= 4) return 'wx-alert';
   if (kp >= 3) return 'wx-warn';
@@ -712,11 +707,6 @@ async function loadWeather() {
   const body = document.getElementById('wx-body');
   body.innerHTML = '<div class="wx-status">Loading...</div>';
 
-  if (!OWM_KEY || OWM_KEY === 'YOUR_API_KEY_HERE') {
-    body.innerHTML = `<div class="wx-key-prompt">⚠️ Add your API keys to enable live weather and Preflight Conditions panel.<br>1. <a href="https://openweathermap.org/api" target="_blank">OpenWeatherMap</a> (free) — paste key in OWM_KEY<br>2. <a href="https://checkwx.com" target="_blank">CheckWX</a> (free) — paste key in CHECKWX_KEY</div>`;
-    return;
-  }
-
   if (!navigator.geolocation) {
     body.innerHTML = '<div class="wx-status wx-alert">Location not available on this device.</div>';
     return;
@@ -726,22 +716,36 @@ async function loadWeather() {
     const { latitude: lat, longitude: lon } = pos.coords;
     try {
       const [wxRes, kpData, metarData] = await Promise.allSettled([
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${OWM_KEY}`),
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=visibility,wind_speed_120m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=1`),
         fetchKP(),
         fetchMetar(lat, lon)
       ]);
 
       if (wxRes.status === 'rejected') throw new Error('Weather API unreachable');
-      const wx = await wxRes.value.json();
-      if (wx.cod !== 200) throw new Error(wx.message);
+      if (!wxRes.value.ok) throw new Error('Weather service error ' + wxRes.value.status);
+      const om = await wxRes.value.json();
+      if (!om.current) throw new Error('No weather data returned');
       const kpData2 = kpData.status === 'fulfilled' ? kpData.value : null;
       const metarData2 = metarData.status === 'fulfilled' ? metarData.value : null;
 
+      // Normalize Open-Meteo response
+      const cur = om.current;
+      const hIdx = om.hourly ? om.hourly.time.indexOf(cur.time.slice(0, 13) + ':00') : -1;
+      const wx = {
+        wind: { speed: cur.wind_speed_10m, gust: cur.wind_gusts_10m, deg: cur.wind_direction_10m },
+        main: { temp: cur.temperature_2m },
+        visibility: hIdx >= 0 ? om.hourly.visibility[hIdx] : null,
+        wind120: hIdx >= 0 ? om.hourly.wind_speed_120m[hIdx] : null,
+        sunrise: om.daily && om.daily.sunrise ? om.daily.sunrise[0] : null,
+        sunset: om.daily && om.daily.sunset ? om.daily.sunset[0] : null
+      };
+
       const windMph = Math.round(wx.wind.speed);
-      const gustMph = wx.wind.gust ? Math.round(wx.wind.gust) : null;
+      const gustMph = wx.wind.gust && Math.round(wx.wind.gust) > windMph ? Math.round(wx.wind.gust) : null;
       const tempF = Math.round(wx.main.temp);
-      const visM = wx.visibility;
-      const visMi = (visM / 1609.34).toFixed(1);
+      const visMi = wx.visibility != null ? (wx.visibility / 1609.34).toFixed(1) : '—';
+      const wind120Txt = wx.wind120 != null ? ` · 400 ft: ${Math.round(wx.wind120)} mph` : '';
+      const fmtT = (iso) => iso ? new Date(iso).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '—';
 
       // Ceiling from METAR
       let ceilFt = null, ceilNote = 'No METAR data', ceilClass = 'wx-good', ceilTxt = '—', stationId = '';
@@ -766,7 +770,7 @@ async function loadWeather() {
           <div class="wx-item">
             <div class="wx-label">Wind</div>
             <div class="wx-value ${windColor(windMph)}">${windMph}${gustMph ? ' / ' + gustMph : ''} mph ${windArrow(wx.wind.deg)}</div>
-            <div class="wx-sub">${gustMph ? 'Sustained / Gusts' : 'No gusts reported'} · ${windCardinal(wx.wind.deg)}</div>
+            <div class="wx-sub">${gustMph ? 'Sustained / Gusts' : 'No gusts reported'} · ${windCardinal(wx.wind.deg)}${wind120Txt}</div>
           </div>
           <div class="wx-item">
             <div class="wx-label">Cloud Ceiling ${stationId ? '<span style="font-weight:400;opacity:0.7">· ' + stationId + '</span>' : ''}</div>
@@ -784,8 +788,8 @@ async function loadWeather() {
             <div class="wx-sub">${kpNote}</div>
           </div>
         </div>
-        <div class="wx-sun">🌅 Sunrise ${new Date(wx.sys.sunrise*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})} &nbsp;·&nbsp; 🌇 Sunset ${new Date(wx.sys.sunset*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>
-        <div class="wx-updated">Updated ${now} · ${wx.name}</div>
+        <div class="wx-sun">🌅 Sunrise ${fmtT(wx.sunrise)} &nbsp;·&nbsp; 🌇 Sunset ${fmtT(wx.sunset)}</div>
+        <div class="wx-updated">Updated ${now} · ${stationId ? 'METAR ' + stationId : lat.toFixed(2) + ', ' + lon.toFixed(2)}</div>
 
       `;
     } catch (e) {

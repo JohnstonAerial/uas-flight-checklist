@@ -24,35 +24,24 @@ A free, mobile-friendly Part 107 preflight checklist (can be used for recreation
 
 ## Setup
 
-The checklist works without any API keys, but the live weather and Preflight Conditions panel requires two free API keys.
+**Live weather works out of the box — no account or API key needed.** Wind, gusts, wind at 400 ft, temperature, visibility, sunrise/sunset, and KP index all load automatically.
 
-### Step 1 — Get your free API keys
+### Optional — real cloud ceiling (CheckWX)
 
-1. **OpenWeatherMap** — sign up at [openweathermap.org/api](https://openweathermap.org/api)
-   - Free tier is all you need (1,000 calls/day)
-   - Key activates within 1-2 hours of signup
+Cloud ceiling in feet AGL comes from real METAR reports via CheckWX. Without a key, the Cloud Ceiling tile shows "No METAR data" and everything else still works.
 
-2. **CheckWX** — sign up at [checkwx.com](https://checkwx.com)
-   - Free tier provides METAR cloud ceiling data
-   - Key activates immediately
-
-### Step 2 — Add your keys
-
-**Recommended: use a proxy so your keys stay private.** This deployment proxies weather requests through a free Cloudflare Worker, so the API keys never appear in the client-side code. If you fork this repo:
-
-1. Deploy a Cloudflare Worker (free tier) that accepts requests and forwards them to OpenWeatherMap and CheckWX with your keys attached server-side
-2. Point the app's fetch calls at your Worker's `/weather` and `/metar` routes instead of the APIs directly
-
-**Simpler alternative (keys visible in source):** Open `index.html` in a text editor and find these two lines near the bottom:
+1. Sign up free at [checkwx.com](https://checkwx.com) (key activates immediately)
+2. Open `index.html` in a text editor and find this line near the bottom:
 
 ```javascript
-const OWM_KEY = 'YOUR_OWM_KEY_HERE';
 const CHECKWX_KEY = 'YOUR_CHECKWX_KEY_HERE';
 ```
 
-Replace `YOUR_OWM_KEY_HERE` and `YOUR_CHECKWX_KEY_HERE` with your actual keys. Note: if you host this on a public GitHub repo this way, your keys will be visible in the source code. Both OpenWeatherMap and CheckWX free tiers have no billing attached, so the risk is limited to someone using up your quota — but the Worker proxy approach avoids this entirely.
+3. Replace `YOUR_CHECKWX_KEY_HERE` with your key.
 
-### Step 3 — Host it
+Note: on a public GitHub repo the key is visible in the source. The CheckWX free tier has no billing attached, so the risk is limited to someone using up your quota. To keep it private, route the METAR request through a free Cloudflare Worker that adds the key server-side.
+
+### Host it
 
 The simplest way is GitHub Pages:
 
@@ -80,7 +69,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 - **No cross-device sync** — checked items only persist on the device and browser you're using. If you start the checklist on your computer at home and then open it on your phone in the field, it will start fresh. Plan to use a single device per flight.
 - **No account or login** — by design. Keeps it simple, private, and free.
 - **Weather is location-based** — the Preflight Conditions panel pulls data for your current GPS location when you open it. It does not pull weather for a planned job site in a different location. Use the **Radar — NWS** button to check conditions at a distant destination.
-- **Weather requires API keys** — the panel will show a setup prompt until keys (or a proxy) are configured.
+- **Cloud ceiling needs an optional CheckWX key** — all other weather works with no key.
 - **Altitude and speed limits** — defaults shown are US FAA limits. Always verify the regulations for your country and airspace class.
 
 ---
@@ -99,8 +88,8 @@ This is a single HTML file — everything is in `index.html`. You can:
 ## Built With
 
 - Vanilla HTML, CSS, and JavaScript — no frameworks or dependencies
-- [OpenWeatherMap API](https://openweathermap.org/api) — wind, temperature, visibility
-- [CheckWX API](https://checkwx.com) — METAR cloud ceiling data
+- [Open-Meteo](https://open-meteo.com) — wind, gusts, wind at 400 ft, temperature, visibility, sunrise/sunset (no key required)
+- [CheckWX API](https://checkwx.com) — METAR cloud ceiling data (optional free key)
 - [NOAA Space Weather](https://services.swpc.noaa.gov) — KP Index (no key required)
 - [aviationweather.gov](https://aviationweather.gov) — TFR and NOTAM links
 - Hosted free on [GitHub Pages](https://pages.github.com)
