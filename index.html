@@ -166,6 +166,17 @@
   .cust-btn { font-family: inherit; font-size: 12px; color: var(--blue-mid); background: none; border: 1px solid var(--border); border-radius: 14px; padding: 4px 12px; cursor: pointer; }
   .cust-help { display: none; margin-top: 6px; line-height: 1.4; }
   .panel.editing .cust-help { display: block; }
+  .section-header { display: flex; align-items: center; gap: 8px; cursor: pointer; -webkit-user-select: none; user-select: none; }
+  .sec-meta { margin-left: auto; display: flex; align-items: center; gap: 8px; text-transform: none; letter-spacing: 0; font-weight: 600; }
+  .sec-count { font-size: 11px; color: var(--text-light); }
+  .sec-count.done { color: var(--green); }
+  .sec-count.attn { color: var(--amber); }
+  .sec-arrow { font-size: 12px; color: var(--text-light); transition: transform 0.15s; }
+  .section.collapsed .sec-arrow { transform: rotate(-90deg); }
+  .section.collapsed .section-card, .section.collapsed .add-row { display: none; }
+  .panel.editing .section.collapsed .section-card { display: block; }
+  .panel.editing .section.collapsed .add-row { display: flex; }
+  .cust-row .sec-all { margin: 0 4px; }
   .keep-row { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; font-size: 11px; color: var(--text-light); text-align: center; }
   .keep-row select { font-family: inherit; font-size: 11px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 4px 8px; }
   .flag-hint { font-size: 11px; color: var(--text-light); text-align: center; padding: 2px 16px 8px; }
@@ -246,7 +257,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v2.6</p>
+      <p>Free Drone Preflight Checklist · v2.7</p>
     </div>
   </div>
   <div class="tabs">
@@ -697,6 +708,7 @@ function updateProgress(panel) {
   document.getElementById('header-bar').style.width = pct + '%';
   const done = document.getElementById('done-' + panel);
   done.classList.toggle('show', checked === total && total > 0);
+  updateSectionMeta(p);
 }
 
 // Press and hold an item (~0.5 s) to flag it as "needs attention"
@@ -774,7 +786,7 @@ function baseKeyMap(panelEl) {            // stable key per built-in item: its t
   panelEl.querySelectorAll('.item:not(.custom)').forEach(it => { const t = itemTextOf(it); seen[t] = (seen[t] || 0) + 1; map.set(it, t + '#' + seen[t]); });
   return map;
 }
-const sectionTitleOf = (secEl) => secEl.querySelector('.section-header').textContent.trim();
+const sectionTitleOf = (secEl) => secEl.querySelector('.section-header').firstChild.textContent.trim();
 function makeItem(text) {
   const it = document.createElement('div');
   it.className = 'item custom';
@@ -875,6 +887,74 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     '<button type="button" class="cust-btn" onclick="restoreDefaults(this)">Restore original list</button></div>';
   panelEl.querySelector('.keep-row').after(row);
   refreshCust(panelEl);
+});
+
+
+// ── Collapsible sections: tap a header to fold it; counts and ✓ / ⚠ stay visible ──
+const COLLAPSE_KEY = 'uasCollapsedSections';
+let collapsed = (function () { try { return JSON.parse(localStorage.getItem(COLLAPSE_KEY)) || {}; } catch (e) { return {}; } })();
+function collapseSave() { try { localStorage.setItem(COLLAPSE_KEY, JSON.stringify(collapsed)); } catch (e) {} }
+const secTitle = (sec) => sec.querySelector('.section-header').firstChild.textContent.trim();
+
+function updateSectionMeta(panelEl) {
+  panelEl.querySelectorAll('.section').forEach(sec => {
+    const cnt = sec.querySelector('.sec-count');
+    if (!cnt) return;
+    const total = sec.querySelectorAll('.item:not(.is-hidden)').length;
+    const done = sec.querySelectorAll('.item.checked:not(.is-hidden)').length;
+    const fl = sec.querySelectorAll('.item.flagged:not(.is-hidden)').length;
+    const complete = total > 0 && done === total;
+    cnt.className = 'sec-count' + (fl ? ' attn' : complete ? ' done' : '');
+    cnt.textContent = (fl ? '⚠ ' : complete ? '✓ ' : '') + done + '/' + total;
+  });
+}
+function syncAllButton(panelEl) {
+  const b = panelEl.querySelector('.sec-all');
+  if (!b) return;
+  const anyOpen = [...panelEl.querySelectorAll('.section')].some(s => !s.classList.contains('collapsed'));
+  b.textContent = anyOpen ? 'Collapse all' : 'Expand all';
+}
+function setCollapsed(sec, on, save) {
+  sec.classList.toggle('collapsed', on);
+  sec.querySelector('.section-header').setAttribute('aria-expanded', on ? 'false' : 'true');
+  const pid = sec.closest('.panel').id, title = secTitle(sec);
+  const list = collapsed[pid] || (collapsed[pid] = []), i = list.indexOf(title);
+  if (on && i < 0) list.push(title);
+  if (!on && i >= 0) list.splice(i, 1);
+  if (save) collapseSave();
+}
+function toggleSection(head) {
+  const sec = head.closest('.section');
+  if (sec.closest('.panel.editing')) return;          // everything stays open while customizing
+  setCollapsed(sec, !sec.classList.contains('collapsed'), true);
+  syncAllButton(sec.closest('.panel'));
+}
+function toggleAllSections(btn) {
+  const panelEl = btn.closest('.panel'), secs = [...panelEl.querySelectorAll('.section')];
+  const anyOpen = secs.some(s => !s.classList.contains('collapsed'));
+  secs.forEach(s => setCollapsed(s, anyOpen, false));
+  collapseSave(); syncAllButton(panelEl);
+}
+
+document.querySelectorAll('.panel').forEach(panelEl => {
+  panelEl.querySelectorAll('.section').forEach(sec => {
+    const head = sec.querySelector('.section-header');
+    head.setAttribute('role', 'button'); head.setAttribute('tabindex', '0'); head.setAttribute('aria-expanded', 'true');
+    const meta = document.createElement('span');
+    meta.className = 'sec-meta';
+    meta.innerHTML = '<span class="sec-count"></span><span class="sec-arrow">▾</span>';
+    head.appendChild(meta);
+    head.addEventListener('click', () => toggleSection(head));
+    head.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSection(head); } });
+    if ((collapsed[panelEl.id] || []).includes(secTitle(sec))) setCollapsed(sec, true, false);
+  });
+  let row = panelEl.querySelector('.cust-row');
+  if (!row) { row = document.createElement('div'); row.className = 'cust-row'; panelEl.querySelector('.keep-row').after(row); }
+  const all = document.createElement('button');
+  all.type = 'button'; all.className = 'cust-btn sec-all'; all.setAttribute('onclick', 'toggleAllSections(this)');
+  const first = row.querySelector('.cust-btn');
+  if (first) first.after(all); else row.appendChild(all);
+  updateSectionMeta(panelEl); syncAllButton(panelEl);
 });
 
 restoreProgress();

@@ -18,6 +18,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar
 - **Progress tracker** — percentage complete per tab
+- **Collapsible sections** — tap a section header to fold it up or open it, or use **Collapse all / Expand all**. Each header shows its count (like 9/12), a ✓ when it's finished and an amber ⚠ if something in it needs attention, even when folded. Your fold state is remembered
 - **Customize the list** — tap **✎ Customize list** on any tab to hide items that don't apply where you fly (for example, services your country doesn't have) or add your own items to any section. Hidden items don't count toward progress. Your changes are saved on your device, and **Restore original list** puts the tab back to the defaults
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it with the dropdown under the progress bar (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
 - **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
