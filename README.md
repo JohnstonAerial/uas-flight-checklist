@@ -1,14 +1,29 @@
 # UAS Flight Checklists
 
-A free, mobile-friendly drone preflight checklist web app with live weather conditions built in. It works for recreational and commercial pilots in any country — hide the items that don't apply to you and add your own. No app to download, no subscription required — just open it in any browser and fly.
+A free, mobile-friendly drone preflight checklist web app with live weather conditions built in. It works for recreational and commercial pilots in any country — hide the items that don't apply to you, add your own, put things in the order you fly them, and back it all up. No app to download, no subscription required — just open it in any browser and fly.
 
 **Live Demo:** [checklist.johnstonaerial.com](https://checklist.johnstonaerial.com)
 
 ---
 
+## What's new in v3.0
+
+Version 3 is a major update built around making the checklist *yours*:
+
+- **⚙ Settings & customize panel** — everything that configures the checklist now lives in one tidy, collapsible panel at the top of each tab: how long progress is kept, where you fly (USA or outside), Customize, tab names, and backup
+- **Reorder items** — in Customize mode, drag the **≡** handle to move any item up or down within its section
+- **Back up & restore** — copy a code or save a file of your settings (and, optionally, your current progress), then restore it on another phone, tablet or browser — or on the same one after a reset
+- **Two-stage banner** — a green banner tells you when your pre-flight checks are done (**ready to fly**) and again when the whole flight is finished (**flight complete**)
+- **Floating Done bar** — while you customize, a bar stays pinned to the bottom of the screen with a **Done** button, so you never have to scroll back to finish
+- **Tabs stay out of your way** — switch tabs while customizing and Settings stays open, so you can tidy several tabs in one pass
+- **Cleaner layout** — the progress bar sits right above the checklist with **Reset** and **Collapse all / Expand all** beside it; **Expand all** appears as soon as any section is folded
+- **Upgrading is safe** — saved progress, hidden and added items, region, units and fold state carry over from v2.x
+
+---
+
 ## Features
 
-- **3 mission-specific tabs** — General, Mapping, and Commercial
+- **3 mission-specific tabs** — General, Mapping, and Commercial (rename or hide any of them)
 - **Live Preflight Conditions panel** showing:
   - Wind speed, gusts, and direction arrow, plus wind at 400 ft
   - Cloud ceiling in feet AGL from nearest METAR station
@@ -17,16 +32,36 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
   - Sunrise and sunset times
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar
-- **Progress tracker** — percentage complete per tab
-- **Works outside the USA** — the first time you open it, choose **USA** or **Outside the USA**. Choosing outside the USA hides the US-only items (TFR and LAANC checks), rewords the NOTAM and airspace items so they aren't tied to US websites, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. You can change it any time with the "Checklist for" dropdown on each tab, and use Customize to hide or add anything else
+- **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
+- **Works outside the USA** — the first time you open it, choose **USA** or **Outside the USA**. Choosing outside the USA hides the US-only items (TFR and LAANC checks), rewords the NOTAM and airspace items so they aren't tied to US websites, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. Change it any time in **⚙ Settings**
+- **Customize the list** — open **⚙ Settings & customize** and tap **✎ Customize list** to hide items that don't apply where you fly, add your own items to any section, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
+- **Rename or hide tabs** — in Customize mode, rename the tab you're on or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Renaming changes the tab's name only; use Hide and Add to change what's inside it
+- **Back up & restore** — see below
 - **Collapsible sections** — tap a section header to fold it up or open it, or use **Collapse all / Expand all**. Each header shows its count (like 9/12), a ✓ when it's finished and an amber ⚠ if something in it needs attention, even when folded. Your fold state is remembered
-- **Customize the list** — tap **✎ Customize list** on any tab to hide items that don't apply where you fly (for example, services your country doesn't have) or add your own items to any section. Hidden items don't count toward progress. Your changes are saved on your device, and **Restore original list** puts the tab back to the defaults
-- **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it with the dropdown under the progress bar (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
+- **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it in Settings (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
 - **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention** — press and hold any item to mark it amber; flagged items don't count as complete until you resolve them
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
 - **Completely free** to host and run
+
+---
+
+## Back up & restore
+
+Your settings and progress are stored in the browser on the device you're using. They don't sync by themselves, and a checklist added to your Home Screen can keep its own separate copy from the browser tab (iPhones and iPads always do). It works the same on any phone, tablet or computer, in any current browser. **Back up & restore** (in ⚙ Settings, and also visible while you customize) lets you move them:
+
+**To back up or move to another device**
+1. Open **⚙ Settings & customize** and find **Back up & restore**
+2. Choose whether to **Include current progress** (leave it off to move only your settings)
+3. Tap **Copy code** to copy a code you can paste into a message or note, or **Save file** to save or share a small backup file
+
+**To restore**
+1. On the other device, open **⚙ Settings & customize**
+2. Paste the code and tap **Restore from code**, or tap **Restore from file…** and choose your backup
+3. Confirm — the checklist reloads, collapses Settings and scrolls to the top, and a short message confirms it worked
+
+Restoring **replaces** that device's settings with the backup. A backup includes your region, units, tab names and hidden tabs, hidden/added/reordered items, fold state, recent flight sites and progress retention — and, if you chose it, your checks and flags. Progress that has already expired is not restored.
 
 ---
 
@@ -61,27 +96,31 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 3. Review the **Preflight Conditions** panel — tap **↻ Refresh** to update weather. It shows your current location by default; tap **Change** to look up a different flight site, and **Use my location** to switch back
 4. Tap each item to check it off as you complete it
 5. Press and hold an item to flag it as **needs attention** (amber). Tap a flagged item once it's resolved to check it off
-6. The progress bar tracks your completion percentage and shows how many items need attention
+6. The progress bar tracks your completion percentage and shows how many items need attention. When your pre-flight sections are done, a **ready to fly** banner appears; after the last section, **flight complete**
 7. Tap **Reset** (next to the progress bar) to clear all checks and flags on the current tab — it asks you to confirm first
+
+**To make it yours:** open **⚙ Settings & customize**, tap **✎ Customize list**, and hide, add, drag or rename what you need — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup.
 
 ---
 
 ## Limitations
 
-- **No cross-device sync** — saved progress lives only in the browser on the device you're using (and is cleared when it expires or when you tap Reset). If you start on your computer and open the checklist on your phone, it will start fresh. Plan to use a single device per flight.
+- **No automatic sync** — saved progress and settings live only in the browser on the device you're using (and progress is cleared when it expires or when you tap Reset). Use **Back up & restore** to move them to another device. Plan to use a single device per flight.
 - **No account or login** — by design. Keeps it simple, private, and free.
+- **Backup codes need a recent browser** — codes are compressed using a feature of current browsers (Chrome, Edge, Firefox and Safari from roughly 2023 on, including iOS/iPadOS 16.4 and newer). On older browsers a backup still works but the code is longer.
 - **Weather defaults to your current GPS location** — to check a different flight site, tap **Change** on the weather panel and search for a town, ZIP code, or coordinates. Place search works best for towns and cities; for a specific job site, use a nearby town or enter coordinates. Cloud ceiling comes from the nearest METAR station, which can be several miles from the site (the station is shown on the panel). The **Radar — NWS** button opens the national map.
 - **Cloud ceiling depends on the METAR proxy** — if it is unreachable the Cloud Ceiling tile shows "No METAR data" and everything else still works.
 - **Altitude and speed limits** — defaults shown are US FAA limits, and cloud ceiling depends on a nearby airport's weather report, which can be missing in areas with few airports. Always verify the regulations for your country and airspace class, and use Customize to hide or replace items that don't match.
+- **Items move within their section** — you can reorder an item inside its section, but not move it to a different section.
 
 ---
 
 ## Customization
 
-This is a single HTML file — everything is in `index.html`. You can:
+This is a single HTML file — everything is in `index.html`. Without touching any code you can hide, add, reorder and rename from **⚙ Settings & customize**. If you fork it, you can also:
 
 - Add your own company name and branding in the header
-- Add or remove checklist items to match your operation
+- Change the default checklist items to match your operation
 - Add additional tabs for mission types specific to your work
 - Adjust the weather color thresholds to match your personal minimums
 

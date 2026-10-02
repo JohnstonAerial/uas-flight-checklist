@@ -72,6 +72,12 @@
   .tabs { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .tabs::-webkit-scrollbar { display: none; }
   .tab { flex: 1 0 auto; white-space: nowrap; padding: 10px 8px; text-align: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.65); border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; letter-spacing: 0.2px; }
+  .tab.tab-hidden { display: none; }
+  .tab-edit { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+  .tab-edit input { font-family: inherit; font-size: 16px; width: 11em; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px; }
+  .tab-edit .cust-btn:disabled { opacity: 0.4; cursor: default; }
+  .tab-note { margin-top: 4px; }
+  .tab-hidden-list { margin-top: 6px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
   .tab.active { color: white; border-bottom-color: white; }
 
   .progress-bar-wrap { background: rgba(0,0,0,0.15); height: 3px; }
@@ -164,6 +170,43 @@
   .add-row button { font-family: inherit; font-size: 13px; color: #fff; background: var(--blue-mid); border: none; border-radius: 10px; padding: 8px 14px; cursor: pointer; }
   .cust-row { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; text-align: center; font-size: 11px; color: var(--text-light); }
   .cust-btn { font-family: inherit; font-size: 12px; color: var(--blue-mid); background: none; border: 1px solid var(--border); border-radius: 14px; padding: 4px 12px; cursor: pointer; }
+  .cust-btn.primary { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); font-weight: 600; }
+  .panel.editing .cust-toggle, .panel.editing .sec-all { display: none; }
+  .cust-actions { display: flex; justify-content: center; gap: 16px; margin-top: 12px; }
+  .settings { margin-bottom: 12px; }
+  .settings-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; font-family: inherit; font-size: 13px; color: var(--text-muted); background: var(--card); border: none; border-radius: 14px; padding: 11px 16px; box-shadow: var(--shadow); cursor: pointer; }
+  .settings-toggle .chev { transition: transform 0.2s; }
+  .settings.open .settings-toggle .chev { transform: rotate(180deg); }
+  .settings-body { display: none; background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 12px 4px 6px; margin-top: 8px; }
+  .settings.open .settings-body, .panel.editing .settings-body { display: block; }
+  .panel.editing .settings-toggle { display: none; }
+  .settings-note { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; text-align: center; font-size: 11px; color: var(--text-light); line-height: 1.4; }
+  .pc-btns { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+  .pc-btns .reset-inline, .pc-btns .sec-all { width: 100%; text-align: center; border-radius: 20px; padding: 6px 12px; font-size: 12px; margin: 0; color: var(--text-muted); background: transparent; border: 1px solid var(--border); font-family: inherit; cursor: pointer; }
+  .saved-note { font-size: 11px; color: var(--text-light); text-align: center; padding: 0 16px 8px; }
+  .edit-bar { display: none; position: fixed; left: 0; right: 0; bottom: 0; max-width: 600px; margin: 0 auto; z-index: 50; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--border); border-bottom: none; border-radius: 14px 14px 0 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.18); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)) 16px; font-size: 13px; font-weight: 600; color: var(--text); }
+  .panel.editing { padding-bottom: 76px; }
+  .panel.editing .edit-bar { display: flex; }
+  .cust-tip { margin-top: 8px; padding: 8px 10px; background: var(--section-bg); border-radius: 10px; line-height: 1.4; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 200; max-width: 90%; background: var(--green); color: #fff; font-size: 13px; font-weight: 600; padding: 10px 16px; border-radius: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); text-align: center; transition: opacity 0.4s; }
+  .toast.gone { opacity: 0; }
+  .xfer { max-width: 600px; margin: 14px auto 6px; padding: 12px 16px 4px; border-top: 1px solid var(--border); text-align: center; font-size: 11px; color: var(--text-light); }
+  .xfer-title { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 2px; }
+  .xfer-sub { margin-bottom: 8px; line-height: 1.4; }
+  .xfer-incl { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 4px; cursor: pointer; }
+  .xfer-btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 6px 0; }
+  .xfer-box { width: 100%; font-family: ui-monospace, Menlo, monospace; font-size: 16px; color: var(--text); background: var(--section-bg); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; margin-top: 6px; resize: vertical; }
+  .xfer-msg { min-height: 14px; margin-top: 6px; line-height: 1.4; color: var(--green); }
+  .xfer-msg.bad { color: var(--red, #c0392b); }
+  .item-grip { display: none; flex-shrink: 0; align-self: center; width: 28px; height: 32px; margin: -4px 0 -4px -6px; align-items: center; justify-content: center; font-size: 22px; line-height: 1; color: var(--text-light); cursor: grab; touch-action: none; -webkit-user-select: none; user-select: none; }
+  .panel.editing .item-grip { display: flex; }
+  .panel.editing .check-circle { display: none; }
+  .section-card.drag-on { overflow: visible; }
+  .item.dragging { position: relative; z-index: 30; background: var(--card); box-shadow: 0 6px 18px rgba(0,0,0,0.3); border-radius: 10px; transition: none; }
+  .panel.editing .item.dragging, .panel.editing .item.dragging:active { background: var(--card); }
+  .item.dragging .item-grip { cursor: grabbing; color: var(--blue-mid); }
+  .item.drop-before { box-shadow: inset 0 3px 0 var(--blue-mid); }
+  .item.drop-end { box-shadow: inset 0 -3px 0 var(--blue-mid); }
   .cust-help { display: none; margin-top: 6px; line-height: 1.4; }
   .panel.editing .cust-help { display: block; }
   .section-header { display: flex; align-items: center; gap: 8px; cursor: pointer; -webkit-user-select: none; user-select: none; }
@@ -264,7 +307,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v2.8</p>
+      <p>Free Drone Preflight Checklist · v3.0</p>
     </div>
   </div>
   <div class="tabs">
@@ -318,7 +361,7 @@
       <div class="progress-track"><div class="progress-track-fill" id="bar-zeitview" style="width:0%"></div></div>
     </div>
   </div>
-  <div class="complete-banner" id="done-zeitview">✓ All checks complete — cleared for flight</div>
+  <div class="complete-banner" id="done-zeitview">✓ Pre-flight checks complete — ready to fly</div>
 
   <div class="section">
     <div class="section-header">Before leaving home</div>
@@ -418,7 +461,7 @@
       <div class="progress-track"><div class="progress-track-fill" id="bar-mapping" style="width:0%"></div></div>
     </div>
   </div>
-  <div class="complete-banner" id="done-mapping">✓ All checks complete — cleared for flight</div>
+  <div class="complete-banner" id="done-mapping">✓ Pre-flight checks complete — ready to fly</div>
 
   <div class="section">
     <div class="section-header">Mission planning (before leaving home)</div>
@@ -522,7 +565,7 @@
       <div class="progress-track"><div class="progress-track-fill" id="bar-general" style="width:0%"></div></div>
     </div>
   </div>
-  <div class="complete-banner" id="done-general">✓ All checks complete — cleared for flight</div>
+  <div class="complete-banner" id="done-general">✓ Pre-flight checks complete — ready to fly</div>
 
   <div class="section">
     <div class="section-header">Before leaving home</div>
@@ -621,6 +664,8 @@ function progTtl() { return keepHours() * 60 * 60 * 1000; }
 function setKeepHours(v) {
   try { localStorage.setItem(KEEP_KEY, String(Number(v))); } catch (e) {}
   document.querySelectorAll('.keep-hours').forEach(sel => { sel.value = String(keepHours()); });
+  const s0 = document.querySelector('.keep-hours');
+  if (s0) document.querySelectorAll('.saved-hours').forEach(el => { el.textContent = s0.options[s0.selectedIndex].text; });
 }
 let restoredAt = null;
 
@@ -713,8 +758,19 @@ function updateProgress(panel) {
     (flagged ? ' · <span class="attn-count">⚠ ' + flagged + ' need' + (flagged === 1 ? 's' : '') + ' attention</span>' : '');
   document.getElementById('bar-' + panel).style.width = pct + '%';
   document.getElementById('header-bar').style.width = pct + '%';
+  // Two stages: ready to fly once every section before "During flight" is checked; flight complete at 100%
   const done = document.getElementById('done-' + panel);
-  done.classList.toggle('show', checked === total && total > 0);
+  const secs = [...p.querySelectorAll('.section')];
+  const fi = secs.findIndex(sc => /^during flight/i.test(sc.querySelector('.section-header').firstChild.textContent.trim()));
+  let preTotal = 0, preLeft = 0;
+  if (fi > 0) secs.slice(0, fi).forEach(sc => {
+    preTotal += sc.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').length;
+    preLeft += sc.querySelectorAll('.item:not(.checked):not(.is-hidden):not(.region-hidden)').length;
+  });
+  const allDone = total > 0 && checked === total;
+  const preReady = !allDone && preTotal > 0 && preLeft === 0;
+  done.textContent = allDone ? '✓ Flight complete — all checks done' : '✓ Pre-flight checks complete — ready to fly';
+  done.classList.toggle('show', allDone || preReady);
   updateSectionMeta(p);
 }
 
@@ -738,6 +794,16 @@ function updateProgress(panel) {
 
 function showPanel(panel, tab) {
   current = panel;
+  // while customizing, switching tabs keeps Settings and editing open on the new tab
+  const prevP = document.querySelector('.panel.active'), nextP = document.getElementById('panel-' + panel);
+  if (prevP && prevP !== nextP) {
+    const pst = prevP.querySelector('.settings'), nst = nextP.querySelector('.settings');
+    const wasEditing = prevP.classList.contains('editing'), wasOpen = !!(pst && pst.classList.contains('open'));
+    prevP.classList.remove('editing'); if (pst) pst.classList.remove('open');
+    if (wasEditing) nextP.classList.add('editing');
+    if (nst && wasOpen) nst.classList.add('open');
+    if (wasEditing || wasOpen) { const t = nextP.querySelector('.settings-toggle'); if (t) t.setAttribute('aria-expanded', 'true'); if (typeof refreshCust === 'function') refreshCust(nextP); }
+  }
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + panel).classList.add('active');
@@ -829,6 +895,80 @@ function baseKeyMap(panelEl) {            // stable key per built-in item: its t
   return map;
 }
 const sectionTitleOf = (secEl) => secEl.querySelector('.section-header').firstChild.textContent.trim();
+// ── Reorder items within a section: drag the ≡ handle while customizing ──
+function orderKeys(card) {
+  const seen = {};
+  return [...card.querySelectorAll(':scope > .item')].map(it => { const t = itemTextOf(it); seen[t] = (seen[t] || 0) + 1; return [t + '#' + seen[t], it]; });
+}
+function applyOrder(panelEl) {
+  const c = cust[panelEl.id];
+  if (!c || !c.order) return;
+  panelEl.querySelectorAll('.section').forEach(sec => {
+    const want = c.order[sectionTitleOf(sec)];
+    if (!want || !want.length) return;
+    const card = sec.querySelector('.section-card'), pairs = orderKeys(card), byKey = new Map(pairs);
+    const placed = new Set(), out = [];
+    want.forEach(k => { if (byKey.has(k) && !placed.has(k)) { out.push(byKey.get(k)); placed.add(k); } });
+    pairs.forEach(([k, it]) => { if (!placed.has(k)) out.push(it); });
+    out.forEach(it => card.appendChild(it));
+  });
+}
+function saveOrder(panelEl, sec) {
+  const c = custFor(panelEl.id);
+  c.order = c.order || {};
+  c.order[sectionTitleOf(sec)] = orderKeys(sec.querySelector('.section-card')).map(p => p[0]);
+  custSave(); saveProgress();
+}
+let drag = null;
+function gripDown(e) {
+  if (drag || (e.pointerType === 'mouse' && e.button !== 0)) return;
+  const it = e.currentTarget.closest('.item'), card = it.parentElement;
+  e.preventDefault();
+  drag = { it, card, startY: e.clientY, curY: e.clientY, startScroll: window.scrollY, target: null, end: false, raf: 0 };
+  it.classList.add('dragging'); card.classList.add('drag-on');
+  document.addEventListener('pointermove', gripMove, { passive: false });
+  document.addEventListener('pointerup', gripUp);
+  document.addEventListener('pointercancel', gripCancel);
+  gripTick();
+}
+function gripMove(e) { if (!drag) return; e.preventDefault(); drag.curY = e.clientY; if (Math.abs(drag.curY - drag.startY) > 8) drag.moved = true; gripUpdate(); }
+function gripUpdate() {
+  const d = drag; if (!d) return;
+  d.it.style.transform = 'translateY(' + (d.curY - d.startY + (window.scrollY - d.startScroll)) + 'px)';
+  const others = [...d.card.querySelectorAll(':scope > .item')].filter(x => x !== d.it);
+  others.forEach(x => x.classList.remove('drop-before', 'drop-end'));
+  d.target = others.find(x => { const r = x.getBoundingClientRect(); return r.top + r.height / 2 > d.curY; }) || null;
+  d.end = !d.target && others.length > 0;
+  if (d.target) d.target.classList.add('drop-before'); else if (d.end) others[others.length - 1].classList.add('drop-end');
+}
+function gripTick() {
+  const d = drag; if (!d) return;
+  const vh = window.innerHeight, top = 80, bottom = vh - 120;
+  let v = 0;
+  if (!d.moved) { d.raf = requestAnimationFrame(gripTick); return; }
+  if (d.curY < top) v = -Math.min(12, (top - d.curY) / 5 + 2);
+  else if (d.curY > bottom) v = Math.min(12, (d.curY - bottom) / 5 + 2);
+  if (v) { window.scrollBy(0, v); gripUpdate(); }
+  d.raf = requestAnimationFrame(gripTick);
+}
+function gripEnd() {
+  const d = drag; if (!d) return null;
+  cancelAnimationFrame(d.raf);
+  document.removeEventListener('pointermove', gripMove);
+  document.removeEventListener('pointerup', gripUp);
+  document.removeEventListener('pointercancel', gripCancel);
+  d.it.classList.remove('dragging'); d.it.style.transform = ''; d.card.classList.remove('drag-on');
+  d.card.querySelectorAll(':scope > .item').forEach(x => x.classList.remove('drop-before', 'drop-end'));
+  drag = null; return d;
+}
+function gripUp() {
+  const d = gripEnd(); if (!d) return;
+  if (d.target) { if (d.target !== d.it.nextElementSibling) d.card.insertBefore(d.it, d.target); }
+  else if (d.end) d.card.appendChild(d.it);
+  saveOrder(d.it.closest('.panel'), d.it.closest('.section'));
+}
+function gripCancel() { gripEnd(); }
+
 function makeItem(text) {
   const it = document.createElement('div');
   it.className = 'item custom';
@@ -839,6 +979,12 @@ function makeItem(text) {
   return it;
 }
 function addItemButton(it) {
+  if (!it.querySelector('.item-grip')) {
+    const g = document.createElement('div');
+    g.className = 'item-grip'; g.setAttribute('role', 'button'); g.setAttribute('aria-label', 'Drag to move this item');
+    g.setAttribute('onpointerdown', 'gripDown(event)'); g.textContent = '≡';
+    it.insertBefore(g, it.firstChild);
+  }
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'item-x';
   b.setAttribute('onclick', 'itemX(event, this)');
@@ -891,21 +1037,29 @@ function addCustomItem(e, form) {
 function toggleEdit(btn) {
   const panelEl = btn.closest('.panel');
   const on = panelEl.classList.toggle('editing');
-  btn.textContent = on ? '✓ Done' : '✎ Customize list';
+  if (!on) {
+    const st = panelEl.querySelector('.settings');
+    if (st) { st.classList.remove('open'); const t = st.querySelector('.settings-toggle'); if (t) t.setAttribute('aria-expanded', 'false'); }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   refreshCust(panelEl);
 }
 function restoreDefaults(btn) {
-  const panelEl = btn.closest('.panel'), c = cust[panelEl.id];
-  if (!c || (!c.hidden.length && !c.added.length)) return;
-  if (!confirm('Restore this tab to the original list? Hidden items come back and the items you added are removed.')) return;
+  const panelEl = btn.closest('.panel'), c = cust[panelEl.id], pid = panelEl.id.replace('panel-', '');
+  const hasItems = c && ((c.hidden || []).length || (c.added || []).length || (c.order && Object.keys(c.order).length)), hasName = !!tabsCfg.names[pid];
+  if (!hasItems && !hasName) return;
+  if (!confirm('Restore this tab to the original list? Hidden items come back, the items you added are removed, the order is reset and the tab name is reset.')) return;
   panelEl.querySelectorAll('.item.custom').forEach(i => i.remove());
+  panelEl.querySelectorAll('.section-card').forEach(card => [...card.querySelectorAll(':scope > .item')].sort((a, b) => a.dataset.i - b.dataset.i).forEach(it => card.appendChild(it)));
   panelEl.querySelectorAll('.item.is-hidden').forEach(i => i.classList.remove('is-hidden'));
   delete cust[panelEl.id];
+  if (hasName) { delete tabsCfg.names[pid]; tabsSave(); refreshTabs(); }
   custSave(); refreshCust(panelEl); saveProgress();
 }
 
 document.querySelectorAll('.panel').forEach(panelEl => {
   const c = cust[panelEl.id];
+  panelEl.querySelectorAll('.section-card').forEach(card => card.querySelectorAll(':scope > .item').forEach((it, i) => { it.dataset.i = i; }));
   panelEl.querySelectorAll('.item').forEach(addItemButton);
   panelEl.querySelectorAll('.section').forEach(sec => {
     const form = document.createElement('form');
@@ -922,12 +1076,18 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     });
     const keys = baseKeyMap(panelEl);
     keys.forEach((k, it) => { if ((c.hidden || []).includes(k)) it.classList.add('is-hidden'); });
+    applyOrder(panelEl);
   }
   const row = document.createElement('div');
   row.className = 'cust-row';
-  row.innerHTML = '<button type="button" class="cust-btn" onclick="toggleEdit(this)">✎ Customize list</button>' +
+  row.innerHTML = '<button type="button" class="cust-btn cust-toggle" onclick="toggleEdit(this)">✎ Customize list</button>' +
     '<div class="cust-help">Tap <b>Hide</b> on items that don\'t apply where you fly (for example, rules or services your country doesn\'t have), or add your own at the bottom of any section. Saved on this device only. ' +
-    '<button type="button" class="cust-btn" onclick="restoreDefaults(this)">Restore original list</button></div>';
+    '<div class="cust-tip">💡 Drag the <b>≡</b> handle to move an item up or down within its section. To customize another tab, just tap it at the top — Settings stays open. Press <b>Done</b> when you\'re finished.</div>' +
+    '<div class="tab-edit"><label>Tab name <input class="tab-name" type="text" maxlength="24" autocomplete="off" oninput="saveTabName(this)" onblur="refreshTabs()"></label>' +
+    '<button type="button" class="cust-btn tab-hide-btn" onclick="hideTab(this)">Hide this tab</button></div>' +
+    '<div class="tab-note">Renaming changes the tab\'s name only. Use Hide and Add to change what\'s in it.</div>' +
+    '<div class="tab-hidden-list"></div>' +
+    '<div class="cust-actions"><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button><button type="button" class="cust-btn" onclick="restoreDefaults(this)">Restore original list</button></div></div>';
   panelEl.querySelector('.keep-row').after(row);
   refreshCust(panelEl);
 });
@@ -954,8 +1114,8 @@ function updateSectionMeta(panelEl) {
 function syncAllButton(panelEl) {
   const b = panelEl.querySelector('.sec-all');
   if (!b) return;
-  const anyOpen = [...panelEl.querySelectorAll('.section')].some(s => !s.classList.contains('collapsed'));
-  b.textContent = anyOpen ? 'Collapse all' : 'Expand all';
+  const anyCollapsed = [...panelEl.querySelectorAll('.section:not(.all-hidden)')].some(s => s.classList.contains('collapsed'));
+  b.textContent = anyCollapsed ? 'Expand all' : 'Collapse all';
 }
 function setCollapsed(sec, on, save) {
   sec.classList.toggle('collapsed', on);
@@ -974,8 +1134,8 @@ function toggleSection(head) {
 }
 function toggleAllSections(btn) {
   const panelEl = btn.closest('.panel'), secs = [...panelEl.querySelectorAll('.section')];
-  const anyOpen = secs.some(s => !s.classList.contains('collapsed'));
-  secs.forEach(s => setCollapsed(s, anyOpen, false));
+  const anyCollapsed = secs.filter(s => !s.classList.contains('all-hidden')).some(s => s.classList.contains('collapsed'));
+  secs.forEach(s => setCollapsed(s, !anyCollapsed, false));
   collapseSave(); syncAllButton(panelEl);
 }
 
@@ -1016,6 +1176,222 @@ if (!region) {
   document.getElementById('wx-panel').before(card);
 }
 
+
+// ── Tabs: rename or hide (saved on this device) ──
+const TABS_KEY = 'uasTabs';
+let tabsCfg = (function () {
+  try { const v = JSON.parse(localStorage.getItem(TABS_KEY)); return { names: (v && v.names) || {}, hidden: (v && v.hidden) || [] }; }
+  catch (e) { return { names: {}, hidden: [] }; }
+})();
+function tabsSave() { try { localStorage.setItem(TABS_KEY, JSON.stringify(tabsCfg)); } catch (e) {} }
+const tabEls = [...document.querySelectorAll('.tabs .tab')];
+tabEls.forEach(t => {
+  const txt = t.textContent.trim(), m = txt.match(/^(\S+)\s+(.+)$/), id = (t.getAttribute('onclick') || '').match(/showPanel\('([^']+)'/);
+  t.dataset.pid = id ? id[1] : '';
+  if (m && !/[A-Za-z0-9]/.test(m[1])) { t.dataset.emoji = m[1]; t.dataset.name = m[2]; } else { t.dataset.emoji = ''; t.dataset.name = txt; }
+});
+const tabName = (t) => tabsCfg.names[t.dataset.pid] || t.dataset.name;
+function refreshTabs() {
+  tabEls.forEach(t => {
+    t.textContent = (t.dataset.emoji ? t.dataset.emoji + ' ' : '') + tabName(t);
+    t.classList.toggle('tab-hidden', tabsCfg.hidden.includes(t.dataset.pid));
+  });
+  const visible = tabEls.filter(t => !t.classList.contains('tab-hidden'));
+  document.querySelectorAll('.panel').forEach(p => {
+    const t = tabEls.find(x => x.dataset.pid === p.id.replace('panel-', ''));
+    const inp = p.querySelector('.tab-name');
+    if (inp && t && document.activeElement !== inp) inp.value = tabName(t);
+    const hb = p.querySelector('.tab-hide-btn'); if (hb) hb.disabled = visible.length <= 1;
+    const list = p.querySelector('.tab-hidden-list');
+    if (list) {
+      list.innerHTML = '';
+      tabEls.filter(x => x.classList.contains('tab-hidden')).forEach(x => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'cust-btn'; b.textContent = 'Show tab: ' + tabName(x);
+        b.onclick = () => showTab(x.dataset.pid);
+        list.appendChild(b);
+      });
+    }
+  });
+}
+function saveTabName(inp) {
+  const pid = inp.closest('.panel').id.replace('panel-', ''), v = inp.value.trim().slice(0, 24);
+  if (v) tabsCfg.names[pid] = v; else delete tabsCfg.names[pid];
+  tabsSave(); refreshTabs();
+}
+function hideTab(btn) {
+  const panelEl = btn.closest('.panel'), pid = panelEl.id.replace('panel-', '');
+  if (tabEls.filter(t => !t.classList.contains('tab-hidden')).length <= 1) return;
+  if (!tabsCfg.hidden.includes(pid)) tabsCfg.hidden.push(pid);
+  tabsSave();
+  refreshTabs();
+  const next = tabEls.find(t => !t.classList.contains('tab-hidden'));
+  showPanel(next.dataset.pid, next);
+}
+function showTab(pid) {
+  tabsCfg.hidden = tabsCfg.hidden.filter(x => x !== pid);
+  tabsSave(); refreshTabs();
+}
+refreshTabs();
+(function () {
+  const active = tabEls.find(t => t.classList.contains('active'));
+  if (active && active.classList.contains('tab-hidden')) {
+    const next = tabEls.find(t => !t.classList.contains('tab-hidden'));
+    if (next) showPanel(next.dataset.pid, next);
+  }
+})();
+
+// ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
+const XFER_PROGRESS = 'uasChecklistProgress';
+const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', XFER_PROGRESS];
+function makeXfer() {
+  const d = document.createElement('div');
+  d.className = 'xfer';
+  d.innerHTML = '<div class="xfer-title">💾 Back up &amp; restore</div>' +
+    '<div class="xfer-sub">Save your settings and progress, or move them to another phone, tablet or browser.</div>' +
+    '<label class="xfer-incl"><input type="checkbox" class="xfer-prog" checked> Include current progress</label>' +
+    '<div class="xfer-btns"><button type="button" class="cust-btn" onclick="xferCopy(this)">Copy code</button><button type="button" class="cust-btn" onclick="xferSave(this)">Save file</button></div>' +
+    '<textarea class="xfer-box" rows="2" placeholder="On the other device, paste the code here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>' +
+    '<div class="xfer-btns"><button type="button" class="cust-btn primary" onclick="xferRestore(this)">Restore from code</button><button type="button" class="cust-btn" onclick="xferFile(this)">Restore from file…</button>' +
+    '<input type="file" class="xfer-file" accept=".json,application/json,text/plain" hidden onchange="xferFileChosen(this)"></div>' +
+    '<div class="xfer-msg" role="status"></div>';
+  return d;
+}
+function xferSnapshot(withProgress) {
+  const data = {};
+  XFER_KEYS.forEach(k => {
+    if (k === XFER_PROGRESS && !withProgress) return;
+    let v = null; try { v = localStorage.getItem(k); } catch (e) {}
+    if (v !== null) data[k] = v;
+  });
+  return { app: 'uas-checklist', v: 1, at: Date.now(), data };
+}
+function b64enc(bytes) { let s = ''; bytes.forEach(b => { s += String.fromCharCode(b); }); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+function b64dec(str) { str = str.replace(/-/g, '+').replace(/_/g, '/'); while (str.length % 4) str += '='; return Uint8Array.from(atob(str), c => c.charCodeAt(0)); }
+async function xferEncode(obj) {
+  const bytes = new TextEncoder().encode(JSON.stringify(obj));
+  if (window.CompressionStream) {
+    try {
+      const out = new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw'))).arrayBuffer());
+      return 'UAS1.' + b64enc(out);
+    } catch (e) {}
+  }
+  return 'UAS0.' + b64enc(bytes);
+}
+async function xferDecode(text) {
+  text = String(text || '').trim();
+  if (text[0] === '{') return JSON.parse(text);                       // a saved file
+  const m = text.replace(/\s+/g, '').match(/UAS([01])\.([A-Za-z0-9_-]+)/);
+  if (!m) throw new Error('not a code');
+  let bytes = b64dec(m[2]);
+  if (m[1] === '1') {
+    if (!window.DecompressionStream) { const err = new Error('This browser can\'t read that code. Use Save file instead.'); err.friendly = true; throw err; }
+    bytes = new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());
+  }
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+function xferMsg(el, text, bad) {
+  const m = el.closest('.xfer').querySelector('.xfer-msg');
+  m.textContent = text; m.className = 'xfer-msg' + (bad ? ' bad' : '');
+}
+async function xferCopy(btn) {
+  const box = btn.closest('.xfer'), codeP = xferEncode(xferSnapshot(box.querySelector('.xfer-prog').checked));
+  const ok = '✓ Code copied. On your other device, open Settings and paste it into the box.';
+  try {
+    if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+      await navigator.clipboard.write([new ClipboardItem({ 'text/plain': codeP.then(t => new Blob([t], { type: 'text/plain' })) })]);
+      xferMsg(btn, ok); return;
+    }
+  } catch (e) {}
+  const code = await codeP;
+  try { await navigator.clipboard.writeText(code); xferMsg(btn, ok); return; } catch (e) {}
+  const ta = box.querySelector('.xfer-box'); ta.value = code; ta.focus(); ta.select();
+  xferMsg(btn, 'Couldn\'t copy automatically. Touch and hold the code in the box, then choose Copy.', true);
+}
+async function xferSave(btn) {
+  const json = JSON.stringify(xferSnapshot(btn.closest('.xfer').querySelector('.xfer-prog').checked));
+  const name = 'uas-checklist-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+  const file = new File([json], name, { type: 'application/json' });
+  try {
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: 'UAS checklist backup' });
+      xferMsg(btn, '✓ Backup ready. Save it or send it to your other device.'); return;
+    }
+  } catch (e) { if (e && e.name === 'AbortError') return; }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  xferMsg(btn, '✓ File saved to your downloads.');
+}
+function xferApply(el, obj) {
+  if (!obj || obj.app !== 'uas-checklist' || !obj.data || typeof obj.data !== 'object') { xferMsg(el, 'That isn\'t a checklist backup.', true); return; }
+  const data = {};
+  XFER_KEYS.forEach(k => { const v = obj.data[k]; if (typeof v === 'string' && v.length < 400000) data[k] = v; });
+  let note = '';
+  if (XFER_PROGRESS in data) {
+    let ok = false;
+    try {
+      const pr = JSON.parse(data[XFER_PROGRESS]), hrs = KEEP_CHOICES.includes(Number(data.uasProgressHours)) ? Number(data.uasProgressHours) : keepHours();
+      ok = !!pr.savedAt && Date.now() - pr.savedAt <= hrs * 3600000;
+    } catch (e) {}
+    if (!ok) { delete data[XFER_PROGRESS]; note = ' The progress in this backup has already expired, so it will be left out.'; }
+  }
+  const withProg = XFER_PROGRESS in data;
+  const when = obj.at ? new Date(obj.at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : 'an earlier time';
+  if (!confirm('Replace this device\'s settings' + (withProg ? ' and progress' : '') + ' with the backup from ' + when + '?' + note)) return;
+  XFER_KEYS.forEach(k => {
+    if (k === XFER_PROGRESS && !withProg) return;               // no progress in the backup: keep what is here
+    try { if (k in data) localStorage.setItem(k, data[k]); else localStorage.removeItem(k); } catch (e) {}
+  });
+  try { sessionStorage.setItem('uasRestored', withProg ? 'progress' : 'settings'); } catch (e) {}
+  location.replace(location.pathname + location.search);       // fresh load, starts at the top
+}
+async function xferRestore(btn) {
+  const box = btn.closest('.xfer').querySelector('.xfer-box');
+  if (!box.value.trim()) { xferMsg(btn, 'Paste a code into the box first.', true); return; }
+  let obj;
+  try { obj = await xferDecode(box.value); }
+  catch (e) { xferMsg(btn, e && e.friendly ? e.message : 'That code didn\'t work. Check that you copied all of it.', true); return; }
+  xferApply(btn, obj);
+}
+function xferFile(btn) { btn.closest('.xfer').querySelector('.xfer-file').click(); }
+async function xferFileChosen(inp) {
+  const f = inp.files && inp.files[0]; if (!f) return;
+  let obj;
+  try { obj = await xferDecode(await f.text()); } catch (e) { inp.value = ''; xferMsg(inp, 'That file didn\'t work.', true); return; }
+  inp.value = '';
+  xferApply(inp, obj);
+}
+
+// ── Layout: collapsed Settings panel, progress + Collapse all next to the list, sticky Editing bar ──
+document.querySelectorAll('.panel').forEach(panelEl => {
+  const card = panelEl.querySelector('.progress-card');
+  const keep = panelEl.querySelector('.keep-row:not(.region-row)');
+  const reg = panelEl.querySelector('.region-row');
+  const cust = panelEl.querySelector('.cust-row');
+  keep.querySelector('span').textContent = '💾 Clear saved progress after';
+  const wrap = document.createElement('div'); wrap.className = 'settings';
+  const tg = document.createElement('button'); tg.type = 'button'; tg.className = 'settings-toggle'; tg.setAttribute('aria-expanded', 'false');
+  tg.innerHTML = '<span>⚙ Settings &amp; customize</span><span class="chev">▾</span>';
+  tg.onclick = () => { const o = wrap.classList.toggle('open'); tg.setAttribute('aria-expanded', String(o)); };
+  const body = document.createElement('div'); body.className = 'settings-body';
+  const note = document.createElement('div'); note.className = 'settings-note';
+  note.textContent = 'Your progress and these settings are saved on this device only. They don\'t sync by themselves, and on some devices a Home Screen app keeps its own separate copy. To copy them to another phone, tablet or browser, use Back up & restore below.';
+  body.append(keep, reg, note, cust, makeXfer());
+  wrap.append(tg, body);
+  card.before(wrap);
+  const reset = card.querySelector('.reset-inline'), all = cust.querySelector('.sec-all');
+  const col = document.createElement('div'); col.className = 'pc-btns';
+  card.appendChild(col); col.appendChild(reset); if (all) col.appendChild(all);
+  const tip = panelEl.querySelector('.flag-hint');
+  const sn = document.createElement('div'); sn.className = 'saved-note';
+  sn.innerHTML = '💾 Saved on this device only · clears after <span class="saved-hours"></span>';
+  tip.after(sn);
+  const bar = document.createElement('div'); bar.className = 'edit-bar';
+  bar.innerHTML = '<span>✎ Editing your list</span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button>';
+  panelEl.prepend(bar);
+});
+setKeepHours(keepHours());
+
 restoreProgress();
 if (restoredAt) {
   document.querySelectorAll('.flag-hint').forEach(h => {
@@ -1024,6 +1400,19 @@ if (restoredAt) {
 }
 
 ['zeitview','mapping','general'].forEach(updateProgress);
+
+// After a restore from a code or file: start at the top with Settings closed, and say so
+(function () {
+  let f = null;
+  try { f = sessionStorage.getItem('uasRestored'); sessionStorage.removeItem('uasRestored'); } catch (e) {}
+  if (!f) return;
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+  window.scrollTo(0, 0); setTimeout(() => window.scrollTo(0, 0), 150); window.addEventListener('load', () => window.scrollTo(0, 0));
+  const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status');
+  t.textContent = '✓ Restored from your backup' + (f === 'progress' ? ' (settings and progress)' : ' (settings)');
+  document.body.appendChild(t);
+  setTimeout(() => { t.classList.add('gone'); setTimeout(() => t.remove(), 500); }, 5000);
+})();
 </script>
 
 <script>
