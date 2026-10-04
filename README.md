@@ -267,3 +267,11 @@ Originally built by **Johnston Aerial** — FAA-certified commercial drone pilot
 ## License
 
 MIT License — free to use, modify, and share. A credit back to Johnston Aerial is appreciated but not required.
+
+---
+
+## Support this project
+
+This checklist is free. If it's saved you a forgotten step or a bad-weather launch, you can [buy me a coffee ☕](https://buymeacoffee.com/JohnstonAerial). It helps cover the time I put into keeping it accurate. Thank you, and fly safe.
+
+— Jim, Johnston Aerial
