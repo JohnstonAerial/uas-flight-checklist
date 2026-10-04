@@ -23,6 +23,21 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.1
+
+Version 3.1 makes the weather card much more useful on a rainy or low-cloud day:
+
+- **Cloud ceiling from the lowest nearby station** — it checks every airport weather report within 30 miles and shows the lowest ceiling (with the station, distance and age), the cautious choice. A **Lowest cloud nearby** line helps with the cloud-clearance rule
+- **Precipitation card** — combines live **radar** (RainViewer, free), **airport weather reports** and the forecast. Headlines include *Precip. nearby*, *Precip. likely*, the airport's own wording (for example *Light rain*), and *Rain possible* when only the forecast thinks so — with a note when radar doesn't see it
+- **Look-ahead lines** — *Rain likely ~4 PM*, *Best window ~8 PM – 2 AM*, *No clear window next 12 hrs* and *Storms possible*, shown only when there is something to say
+- **Humidity card** with dew point and a fog / lens-fogging warning
+- **Radar — NWS button opens on your location**
+- **Source footer** — lists where each reading came from (forecast, airport station, radar time)
+- **Weak signal friendly** — if a refresh fails, the last good reading stays on screen with a short note, and the app retries once
+- Guide only: always check your own weather sources and look at the sky before you fly
+
+---
+
 ## What's new in v3.0
 
 Version 3 is a major update built around making the checklist *yours*:
