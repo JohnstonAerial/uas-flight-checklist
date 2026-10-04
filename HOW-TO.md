@@ -65,7 +65,7 @@ I did the same thing for my other kinds of work: one backup file each for Genera
 The checklist works with no signal. Once you've opened the app **once with a connection**, it stays ready:
 
 - **Works offline:** the whole checklist, ticking items, your own items and tabs, and your saved settings.
-- **Needs a connection:** live weather, radar, KP index, airport reports and place search. If there's no signal, the weather card says so and tells you to tap **Refresh** when you're back online.
+- **Needs a connection:** live weather, radar, KP index, airport reports and place search. With no signal, the weather card shows **📴 No signal** (with your last readings if it has them) and refreshes by itself when you're back online.
 - **Updates:** when you do have a signal, the app loads the newest version. With no signal it opens the last copy it loaded.
 
 **Get it ready before a trip**
@@ -116,6 +116,8 @@ The **⚠️ TFRs** button opens the FAA's list for the whole country, so most o
 2. If nothing is listed, there are no TFRs in your state right now. If you fly near a border, check the neighboring state too.
 3. Tap the **magnifier** icon next to an entry to see it on the map.
 4. Read the **Type** column. VIP, Security, and Hazards (fires, for example) are the ones that matter for flying.
+
+**Easier on a phone: the B4UFLY app.** The FAA's TFR list is built for a desktop screen. The FAA's free **B4UFLY** app puts airspace advisories, including TFRs, on a map around you, which is much easier to read at the launch site. Treat it as a quick look, and still confirm against the FAA's current TFR and NOTAM pages, because an app can lag behind or miss a notice.
 
 ### Reading NOTAMs
 
