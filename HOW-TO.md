@@ -1,10 +1,11 @@
 # How to use the UAS Flight Checklist
 
-Short guides for three things people ask about: saving different setups ("profiles"), using the app with no signal, and using it outside the USA.
+Short guides for four things people ask about: saving different setups ("profiles"), using the app with no signal, using it outside the USA, and checking TFRs and NOTAMs (USA only).
 
 - [Make your own profiles](#make-your-own-profiles)
 - [Use it with no signal](#use-it-with-no-signal)
 - [Use it outside the USA](#use-it-outside-the-usa)
+- [Check TFRs and NOTAMs before you fly (USA only)](#check-tfrs-and-notams-before-you-fly-usa)
 
 ---
 
@@ -100,3 +101,35 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside t
 **US-only buttons:** the **FAA TFRs**, **NOTAMs** and **NWS radar** buttons are hidden outside the USA.
 
 **An honest limit:** this is a guide, not legal advice. The app doesn't know your country's drone rules. Check with your own aviation authority, such as Transport Canada, EASA or your national CAA, before you fly. Please also tell us which items don't fit where you fly. That feedback shapes the next version.
+
+---
+
+## Check TFRs and NOTAMs before you fly (USA)
+
+**This section is for flying in the USA only.** TFRs and NOTAMs here are the FAA's. Outside the USA the **TFRs**, **NOTAMs** and **NWS radar** buttons are hidden, so use your own country's aviation authority and drone airspace app instead (see [Use it outside the USA](#use-it-outside-the-usa)).
+
+### TFRs
+
+The **⚠️ TFRs** button opens the FAA's list for the whole country, so most of what you see will be far from you. To narrow it down:
+
+1. In the left sidebar, open **Please select a state** and pick your state.
+2. If nothing is listed, there are no TFRs in your state right now. If you fly near a border, check the neighboring state too.
+3. Tap the **magnifier** icon next to an entry to see it on the map.
+4. Read the **Type** column. VIP, Security, and Hazards (fires, for example) are the ones that matter for flying.
+
+### Reading NOTAMs
+
+The **NOTAMs** button opens the FAA's NOTAM search. A few tips make it much less noisy:
+
+1. **Search by airport code, not coordinates.** A coordinate search also returns center-wide notices for your whole region (for central NC they show as "ZDC"). Enter the codes of your nearest airports instead, such as the ones on the weather card, plus any airport near your job site.
+2. **Use the free-text search** to find notices aimed at you. Try **UAS** or **drone**.
+3. **Check the dates first.** Look at the start and end times before anything else, since many notices are expired or haven't started yet. Times are in UTC (Zulu), so convert them to your local time. For example, 1200Z is 8 AM Eastern daylight time.
+4. **Know which notices matter to a small drone:**
+   - Anything that starts with **FLIGHT RESTRICTIONS**. That's a TFR.
+   - Anything mentioning **UAS** or **drones**.
+   - **Obstructions** (OBST), such as cranes and towers, near your site.
+   - **Airspace activity** such as parachute jumping, airshows, and military activity.
+   - You can skip runway, taxiway, and navigation-aid notices. They matter to pilots at the airport, not to you.
+5. **Learn the shorthand as you go.** SFC is ground level, AGL is above ground level, WI is within, and NM is nautical miles. "WI 3NM … SFC-400FT AGL" means within 3 nautical miles, from the ground up to 400 feet, which overlaps normal drone altitude.
+
+A NOTAM search doesn't replace your airspace check (LAANC or your drone airspace app). It tells you about temporary changes. Always confirm against the FAA's current pages.
