@@ -25,6 +25,17 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.2.2
+
+The weather card now tells you when your phone has no signal:
+
+- **Offline note on resume** — if you leave the app, lose signal, and come back, the last readings stay on screen with **📴 No signal — weather isn't updating. Showing data from [time].** You no longer have to tap Refresh to find out
+- **Instant message when opened offline** — with no signal at all, you see **📴 No signal — can't load the weather** straight away instead of a long "Loading…"
+- **Refreshes itself when signal returns** — the note clears and the weather updates on its own
+- A weak or flaky connection behaves as before (it retries once, then keeps your last readings with a "Couldn't refresh" note)
+
+---
+
 ## What's new in v3.2.1
 
 A small fix on the weather card (USA setting):

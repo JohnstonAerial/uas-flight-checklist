@@ -325,7 +325,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.2.1</p>
+      <p>Free Drone Preflight Checklist · v3.2.2</p>
     </div>
   </div>
   <div class="tabs" role="tablist" aria-label="Checklists">
@@ -1863,7 +1863,29 @@ async function searchSite(e) {
   }
 }
 
+// Phone reports no connection: keep the last readings (if any) and say so, instead of "Loading…" or silently stale numbers
+function showOffline() {
+  const body = document.getElementById('wx-body');
+  const key = site ? site.lat + ',' + site.lon : 'gps';
+  wxReq++;   // cancel any request still in flight
+  body.style.opacity = '';
+  updateLocLabel();
+  if (goodDraw && goodKey === key && lastWeatherAt) {
+    lastDraw = goodDraw;
+    goodDraw();
+    const t = new Date(lastWeatherAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const msg = '📴 No signal — weather isn\'t updating. Showing data from ' + t + '.';
+    body.insertAdjacentHTML('afterbegin', '<div class="wx-status wx-warn">' + msg + '</div>');
+    srSay('No signal. Weather isn\'t updating. Showing data from ' + t + '.');
+  } else {
+    const msg = '📴 No signal — can\'t load the weather. It will load when you\'re back online.';
+    body.innerHTML = '<div class="wx-status wx-alert">' + msg + '</div>';
+    srSay('No signal. Can\'t load the weather.');
+  }
+}
+
 async function loadWeather() {
+  if (navigator.onLine === false) { showOffline(); return; }
   const body = document.getElementById('wx-body');
   const key = site ? site.lat + ',' + site.lon : 'gps';
   // Keep showing the last good reading (dimmed) while refreshing the same place; otherwise show Loading
@@ -1894,6 +1916,7 @@ async function loadWeather() {
 
 async function renderWeather(lat, lon, attempt = 1) {
   const body = document.getElementById('wx-body');
+  if (navigator.onLine === false) { showOffline(); return; }
   const my = ++wxReq;
   lastDraw = null;
   try {
@@ -2186,6 +2209,7 @@ function refreshAge() {
 
 function refreshIfStale() {
   if (document.visibilityState !== 'visible') return;
+  if (navigator.onLine === false) { showOffline(); return; }
   if (!lastWeatherAt || Date.now() - lastWeatherAt > RETURN_REFRESH_MS) loadWeather();
   else refreshAge();
 }
@@ -2194,6 +2218,8 @@ updateUnitsButton();
 setInterval(refreshAge, 60000);
 document.addEventListener('visibilitychange', refreshIfStale);
 window.addEventListener('pageshow', (e) => { if (e.persisted) refreshIfStale(); });
+window.addEventListener('offline', showOffline);
+window.addEventListener('online', loadWeather);   // signal is back: refresh automatically
 
 
 // Offline support: lets the checklist open with no signal (see sw.js)
