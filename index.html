@@ -325,7 +325,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.2</p>
+      <p>Free Drone Preflight Checklist · v3.2.1</p>
     </div>
   </div>
   <div class="tabs" role="tablist" aria-label="Checklists">
@@ -2021,7 +2021,9 @@ async function renderWeather(lat, lon, attempt = 1) {
       // Amber for fog risk; red only when fog is likely AND visibility is already under 3 statute miles (US minimum)
       const dewClassNow = () => { const visLow = region !== 'intl' && typeof wx.visibility === 'number' && wx.visibility < 4828; return !dewOk ? '' : (dewSpreadF <= 2 && visLow) ? 'wx-alert' : dewSpreadF <= 4 ? 'wx-warn' : 'wx-good'; };
       const dewNote = !dewOk ? 'No data' : dewSpreadF <= 2 ? 'Fog likely' : dewSpreadF <= 4 ? 'Fog or lens fogging possible' : 'Low fog risk';
-      const dewSub = () => !dewOk ? '' : 'Dew point ' + fmtTemp(wx.dewPoint) + ' · ' + dewNote;
+      const dewSub = () => !dewOk ? '' : 'Dew point ' + fmtTemp(wx.dewPoint) + ' · ' + dewNote + (dewClassNow() === 'wx-alert' ? ', visibility under 3 mi' : '');
+      // US only: visibility under 3 statute miles (14 CFR 107.51) is shown in red with a short note
+      const visBelowMin = () => region !== 'intl' && typeof wx.visibility === 'number' && wx.visibility < 4828;
 
       // Precipitation: current conditions + next 6 hours
       const WX_CODES = { 51:'Light drizzle', 53:'Drizzle', 55:'Heavy drizzle', 56:'Freezing drizzle', 57:'Freezing drizzle',
@@ -2112,7 +2114,7 @@ async function renderWeather(lat, lon, attempt = 1) {
           <div class="wx-item">
             <div class="wx-label">Temperature</div>
             <div class="wx-value">${tempOk ? fmtTemp(wx.main.temp) : '—'}</div>
-            <div class="wx-sub">Visibility ${fmtVis(wx.visibility)}</div>
+            <div class="wx-sub">${visBelowMin() ? `<span class="wx-alert"><strong>Visibility ${fmtVis(wx.visibility)}</strong> · ⛔ Below 3 mi minimum</span>` : 'Visibility ' + fmtVis(wx.visibility)}</div>
           </div>
           <div class="wx-item">
             <div class="wx-label">KP Index</div>

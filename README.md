@@ -25,6 +25,15 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.2.1
+
+A small fix on the weather card (USA setting):
+
+- **Low visibility is flagged** — visibility under 3 miles now shows in red with **⛔ Below 3 mi minimum**, so it no longer depends on reading the number
+- **Humidity says why it's red** — when fog is likely *and* visibility is under 3 miles, the line reads *Fog likely, visibility under 3 mi*
+
+---
+
 ## What's new in v3.2
 
 Version 3.2 makes the checklist work in more places and for more people:
