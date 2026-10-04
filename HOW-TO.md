@@ -117,9 +117,13 @@ The **⚠️ TFRs** button opens the FAA's list for the whole country, so most o
 3. Tap the **magnifier** icon next to an entry to see it on the map.
 4. Read the **Type** column. VIP, Security, and Hazards (fires, for example) are the ones that matter for flying.
 
+**Use a bigger view.** Both FAA sites (TFRs and NOTAMs) are built for a computer screen. If a link opens inside the app, open it in your browser instead. On iPhone, tap the compass icon. On Android, look for **Open in browser** (or **Open in Chrome**) in the menu. Then turn your phone sideways, since landscape gives the list and the map much more room.
+
 **Easier on a phone: the B4UFLY app.** The FAA's TFR list is built for a desktop screen. The FAA's free **B4UFLY** app puts airspace advisories, including TFRs, on a map around you, which is much easier to read at the launch site. Treat it as a quick look, and still confirm against the FAA's current TFR and NOTAM pages, because an app can lag behind or miss a notice.
 
 ### Reading NOTAMs
+
+Like the TFR page, the NOTAM search is easier to use in your browser with your phone turned sideways.
 
 The **NOTAMs** button opens the FAA's NOTAM search. A few tips make it much less noisy:
 
