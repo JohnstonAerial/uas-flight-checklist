@@ -4,7 +4,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 **Use it now:** [checklist.johnstonaerial.com](https://checklist.johnstonaerial.com)
 
-📘 **New here?** See the [How-to guides](HOW-TO.md): make your own profiles (with a real timelapse example), use it with no signal, and use it outside the USA.
+📘 **New here?** See the [How-to guides](HOW-TO.md): make your own profiles (with a real timelapse example), use it with no signal, use it outside the USA, and check TFRs and NOTAMs (USA). Inside the app, tap **⚙ Settings & customize → 📘 Help & guides**.
 
 ---
 
@@ -22,6 +22,22 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
     <td></td>
   </tr>
 </table>
+
+---
+
+## What's new in v3.2
+
+Version 3.2 makes the checklist work in more places and for more people:
+
+- **Works with no signal** — open it once with a connection and it opens again with none (for example at a remote site). The checklist, your own items and your settings all work offline; weather says so and refreshes when you're back online. When you do have a signal you always get the newest version
+- **Max altitude line (USA)** — when the cloud ceiling is above 500 ft but below 900 ft, the Cloud Ceiling card adds **Max legal altitude about … ft AGL (500 ft below clouds)**, so you know how high you can actually go. A ceiling of **500 ft or lower is now red: Cannot fly**
+- **Night notice** — after sunset or before sunrise the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules). It follows the clock, even if the weather hasn't refreshed
+- **Best window is smarter** — when it is raining now, it shows the *longest* dry stretch of at least 2 hours in the next 12 hours, not just the next dry hour
+- **Humidity** — fog risk is amber; it turns red only when fog is likely and visibility is already under 3 miles
+- **Far-away flight sites** — if your flight site is in a different time zone, rain, storm and sunrise/sunset times are marked **(site time)**
+- **Clear messages when something fails** — weather, airport reports, KP index, place search and location lookups now time out after 12 seconds with plain wording ("Airport reports unavailable — check another source") instead of showing a misleading number
+- **Easier to read and use** — screen-reader labels and announcements (checklist items, tabs and weather updates), keyboard control, larger touch targets, better text contrast, 16 px form fields so iPhones don't zoom in, a layout that fits very small phones, and pinch-to-zoom is no longer blocked
+- **📘 Help & guides** link in ⚙ Settings, and a new [How-to guides](HOW-TO.md) page: make your own profiles (with a real timelapse example), use it with no signal, use it outside the USA, and check TFRs and NOTAMs
 
 ---
 
@@ -65,7 +81,7 @@ Version 3 is a major update built around making the checklist *yours*:
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
-- **One-tap buttons** for TFRs, NOTAMs, and NWS Radar
+- **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)
 - **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
 - **Works outside the USA** — the first time you open it, choose **USA** or **Outside the USA**. Choosing outside the USA hides the US-only items (TFR and LAANC checks), rewords the NOTAM and airspace items so they aren't tied to US websites, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. Change it any time in **⚙ Settings**
 - **Customize the list** — open **⚙ Settings & customize** and tap **✎ Customize list** to hide items that don't apply where you fly, add your own items to any section, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
@@ -152,7 +168,7 @@ None about you. There are no accounts, no analytics and no tracking in the page.
 To show weather for where you are. If you say no, tap **Change** and search for a town, ZIP code or coordinates instead.
 
 **Does it work offline?**
-The checklist itself keeps working if you lose signal after the page has loaded, and your checks keep saving. The weather needs a connection, and the page doesn't cache itself, so you need a connection to open it fresh.
+Yes. Open it once with a connection and it opens again with none, and your checks keep saving. Live weather, radar, KP index, airport reports and place search need a connection. When you're back online the app loads the newest version. On an iPhone or iPad, open the Home Screen icon once with a signal too, since it keeps its own storage. See [Use it with no signal](HOW-TO.md#use-it-with-no-signal).
 
 **How do I put it on my Home Screen like an app?**
 - **iPhone / iPad (Safari):** tap Share → **Add to Home Screen**

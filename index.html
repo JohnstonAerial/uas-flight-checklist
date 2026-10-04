@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>UAS Flight Checklists</title>
@@ -22,7 +22,8 @@
     --amber-light: #FFF4E0;
     --text: #1a1a1a;
     --text-muted: #666;
-    --text-light: #999;
+    --text-light: #6b6b6b;
+    --link: #185FA5;
     --border: #e0e0e0;
     --bg: #f5f5f5;
     --card: #ffffff;
@@ -35,7 +36,8 @@
     :root {
       --text: #f0f0f0;
       --text-muted: #aaa;
-      --text-light: #777;
+      --text-light: #9a9a9a;
+      --link: #6db3f2;
       --border: #333;
       --bg: #111;
       --card: #1e1e1e;
@@ -46,6 +48,7 @@
       --amber-light: #33240a;
       --shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
+    .wx-alert { color: #ff7b6e; }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; width: 100%; overflow-x: hidden; margin: 0; padding: 0; }
@@ -71,7 +74,7 @@
 
   .tabs { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .tabs::-webkit-scrollbar { display: none; }
-  .tab { flex: 1 0 auto; white-space: nowrap; padding: 10px 8px; text-align: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.65); border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; letter-spacing: 0.2px; }
+  .tab { flex: 1 0 auto; white-space: nowrap; padding: 10px 8px; text-align: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.85); border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; letter-spacing: 0.2px; }
   .tab.tab-hidden { display: none; }
   .tab-edit { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
   .tab-edit input { font-family: inherit; font-size: 16px; width: 11em; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px; }
@@ -169,8 +172,8 @@
   .add-row input { flex: 1; min-width: 0; font-family: inherit; font-size: 16px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; }
   .add-row button { font-family: inherit; font-size: 13px; color: #fff; background: var(--blue-mid); border: none; border-radius: 10px; padding: 8px 14px; cursor: pointer; }
   .cust-row { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; text-align: center; font-size: 11px; color: var(--text-light); }
-  .cust-btn { font-family: inherit; font-size: 12px; color: var(--blue-mid); background: none; border: 1px solid var(--border); border-radius: 14px; padding: 4px 12px; cursor: pointer; }
-  .cust-btn.primary { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); font-weight: 600; }
+  .cust-btn { font-family: inherit; font-size: 12px; color: var(--link); background: none; border: 1px solid var(--border); border-radius: 14px; padding: 4px 12px; cursor: pointer; }
+  .cust-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); font-weight: 600; }
   .panel.editing .cust-toggle, .panel.editing .sec-all { display: none; }
   .cust-actions { display: flex; justify-content: center; gap: 16px; margin-top: 12px; }
   .settings { margin-bottom: 12px; }
@@ -191,6 +194,8 @@
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 200; max-width: 90%; background: var(--green); color: #fff; font-size: 13px; font-weight: 600; padding: 10px 16px; border-radius: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); text-align: center; transition: opacity 0.4s; }
   .toast.gone { opacity: 0; }
   .xfer { max-width: 600px; margin: 14px auto 6px; padding: 12px 16px 4px; border-top: 1px solid var(--border); text-align: center; font-size: 11px; color: var(--text-light); }
+  .settings-help { max-width: 600px; margin: 6px auto 10px; padding: 0 16px; text-align: center; font-size: 14px; }
+  .settings-help a { color: var(--link); display: inline-block; padding: 6px 0; }
   .xfer-title { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 2px; }
   .xfer-sub { margin-bottom: 8px; line-height: 1.4; }
   .xfer-incl { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 4px; cursor: pointer; }
@@ -226,7 +231,7 @@
   .region-card .rc-title { font-size: 15px; font-weight: 700; color: var(--text); }
   .region-card .rc-sub { font-size: 12px; color: var(--text-muted); margin: 4px 0 10px; }
   .region-card .rc-btns { display: flex; gap: 8px; }
-  .region-card .rc-btns button { flex: 1; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--blue-mid); background: var(--section-bg); border: 1px solid var(--border); border-radius: 12px; padding: 10px 6px; cursor: pointer; }
+  .region-card .rc-btns button { flex: 1; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--link); background: var(--section-bg); border: 1px solid var(--border); border-radius: 12px; padding: 10px 6px; cursor: pointer; }
   .keep-row { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; font-size: 11px; color: var(--text-light); text-align: center; }
   .keep-row select { font-family: inherit; font-size: 11px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 4px 8px; }
   .flag-hint { font-size: 11px; color: var(--text-light); text-align: center; padding: 2px 16px 8px; }
@@ -269,8 +274,8 @@
   .wx-panel { background: var(--card); border-radius: 14px; padding: 12px 14px; margin: 12px 12px 0; box-shadow: var(--shadow); max-width: 600px; margin-left: auto; margin-right: auto; }
   .wx-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .wx-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
-  .wx-units { font-size: 11px; color: var(--blue-mid); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 12px; font-family: inherit; padding: 2px 9px; margin-left: auto; margin-right: 6px; }
-  .wx-refresh { font-size: 11px; color: var(--blue-mid); cursor: pointer; background: none; border: none; font-family: inherit; padding: 2px 6px; }
+  .wx-units { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 12px; font-family: inherit; padding: 2px 9px; margin-left: auto; margin-right: 6px; }
+  .wx-refresh { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: none; font-family: inherit; padding: 2px 6px; }
   .wx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .wx-item { background: var(--section-bg); border-radius: 10px; padding: 9px 11px; }
   .wx-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
@@ -278,7 +283,7 @@
   .wx-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
   .wx-loc { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: -4px 0 10px; font-size: 13px; color: var(--text); }
   .wx-loc-label { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .wx-loc-btn { flex-shrink: 0; font-size: 12px; color: var(--blue-mid); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 14px; font-family: inherit; padding: 3px 10px; }
+  .wx-loc-btn { flex-shrink: 0; font-size: 12px; color: var(--link); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 14px; font-family: inherit; padding: 3px 10px; }
   .wx-picker { background: var(--section-bg); border-radius: 10px; padding: 10px; margin-bottom: 10px; }
   .wx-search { display: flex; gap: 6px; }
   .wx-search input { flex: 1; min-width: 0; font-size: 16px; font-family: inherit; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--text); }
@@ -289,12 +294,12 @@
   .wx-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .wx-chip { font-family: inherit; font-size: 12px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 5px 10px; cursor: pointer; }
   .wx-status { font-size: 12px; color: var(--text-muted); text-align: center; padding: 6px 0 2px; }
-  .wx-alert { color: #c0392b; } .wx-warn { color: #e67e22; } .wx-good { color: var(--green); }
+  .wx-alert { color: #c0392b; } .wx-warn { color: var(--amber); } .wx-good { color: var(--green); }
   .wx-key-prompt { font-size: 12px; color: var(--text-muted); background: var(--section-bg); border-radius: 8px; padding: 8px 10px; text-align: center; }
-  .wx-key-prompt a { color: var(--blue-mid); }
+  .wx-key-prompt a { color: var(--link); }
   .wx-updated.wx-stale { color: var(--amber); font-weight: 600; }
   .wx-updated { font-size: 10px; color: var(--text-light); text-align: center; margin-top: 8px; }
-  .wx-link { display: inline-block; margin-top: 4px; font-size: 11px; color: var(--blue-mid); text-decoration: none; }
+  .wx-link { display: inline-block; margin-top: 4px; font-size: 11px; color: var(--link); text-decoration: none; }
   .wx-disclaimer a { color: inherit; }
   .wx-disclaimer { font-size: 10px; color: var(--text-light); text-align: center; margin-top: 8px; line-height: 1.4; }
   .wx-sun { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 8px; }
@@ -302,18 +307,28 @@
   .wx-tfr { display: block; width: 100%; padding: 9px; background: #c0392b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-notam { display: block; width: 100%; padding: 9px; background: #7f3fbf; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-radar { display: block; width: 100%; padding: 9px; background: #1a6b3c; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+
+  /* Accessibility: screen-reader text, visible keyboard focus, bigger tap targets, 16px form text (stops iOS zoom-on-focus) */
+  .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .item:focus-visible, .tab:focus-visible, .section-header:focus-visible { outline: 3px solid var(--blue-mid); outline-offset: -3px; }
+  button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--blue-mid); outline-offset: 2px; }
+  .item, .tab, button, .section-header { touch-action: manipulation; }
+  .wx-units, .wx-refresh, .wx-loc-btn { min-height: 32px; display: inline-flex; align-items: center; justify-content: center; }
+  .reset-inline, .sec-all, .cust-btn { min-height: 32px; }
+  .keep-row select, .region-sel, .xfer-box { font-size: 16px; }
+  .wx-night { font-size: 12px; font-weight: 600; color: var(--amber); text-align: center; margin-top: 6px; }
 </style>
 </head>
 <body>
 
-<div class="header">
+<div class="header" role="banner">
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.1</p>
+      <p>Free Drone Preflight Checklist · v3.2</p>
     </div>
   </div>
-  <div class="tabs">
+  <div class="tabs" role="tablist" aria-label="Checklists">
     <div class="tab active" onclick="showPanel('general',this)">🏞 General</div>
     <div class="tab" onclick="showPanel('mapping',this)">🗺 Mapping</div>
     <div class="tab" onclick="showPanel('zeitview',this)">📋 Commercial</div>
@@ -325,7 +340,8 @@
 
 
 <!-- WEATHER STATUS PANEL -->
-<div class="wx-panel" id="wx-panel">
+<div class="wx-panel" id="wx-panel" role="region" aria-label="Preflight conditions">
+  <div id="wx-sr" class="sr-only" role="status" aria-live="polite"></div>
   <div class="wx-header">
     <span class="wx-title">📡 Preflight Conditions</span>
     <button class="wx-units" id="wx-units" onclick="toggleUnits()" aria-label="Switch between imperial and metric units"></button>
@@ -347,13 +363,13 @@
     <div class="wx-status">Locating...</div>
   </div>
   <div class="wx-tfr-row" style="margin-top:10px;">
-    <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank">⚠️ TFRs — FAA.gov</a>
-    <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank">📋 NOTAMs — AIM</a>
-    <a class="wx-radar" href="https://radar.weather.gov" target="_blank">🌧 Radar — NWS</a>
+    <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener">⚠️ TFRs — FAA.gov</a>
+    <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener">📋 NOTAMs — AIM</a>
+    <a class="wx-radar" href="https://radar.weather.gov" target="_blank" rel="noopener">🌧 Radar — NWS</a>
   </div>
 </div>
 
-<div class="content">
+<div class="content" role="main">
 
 <!-- COMMERCIAL -->
 <div class="panel" id="panel-zeitview">
@@ -867,6 +883,7 @@ let region = (function () { try { const v = localStorage.getItem(REGION_KEY); re
 const US_ONLY_ITEMS = [/^Check TFRs at tfr\.faa\.gov$/, /^LAANC —/];               // hidden outside the USA
 const INTL_SWAPS = [                                                               // reworded outside the USA
   { re: /^Check NOTAMs at notams\.aim\.faa\.gov/, text: "Check NOTAMs — look for notices affecting your flight area (use your country's aviation authority or NOTAM service)" },
+  { re: /^Check weather — wind under 23 mph \(37 km\/h\)/, text: "Check weather — wind under 37 km/h (23 mph), no rain, good visibility" },
   { re: /^Check airspace — use B4UFLY/, text: "Check airspace — use your country's drone airspace map or app to confirm class and restrictions" }
 ];
 document.querySelectorAll('.item').forEach(it => {
@@ -1389,7 +1406,9 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const body = document.createElement('div'); body.className = 'settings-body';
   const note = document.createElement('div'); note.className = 'settings-note';
   note.textContent = 'Your progress and these settings are saved on this device only. They don\'t sync by themselves, and on some devices a Home Screen app keeps its own separate copy. To copy them to another phone, tablet or browser, use Back up & restore below.';
-  body.append(keep, reg, note, cust, makeXfer());
+  const help = document.createElement('div'); help.className = 'settings-help';
+  help.innerHTML = '<a href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener">📘 Help &amp; guides</a>';
+  body.append(keep, reg, note, cust, makeXfer(), help);
   wrap.append(tg, body);
   card.before(wrap);
   const reset = card.querySelector('.reset-inline'), all = cust.querySelector('.sec-all');
@@ -1456,15 +1475,23 @@ function windCardinal(deg) {
   return 'From ' + cards[idx];
 }
 function ceilingColor(ft) {
-  if (ft < 500) return 'wx-alert';
+  if (ft <= 500) return 'wx-alert';
   if (ft < 1000) return 'wx-warn';
   return 'wx-good';
+}
+
+// Every network request gets a time limit, so a stalled connection ends in a clear message instead of "Loading..." forever
+const FETCH_TIMEOUT_MS = 12000;
+function fetchT(url, ms) {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), ms || FETCH_TIMEOUT_MS);
+  return fetch(url, { signal: ctl.signal }).finally(() => clearTimeout(timer));
 }
 
 async function fetchKP() {
   try {
     // 1-minute estimated feed — confirmed working via CORS
-    const res = await fetch('https://services.swpc.noaa.gov/json/planetary_k_index_1m.json');
+    const res = await fetchT('https://services.swpc.noaa.gov/json/planetary_k_index_1m.json');
     if (!res.ok) throw new Error('failed');
     const data = await res.json();
     if (!data || data.length === 0) throw new Error('no data');
@@ -1482,6 +1509,7 @@ async function fetchKP() {
       const kp = parseFloat(data[i].kp_index);
       if (!isNaN(kp) && kp > 0) return kp;
     }
+    if (maxKp !== null) return maxKp;   // every recent reading was 0: a quiet sun, not missing data
   } catch(e) { console.warn('KP fetch failed:', e.message); }
   return null;
 }
@@ -1605,7 +1633,7 @@ function lowestLayer(metar) {
 
 async function fetchMetar(lat, lon) {
   try {
-    const res = await fetch(`${METAR_PROXY}/metar?lat=${lat}&lon=${lon}`);
+    const res = await fetchT(`${METAR_PROXY}/metar?lat=${lat}&lon=${lon}`);
     if (!res.ok) throw new Error('METAR service error: ' + res.status);
     const list = await res.json();
     if (!Array.isArray(list) || list.length === 0) return null;
@@ -1642,7 +1670,7 @@ async function fetchMetar(lat, lon) {
     return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, precipReport };
   } catch (e) {
     console.warn('METAR fetch failed:', e.message);
-    return null;
+    throw e;   // the caller tells "service failed" apart from "no station nearby"
   }
 }
 
@@ -1666,7 +1694,7 @@ function parseCeiling(metar) {
 
 function ceilingColor(ft) {
   if (ft === null) return 'wx-good';
-  if (ft < 500) return 'wx-alert';
+  if (ft <= 500) return 'wx-alert';
   if (ft < 1000) return 'wx-warn';
   return 'wx-good';
 }
@@ -1689,9 +1717,10 @@ function ceilingNote(ft, metar) {
     return clouds.length > 0 ? clouds.map(c => (c.text || c.code || '') + (c.base_feet_agl ? ' ' + fmtAlt(c.base_feet_agl) : '')).join(', ').trim() || 'Clear skies' : 'Clear skies';
   }
   let note;
-  if (ft < 500) note = '⛔ Cannot fly — below minimums';
-  else if (ft < 1000) note = '⚠️ Very low — stay 500 ft below clouds';
-  else if (ft < 3000) note = 'Low ceiling — stay 500 ft below clouds';
+  const intl = region === 'intl';   // the cloud rules below are US rules; outside the USA say it neutrally
+  if (ft <= 500) note = intl ? '⚠️ Very low ceiling — check your local cloud and visibility rules' : '⛔ Cannot fly — below minimums';
+  else if (ft < 1000) note = intl ? '⚠️ Very low — keep clear of cloud' : '⚠️ Very low — stay 500 ft below clouds';
+  else if (ft < 3000) note = intl ? 'Low ceiling — keep clear of cloud' : 'Low ceiling — stay 500 ft below clouds';
   else note = 'Good for ops';
   const low = metar ? lowestLayer(metar) : null;
   if (low && low.base < ft) note += ' · Lowest layer: ' + low.cover + ' ' + fmtAlt(low.base);
@@ -1738,11 +1767,15 @@ let wxReq = 0;
 let lastWeatherAt = null;
 let goodDraw = null, goodKey = null;   // last successful weather drawing, kept for when a refresh fails (weak signal, rate limit)
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+let nightUpdate = null;   // set each time the weather card is drawn; keeps the night notice in step with the clock
+function srSay(txt) { const el = document.getElementById('wx-sr'); if (el) { el.textContent = ''; setTimeout(() => { el.textContent = txt; }, 50); } }
 function friendlyWxError(e) {
   const m = (e && e.message) || '';
   if (/429/.test(m)) return 'Weather service is busy — wait a minute, then tap Refresh.';
   if (e && (e.name === 'SyntaxError' || e.name === 'TypeError') || /unreachable|did not match|JSON|network|fetch|Failed/i.test(m))
     return 'No signal, or a weak one — couldn\'t load the weather. Tap Refresh when you\'re back online.';
+  if (/error 5\d\d/.test(m)) return 'The weather service is having trouble right now — tap Refresh in a minute.';
+  if (/No weather data/.test(m)) return 'The weather service sent back nothing usable — tap Refresh to try again.';
   return 'Weather unavailable: ' + m;
 }
 
@@ -1806,14 +1839,14 @@ async function searchSite(e) {
 
   note('Searching…');
   try {
-    const res = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(name) + '&count=10&language=en&format=json');
+    const res = await fetchT('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(name) + '&count=10&language=en&format=json');
     if (!res.ok) throw new Error('search ' + res.status);
     const data = await res.json();
     let list = data.results || [];
     if (state) { const f = list.filter(r => r.admin1 === state); if (f.length) list = f; }
     list = list.slice(0, 6);
     out.innerHTML = '';
-    if (!list.length) { note('No matches. Try a nearby town, a ZIP code, or coordinates.'); return; }
+    if (!list.length) { note('No matches. Try a nearby town, a postcode or ZIP code, or coordinates.'); return; }
     list.forEach(r => {
       const region = r.admin1 ? (r.country_code === 'US' && STATE_ABBR[r.admin1] ? STATE_ABBR[r.admin1] : r.admin1) : '';
       const label = r.name + (region ? ', ' + region : '') + (r.country_code && r.country_code !== 'US' ? ', ' + r.country_code : '');
@@ -1842,12 +1875,20 @@ async function loadWeather() {
 
   if (!navigator.geolocation) {
     body.innerHTML = '<div class="wx-status wx-alert">Location not available on this device. Tap Change to pick a flight site.</div>';
+    srSay('Location not available on this device. Tap Change to pick a flight site.');
     return;
   }
 
   navigator.geolocation.getCurrentPosition(
     (pos) => renderWeather(pos.coords.latitude, pos.coords.longitude),
-    () => { body.innerHTML = '<div class="wx-status wx-warn">Location permission denied — enable it, or tap Change to pick a flight site.</div>'; }
+    (err) => {
+      const msg = err && err.code === 1 ? 'Location permission denied — enable it, or tap Change to pick a flight site.'
+        : err && err.code === 3 ? 'Your location is taking too long to find. Tap Refresh to try again, or tap Change to pick a flight site.'
+        : 'Your location isn\'t available right now. Tap Refresh to try again, or tap Change to pick a flight site.';
+      body.innerHTML = '<div class="wx-status wx-warn">' + msg + '</div>';
+      srSay(msg);
+    },
+    { timeout: 15000, maximumAge: 60000 }
   );
 }
 
@@ -1857,7 +1898,7 @@ async function renderWeather(lat, lon, attempt = 1) {
   lastDraw = null;
   try {
       const [wxRes, kpData, metarData, radarRes] = await Promise.allSettled([
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_120m,precipitation_probability,precipitation,weather_code,cape&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`),
+        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_120m,precipitation_probability,precipitation,weather_code,cape&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`),
         fetchKP(),
         fetchMetar(lat, lon),
         fetchRadar(lat, lon)
@@ -1898,13 +1939,14 @@ async function renderWeather(lat, lon, attempt = 1) {
           const out = { rain: null, storm: null };
           if (hrs.some(wet)) {
             if (wet(hIdx)) {
-              // wet now: find the next dry stretch of at least 2 hours
-              let found = null;
-              for (let k = 1; k < n - 1 && !found; k++) {
-                if (!wet(hIdx + k) && !wet(hIdx + k + 1)) {
-                  let e = k; while (e + 1 < n && !wet(hIdx + e + 1)) e++;
-                  found = { from: hIdx + k, to: hIdx + e + 1 };
-                }
+              // wet now: find the longest dry stretch (at least 2 hours) in the next 12 hours; if two are equal, the earlier one
+              let found = null, bestLen = 0;
+              for (let k = 1; k < n; ) {
+                if (wet(hIdx + k)) { k++; continue; }
+                let e = k; while (e + 1 < n && !wet(hIdx + e + 1)) e++;
+                const len = e - k + 1;
+                if (len >= 2 && len > bestLen) { bestLen = len; found = { from: hIdx + k, to: hIdx + e + 1 }; }
+                k = e + 1;
               }
               out.rain = found ? 'Best window ~' + hrLabel(found.from) + ' – ' + hrLabel(Math.min(found.to, H.time.length - 1))
                                : 'No clear window next 12 hrs';
@@ -1929,8 +1971,24 @@ async function renderWeather(lat, lon, attempt = 1) {
         })()
       };
 
-      const windMph = Math.round(wx.wind.speed);
-      const gustMph = wx.wind.gust && Math.round(wx.wind.gust) > windMph ? Math.round(wx.wind.gust) : null;
+      // A missing reading must show as missing, never as 0
+      const windOk = wx.wind.speed != null && isFinite(wx.wind.speed);
+      const tempOk = wx.main.temp != null && isFinite(wx.main.temp);
+      const dirOk = wx.wind.deg != null && isFinite(wx.wind.deg);
+      const windMph = windOk ? Math.round(wx.wind.speed) : null;
+      const gustMph = windOk && wx.wind.gust != null && Math.round(wx.wind.gust) > windMph ? Math.round(wx.wind.gust) : null;
+      // Forecast times and sunrise/sunset are in the site's own time; say so when that differs from this device's clock
+      const siteOff = om.utc_offset_seconds;
+      const siteTag = typeof siteOff === 'number' && siteOff !== -new Date().getTimezoneOffset() * 60 ? ' (site time)' : '';
+      // Night notice: judged from this device's clock at the site (not from the moment the weather loaded), so it stays right on an old card
+      const siteHHMM = () => typeof siteOff === 'number' ? new Date(Date.now() + siteOff * 1000).toISOString().slice(11, 16) : String(cur.time || '').slice(11, 16);
+      const isSunDown = () => {
+        const sr = wx.sunrise && String(wx.sunrise).slice(11, 16), ss = wx.sunset && String(wx.sunset).slice(11, 16), n = siteHHMM();
+        return !!(sr && ss && n && (n < sr || n > ss));
+      };
+      const nightTxt = () => region === 'intl'
+        ? '🌙 Sun is down — check your local rules for night flying'
+        : '🌙 Sun is down — night flight needs an <span style="white-space:nowrap">anti-collision</span> light visible 3 mi';
       const fmtT = (iso) => iso ? new Date(iso).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '—';
 
       // Ceiling from METAR (kept in feet; converted for display)
@@ -1944,17 +2002,26 @@ async function renderWeather(lat, lon, attempt = 1) {
 
       // Lowest cloud layer of any cover at any nearby station, when it is lower than what is shown above
       const lc = metarData2 && metarData2.lowCloud;
-      const lowCloudTxt = lc && (ceilFt === null ? lc.station !== stationId : lc.base < ceilFt && lc.station !== stationId)
+      const lowCloudTxt = () => lc && (ceilFt === null ? lc.station !== stationId : lc.base < ceilFt && lc.station !== stationId)
         ? '☁️ Lowest cloud nearby: ' + lc.cover + ' ' + fmtAlt(lc.base) + ' (' + lc.station + ')' : '';
+      // US only: legal max altitude = 500 ft below the ceiling (broken/overcast layer), shown only when it is under the 400 ft limit
+      const maxAltTxt = () => {
+        if (region === 'intl' || !metarData2) return '';
+        const bases = [ceilFt].filter(v => typeof v === 'number' && isFinite(v));   // ceiling only (broken/overcast); a few low clouds can be flown around
+        if (!bases.length) return '';
+        const lim = Math.floor((Math.min.apply(null, bases) - 500) / 10) * 10;
+        return lim > 0 && lim < 400 ? '✈️ Max legal altitude about ' + fmtAlt(lim) + ' AGL (500 ft below clouds)' : '';
+      };
 
       if (lc && lc.base < 1000 && ceilClass === 'wx-good') ceilClass = 'wx-warn';   // a low layer nearby is worth a caution colour
 
       // Humidity and dew point: a small gap between temperature and dew point means fog, mist or lens fogging
-      const dewOk = wx.dewPoint != null && wx.humidity != null;
+      const dewOk = wx.dewPoint != null && wx.humidity != null && wx.main.temp != null;
       const dewSpreadF = dewOk ? wx.main.temp - wx.dewPoint : null;
-      const dewClass = !dewOk ? '' : dewSpreadF <= 2 ? 'wx-alert' : dewSpreadF <= 4 ? 'wx-warn' : 'wx-good';
+      // Amber for fog risk; red only when fog is likely AND visibility is already under 3 statute miles (US minimum)
+      const dewClassNow = () => { const visLow = region !== 'intl' && typeof wx.visibility === 'number' && wx.visibility < 4828; return !dewOk ? '' : (dewSpreadF <= 2 && visLow) ? 'wx-alert' : dewSpreadF <= 4 ? 'wx-warn' : 'wx-good'; };
       const dewNote = !dewOk ? 'No data' : dewSpreadF <= 2 ? 'Fog likely' : dewSpreadF <= 4 ? 'Fog or lens fogging possible' : 'Low fog risk';
-      const dewSub = !dewOk ? '' : 'Dew point ' + fmtTemp(wx.dewPoint) + ' · ' + dewNote;
+      const dewSub = () => !dewOk ? '' : 'Dew point ' + fmtTemp(wx.dewPoint) + ' · ' + dewNote;
 
       // Precipitation: current conditions + next 6 hours
       const WX_CODES = { 51:'Light drizzle', 53:'Drizzle', 55:'Heavy drizzle', 56:'Freezing drizzle', 57:'Freezing drizzle',
@@ -1973,7 +2040,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         if (c >= 61 && c <= 65 || c >= 80 && c <= 82) return 'Rain';
         return 'Precipitation';
       })();
-      const precipSub = precipNext
+      const precipSub = () => precipNext
         ? 'Next 6 hrs: ' + precipNext.prob + '% chance' + (precipNext.mm >= 0.05 ? ' · ' + fmtPrecip(precipNext.mm) + ' (forecast)' : ' (forecast)')
         : 'No forecast data';
       // Best evidence first: the model's current conditions; radar + airport agreeing; radar nearby; an airport report alone
@@ -1994,11 +2061,11 @@ async function renderWeather(lat, lon, attempt = 1) {
         else lines.push('Radar: ' + (rd.near ? 'echoes within ' + fmtDist(rd.nearMi) : 'nothing within ' + fmtDist(rd.nearMi)) + ' · ' + new Date(rd.frameTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' (' + ageText(rd.ageMin * 60000) + ')');
         if (pm) lines.push(pm.station + ' reports ' + pm.text + ' · ' + fmtDist(pm.dist));
         if (forecastOnly) lines.push(rd && rd.covered ? 'Forecast only \u2014 nothing on radar' : 'Forecast only');
-        lines.push(precipSub);
+        lines.push(precipSub());
         // Live evidence (radar echoes nearby or an airport reporting precipitation) outranks the model's timing
         const liveWet = !!pm || !!(rd && rd.covered && rd.near);
-        if (wx.outlook && wx.outlook.rain && !liveWet) lines.push(wx.outlook.rain);
-        if (wx.outlook && wx.outlook.storm) lines.push(wx.outlook.storm);
+        if (wx.outlook && wx.outlook.rain && !liveWet) lines.push(wx.outlook.rain + siteTag);
+        if (wx.outlook && wx.outlook.storm) lines.push(wx.outlook.storm + siteTag);
         return { val, cls, lines };
       };
 
@@ -2013,33 +2080,38 @@ async function renderWeather(lat, lon, attempt = 1) {
       const kp = kpData2;
       const kpVal = kp !== null ? kp.toFixed(1) : '—';
       const kpClass = kp !== null ? kpColor(kp) : '';
-      const kpNote = kp >= 4 ? '⛔ High — GPS/compass risk' : kp >= 3 ? '⚠️ Elevated — monitor' : 'Normal — good to fly';
+      const kpNote = kp === null ? 'Unavailable — check another source before flying' : kp >= 4 ? '⛔ High — GPS/compass risk' : kp >= 3 ? '⚠️ Elevated — monitor' : 'Normal — good to fly';
 
       const now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
       lastWeatherAt = Date.now();
       const draw = () => {
         const ceilTxt = metarData2 ? ceilingText(ceilFt, m) : '—';
-        const ceilNote = metarData2 ? ceilingNote(ceilFt, m) : 'No METAR data';
+        const ceilNote = metarData2 ? ceilingNote(ceilFt, m) : (metarData.status === 'rejected' ? 'Airport reports unavailable — check another source' : 'No METAR data');
         const pb = precipBlock();
+        nightUpdate = () => {
+          const el = document.getElementById('wx-night'); if (!el) return;
+          const d = isSunDown(); el.hidden = !d; el.innerHTML = d ? nightTxt() : '';
+        };
         const wind120Txt = wx.wind120 != null ? ` · ${isMetric() ? '120 m' : '400 ft'}: ${fmtSpeed(wx.wind120)}` : '';
         body.innerHTML = `
         <div class="wx-grid">
           <div class="wx-item">
             <div class="wx-label">Wind</div>
-            <div class="wx-value ${windColor(windMph)}">${fmtSpeedNum(windMph)}${gustMph ? ' / ' + fmtSpeedNum(gustMph) : ''} ${speedUnit()} ${windArrow(wx.wind.deg)}</div>
-            <div class="wx-sub">${gustMph ? 'Sustained / Gusts' : 'No gusts reported'} · ${windCardinal(wx.wind.deg)}${wind120Txt}</div>
+            <div class="wx-value ${windOk ? windColor(windMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() + (dirOk ? ' ' + windArrow(wx.wind.deg) : '') : '—'}</div>
+            <div class="wx-sub">${windOk ? (gustMph ? 'Sustained / Gusts' : 'No gusts reported') + (dirOk ? ' · ' + windCardinal(wx.wind.deg) : '') + wind120Txt : 'No wind data'}</div>
           </div>
           <div class="wx-item">
             <div class="wx-label">Cloud Ceiling</div>
             <div class="wx-value ${ceilClass}">${ceilTxt}</div>
             <div class="wx-sub">${ceilNote}</div>
             ${metarData2 ? `<div class="wx-sub">${stationId} · ${fmtDist(metarData2.dist)} away${metarData2.ageMin != null ? ' · ' + ageText(metarData2.ageMin * 60000) : ''}${metarData2.count > 1 ? ' · lowest of ' + metarData2.count + ' stations' : ''}</div>` : ''}
-            ${lowCloudTxt ? `<div class="wx-sub">${lowCloudTxt}</div>` : ''}
+            ${lowCloudTxt() ? `<div class="wx-sub">${lowCloudTxt()}</div>` : ''}
+            ${maxAltTxt() ? `<div class="wx-sub"><strong>${maxAltTxt()}</strong></div>` : ''}
           </div>
           <div class="wx-item">
             <div class="wx-label">Temperature</div>
-            <div class="wx-value">${fmtTemp(wx.main.temp)}</div>
+            <div class="wx-value">${tempOk ? fmtTemp(wx.main.temp) : '—'}</div>
             <div class="wx-sub">Visibility ${fmtVis(wx.visibility)}</div>
           </div>
           <div class="wx-item">
@@ -2055,11 +2127,12 @@ async function renderWeather(lat, lon, attempt = 1) {
           </div>
           <div class="wx-item">
             <div class="wx-label">Humidity</div>
-            <div class="wx-value ${dewClass}">${dewOk ? Math.round(wx.humidity) + '%' : '—'}</div>
-            <div class="wx-sub">${dewSub}</div>
+            <div class="wx-value ${dewClassNow()}">${dewOk ? Math.round(wx.humidity) + '%' : '—'}</div>
+            <div class="wx-sub">${dewSub()}</div>
           </div>
         </div>
-        <div class="wx-sun">🌅 Sunrise ${fmtT(wx.sunrise)} &nbsp;·&nbsp; 🌇 Sunset ${fmtT(wx.sunset)}</div>
+        <div class="wx-sun">🌅 Sunrise ${fmtT(wx.sunrise)} &nbsp;·&nbsp; 🌇 Sunset ${fmtT(wx.sunset)}${siteTag}</div>
+        <div class="wx-night" id="wx-night" hidden></div>
         <div class="wx-updated" id="wx-updated">Updated ${now} · ${srcText}<span id="wx-age"></span></div>
         <div class="wx-disclaimer">Guide only. Conditions can differ at your site. Check your own weather sources and look at the sky before you fly. Radar: <a href="https://www.rainviewer.com" target="_blank" rel="noopener">RainViewer</a>.</div>
         `;
@@ -2070,6 +2143,7 @@ async function renderWeather(lat, lon, attempt = 1) {
       goodDraw = draw; goodKey = site ? site.lat + ',' + site.lon : 'gps';
       body.style.opacity = '';
       draw();
+      srSay('Weather updated. Wind ' + (windOk ? fmtSpeedNum(windMph) + (gustMph ? ', gusting ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() : 'unavailable') + '. Cloud ceiling ' + (metarData2 ? ceilingText(ceilFt, m) : 'unavailable') + '. Precipitation ' + precipBlock().val + '.');
   } catch (e) {
     if (my !== wxReq) return;
     // One automatic retry for a flaky connection (not for a rate limit, which a retry would only worsen)
@@ -2086,8 +2160,10 @@ async function renderWeather(lat, lon, attempt = 1) {
       goodDraw();
       const t = new Date(lastWeatherAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       body.insertAdjacentHTML('afterbegin', `<div class="wx-status wx-warn">Couldn't refresh — showing ${t} data. ${friendlyWxError(e)}</div>`);
+      srSay('Couldn\'t refresh. Showing ' + t + ' data. ' + friendlyWxError(e));
     } else {
       body.innerHTML = `<div class="wx-status wx-alert">${friendlyWxError(e)}</div>`;
+      srSay(friendlyWxError(e));
     }
   }
 }
@@ -2097,6 +2173,7 @@ const STALE_MS = 30 * 60 * 1000;      // amber after 30 minutes
 const RETURN_REFRESH_MS = 10 * 60 * 1000;
 
 function refreshAge() {
+  if (nightUpdate) nightUpdate();
   const el = document.getElementById('wx-updated');
   const span = document.getElementById('wx-age');
   if (!el || !span || !lastWeatherAt) return;
@@ -2116,6 +2193,63 @@ setInterval(refreshAge, 60000);
 document.addEventListener('visibilitychange', refreshIfStale);
 window.addEventListener('pageshow', (e) => { if (e.persisted) refreshIfStale(); });
 
+
+// Offline support: lets the checklist open with no signal (see sw.js)
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+}
+
+// ── Accessibility: checklist items and tabs for screen readers and keyboards ──
+(function () {
+  function syncItem(el) {
+    if (el.closest('.panel.editing')) {
+      ['role', 'tabindex', 'aria-checked', 'aria-label', 'aria-keyshortcuts'].forEach(a => el.removeAttribute(a));
+      return;
+    }
+    el.setAttribute('role', 'checkbox');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-checked', el.classList.contains('checked') ? 'true' : 'false');
+    el.setAttribute('aria-keyshortcuts', 'F');
+    if (el.classList.contains('flagged')) {
+      const tx = el.querySelector('.item-text');
+      el.setAttribute('aria-label', (tx ? tx.textContent.trim() : 'Item') + ' — flagged. Press Space to mark it done.');
+    } else el.removeAttribute('aria-label');
+  }
+  function syncTabs() {
+    tabEls.forEach(t => {
+      const pid = t.dataset.pid, sel = t.classList.contains('active');
+      t.setAttribute('role', 'tab'); t.id = 'tab-' + pid;
+      t.setAttribute('aria-selected', sel ? 'true' : 'false');
+      t.setAttribute('tabindex', sel ? '0' : '-1');
+      t.setAttribute('aria-controls', 'panel-' + pid);
+      t.setAttribute('aria-label', tabName(t));
+      const pnl = document.getElementById('panel-' + pid);
+      if (pnl) { pnl.setAttribute('role', 'tabpanel'); pnl.setAttribute('aria-labelledby', 'tab-' + pid); }
+    });
+  }
+  function syncAll() { document.querySelectorAll('.item').forEach(syncItem); syncTabs(); }
+  let queued = false;
+  new MutationObserver(() => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; syncAll(); }); } })
+    .observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class'] });
+  syncAll();
+
+  document.addEventListener('keydown', (e) => {
+    const el = e.target;
+    if (!el || !el.matches || !el.matches('.item[role="checkbox"]')) return;
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(el); }
+    else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFlag(el); }
+  });
+  tabEls.forEach(t => t.addEventListener('keydown', (e) => {
+    const vis = tabEls.filter(x => !x.classList.contains('tab-hidden'));
+    const i = vis.indexOf(t); let n = null;
+    if (e.key === 'ArrowRight') n = vis[(i + 1) % vis.length];
+    else if (e.key === 'ArrowLeft') n = vis[(i - 1 + vis.length) % vis.length];
+    else if (e.key === 'Home') n = vis[0];
+    else if (e.key === 'End') n = vis[vis.length - 1];
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showPanel(t.dataset.pid, t); return; }
+    if (n) { e.preventDefault(); showPanel(n.dataset.pid, n); n.focus(); }
+  }));
+})();
 
 loadWeather();
 </script>
