@@ -4,6 +4,8 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 **Use it now:** [checklist.johnstonaerial.com](https://checklist.johnstonaerial.com)
 
+📘 **New here?** See the [How-to guides](HOW-TO.md): make your own profiles (with a real timelapse example), use it with no signal, and use it outside the USA.
+
 ---
 
 ## Screenshots
@@ -81,7 +83,7 @@ Version 3 is a major update built around making the checklist *yours*:
 
 ## Back up & restore
 
-Your settings and progress are stored in the browser on the device you're using. They don't sync by themselves, and a checklist added to your Home Screen can keep its own separate copy from the browser tab (iPhones and iPads always do). It works the same on any phone, tablet or computer, in any current browser. **Back up & restore** (in ⚙ Settings, and also visible while you customize) lets you move them:
+Your settings and progress are stored in the browser on the device you're using. They don't sync by themselves, and a checklist added to your Home Screen can keep its own separate copy from the browser tab (iPhones and iPads always do). It works the same on any phone, tablet or computer, in any current browser. **Back up & restore** (in ⚙ Settings, and also visible while you customize) lets you move them. It also lets you keep several setups and switch between them. See [Make your own profiles](HOW-TO.md#make-your-own-profiles).
 
 **To back up or move to another device**
 1. Open **⚙ Settings & customize** and find **Back up & restore**
@@ -131,7 +133,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 6. The progress bar tracks your completion percentage and shows how many items need attention. When your pre-flight sections are done, a **ready to fly** banner appears; after the last section, **flight complete**
 7. Tap **Reset** (next to the progress bar) to clear all checks and flags on the current tab — it asks you to confirm first
 
-**To make it yours:** open **⚙ Settings & customize**, tap **✎ Customize list**, and hide, add, drag or rename what you need — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup.
+**To make it yours:** open **⚙ Settings & customize**, tap **✎ Customize list**, and hide, add, drag or rename what you need — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
 
 ---
 
