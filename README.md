@@ -25,6 +25,17 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.2.3
+
+A few more preflight checks, and a new look:
+
+- **New checklist items** (General tab) — *Controller and phone/tablet fully charged*, *Visual observer briefed — if you're using one*, *Test photo or short clip — confirm it records and the exposure looks right*, and *Watch signal strength and satellite count for signs of interference*
+- **GPS check merged** — satellite count and home point are now one item: *GPS satellite count and home point — confirm strong lock (10+ satellites) and that the home point is updated*
+- **New app icon** — a dusk sky with a rising sun, a drone and a checklist. On iPhone, delete the Home Screen app and add it again to see it
+- If you've customized your lists, the two reworded items (controller charged, GPS) show up as new items, so you may need to hide or re-tick them once. Your other settings and progress are unchanged
+
+---
+
 ## What's new in v3.2.2
 
 The weather card now tells you when your phone has no signal:
