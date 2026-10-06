@@ -1,9 +1,11 @@
 # How to use the UAS Flight Checklist
 
-Short guides for four things people ask about: saving different setups ("profiles"), using the app with no signal, using it outside the USA, and checking TFRs and NOTAMs (USA only).
+Short guides for six things people ask about: saving different setups ("profiles"), using the app with no signal, saving a record of your preflight, printing the checklist, using it outside the USA, and checking TFRs and NOTAMs (USA only).
 
 - [Make your own profiles](#make-your-own-profiles)
 - [Use it with no signal](#use-it-with-no-signal)
+- [Save a preflight record](#save-a-preflight-record)
+- [Print it and use a pencil](#print-it-and-use-a-pencil)
 - [Use it outside the USA](#use-it-outside-the-usa)
 - [Check TFRs and NOTAMs before you fly (USA only)](#check-tfrs-and-notams-before-you-fly-usa)
 
@@ -76,6 +78,29 @@ The checklist works with no signal. Once you've opened the app **once with a con
 **iPhone and iPad:** a Home Screen icon has its own storage, separate from Safari. If you use the icon, open it once with a signal as well.
 
 Still worth doing: the checklist's own tip to screenshot your mission brief. The app is offline-ready, but your brief, airspace map and NOTAMs aren't.
+
+---
+
+## Save a preflight record
+
+Want a copy of what you checked? Tap **Save record**, next to **Print checklist** at the top of the checklist.
+
+1. Tap **Save record**.
+2. Fill in what you want to keep: the customer, the site (it fills in from the weather card) and any notes. **More details** has boxes for airspace authorization (for example a LAANC reference, altitude and times), flight time and visual observer. Everything is optional.
+3. Choose whether to include the weather conditions and the items you didn't check.
+4. Tap **Save**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files**, AirDrop, Mail or Messages. On a computer the file goes to your Downloads folder.
+
+You get one plain text file, named like `preflight-record-2026-10-06-1415-smith-roofing.txt`, that opens on any device. Items you flagged are listed as NEEDS ATTENTION. Items you hid are left out and items you added are included. The record is made on your device and isn't sent anywhere.
+
+If the Share sheet doesn't open, the app shows a box with **Share…** and **Download** buttons instead.
+
+---
+
+## Print it and use a pencil
+
+You can print the checklist and take it to the site. Open the tab you want, then tap **Print checklist** in Safari. In the Home Screen app, open the page in Safari first, since the Home Screen app can't print. Check items off with a pencil during preflight and again after the flight. Print each tab you need, since only the open tab prints.
+
+The app also works offline once it has loaded (see above), so paper is a choice, not a requirement. You can also save a record afterward and print that.
 
 ---
 

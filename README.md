@@ -4,7 +4,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 **Use it now:** [checklist.johnstonaerial.com](https://checklist.johnstonaerial.com)
 
-📘 **New here?** See the [How-to guides](HOW-TO.md): make your own profiles (with a real timelapse example), use it with no signal, use it outside the USA, and check TFRs and NOTAMs (USA). Inside the app, tap **⚙ Settings & customize → 📘 Help & guides**.
+📘 **New here?** See the [How-to guides](HOW-TO.md): make your own profiles (with a real timelapse example), use it with no signal, save a preflight record, print it and use a pencil, use it outside the USA, and check TFRs and NOTAMs (USA). Inside the app, tap **⚙ Settings & customize → 📘 Help & guides**.
 
 ---
 
@@ -22,6 +22,19 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
     <td></td>
   </tr>
 </table>
+
+---
+
+## What's new in v3.5
+
+Save a record of your preflight, and print the checklist:
+
+- **Save record** — a new button on each tab. It makes a plain text file of the checklist as it stands: customer, site, date and time, the weather conditions (optional), every section with what was checked, and your notes. Items you flagged are listed as **NEEDS ATTENTION**. Items you hid are left out and items you added are included. On an iPhone or iPad it opens the Share sheet (Save to Files, AirDrop, Mail, Messages); on a computer it downloads the file. Nothing is uploaded: the record is made on your device
+- **Optional details** — under **More details**: airspace authorization (for example a LAANC reference, altitude and times), flight time, and visual observer. Anything left blank is left out of the record
+- **Items not checked** — choose whether the record lists the items you didn't check (shown as `[ ]`) or only what you completed
+- **Print checklist** — prints the open tab: square tick boxes, black on white, every section open, about 3 pages, and blank lines at the top for date, time, site, pilot and visual observer. Use a pencil at the site. Printing isn't available in the iPhone **Home Screen app** (iOS doesn't allow it); open the page in Safari to print
+- **Shorter progress card** — the percentage and bar sit on top and the four buttons (Print checklist, Save record, Reset, Collapse all) sit in two rows, so the checklist starts higher on the screen
+- **Fix** — saving a backup file with **Save to Files** on an iPhone no longer also saves a stray small text file
 
 ---
 
@@ -123,6 +136,8 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention** — press and hold any item to mark it amber; flagged items don't count as complete until you resolve them
+- **Save a preflight record** — tap **Save record** to keep a plain text copy of the checklist (what was checked, flagged items, optional weather, site, customer, notes and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-preflight-record)
+- **Print it** — **Print checklist** prints the open tab as a clean paper checklist with blank date, time, site and pilot lines, for use with a pencil. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil)
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
 - **Completely free** to host and run
 
@@ -179,6 +194,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 5. Press and hold an item to flag it as **needs attention** (amber). Tap a flagged item once it's resolved to check it off
 6. The progress bar tracks your completion percentage and shows how many items need attention. When your pre-flight sections are done, a **ready to fly** banner appears; after the last section, **flight complete**
 7. Tap **Reset** (next to the progress bar) to clear all checks and flags on the current tab — it asks you to confirm first
+8. Tap **Save record** to keep a text copy of the checklist, or **Print checklist** to print the tab (in Safari or a computer browser)
 
 **To make it yours:** open **⚙ Settings & customize**, tap **✎ Customize list**, and hide, add, drag or rename what you need — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
 
@@ -227,6 +243,8 @@ Yes. It's free to fork, and you can host your own copy and change the default it
 - **Weather defaults to your current GPS location** — to check a different flight site, tap **Change** on the weather panel and search for a town, ZIP code, or coordinates. Place search works best for towns and cities; for a specific job site, use a nearby town or enter coordinates. Cloud ceiling comes from the nearest METAR station, which can be several miles from the site (the station is shown on the panel). The **Radar — NWS** button opens the national map.
 - **Cloud ceiling depends on the METAR proxy** — if it is unreachable the Cloud Ceiling tile shows "No METAR data" and everything else still works.
 - **Altitude and speed limits** — defaults shown are US FAA limits, and cloud ceiling depends on a nearby airport's weather report, which can be missing in areas with few airports. Always verify the regulations for your country and airspace class, and use Customize to hide or replace items that don't match.
+- **Printing needs a browser** — **Print checklist** works in Safari, other browsers and on computers, but not in the iPhone or iPad Home Screen app, because iOS doesn't allow printing from there. Open the page in Safari to print
+- **Records are plain text** — **Save record** makes a `.txt` file. It isn't a PDF, and it isn't uploaded anywhere
 - **Items move within their section** — you can reorder an item inside its section, but not move it to a different section.
 
 ---

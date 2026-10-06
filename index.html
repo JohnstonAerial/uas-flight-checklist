@@ -184,7 +184,11 @@
   .settings.open .settings-body, .panel.editing .settings-body { display: block; }
   .panel.editing .settings-toggle { display: none; }
   .settings-note { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; text-align: center; font-size: 11px; color: var(--text-light); line-height: 1.4; }
-  .pc-btns { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+  .progress-card { flex-wrap: wrap; padding: 12px 14px; gap: 10px; }
+  .progress-info { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; }
+  .progress-info .progress-label { margin-top: 0; }
+  .progress-info .progress-track { flex: 0 0 100%; margin-top: 8px; }
+  .pc-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; flex: 1 1 100%; }
   .pc-btns .reset-inline, .pc-btns .sec-all { width: 100%; text-align: center; border-radius: 20px; padding: 6px 12px; font-size: 12px; margin: 0; color: var(--text-muted); background: transparent; border: 1px solid var(--border); font-family: inherit; cursor: pointer; }
   .saved-note { font-size: 11px; color: var(--text-light); text-align: center; padding: 0 16px 8px; }
   .edit-bar { display: none; position: fixed; left: 0; right: 0; bottom: 0; max-width: 600px; margin: 0 auto; z-index: 50; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--border); border-bottom: none; border-radius: 14px 14px 0 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.18); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)) 16px; font-size: 13px; font-weight: 600; color: var(--text); }
@@ -193,6 +197,30 @@
   .cust-tip { margin-top: 8px; padding: 8px 10px; background: var(--section-bg); border-radius: 10px; line-height: 1.4; }
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 200; max-width: 90%; background: var(--green); color: #fff; font-size: 13px; font-weight: 600; padding: 10px 16px; border-radius: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); text-align: center; transition: opacity 0.4s; }
   .toast.gone { opacity: 0; }
+
+  /* ── Preflight record ── */
+  .pc-btns .rec-btn { width: 100%; text-align: center; border-radius: 20px; padding: 6px 12px; font-size: 12px; margin: 0; color: var(--blue); background: transparent; border: 1px solid var(--blue); font-family: inherit; cursor: pointer; min-height: 32px; font-weight: 600; }
+  .pc-btns .rec-btn:active { background: var(--blue-light); }
+  .pc-btns .print-btn { white-space: nowrap; font-weight: 500; }
+  .pc-btns .reset-inline, .pc-btns .sec-all, .pc-btns .rec-btn { white-space: nowrap; min-height: 30px; padding: 5px 6px; }
+  .panel.editing .rec-btn { display: none; }
+  .rec-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.5); display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 5vh 12px 24px; -webkit-overflow-scrolling: touch; }
+  .rec-box { width: 100%; max-width: 420px; background: var(--card); color: var(--text); border-radius: 16px; padding: 18px 18px 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.35); }
+  .rec-box h2 { font-size: 17px; margin: 0 0 12px; }
+  .rec-box label.rec-lbl { display: block; font-size: 12px; color: var(--text-muted); margin: 10px 0 4px; }
+  .rec-box input[type=text], .rec-box textarea { width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; color: var(--text); background: var(--section-bg); border: 1px solid var(--border); border-radius: 10px; padding: 9px 10px; }
+  .rec-box textarea { resize: vertical; min-height: 70px; }
+  .rec-box .rec-check { display: flex; align-items: center; gap: 10px; font-size: 14px; margin-top: 12px; }
+  .rec-box .rec-check input { width: 20px; height: 20px; flex-shrink: 0; }
+  .rec-more { margin-top: 12px; border: 1px solid var(--border); border-radius: 10px; padding: 0 12px; }
+  .rec-more summary { cursor: pointer; font-size: 14px; color: var(--blue); padding: 10px 0; min-height: 24px; font-weight: 600; }
+  .rec-more[open] summary { border-bottom: 1px solid var(--border); margin-bottom: 2px; }
+  .rec-more label.rec-lbl:first-of-type { margin-top: 6px; }
+  .rec-more > :last-child { margin-bottom: 12px; }
+  .rec-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+  .rec-actions button { font: inherit; font-size: 15px; border-radius: 22px; padding: 9px 20px; min-height: 40px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--text-muted); }
+  .rec-actions .rec-dl { color: var(--blue); border-color: var(--blue); }
+  .rec-actions .rec-save { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
   .xfer { max-width: 600px; margin: 14px auto 6px; padding: 12px 16px 4px; border-top: 1px solid var(--border); text-align: center; font-size: 11px; color: var(--text-light); }
   .settings-help { max-width: 600px; margin: 6px auto 10px; padding: 0 16px; text-align: center; font-size: 14px; }
   .settings-help a { color: var(--link); display: inline-block; padding: 6px 0; }
@@ -317,6 +345,40 @@
   .reset-inline, .sec-all, .cust-btn { min-height: 32px; }
   .keep-row select, .region-sel, .xfer-box { font-size: 16px; }
   .wx-night { font-size: 12px; font-weight: 600; color: var(--amber); text-align: center; margin-top: 6px; }
+
+  .print-fields { display: none; }
+  /* ── Print: plain checklist you can tick with a pencil ── */
+  @media print {
+    @page { margin: 14mm 12mm; }
+    :root { --text:#000; --text-muted:#000; --text-light:#000; --card:#fff; --section-bg:#fff; --border:#999; --bg:#fff; --amber-light:#fff; }
+    html, body { background: #fff !important; color: #000 !important; min-height: 0; }
+    .header { position: static; background: none !important; color: #000 !important; box-shadow: none; padding: 0 0 6px; border-bottom: 2px solid #000; margin-bottom: 8px; }
+    .header h1 { font-size: 16pt; }
+    .header p { font-size: 9pt; opacity: 1; color: #000; }
+    .tabs { display: block; overflow: visible; }
+    .tab:not(.active) { display: none !important; }
+    .tab.active { display: block; padding: 6px 0 0; font-size: 13pt; text-align: left; color: #000 !important; border: 0; }
+    .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .progress-card, .complete-banner, .flag-hint, .saved-note,
+    .edit-bar, .toast, .rec-overlay, .rec-btn, .pc-btns, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
+    .content { max-width: none; padding: 0; margin: 0; }
+    .panel { padding: 0; }
+    .print-fields { display: block; margin: 0 0 4px; }
+    .pf-row { display: flex; gap: 22px; margin: 12px 0 0; }
+    .pf-f { display: flex; flex: 1; align-items: flex-end; gap: 6px; font-size: 10pt; font-weight: 600; color: #000; }
+    .pf-f.pf-short { flex: 0 0 38%; }
+    .pf-f span { flex: 1; border-bottom: 1px solid #000; height: 1.2em; }
+    .section { margin-bottom: 10px; break-inside: auto; }
+    .section.collapsed .section-card { display: block !important; }
+    .section-header { color: #000 !important; font-size: 10.5pt; padding: 8px 0 3px; border-bottom: 1.5px solid #000; break-after: avoid; }
+    .section-card { box-shadow: none; border-radius: 0; background: none; overflow: visible; }
+    .item { background: none !important; padding: 5px 2px; gap: 10px; border-bottom: 0.5px solid #999; break-inside: avoid; }
+    .item .item-text, .item.checked .item-text { color: #000 !important; text-decoration: none !important; font-size: 10.5pt; line-height: 1.3; padding-top: 0; }
+    .check-circle, .item.checked .check-circle, .item.flagged .check-circle { width: 14px; height: 14px; border-radius: 2px; border: 1.5px solid #000 !important; background: #fff !important; margin-top: 1px; }
+    .item.checked .check-circle { background: #000 !important; }
+    .item.flagged .check-circle::after { color: #000; font-size: 11px; }
+    .check-icon { width: 10px; height: 10px; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
 </style>
 </head>
 <body>
@@ -325,7 +387,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.2.3</p>
+      <p>Free Drone Preflight Checklist · v3.5</p>
     </div>
   </div>
   <div class="tabs" role="tablist" aria-label="Checklists">
@@ -336,6 +398,12 @@
   <div class="progress-bar-wrap">
     <div class="progress-bar-fill" id="header-bar" style="width:0%"></div>
   </div>
+</div>
+
+<div class="print-fields" aria-hidden="true">
+  <div class="pf-row"><div class="pf-f pf-short">Date<span></span></div><div class="pf-f">Time<span></span></div></div>
+  <div class="pf-row"><div class="pf-f">Site<span></span></div></div>
+  <div class="pf-row"><div class="pf-f">Pilot<span></span></div><div class="pf-f">Visual observer<span></span></div></div>
 </div>
 
 
@@ -1347,7 +1415,7 @@ async function xferSave(btn) {
   const file = new File([json], name, { type: 'application/json' });
   try {
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({ files: [file], title: 'UAS checklist backup' });
+      await navigator.share({ files: [file] });
       xferMsg(btn, '✓ Backup ready. Save it or send it to your other device.'); return;
     }
   } catch (e) { if (e && e.name === 'AbortError') return; }
@@ -1768,6 +1836,7 @@ let site = recall('wxSite', null);       // {name, lat, lon}, or null = use my c
 let recentSites = recall('wxRecent', []);
 let wxReq = 0;
 let lastWeatherAt = null;
+let lastCoords = null;   // where the weather last loaded, used for the preflight record
 let goodDraw = null, goodKey = null;   // last successful weather drawing, kept for when a refresh fails (weak signal, rate limit)
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 let nightUpdate = null;   // set each time the weather card is drawn; keeps the night notice in step with the clock
@@ -2168,7 +2237,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         refreshAge();
       };
       lastDraw = draw;
-      goodDraw = draw; goodKey = site ? site.lat + ',' + site.lon : 'gps';
+      goodDraw = draw; goodKey = site ? site.lat + ',' + site.lon : 'gps'; lastCoords = { lat: lat, lon: lon };
       body.style.opacity = '';
       draw();
       srSay('Weather updated. Wind ' + (windOk ? fmtSpeedNum(windMph) + (gustMph ? ', gusting ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() : 'unavailable') + '. Cloud ceiling ' + (metarData2 ? ceilingText(ceilFt, m) : 'unavailable') + '. Precipitation ' + precipBlock().val + '.');
@@ -2283,6 +2352,224 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 })();
 
 loadWeather();
+
+// ── Preflight record: save a copy of the current checklist (and, if wanted, the weather) as a file ──
+const REC_KEY = 'uasRecordPrefs';
+
+function recPrefs() {
+  const p = recall(REC_KEY, {}) || {};
+  return { weather: p.weather !== false, unchecked: p.unchecked !== false, more: p.more === true };
+}
+function recClean(s) { return String(s == null ? '' : s).replace(/\s+/g, ' ').trim(); }
+function recNoEmoji(s) { return recClean(String(s).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '')); }
+function recSiteDefault() {
+  const el = document.getElementById('wx-loc-name');
+  return el ? recClean(el.textContent) : '';
+}
+function recCoords() {
+  const c = site ? site : lastCoords;
+  if (!c) return '';
+  const la = Number(c.lat), lo = Number(c.lon);
+  return isFinite(la) && isFinite(lo) ? la.toFixed(4) + ', ' + lo.toFixed(4) : '';
+}
+function recWeatherLines() {
+  const body = document.getElementById('wx-body');
+  const out = [];
+  if (!body) return out;
+  body.querySelectorAll('.wx-item').forEach(it => {
+    const q = (sel) => { const e = it.querySelector(sel); return e ? recNoEmoji(e.textContent) : ''; };
+    const label = q('.wx-label'), val = q('.wx-value');
+    const subs = [...it.querySelectorAll('.wx-sub')].map(e => recNoEmoji(e.textContent)).filter(Boolean);
+    if (label) out.push(label + ': ' + (val || '—') + (subs.length ? ' (' + subs.join('; ') + ')' : ''));
+  });
+  const sun = body.querySelector('.wx-sun'); if (sun) out.push(recNoEmoji(sun.textContent).replace(/\s*·\s*/g, ' · '));
+  const upd = body.querySelector('.wx-updated'); if (upd) out.push(recNoEmoji(upd.textContent));
+  const st = body.querySelector('.wx-status'); if (st) out.push('Note: ' + recNoEmoji(st.textContent));
+  if (!body.querySelector('.wx-item')) return ['Weather was not available when this record was saved.'].concat(st ? out.slice(-1) : []);
+  return out;
+}
+function recTabName() {
+  const t = document.querySelector('.tab.active');
+  return t ? recClean(t.textContent) : '';
+}
+function recWrap(t) {                       // plain text: 2-space indent, long lines wrap under the text
+  const first = '  ', next = '      ', max = 78;
+  const words = t.split(' '); const out = []; let line = first;
+  words.forEach(w => {
+    if (line.trim() && (line + ' ' + w).length > max) { out.push(line); line = next + w; }
+    else line += (line.trim() ? ' ' : '') + w;
+  });
+  out.push(line);
+  return out.join('\n');
+}
+function buildRecord(o) {
+  const H1 = t => t.toUpperCase() + '\n' + '='.repeat(t.length);
+  const H2 = t => '\n' + t.toUpperCase();
+  const H3 = t => '\n' + t;
+  const B = (k, v) => k + ': ' + v;
+  const L = [];
+  const now = new Date();
+  L.push(H1('Preflight Record'));
+  L.push(now.toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }));
+  L.push('');
+  if (o.customer) L.push(B('Customer', o.customer));
+  if (o.site) L.push(B('Site', o.site));
+  const co = recCoords(); if (co) L.push(B('Coordinates', co));
+  const tab = recNoEmoji(recTabName()); if (tab) L.push(B('Checklist', tab));
+  if (o.laanc) L.push(B('Airspace authorization', o.laanc));
+  if (o.flightTime) L.push(B('Flight time', o.flightTime));
+  if (o.observer) L.push(B('Visual observer', o.observer));
+
+  if (o.weather) {
+    L.push(H2('Conditions'));
+    recWeatherLines().forEach(l => L.push(l));
+  }
+
+  const panelEl = document.getElementById('panel-' + current);
+  let total = 0, done = 0, flagged = 0;
+  const secLines = [];
+  panelEl.querySelectorAll('.section').forEach(sec => {
+    const hdr = sec.querySelector('.section-header');
+    const name = hdr ? recClean(hdr.firstChild ? hdr.firstChild.textContent : hdr.textContent) : 'Items';
+    const rows = [];
+    sec.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').forEach(it => {
+      const te = it.querySelector('.item-text');
+      const txt = recClean(te ? te.textContent : '');
+      const ck = it.classList.contains('checked'), fl = it.classList.contains('flagged');
+      total++; if (ck) done++; if (fl) flagged++;
+      if (!ck && !fl && !o.unchecked) return;
+      rows.push(recWrap((fl ? '[!] NEEDS ATTENTION: ' : ck ? '[x] ' : '[ ] ') + txt));
+    });
+    if (rows.length) { secLines.push(H3(name)); rows.forEach(r => secLines.push(r)); }
+  });
+  L.push(H2('Checklist — ' + done + ' of ' + total + ' complete' + (flagged ? ', ' + flagged + ' need' + (flagged === 1 ? 's' : '') + ' attention' : '')));
+  secLines.forEach(l => L.push(l));
+
+  if (o.notes) { L.push(H2('Notes')); L.push(o.notes); }
+
+  const m = (document.querySelector('.header p') || {}).textContent || '';
+  const v = (m.match(/v\d+(?:\.\d+)*[a-z]?/) || [''])[0];
+  L.push('');
+  const foot = 'UAS Flight Checklists' + (v ? ' ' + v : '') + ' · checklist.johnstonaerial.com';
+  L.push(foot);
+  return L.join('\n') + '\n';
+}
+function recFileName(o) {
+  const d = new Date(), p = n => String(n).padStart(2, '0');
+  let nm = 'preflight-record-' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes());
+  const c = (o.customer || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 30);
+  if (c) nm += '-' + c;
+  return nm + '.txt';
+}
+let recForceDownload = false, recLastErr = '';
+async function recDeliver(text, name) {
+  try {
+    if (typeof File === 'function' && navigator.canShare && navigator.share) {
+      const f = new File([text], name, { type: 'text/plain' });
+      if (navigator.canShare({ files: [f] })) { await navigator.share({ files: [f] }); return 'shared'; }
+    }
+  } catch (e) {
+    if (e && e.name === 'AbortError') return 'cancelled';
+    if (!recForceDownload) { recLastErr = (e && e.name) || 'error'; return 'refused'; }
+  }
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  return 'downloaded';
+}
+function recToast(msg, ms) {
+  const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.classList.add('gone'); setTimeout(() => t.remove(), 500); }, ms || 3500);
+}
+function closeRecord() {
+  const ov = document.querySelector('.rec-overlay');
+  if (ov) { ov.remove(); document.removeEventListener('keydown', recKey); }
+  if (recOpener && recOpener.focus) { try { recOpener.focus(); } catch (e) {} }
+}
+let recOpener = null;
+function recKey(e) { if (e.key === 'Escape') closeRecord(); }
+function recOffer(text, name) {
+  const ov = document.createElement('div'); ov.className = 'rec-overlay';
+  ov.innerHTML = '<div class="rec-box" role="dialog" aria-modal="true" aria-labelledby="rec-ot">' +
+    '<h2 id="rec-ot">Your record is ready</h2>' +
+    '<p style="margin:0 0 4px;font-size:14px;color:var(--text-muted)">Your browser didn\'t open the Share sheet this time. Tap Share to try again, or Download to save the file.</p>' +
+    '<div class="rec-actions"><button type="button" class="rec-cancel">Close</button><button type="button" class="rec-dl">Download</button><button type="button" class="rec-save">Share…</button></div></div>';
+  document.body.appendChild(ov);
+  const done = () => ov.remove();
+  ov.addEventListener('click', e => { if (e.target === ov) done(); });
+  ov.querySelector('.rec-cancel').onclick = done;
+  ov.querySelector('.rec-dl').onclick = async () => { recForceDownload = true; const h = await recDeliver(text, name); recForceDownload = false; done(); recToast('✓ Record saved to your downloads'); };
+  ov.querySelector('.rec-save').onclick = async () => {
+    const h = await recDeliver(text, name);
+    if (h === 'refused') { recToast('Sharing is not available right now — use Download'); return; }
+    done(); if (h === 'shared') recToast('✓ Record ready');
+  };
+}
+function openRecord(btn) {
+  closeRecord();
+  recOpener = btn || null;
+  const prefs = recPrefs();
+  const ov = document.createElement('div'); ov.className = 'rec-overlay';
+  ov.innerHTML =
+    '<div class="rec-box" role="dialog" aria-modal="true" aria-labelledby="rec-title">' +
+    '<h2 id="rec-title">Save preflight record</h2>' +
+    '<label class="rec-lbl" for="rec-cust">Customer (optional)</label><input type="text" id="rec-cust" autocomplete="off" autocapitalize="words" maxlength="120">' +
+    '<label class="rec-lbl" for="rec-site">Site</label><input type="text" id="rec-site" autocomplete="off" maxlength="160">' +
+    '<label class="rec-lbl" for="rec-notes">Notes (optional)</label><textarea id="rec-notes" rows="3" maxlength="2000"></textarea>' +
+    '<details class="rec-more" id="rec-more"><summary>More details</summary>' +
+    '<label class="rec-lbl" for="rec-laanc">Airspace authorization (optional)</label><input type="text" id="rec-laanc" autocomplete="off" maxlength="160" placeholder="Ref #, altitude, times">' +
+    '<label class="rec-lbl" for="rec-ft">Flight time (optional)</label><input type="text" id="rec-ft" autocomplete="off" maxlength="80" placeholder="e.g. 38 min total">' +
+    '<label class="rec-lbl" for="rec-vo">Visual observer (optional)</label><input type="text" id="rec-vo" autocomplete="off" autocapitalize="words" maxlength="120">' +
+    '</details>' +
+    '<label class="rec-check"><input type="checkbox" id="rec-wx"> Include weather conditions</label>' +
+    '<label class="rec-check"><input type="checkbox" id="rec-un"> Include items not checked</label>' +
+    '<div class="rec-actions"><button type="button" class="rec-cancel">Cancel</button><button type="button" class="rec-save">Save</button></div>' +
+    '</div>';
+  document.body.appendChild(ov);
+  const $ = (id) => ov.querySelector(id);
+  $('#rec-site').value = recSiteDefault();
+  $('#rec-wx').checked = prefs.weather;
+  $('#rec-un').checked = prefs.unchecked;
+  $('#rec-more').open = prefs.more;
+  ov.addEventListener('click', (e) => { if (e.target === ov) closeRecord(); });
+  $('.rec-cancel').onclick = closeRecord;
+  $('.rec-save').onclick = async () => {
+    const o = {
+      customer: recClean($('#rec-cust').value), site: recClean($('#rec-site').value),
+      notes: $('#rec-notes').value.replace(/\r\n?/g, '\n').trim(),
+      laanc: recClean($('#rec-laanc').value), flightTime: recClean($('#rec-ft').value), observer: recClean($('#rec-vo').value),
+      weather: $('#rec-wx').checked, unchecked: $('#rec-un').checked
+    };
+    store(REC_KEY, { weather: o.weather, unchecked: o.unchecked, more: !!(o.laanc || o.flightTime || o.observer) });
+    const text = buildRecord(o), name = recFileName(o);
+    const how = await recDeliver(text, name);
+    closeRecord();
+    if (how === 'refused') { recOffer(text, name); return; }
+    if (how === 'downloaded') recToast('✓ Record saved to your downloads');
+    else if (how === 'shared') recToast('✓ Record ready');
+  };
+  document.addEventListener('keydown', recKey);
+  setTimeout(() => { const f = $('#rec-cust'); if (f) f.focus(); }, 50);
+}
+document.querySelectorAll('.panel .pc-btns').forEach(col => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'rec-btn'; b.textContent = 'Save record';
+  b.setAttribute('aria-label', 'Save a preflight record of this checklist');
+  b.onclick = () => openRecord(b);
+  col.prepend(b);
+  const pb = document.createElement('button');
+  pb.type = 'button'; pb.className = 'rec-btn print-btn'; pb.textContent = 'Print checklist';
+  pb.setAttribute('aria-label', 'Print this checklist');
+  pb.onclick = () => {
+    const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const app = navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
+    if (ios && app) { recToast('Printing isn\'t available in the Home Screen app. Open this page in Safari, then tap Share \u2192 Print.', 7000); return; }
+    try { window.print(); } catch (e) {}
+  };
+  col.prepend(pb);
+});
 </script>
 
 </body>
