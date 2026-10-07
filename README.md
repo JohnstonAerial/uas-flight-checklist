@@ -19,9 +19,26 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
   <tr>
     <td align="center"><img src="screenshots/02-settings.png" alt="Settings panel with region, progress retention and Back up and restore" width="240"><br><sub><b>Settings &amp; Back up / restore</b></sub></td>
     <td align="center"><img src="screenshots/03-customize.png" alt="Customize panel with tab rename, hide tab and Done" width="240"><br><sub><b>Rename or hide tabs</b></sub></td>
+    <td align="center"><img src="screenshots/06-save-record.png" alt="Save preflight record pop-up with customer, site, notes and options" width="240"><br><sub><b>Save a preflight record</b></sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="screenshots/07-printed.png" alt="Printed checklist with blank date, time, site and pilot lines" width="240"><br><sub><b>Print it for a pencil</b></sub></td>
+    <td></td>
     <td></td>
   </tr>
 </table>
+
+---
+
+## What's new in v3.5.1
+
+Small changes to **Save record**:
+
+- **GPS coordinates are optional** — the record no longer includes your coordinates unless you tick **Include GPS coordinates**. The box is off by default
+- **Site starts blank** — type an address or place name, or leave it empty. If you chose a flight site on the weather card, its name fills in
+- **Copy as text instead** — a link in the Save record pop-up that copies the record to your clipboard as plain text, with no file. Handy when the Share sheet saves it as a file you didn't want
+- **Clock times in the weather section** — the record shows "observed 02:51 PM" and "Weather as of 03:12 PM" instead of "21 min ago", so it still makes sense when you open it later. The wind arrow is left out of the record because it already says "From NE"
+- **Back to the top** — after you save or copy a record, the page scrolls back to the top
 
 ---
 
@@ -136,7 +153,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention** — press and hold any item to mark it amber; flagged items don't count as complete until you resolve them
-- **Save a preflight record** — tap **Save record** to keep a plain text copy of the checklist (what was checked, flagged items, optional weather, site, customer, notes and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-preflight-record)
+- **Save a preflight record** — tap **Save record** to keep a plain text copy of the checklist (what was checked, flagged items, optional weather, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-preflight-record)
 - **Print it** — **Print checklist** prints the open tab as a clean paper checklist with blank date, time, site and pilot lines, for use with a pencil. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil)
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
 - **Completely free** to host and run
@@ -244,7 +261,7 @@ Yes. It's free to fork, and you can host your own copy and change the default it
 - **Cloud ceiling depends on the METAR proxy** — if it is unreachable the Cloud Ceiling tile shows "No METAR data" and everything else still works.
 - **Altitude and speed limits** — defaults shown are US FAA limits, and cloud ceiling depends on a nearby airport's weather report, which can be missing in areas with few airports. Always verify the regulations for your country and airspace class, and use Customize to hide or replace items that don't match.
 - **Printing needs a browser** — **Print checklist** works in Safari, other browsers and on computers, but not in the iPhone or iPad Home Screen app, because iOS doesn't allow printing from there. Open the page in Safari to print
-- **Records are plain text** — **Save record** makes a `.txt` file. It isn't a PDF, and it isn't uploaded anywhere
+- **Records are plain text** — **Save record** makes a `.txt` file. It isn't a PDF, and it isn't uploaded anywhere. You can also copy it as text
 - **Items move within their section** — you can reorder an item inside its section, but not move it to a different section.
 
 ---

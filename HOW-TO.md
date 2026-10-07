@@ -86,11 +86,13 @@ Still worth doing: the checklist's own tip to screenshot your mission brief. The
 Want a copy of what you checked? Tap **Save record**, next to **Print checklist** at the top of the checklist.
 
 1. Tap **Save record**.
-2. Fill in what you want to keep: the customer, the site (it fills in from the weather card) and any notes. **More details** has boxes for airspace authorization (for example a LAANC reference, altitude and times), flight time and visual observer. Everything is optional.
-3. Choose whether to include the weather conditions and the items you didn't check.
+2. Fill in what you want to keep: the customer, the site (type an address or place name, or leave it blank) and any notes. **More details** has boxes for airspace authorization (for example a LAANC reference, altitude and times), flight time and visual observer. Everything is optional.
+3. Choose whether to include the weather conditions, the items you didn't check, and your GPS coordinates (off unless you tick it).
 4. Tap **Save**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files**, AirDrop, Mail or Messages. On a computer the file goes to your Downloads folder.
 
 You get one plain text file, named like `preflight-record-2026-10-06-1415-smith-roofing.txt`, that opens on any device. Items you flagged are listed as NEEDS ATTENTION. Items you hid are left out and items you added are included. The record is made on your device and isn't sent anywhere.
+
+Prefer to paste it into a note or email? Tap **Copy as text instead**. The record is copied to your clipboard and no file is made.
 
 If the Share sheet doesn't open, the app shows a box with **Share…** and **Download** buttons instead.
 

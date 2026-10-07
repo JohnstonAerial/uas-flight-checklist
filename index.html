@@ -212,6 +212,9 @@
   .rec-box textarea { resize: vertical; min-height: 70px; }
   .rec-box .rec-check { display: flex; align-items: center; gap: 10px; font-size: 14px; margin-top: 12px; }
   .rec-box .rec-check input { width: 20px; height: 20px; flex-shrink: 0; }
+  .rec-box .rec-hint { font-size: 12px; color: var(--text-muted); line-height: 1.35; margin: 4px 0 0 30px; }
+  .rec-box .rec-check.rec-off { opacity: 0.5; }
+  .rec-box .rec-copy { display: block; background: none; border: 0; padding: 12px 0 0; margin: 0; color: var(--blue); font-family: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; }
   .rec-more { margin-top: 12px; border: 1px solid var(--border); border-radius: 10px; padding: 0 12px; }
   .rec-more summary { cursor: pointer; font-size: 14px; color: var(--blue); padding: 10px 0; min-height: 24px; font-weight: 600; }
   .rec-more[open] summary { border-bottom: 1px solid var(--border); margin-bottom: 2px; }
@@ -387,7 +390,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.5</p>
+      <p>Free Drone Preflight Checklist · v3.5.1</p>
     </div>
   </div>
   <div class="tabs" role="tablist" aria-label="Checklists">
@@ -2202,7 +2205,7 @@ async function renderWeather(lat, lon, attempt = 1) {
             <div class="wx-label">Cloud Ceiling</div>
             <div class="wx-value ${ceilClass}">${ceilTxt}</div>
             <div class="wx-sub">${ceilNote}</div>
-            ${metarData2 ? `<div class="wx-sub">${stationId} · ${fmtDist(metarData2.dist)} away${metarData2.ageMin != null ? ' · ' + ageText(metarData2.ageMin * 60000) : ''}${metarData2.count > 1 ? ' · lowest of ' + metarData2.count + ' stations' : ''}</div>` : ''}
+            ${metarData2 ? `<div class="wx-sub"${metarData2.ageMin != null ? ' data-rec-age="' + (Date.now() - metarData2.ageMin * 60000) + '"' : ''}>${stationId} · ${fmtDist(metarData2.dist)} away${metarData2.ageMin != null ? ' · ' + ageText(metarData2.ageMin * 60000) : ''}${metarData2.count > 1 ? ' · lowest of ' + metarData2.count + ' stations' : ''}</div>` : ''}
             ${lowCloudTxt() ? `<div class="wx-sub">${lowCloudTxt()}</div>` : ''}
             ${maxAltTxt() ? `<div class="wx-sub"><strong>${maxAltTxt()}</strong></div>` : ''}
           </div>
@@ -2358,13 +2361,12 @@ const REC_KEY = 'uasRecordPrefs';
 
 function recPrefs() {
   const p = recall(REC_KEY, {}) || {};
-  return { weather: p.weather !== false, unchecked: p.unchecked !== false, more: p.more === true };
+  return { weather: p.weather !== false, unchecked: p.unchecked !== false, coords: p.coords === true, more: p.more === true };
 }
 function recClean(s) { return String(s == null ? '' : s).replace(/\s+/g, ' ').trim(); }
 function recNoEmoji(s) { return recClean(String(s).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '')); }
 function recSiteDefault() {
-  const el = document.getElementById('wx-loc-name');
-  return el ? recClean(el.textContent) : '';
+  return (typeof site !== 'undefined' && site && site.name) ? recClean(site.name) : '';
 }
 function recCoords() {
   const c = site ? site : lastCoords;
@@ -2378,12 +2380,18 @@ function recWeatherLines() {
   if (!body) return out;
   body.querySelectorAll('.wx-item').forEach(it => {
     const q = (sel) => { const e = it.querySelector(sel); return e ? recNoEmoji(e.textContent) : ''; };
-    const label = q('.wx-label'), val = q('.wx-value');
-    const subs = [...it.querySelectorAll('.wx-sub')].map(e => recNoEmoji(e.textContent)).filter(Boolean);
+    const label = q('.wx-label'), val = q('.wx-value').replace(/\s*[\u2190-\u2199]\s*/g, ' ').trim();   // no wind arrow in the record; the "From NE" text says it
+    const subs = [...it.querySelectorAll('.wx-sub')].map(e => {
+      let t = recNoEmoji(e.textContent);
+      const ts = e.getAttribute('data-rec-age');              // record shows a clock time, not "21 min ago"
+      if (ts) t = t.replace(/ · (just now|\d+ min ago|\d+ hrs? ago)/, ' · observed ' + new Date(+ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+      return t.replace(/ \((just now|\d+ min ago|\d+ hrs? ago)\)/, '');
+    }).filter(Boolean);
     if (label) out.push(label + ': ' + (val || '—') + (subs.length ? ' (' + subs.join('; ') + ')' : ''));
   });
   const sun = body.querySelector('.wx-sun'); if (sun) out.push(recNoEmoji(sun.textContent).replace(/\s*·\s*/g, ' · '));
-  const upd = body.querySelector('.wx-updated'); if (upd) out.push(recNoEmoji(upd.textContent));
+  const upd = body.querySelector('.wx-updated');
+  if (upd) { const u = upd.cloneNode(true); const ag = u.querySelector('#wx-age'); if (ag) ag.remove(); out.push(recNoEmoji(u.textContent).replace(/^\s*Updated /, 'Weather as of ')); }
   const st = body.querySelector('.wx-status'); if (st) out.push('Note: ' + recNoEmoji(st.textContent));
   if (!body.querySelector('.wx-item')) return ['Weather was not available when this record was saved.'].concat(st ? out.slice(-1) : []);
   return out;
@@ -2414,7 +2422,7 @@ function buildRecord(o) {
   L.push('');
   if (o.customer) L.push(B('Customer', o.customer));
   if (o.site) L.push(B('Site', o.site));
-  const co = recCoords(); if (co) L.push(B('Coordinates', co));
+  const co = o.coords ? recCoords() : ''; if (co) L.push(B('Coordinates', co));
   const tab = recNoEmoji(recTabName()); if (tab) L.push(B('Checklist', tab));
   if (o.laanc) L.push(B('Airspace authorization', o.laanc));
   if (o.flightTime) L.push(B('Flight time', o.flightTime));
@@ -2507,6 +2515,17 @@ function recOffer(text, name) {
     done(); if (h === 'shared') recToast('✓ Record ready');
   };
 }
+async function recCopy(text) {
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(text); return true; }
+  } catch (e) {}
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+    const ok = document.execCommand('copy'); ta.remove(); return !!ok;
+  } catch (e) { return false; }
+}
 function openRecord(btn) {
   closeRecord();
   recOpener = btn || null;
@@ -2516,7 +2535,7 @@ function openRecord(btn) {
     '<div class="rec-box" role="dialog" aria-modal="true" aria-labelledby="rec-title">' +
     '<h2 id="rec-title">Save preflight record</h2>' +
     '<label class="rec-lbl" for="rec-cust">Customer (optional)</label><input type="text" id="rec-cust" autocomplete="off" autocapitalize="words" maxlength="120">' +
-    '<label class="rec-lbl" for="rec-site">Site</label><input type="text" id="rec-site" autocomplete="off" maxlength="160">' +
+    '<label class="rec-lbl" for="rec-site">Site</label><input type="text" id="rec-site" autocomplete="off" maxlength="160" placeholder="Address or place name">' +
     '<label class="rec-lbl" for="rec-notes">Notes (optional)</label><textarea id="rec-notes" rows="3" maxlength="2000"></textarea>' +
     '<details class="rec-more" id="rec-more"><summary>More details</summary>' +
     '<label class="rec-lbl" for="rec-laanc">Airspace authorization (optional)</label><input type="text" id="rec-laanc" autocomplete="off" maxlength="160" placeholder="Ref #, altitude, times">' +
@@ -2525,6 +2544,9 @@ function openRecord(btn) {
     '</details>' +
     '<label class="rec-check"><input type="checkbox" id="rec-wx"> Include weather conditions</label>' +
     '<label class="rec-check"><input type="checkbox" id="rec-un"> Include items not checked</label>' +
+    '<label class="rec-check" id="rec-gps-row"><input type="checkbox" id="rec-gps"> Include GPS coordinates</label>' +
+    '<div class="rec-hint" id="rec-gps-hint"></div>' +
+    '<button type="button" class="rec-copy" id="rec-copy">Copy as text instead</button>' +
     '<div class="rec-actions"><button type="button" class="rec-cancel">Cancel</button><button type="button" class="rec-save">Save</button></div>' +
     '</div>';
   document.body.appendChild(ov);
@@ -2533,20 +2555,37 @@ function openRecord(btn) {
   $('#rec-wx').checked = prefs.weather;
   $('#rec-un').checked = prefs.unchecked;
   $('#rec-more').open = prefs.more;
+  const gpsOk = !!recCoords();
+  $('#rec-gps').checked = gpsOk && prefs.coords;
+  $('#rec-gps').disabled = !gpsOk;
+  $('#rec-gps-row').classList.toggle('rec-off', !gpsOk);
+  $('#rec-gps-hint').textContent = gpsOk
+    ? 'Adds the latitude and longitude the weather is using: your phone\'s location, or the flight site you chose. Accurate to about 35 feet (11 m).'
+    : 'Location not available.';
   ov.addEventListener('click', (e) => { if (e.target === ov) closeRecord(); });
   $('.rec-cancel').onclick = closeRecord;
-  $('.rec-save').onclick = async () => {
+  const collect = () => {
     const o = {
       customer: recClean($('#rec-cust').value), site: recClean($('#rec-site').value),
       notes: $('#rec-notes').value.replace(/\r\n?/g, '\n').trim(),
       laanc: recClean($('#rec-laanc').value), flightTime: recClean($('#rec-ft').value), observer: recClean($('#rec-vo').value),
-      weather: $('#rec-wx').checked, unchecked: $('#rec-un').checked
+      weather: $('#rec-wx').checked, unchecked: $('#rec-un').checked, coords: gpsOk && $('#rec-gps').checked
     };
-    store(REC_KEY, { weather: o.weather, unchecked: o.unchecked, more: !!(o.laanc || o.flightTime || o.observer) });
+    store(REC_KEY, { weather: o.weather, unchecked: o.unchecked, coords: gpsOk ? o.coords : prefs.coords, more: !!(o.laanc || o.flightTime || o.observer) });
+    return o;
+  };
+  $('#rec-copy').onclick = async () => {
+    const ok = await recCopy(buildRecord(collect()));
+    if (ok) { closeRecord(); try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); } recToast('\u2713 Copied to your clipboard', 5000); }
+    else recToast('Couldn\'t copy. Use Save instead.', 5000);
+  };
+  $('.rec-save').onclick = async () => {
+    const o = collect();
     const text = buildRecord(o), name = recFileName(o);
     const how = await recDeliver(text, name);
     closeRecord();
     if (how === 'refused') { recOffer(text, name); return; }
+    if (how === 'downloaded' || how === 'shared') { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); } }
     if (how === 'downloaded') recToast('✓ Record saved to your downloads');
     else if (how === 'shared') recToast('✓ Record ready');
   };
