@@ -306,6 +306,8 @@ This is a single HTML file — everything is in `index.html`. Without touching a
 
 Originally built by **Johnston Aerial** — FAA-certified commercial drone pilot based in Johnston County, North Carolina.
 
+**Save record** came from a suggestion by Mac in the Pilot Institute community. Thanks, Mac!
+
 [www.johnstonaerial.com](https://www.johnstonaerial.com) · [YouTube](https://www.youtube.com/@JohnstonAerial)
 
 ---
