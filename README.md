@@ -32,6 +32,12 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.5.6
+
+- **Buy me a coffee button shows on more screens** — it now appears next to **📘 Help** on iPads held upright, phones turned sideways, and any screen where the page is zoomed in. It still stays hidden on a phone held upright, and when you print.
+
+---
+
 ## What's new in v3.5.5
 
 - **Buy me a coffee button on bigger screens** — on a computer, tablet or unfolded folding phone, a **☕ Buy me a coffee** button now sits next to **📘 Help** at the top of the page. It doesn't show on a phone, where space is tight, or when you print.

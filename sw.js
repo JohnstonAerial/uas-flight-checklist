@@ -2,7 +2,7 @@
 // Network first: when you're online you always get the newest version.
 // When there's no signal, the last copy that loaded is used instead.
 // Only this site's own files are handled. Weather, radar and search always go to the network.
-const CACHE = 'uas-checklist-v3.5.5';
+const CACHE = 'uas-checklist-v3.5.6';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
