@@ -32,6 +32,12 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.5.7
+
+- **External pressures check** — a new item at the start of **On site — pre-flight** on all three tabs: "feeling rushed or pushed to fly? Would you still fly without it?" It's the "E" in the FAA's PAVE risk check, and the one most often skipped.
+
+---
+
 ## What's new in v3.5.6
 
 - **Buy me a coffee button shows on more screens** — it now appears next to **📘 Help** on iPads held upright, phones turned sideways, and any screen where the page is zoomed in. It still stays hidden on a phone held upright, and when you print.
