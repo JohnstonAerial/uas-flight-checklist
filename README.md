@@ -32,6 +32,13 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.5.8
+
+- **Antennas out** — a new item before powering on, a reminder to deploy your controller's antennas.
+- **Visit counter** — a privacy-focused counter, with no cookies and no personal information, so I can see how many people use the checklist.
+
+---
+
 ## What's new in v3.5.7
 
 - **External pressures check** — a new item at the start of **On site — pre-flight** on all three tabs: "feeling rushed or pushed to fly? Would you still fly without it?" It's the "E" in the FAA's PAVE risk check, and the one most often skipped.
@@ -271,7 +278,7 @@ Yes. There's no app to buy, no subscription, no ads and no account. It's an open
 No. It's a memory aid. The pilot in command is responsible for knowing and following the rules where they fly. The default items and limits (for example the wind and altitude numbers) reflect US FAA guidance, so check your local rules and use **Customize** to change anything that doesn't fit your operation.
 
 **What information does it collect?**
-None about you. There are no accounts, no analytics and no tracking in the page. Your checks, settings and notes stay in your browser's storage on your device. To show weather, the page sends the coordinates of your location (or the flight site you choose) to the free weather services listed under *Built With*, and the text you type in "Change" to look up a place. It's hosted on GitHub Pages, which, like any web host, keeps its own standard server logs.
+None about you. There are no accounts and no ads, and nothing in the page identifies you. Your checks, settings and notes stay in your browser's storage on your device. To show weather, the page sends the coordinates of your location (or the flight site you choose) to the free weather services listed under *Built With*, and the text you type in "Change" to look up a place. The page also uses Cloudflare Web Analytics, a privacy-focused visit counter. It counts visits and rough details like country and device type, with no cookies and no personal information, so I can see whether the checklist is being used. It's hosted on GitHub Pages, which, like any web host, keeps its own standard server logs.
 
 **Why does it ask for my location?**
 To show weather for where you are. If you say no, tap **Change** and search for a town, ZIP code or coordinates instead.
@@ -344,6 +351,7 @@ This is a single HTML file — everything is in `index.html`. Without touching a
 - [aviationweather.gov](https://aviationweather.gov) — TFR and NOTAM links
 - Hosted free on [GitHub Pages](https://pages.github.com)
 - Weather proxy via [Cloudflare Workers](https://workers.cloudflare.com)
+- [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/) — a simple visit count, with no cookies and no personal information
 
 ---
 
