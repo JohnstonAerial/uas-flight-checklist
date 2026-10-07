@@ -72,6 +72,9 @@
   .header p { font-size: 11px; opacity: 0.8; margin-top: 2px; }
   .hdr-help { color: #fff; font-size: 13px; font-weight: 600; text-decoration: none; padding: 6px 12px; border: 1px solid rgba(255,255,255,0.55); border-radius: 999px; white-space: nowrap; align-self: flex-start; }
   .hdr-help:active { background: rgba(255,255,255,0.18); }
+  .hdr-actions { display: flex; gap: 8px; align-self: flex-start; }
+  .hdr-coffee { display: none; }
+  @media (min-width: 700px) { .hdr-coffee { display: inline-block; } }
   .reset-all { background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; font-family: inherit; }
 
   .tabs { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
@@ -395,9 +398,12 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.5.4</p>
+      <p>Free Drone Preflight Checklist · v3.5.5</p>
     </div>
-    <a class="hdr-help" href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener" aria-label="Help and guides (opens in a new tab)">📘 Help</a>
+    <div class="hdr-actions">
+      <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
+      <a class="hdr-help" href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener" aria-label="Help and guides (opens in a new tab)">📘 Help</a>
+    </div>
   </div>
   <div class="tabs" role="tablist" aria-label="Checklists">
     <div class="tab active" onclick="showPanel('general',this)">🏞 General</div>
