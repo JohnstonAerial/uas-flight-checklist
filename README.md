@@ -353,6 +353,8 @@ Originally built by **Johnston Aerial** — FAA-certified commercial drone pilot
 
 **Save record** came from a suggestion by Mac in the Pilot Institute community. Thanks, Mac!
 
+Many of the checklist items, like the IMSAFE self check, max distance, the TFR recheck, the flight plan item and the External pressures check, came from discussions and articles shared by the [Pilot Institute](https://pilotinstitute.com) community. Thank you!
+
 [www.johnstonaerial.com](https://www.johnstonaerial.com) · [YouTube](https://www.youtube.com/@JohnstonAerial)
 
 ---
