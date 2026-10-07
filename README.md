@@ -32,6 +32,12 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.5.4
+
+- **Buy me a coffee** — the checklist is free, and now there's a small way to say thanks: a **☕ Buy me a coffee** link in Settings & customize, and a quiet one-line note at the bottom of each tab. Neither shows when you print.
+
+---
+
 ## What's new in v3.5.3
 
 - **More checklist items** — a few things that are easy to forget:

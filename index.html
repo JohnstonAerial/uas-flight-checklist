@@ -229,6 +229,8 @@
   .xfer { max-width: 600px; margin: 14px auto 6px; padding: 12px 16px 4px; border-top: 1px solid var(--border); text-align: center; font-size: 11px; color: var(--text-light); }
   .settings-help { max-width: 600px; margin: 6px auto 10px; padding: 0 16px; text-align: center; font-size: 14px; }
   .settings-help a { color: var(--link); display: inline-block; padding: 6px 0; }
+  .coffee-note { font-size: 11px; color: var(--text-light); text-align: center; padding: 16px 16px 28px; }
+  .coffee-note a { color: var(--link); }
   .xfer-title { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 2px; }
   .xfer-sub { margin-bottom: 8px; line-height: 1.4; }
   .xfer-incl { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 4px; cursor: pointer; }
@@ -364,7 +366,7 @@
     .tabs { display: block; overflow: visible; }
     .tab:not(.active) { display: none !important; }
     .tab.active { display: block; padding: 6px 0 0; font-size: 13pt; text-align: left; color: #000 !important; border: 0; }
-    .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .progress-card, .complete-banner, .flag-hint, .saved-note,
+    .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .progress-card, .complete-banner, .flag-hint, .saved-note, .coffee-note,
     .edit-bar, .toast, .rec-overlay, .rec-btn, .pc-btns, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
     .content { max-width: none; padding: 0; margin: 0; }
     .panel { padding: 0; }
@@ -393,7 +395,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.5.3</p>
+      <p>Free Drone Preflight Checklist · v3.5.4</p>
     </div>
     <a class="hdr-help" href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener" aria-label="Help and guides (opens in a new tab)">📘 Help</a>
   </div>
@@ -1503,7 +1505,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const note = document.createElement('div'); note.className = 'settings-note';
   note.textContent = 'Your progress and these settings are saved on this device only. They don\'t sync by themselves, and on some devices a Home Screen app keeps its own separate copy. To copy them to another phone, tablet or browser, use Back up & restore below.';
   const help = document.createElement('div'); help.className = 'settings-help';
-  help.innerHTML = '<a href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener">📘 Help &amp; guides</a>';
+  help.innerHTML = '<a href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener">📘 Help &amp; guides</a><br><a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">☕ Buy me a coffee</a>';
   body.append(keep, reg, note, cust, makeXfer(), help);
   wrap.append(tg, body);
   card.before(wrap);
@@ -1517,6 +1519,9 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const bar = document.createElement('div'); bar.className = 'edit-bar';
   bar.innerHTML = '<span>✎ Editing your list</span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button>';
   panelEl.prepend(bar);
+  const coffee = document.createElement('div'); coffee.className = 'coffee-note';
+  coffee.innerHTML = 'Free to use. If it saved you a step, you can <a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee ☕</a>';
+  panelEl.appendChild(coffee);
 });
 setKeepHours(keepHours());
 
