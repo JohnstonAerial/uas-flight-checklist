@@ -30,6 +30,19 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.5.3
+
+- **More checklist items** — a few things that are easy to forget:
+  - **Gear packed** and **Battery installed and latched** on all three tabs
+  - **Max distance** (next to Max altitude) and **Recheck TFRs** (on site) on all three tabs
+  - **Bystanders warned** on General and Mapping
+  - **Flight plan** on General and Commercial
+  - On Mapping: **RTK FIX** before launch, and **Ground control points** for survey-accuracy jobs
+- **Self check now spells out IMSAFE** — Illness, Medication, Stress, Alcohol, Fatigue, Eating. If you had that item checked, it shows unchecked once after you update.
+- **Matching wording** — "Log flight time in your records" now reads the same on every tab
+
+---
+
 ## What's new in v3.5.2
 
 - **Help button** — a **📘 Help** button at the top right of the page opens these guides without opening Settings first
