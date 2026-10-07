@@ -32,6 +32,13 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.6
+
+- **Starts tidy** — the first time you open the checklist, only the first section of each tab is open and the rest are folded, so the long lists don't greet you all at once. Tap any header to open it. If you've used the checklist before, it keeps your layout.
+- **Finished sections fold themselves** — when you check off the last item in a section, it folds and the next unfinished section opens. If you've flagged an item as needing attention, the section stays open until it's resolved. Reset puts everything back, and printing still shows every item.
+
+---
+
 ## What's new in v3.5.8
 
 - **Antennas out** — a new item before powering on, a reminder to deploy your controller's antennas.

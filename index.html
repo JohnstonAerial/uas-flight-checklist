@@ -398,7 +398,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.5.8</p>
+      <p>Free Drone Preflight Checklist · v3.6</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -871,6 +871,7 @@ function toggle(el) {
   }
   updateProgress(current);
   saveProgress();
+  autoAdvance(el);
 }
 
 function toggleFlag(el) {
@@ -958,6 +959,7 @@ function resetCurrent() {
   if (!n) return;
   if (!confirm('Reset this checklist? This clears ' + n + ' checked or flagged item' + (n === 1 ? '' : 's') + ' on this tab.')) return;
   p.querySelectorAll('.item').forEach(i => i.classList.remove('checked', 'flagged'));
+  unfoldAuto(p);
   updateProgress(current);
   saveProgress();
   const h = p.querySelector('.flag-hint');
@@ -1235,6 +1237,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
 
 // ── Collapsible sections: tap a header to fold it; counts and ✓ / ⚠ stay visible ──
 const COLLAPSE_KEY = 'uasCollapsedSections';
+const firstVisit = (function () { try { return localStorage.getItem('uasCollapsedSections') === null && localStorage.getItem(REGION_KEY) === null; } catch (e) { return false; } })();
 let collapsed = (function () { try { return JSON.parse(localStorage.getItem(COLLAPSE_KEY)) || {}; } catch (e) { return {}; } })();
 function collapseSave() { try { localStorage.setItem(COLLAPSE_KEY, JSON.stringify(collapsed)); } catch (e) {} }
 const secTitle = (sec) => sec.querySelector('.section-header').firstChild.textContent.trim();
@@ -1269,9 +1272,70 @@ function setCollapsed(sec, on, save) {
 function toggleSection(head) {
   const sec = head.closest('.section');
   if (sec.closest('.panel.editing')) return;          // everything stays open while customizing
-  setCollapsed(sec, !sec.classList.contains('collapsed'), true);
+  const willFold = !sec.classList.contains('collapsed');
+  sec.classList.remove('auto-folded');
+  setCollapsed(sec, willFold, true);
   syncAllButton(sec.closest('.panel'));
 }
+// ── Auto-advance: when a section is finished it folds and the next unfinished one opens ──
+// This is temporary (not saved), so a reload or Reset puts things back as you had them.
+function secComplete(sec) {
+  const total = sec.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').length;
+  return total > 0 && sec.querySelectorAll('.item.checked:not(.is-hidden):not(.region-hidden)').length === total;
+}
+function tempFold(sec, on) {
+  sec.classList.toggle('collapsed', on);
+  sec.classList.toggle('auto-folded', on);
+  sec.querySelector('.section-header').setAttribute('aria-expanded', on ? 'false' : 'true');
+}
+function nextIncomplete(sec) {
+  let n = sec.nextElementSibling;
+  while (n) {
+    if (n.classList.contains('section') && !n.classList.contains('all-hidden') && !secComplete(n)) return n;
+    n = n.nextElementSibling;
+  }
+  return null;
+}
+function openTemp(sec) {
+  if (!sec.classList.contains('collapsed')) return;
+  sec.classList.remove('collapsed', 'auto-folded');
+  sec.querySelector('.section-header').setAttribute('aria-expanded', 'true');
+}
+function autoAdvance(el) {
+  const sec = el.closest('.section');
+  if (!sec || !el.classList.contains('checked') || !secComplete(sec)) return;
+  setTimeout(() => {
+    const panelEl = sec.closest('.panel');
+    if (panelEl.classList.contains('editing') || sec.classList.contains('collapsed') || !secComplete(sec)) return;
+    tempFold(sec, true);
+    const next = nextIncomplete(sec);
+    if (next) {
+      openTemp(next);
+      const r = next.querySelector('.section-header').getBoundingClientRect();
+      if (r.top < 90 || r.top > window.innerHeight * 0.6) {
+        window.scrollTo({ top: Math.max(0, window.scrollY + r.top - 110), behavior: 'smooth' });
+      }
+    }
+    syncAllButton(panelEl);
+  }, 500);
+}
+function unfoldAuto(panelEl) {
+  panelEl.querySelectorAll('.section.auto-folded').forEach(s => openTemp(s));
+  panelEl.querySelectorAll('.section').forEach(s => { if ((collapsed[panelEl.id] || []).includes(secTitle(s))) { s.classList.add('collapsed'); s.querySelector('.section-header').setAttribute('aria-expanded', 'false'); } });
+  syncAllButton(panelEl);
+}
+// On reload with restored progress: fold finished sections, open the first unfinished one
+function foldFinishedOnLoad() {
+  document.querySelectorAll('.panel').forEach(panelEl => {
+    if (!panelEl.querySelector('.item.checked')) return;
+    const secs = [...panelEl.querySelectorAll('.section:not(.all-hidden)')];
+    secs.forEach(s => { if (secComplete(s)) tempFold(s, true); });
+    const nxt = secs.find(s => !secComplete(s));
+    if (nxt) openTemp(nxt);
+    syncAllButton(panelEl);
+  });
+}
+
 function toggleAllSections(btn) {
   const panelEl = btn.closest('.panel'), secs = [...panelEl.querySelectorAll('.section')];
   const anyCollapsed = secs.filter(s => !s.classList.contains('all-hidden')).some(s => s.classList.contains('collapsed'));
@@ -1291,6 +1355,10 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     head.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSection(head); } });
     if ((collapsed[panelEl.id] || []).includes(secTitle(sec))) setCollapsed(sec, true, false);
   });
+  if (firstVisit) {   // first visit: only the first section is open; the rest are folded
+    [...panelEl.querySelectorAll('.section')].forEach((sec, i) => { if (i > 0) setCollapsed(sec, true, false); });
+    collapseSave();
+  }
   let row = panelEl.querySelector('.cust-row');
   if (!row) { row = document.createElement('div'); row.className = 'cust-row'; panelEl.querySelector('.keep-row').after(row); }
   const all = document.createElement('button');
@@ -1545,6 +1613,7 @@ if (restoredAt) {
 }
 
 ['zeitview','mapping','general'].forEach(updateProgress);
+foldFinishedOnLoad();
 
 // After a restore from a code or file: start at the top with Settings closed, and say so
 (function () {
