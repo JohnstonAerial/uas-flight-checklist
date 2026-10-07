@@ -30,6 +30,12 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.5.2
+
+- **Help button** — a **📘 Help** button at the top right of the page opens these guides without opening Settings first
+
+---
+
 ## What's new in v3.5.1
 
 Small changes to **Save record**:
