@@ -116,7 +116,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside t
 - **Checklist wording:** the items marked "(US)" are hidden: the TFR check, the LAANC item and the TFR recheck on site. The NOTAM item is reworded to point you to your country's aviation authority or NOTAM service.
 - **Ceiling warnings:** low-cloud notes say "check your local cloud and visibility rules" instead of quoting US rules.
 - **Night notice:** after sunset or before sunrise it says to check your local rules for night flying.
-- **Place search:** you can search by town, postcode or ZIP code, or enter coordinates.
+- **Place search:** you can search by town, postal code (ZIP code in the USA), or enter coordinates.
 
 **What works worldwide**
 

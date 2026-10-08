@@ -184,7 +184,7 @@ Version 3.2 makes the checklist work in more places and for more people:
 Version 3.1 makes the weather card much more useful on a rainy or low-cloud day:
 
 - **Cloud ceiling from the lowest nearby station** — it checks every airport weather report within 30 miles and shows the lowest ceiling (with the station, distance and age), the cautious choice. A **Lowest cloud nearby** line helps with the cloud-clearance rule
-- **Precipitation card** — combines live **radar** (RainViewer, free), **airport weather reports** and the forecast. Headlines include *Radar echoes nearby* (with a *No rain reported* note when nothing else confirms it), *Precip. likely*, the airport's own wording (for example *Light rain*), and *Rain possible* when only the forecast thinks so — with a note when radar doesn't see it
+- **Precipitation card** — combines live **radar** (RainViewer, free), **airport weather reports** and the forecast. Headlines include *Precip. nearby*, *Precip. likely*, the airport's own wording (for example *Light rain*), and *Rain possible* when only the forecast thinks so — with a note when radar doesn't see it
 - **Look-ahead lines** — *Rain likely ~4 PM*, *Best window ~8 PM – 2 AM*, *No clear window next 12 hrs* and *Storms possible*, shown only when there is something to say
 - **Humidity card** with dew point and a fog / lens-fogging warning
 - **Radar — NWS button opens on your location**
@@ -214,10 +214,14 @@ Version 3 is a major update built around making the checklist *yours*:
 - **3 mission-specific tabs** — General, Mapping, and Commercial (rename or hide any of them)
 - **Live Preflight Conditions panel** showing:
   - Wind speed, gusts, and direction arrow, plus wind at 400 ft
-  - Cloud ceiling in feet AGL from nearest METAR station
+  - Cloud ceiling in feet AGL from nearby airport (METAR) reports
   - Temperature and visibility
+  - Precipitation: live radar at your location, airport reports and the forecast, with a link to the radar map
+  - Humidity and dew point, with a fog and lens-fogging warning
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times
+- **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at 15 mph and red at 23 mph. The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility under 3 miles is red. KP index turns amber at 3 and red at 4. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
+- **Night notice** — after sunset or before sunrise, the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules)
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)
 - **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
@@ -225,11 +229,11 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Customize the list** — open **⚙ Settings & customize** and tap **✎ Customize list** to hide items that don't apply where you fly, add your own items to any section, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
 - **Rename or hide tabs** — in Customize mode, rename the tab you're on or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Renaming changes the tab's name only; use Hide and Add to change what's inside it
 - **Back up & restore** — see below
-- **Collapsible sections** — tap a section header to fold it up or open it, or use **Collapse all / Expand all**. Each header shows its count (like 9/12), a ✓ when it's finished and an amber ⚠ if something in it needs attention, even when folded. Your fold state is remembered
+- **Collapsible sections** — tap a section header to fold it up or open it, or use **Collapse all / Expand all**. Finished sections fold themselves and the next unfinished one opens, and on your first visit only the first section of each tab is open. Each header shows its count (like 9/12), a ✓ when it's finished and an amber ⚠ if something in it needs attention, even when folded. Your fold state is remembered
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it in Settings (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
 - **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
-- **Flag items that need attention** — press and hold any item to mark it amber; flagged items don't count as complete until you resolve them
+- **Flag items that need attention** — press and hold any item to mark it amber. Flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag
 - **Save a preflight record** — tap **Save record** to keep a plain text copy of the checklist (what was checked, flagged items, optional weather, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-preflight-record)
 - **Print it** — **Print checklist** prints the open tab as a clean paper checklist with blank date, time, site and pilot lines, for use with a pencil. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil)
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
@@ -239,15 +243,15 @@ Version 3 is a major update built around making the checklist *yours*:
 
 ## Back up & restore
 
-Your settings and progress are stored in the browser on the device you're using. They don't sync by themselves, and a checklist added to your Home Screen can keep its own separate copy from the browser tab (iPhones and iPads always do). It works the same on any phone, tablet or computer, in any current browser. **Back up & restore** (in ⚙ Settings, and also visible while you customize) lets you move them. It also lets you keep several setups and switch between them. See [Make your own profiles](HOW-TO.md#make-your-own-profiles).
+Your settings and progress are stored in the browser on the device you're using. They don't sync by themselves, and a checklist added to your Home Screen can keep its own separate copy from the browser tab (iPhones and iPads always do). It works the same on any phone, tablet or computer, in any current browser. **Back up & restore** (in ⚙ Settings, and also visible while you customize) saves a copy of your setup. Use it to move to another device, to move from your browser to the Home Screen app (or back), to get your settings back on the same device after clearing your browser, or to keep several setups and switch between them. See [Make your own profiles](HOW-TO.md#make-your-own-profiles).
 
-**To back up or move to another device**
+**To back up**
 1. Open **⚙ Settings & customize** and find **Back up & restore**
 2. Choose whether to **Include current progress** (leave it off to move only your settings)
 3. Tap **Copy code** to copy a code you can paste into a message or note, or **Save file** to save or share a small backup file
 
 **To restore**
-1. On the other device, open **⚙ Settings & customize**
+1. Open **⚙ Settings & customize** where you want your setup: on a new device, in the Home Screen app, or on the same device
 2. Paste the code and tap **Restore from code**, or tap **Restore from file…** and choose your backup
 3. Confirm — the checklist reloads, collapses Settings and scrolls to the top, and a short message confirms it worked
 
@@ -285,12 +289,13 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 2. Select the tab that matches your mission type
 3. Review the **Preflight Conditions** panel — tap **↻ Refresh** to update weather. It shows your current location by default; tap **Change** to look up a different flight site, and **Use my location** to switch back
 4. Tap each item to check it off as you complete it
-5. Press and hold an item to flag it as **needs attention** (amber). Tap a flagged item once it's resolved to check it off
-6. The progress bar tracks your completion percentage and shows how many items need attention. When your pre-flight sections are done, a **ready to fly** banner appears; after the last section, **flight complete**
-7. Tap **Reset** (next to the progress bar) to clear all checks and flags on the current tab — it asks you to confirm first
-8. Tap **Save record** to keep a text copy of the checklist, or **Print checklist** to print the tab (in Safari or a computer browser)
+5. Press and hold an item to flag it as **needs attention** (amber). Tap a flagged item once it's resolved to check it off, or press and hold it again to clear the flag
+6. When you check off the last item in a section, it folds itself and the next unfinished section opens. Tap any header to open a section again. A section with a flagged item stays open until the flag is resolved
+7. The progress bar tracks your completion percentage and shows how many items need attention. When your pre-flight sections are done, a **ready to fly** banner appears; after the last section, **flight complete**
+8. Tap **Reset** (next to the progress bar) to clear all checks and flags on the current tab — it asks you to confirm first
+9. Tap **Save record** to keep a text copy of the checklist, or **Print checklist** to print the tab (in Safari or a computer browser)
 
-**To make it yours:** open **⚙ Settings & customize**, tap **✎ Customize list**, and hide, add, drag or rename what you need — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
+**To make it yours:** open **⚙ Settings & customize**, tap **✎ Customize list**, and hide items you don't need, add your own, drag items into your order, and rename or hide whole tabs — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
 
 ---
 
@@ -306,7 +311,7 @@ No. It's a memory aid. The pilot in command is responsible for knowing and follo
 None about you. There are no accounts and no ads, and nothing in the page identifies you. Your checks, settings and notes stay in your browser's storage on your device. To show weather, the page sends the coordinates of your location (or the flight site you choose) to the free weather services listed under *Built With*, and the text you type in "Change" to look up a place. The page also uses Cloudflare Web Analytics, a privacy-focused visit counter. It counts visits and rough details like country and device type, with no cookies and no personal information, so I can see whether the checklist is being used. It's hosted on GitHub Pages, which, like any web host, keeps its own standard server logs.
 
 **Why does it ask for my location?**
-To show weather for where you are. If you say no, tap **Change** and search for a town, ZIP code or coordinates instead.
+To show weather for where you are. If you say no, tap **Change** and search for a town, postal code (ZIP code in the USA) or coordinates instead.
 
 **Does it work offline?**
 Yes. Open it once with a connection and it opens again with none, and your checks keep saving. Live weather, radar, KP index, airport reports and place search need a connection. When you're back online the app loads the newest version. On an iPhone or iPad, open the Home Screen icon once with a signal too, since it keeps its own storage. See [Use it with no signal](HOW-TO.md#use-it-with-no-signal).
@@ -334,7 +339,7 @@ Yes. It's free to fork, and you can host your own copy and change the default it
 - **No automatic sync** — saved progress and settings live only in the browser on the device you're using (and progress is cleared when it expires or when you tap Reset). Use **Back up & restore** to move them to another device. Plan to use a single device per flight.
 - **No account or login** — by design. Keeps it simple, private, and free.
 - **Backup codes need a recent browser** — codes are compressed using a feature of current browsers (Chrome, Edge, Firefox and Safari from roughly 2023 on, including iOS/iPadOS 16.4 and newer). On older browsers a backup still works but the code is longer.
-- **Weather defaults to your current GPS location** — to check a different flight site, tap **Change** on the weather panel and search for a town, ZIP code, or coordinates. Place search works best for towns and cities; for a specific job site, use a nearby town or enter coordinates. Cloud ceiling comes from the nearest METAR station, which can be several miles from the site (the station is shown on the panel). The **Radar — NWS** button opens the national map.
+- **Weather defaults to your current GPS location** — to check a different flight site, tap **Change** on the weather panel and search for a town, postal code (ZIP code in the USA), or coordinates. Place search works best for towns and cities; for a specific job site, use a nearby town or enter coordinates. Cloud ceiling comes from the nearest METAR station, which can be several miles from the site (the station is shown on the panel). The **Radar — NWS** button opens the national map.
 - **Cloud ceiling depends on the METAR proxy** — if it is unreachable the Cloud Ceiling tile shows "No METAR data" and everything else still works.
 - **Altitude and speed limits** — defaults shown are US FAA limits, and cloud ceiling depends on a nearby airport's weather report, which can be missing in areas with few airports. Always verify the regulations for your country and airspace class, and use Customize to hide or replace items that don't match.
 - **Printing needs a browser** — **Print checklist** works in Safari, other browsers and on computers, but not in the iPhone or iPad Home Screen app, because iOS doesn't allow printing from there. Open the page in Safari to print
