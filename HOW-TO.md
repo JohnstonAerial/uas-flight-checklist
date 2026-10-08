@@ -113,7 +113,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside t
 **What changes**
 
 - **Units:** wind and distances show in km/h and km, temperatures in °C. The **mph · °F / km/h · °C** button next to the weather title switches units without changing your region.
-- **Checklist wording:** the US-only items for TFRs and LAANC are hidden. The NOTAM and airspace items are reworded, so "Check airspace — use your country's drone airspace map or app" replaces the one about B4UFLY. The wind item shows km/h first.
+- **Checklist wording:** the items marked "(US)" are hidden: the TFR check, the LAANC item and the TFR recheck on site. The NOTAM item is reworded to point you to your country's aviation authority or NOTAM service.
 - **Ceiling warnings:** low-cloud notes say "check your local cloud and visibility rules" instead of quoting US rules.
 - **Night notice:** after sunset or before sunrise it says to check your local rules for night flying.
 - **Place search:** you can search by town, postcode or ZIP code, or enter coordinates.

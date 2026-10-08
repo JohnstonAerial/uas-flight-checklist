@@ -32,6 +32,17 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.7
+
+- **One wording and order on all three tabs** — every item was reviewed one by one. General, Mapping and Commercial now share the same wording and the same order wherever an item appears on more than one tab.
+- **Clearer, shorter items** — for example the weather lines say "within your drone's limits" instead of fixed numbers, the airspace line points to an airspace app or your country's official drone map, and the battery line says to start back early enough to land with a reserve instead of quoting a percentage.
+- **New or extended items** — Remote ID (at home and module attached on site), hourly insurance on General, firmware on the drone, controller and each battery, strobe lights, line of sight, max altitude and people entering the zone on every tab, power off and inspect after landing, notify and wrap up with your site contact, and a log line that points to **Save record**.
+- **Accessories split from gear** — "Gear packed" and "Accessories packed" are separate lines, and the pilot certificate and registration line is worded for pilots outside the USA too.
+- **(US) tags** — items that only apply in the USA (TFRs, LAANC, the TFR recheck) are marked "(US)" and hidden when you choose **Outside the USA**. The NOTAM line is reworded for other countries.
+- **Upgrading is safe** — reworded items keep their checked, flagged, hidden and custom-order state. Two items were removed because they duplicated others: "Wait 60 seconds for GPS lock" (General) and "Import all images to backup drive" (Mapping).
+
+---
+
 ## What's new in v3.6
 
 - **Starts tidy** — the first time you open the checklist, only the first section of each tab is open and the rest are folded, so the long lists don't greet you all at once. Tap any header to open it. If you've used the checklist before, it keeps your layout.
@@ -203,7 +214,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)
 - **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
-- **Works outside the USA** — the first time you open it, choose **USA** or **Outside the USA**. Choosing outside the USA hides the US-only items (TFR and LAANC checks), rewords the NOTAM and airspace items so they aren't tied to US websites, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. Change it any time in **⚙ Settings**
+- **Works outside the USA** — the first time you open it, choose **USA** or **Outside the USA**. Choosing outside the USA hides the items marked "(US)" (TFR and LAANC checks and the TFR recheck on site), rewords the NOTAM item so it isn't tied to a US website, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. Change it any time in **⚙ Settings**
 - **Customize the list** — open **⚙ Settings & customize** and tap **✎ Customize list** to hide items that don't apply where you fly, add your own items to any section, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
 - **Rename or hide tabs** — in Customize mode, rename the tab you're on or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Renaming changes the tab's name only; use Hide and Add to change what's inside it
 - **Back up & restore** — see below
@@ -282,7 +293,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 Yes. There's no app to buy, no subscription, no ads and no account. It's an open-source web page (MIT license).
 
 **Does it replace my official checks or the regulations?**
-No. It's a memory aid. The pilot in command is responsible for knowing and following the rules where they fly. The default items and limits (for example the wind and altitude numbers) reflect US FAA guidance, so check your local rules and use **Customize** to change anything that doesn't fit your operation.
+No. It's a memory aid. The pilot in command is responsible for knowing and following the rules where they fly. The default items and limits (for example the altitude number) reflect US FAA guidance, so check your local rules and use **Customize** to change anything that doesn't fit your operation.
 
 **What information does it collect?**
 None about you. There are no accounts and no ads, and nothing in the page identifies you. Your checks, settings and notes stay in your browser's storage on your device. To show weather, the page sends the coordinates of your location (or the flight site you choose) to the free weather services listed under *Built With*, and the text you type in "Change" to look up a place. The page also uses Cloudflare Web Analytics, a privacy-focused visit counter. It counts visits and rough details like country and device type, with no cookies and no personal information, so I can see whether the checklist is being used. It's hosted on GitHub Pages, which, like any web host, keeps its own standard server logs.
