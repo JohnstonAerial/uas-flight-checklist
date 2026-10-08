@@ -32,6 +32,13 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.7.2
+
+- **Fewer false radar warnings** — a single stray radar echo (birds, insects, dust) no longer triggers the precipitation warning. Radar now has to show a small cluster of echoes within about 3 miles. When radar is the only sign of wet weather, the card says **Radar echoes nearby** with a **No rain reported** note instead of "Precip. nearby", so it doesn't imply rain that nobody has reported.
+- **Brand-neutral button item** — the pre-flight item about custom buttons now reads "Controller programmable buttons — confirm mapping for this flight", so it fits any controller. Your checked and hidden state carries over.
+
+---
+
 ## What's new in v3.7
 
 - **One wording and order on all three tabs** — every item was reviewed one by one. General, Mapping and Commercial now share the same wording and the same order wherever an item appears on more than one tab.
@@ -177,7 +184,7 @@ Version 3.2 makes the checklist work in more places and for more people:
 Version 3.1 makes the weather card much more useful on a rainy or low-cloud day:
 
 - **Cloud ceiling from the lowest nearby station** — it checks every airport weather report within 30 miles and shows the lowest ceiling (with the station, distance and age), the cautious choice. A **Lowest cloud nearby** line helps with the cloud-clearance rule
-- **Precipitation card** — combines live **radar** (RainViewer, free), **airport weather reports** and the forecast. Headlines include *Precip. nearby*, *Precip. likely*, the airport's own wording (for example *Light rain*), and *Rain possible* when only the forecast thinks so — with a note when radar doesn't see it
+- **Precipitation card** — combines live **radar** (RainViewer, free), **airport weather reports** and the forecast. Headlines include *Radar echoes nearby* (with a *No rain reported* note when nothing else confirms it), *Precip. likely*, the airport's own wording (for example *Light rain*), and *Rain possible* when only the forecast thinks so — with a note when radar doesn't see it
 - **Look-ahead lines** — *Rain likely ~4 PM*, *Best window ~8 PM – 2 AM*, *No clear window next 12 hrs* and *Storms possible*, shown only when there is something to say
 - **Humidity card** with dew point and a fog / lens-fogging warning
 - **Radar — NWS button opens on your location**
