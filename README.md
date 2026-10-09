@@ -20,7 +20,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
   </tr>
   <tr>
     <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/04-reorder-dark.png"><img src="screenshots/04-reorder-light.png" alt="Customize mode with drag handles, Hide buttons and the Editing your list bar" width="240"></picture><br><sub><b>Customize: drag, hide, add</b></sub></td>
-    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/02-settings-dark.png"><img src="screenshots/02-settings-light.png" alt="Settings panel with progress retention, region and customize tips" width="240"></picture><br><sub><b>Settings</b></sub></td>
+    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/02-settings-dark.png"><img src="screenshots/02-settings-light.png" alt="Settings panel with progress retention, region, customize tips and Back up and restore" width="240"></picture><br><sub><b>Settings &amp; Back up / restore</b></sub></td>
     <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/03-customize-dark.png"><img src="screenshots/03-customize-light.png" alt="Customize panel with tab name, Hide this tab and the Tab icon picker" width="240"></picture><br><sub><b>Rename tabs, pick an icon</b></sub></td>
   </tr>
   <tr>
