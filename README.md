@@ -14,17 +14,17 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 <table>
   <tr>
-    <td align="center" width="33%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions: wind, cloud ceiling, temperature, Kp index, precipitation, humidity, sunrise and sunset, with TFR, NOTAM and radar buttons" width="240"></picture><br><sub><b>Live conditions (light or dark, it follows your phone)</b></sub></td>
-    <td align="center" width="33%"><img src="screenshots/01-checklist.png" alt="Checklist with live weather, progress bar and checked items" width="240"><br><sub><b>Live weather and checklist</b></sub></td>
-    <td align="center" width="33%"><img src="screenshots/05-ready-to-fly.png" alt="Ready to fly banner after the pre-flight sections are complete" width="240"><br><sub><b>"Ready to fly" banner</b></sub></td>
+    <td align="center" width="33%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions: wind, cloud ceiling, temperature, Kp index, precipitation, humidity, sunrise and sunset, with TFR, NOTAM and radar buttons" width="240"></picture><br><sub><b>Live conditions</b></sub></td>
+    <td align="center" width="33%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/01-checklist-dark.png"><img src="screenshots/01-checklist-light.png" alt="Checklist with progress bar, Before leaving home items and checked boxes" width="240"></picture><br><sub><b>Checklist</b></sub></td>
+    <td align="center" width="33%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/05-ready-to-fly-dark.png"><img src="screenshots/05-ready-to-fly-light.png" alt="Ready to fly banner after the pre-flight sections are complete" width="240"></picture><br><sub><b>&quot;Ready to fly&quot; banner</b></sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="screenshots/04-reorder.png" alt="Customize mode with drag handles and Hide buttons" width="240"><br><sub><b>Customize: drag, hide, add</b></sub></td>
-    <td align="center"><img src="screenshots/02-settings.png" alt="Settings panel with region, progress retention and Back up and restore" width="240"><br><sub><b>Settings &amp; Back up / restore</b></sub></td>
-    <td align="center"><img src="screenshots/03-customize.png" alt="Customize panel with tab rename, hide tab and Done" width="240"><br><sub><b>Rename or hide tabs</b></sub></td>
+    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/04-reorder-dark.png"><img src="screenshots/04-reorder-light.png" alt="Customize mode with drag handles, Hide buttons and the Editing your list bar" width="240"></picture><br><sub><b>Customize: drag, hide, add</b></sub></td>
+    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/02-settings-dark.png"><img src="screenshots/02-settings-light.png" alt="Settings panel with progress retention, region and customize tips" width="240"></picture><br><sub><b>Settings</b></sub></td>
+    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/03-customize-dark.png"><img src="screenshots/03-customize-light.png" alt="Customize panel with tab name, Hide this tab and the Tab icon picker" width="240"></picture><br><sub><b>Rename tabs, pick an icon</b></sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="screenshots/06-save-record.png" alt="Save preflight record pop-up with customer, site, notes and options" width="240"><br><sub><b>Save a preflight record</b></sub></td>
+    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/06-save-record-dark.png"><img src="screenshots/06-save-record-light.png" alt="Save preflight record pop-up with customer, site, notes and options" width="240"></picture><br><sub><b>Save a preflight record</b></sub></td>
     <td align="center"><img src="screenshots/07-printed.png" alt="Printed checklist with blank date, time, site and pilot lines" width="240"><br><sub><b>Print it for a pencil</b></sub></td>
     <td></td>
   </tr>
