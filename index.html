@@ -219,6 +219,7 @@
   .pc-btns .rec-btn { width: 100%; text-align: center; border-radius: 20px; padding: 6px 12px; font-size: 12px; margin: 0; color: var(--blue); background: transparent; border: 1px solid var(--blue); font-family: inherit; cursor: pointer; min-height: 32px; font-weight: 600; }
   .pc-btns .rec-btn:active { background: var(--blue-light); }
   .pc-btns .print-btn { white-space: nowrap; font-weight: 500; }
+  .pc-btns .pdf-btn { grid-column: 1 / -1; }
   .pc-btns .reset-inline, .pc-btns .sec-all, .pc-btns .rec-btn { white-space: nowrap; min-height: 30px; padding: 5px 6px; }
   .panel.editing .rec-btn { display: none; }
   .rec-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.5); display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 5vh 12px 24px; -webkit-overflow-scrolling: touch; }
@@ -238,9 +239,10 @@
   .rec-more label.rec-lbl:first-of-type { margin-top: 6px; }
   .rec-more > :last-child { margin-bottom: 12px; }
   .rec-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
-  .rec-actions button { font: inherit; font-size: 15px; border-radius: 22px; padding: 9px 20px; min-height: 40px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--text-muted); }
-  .rec-actions .rec-dl { color: var(--blue); border-color: var(--blue); }
-  .rec-actions .rec-save { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
+  .rec-actions button { font: inherit; font-size: 14.5px; border-radius: 22px; padding: 9px 13px; min-height: 40px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--text-muted); }
+  .rec-actions { flex-wrap: wrap; gap: 8px; }
+  .rec-actions .rec-dl, .rec-actions .rec-alt { color: var(--blue); border-color: var(--blue); }
+  .rec-actions .rec-primary { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
   .xfer { max-width: 600px; margin: 14px auto 6px; padding: 12px 16px 4px; border-top: 1px solid var(--border); text-align: center; font-size: 11px; color: var(--text-light); }
   .settings-help { max-width: 600px; margin: 6px auto 10px; padding: 0 16px; text-align: center; font-size: 14px; }
   .settings-help a { color: var(--link); display: inline-block; padding: 6px 0; }
@@ -413,7 +415,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.4</p>
+      <p>Free Drone Preflight Checklist · v3.7.5</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2707,7 +2709,7 @@ const REC_KEY = 'uasRecordPrefs';
 
 function recPrefs() {
   const p = recall(REC_KEY, {}) || {};
-  return { weather: p.weather !== false, unchecked: p.unchecked !== false, coords: p.coords === true, more: p.more === true };
+  return { weather: p.weather !== false, unchecked: p.unchecked !== false, coords: p.coords === true, more: p.more === true, fmt: p.fmt === 'text' ? 'text' : 'pdf' };
 }
 function recClean(s) { return String(s == null ? '' : s).replace(/\s+/g, ' ').trim(); }
 function recNoEmoji(s) { return recClean(String(s).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '')); }
@@ -2815,18 +2817,201 @@ function recFileName(o) {
   if (c) nm += '-' + c;
   return nm + '.txt';
 }
+// ── PDF output: a tiny built-in PDF writer (text, lines and check boxes only; no libraries, works offline) ──
+const PDF_W  = [278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584];
+const PDF_WB = [278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,333,333,584,584,584,611,975,722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667,667,611,333,278,333,584,556,333,556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,611,389,556,333,611,556,778,556,556,500,389,280,389,584];
+function pdfEnc(s) {                         // text -> single-byte WinAnsi (what the built-in Helvetica expects)
+  const map = { 0x2014: 0x97, 0x2013: 0x96, 0x2018: 0x91, 0x2019: 0x92, 0x201C: 0x93, 0x201D: 0x94, 0x2026: 0x85, 0x2022: 0x95, 0x2212: 0x2D, 0xA0: 0x20 };
+  let out = '';
+  for (const ch of String(s).replace(/→/g, '->').replace(/≥/g, '>=').replace(/≤/g, '<=')) {
+    let c = ch.codePointAt(0);
+    if (c === 9 || c === 10) { out += ch; continue; }
+    if (map[c]) c = map[c]; else if (c < 32 || c > 255 || (c >= 0x7F && c <= 0x9F)) c = 0x3F;
+    out += String.fromCharCode(c);
+  }
+  return out;
+}
+function pdfEsc(s) { return s.replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)'); }
+function pdfCharW(code, bold) {
+  if (code >= 32 && code <= 126) return (bold ? PDF_WB : PDF_W)[code - 32];
+  const sp = { 0x97: 1000, 0x85: 1000, 0x96: 556, 0x95: 350, 0xB7: 278, 0xB0: 400, 0xB1: 584 };
+  if (sp[code]) return sp[code];
+  if (code === 0x91 || code === 0x92) return bold ? 278 : 222;
+  if (code === 0x93 || code === 0x94) return bold ? 500 : 333;
+  return 556;
+}
+function PdfDoc(footer, title) {
+  this.footer = footer; this.title = title || 'Document';
+  this.W = 612; this.H = 792; this.mx = 46; this.top = 50; this.bot = 52;
+  this.pages = []; this.newPage();
+}
+PdfDoc.prototype = {
+  newPage() { this.pages.push([]); this.y = this.top; },
+  raw(s) { this.pages[this.pages.length - 1].push(s); },
+  ensure(h) { if (this.y + h > this.H - this.bot) this.newPage(); },
+  gap(h) { this.y += h; },
+  width(s, size, bold) { let w = 0; for (let i = 0; i < s.length; i++) w += pdfCharW(s.charCodeAt(i), bold); return w * size / 1000; },
+  wrap(s, size, bold, maxW) {                // greedy word wrap; honours line breaks; very long words are split
+    const out = [];
+    pdfEnc(s).split('\n').forEach(par => {
+      if (!par.trim()) { out.push(''); return; }
+      let line = '';
+      par.split(/ +/).forEach(w => {
+        while (this.width(w, size, bold) > maxW && w.length > 1) {
+          let k = w.length - 1; while (k > 1 && this.width(w.slice(0, k), size, bold) > maxW) k--;
+          if (line) { out.push(line); line = ''; }
+          out.push(w.slice(0, k)); w = w.slice(k);
+        }
+        const t = line ? line + ' ' + w : w;
+        if (line && this.width(t, size, bold) > maxW) { out.push(line); line = w; } else line = t;
+      });
+      out.push(line);
+    });
+    return out;
+  },
+  text(enc, x, base, size, bold, gray) {     // enc is already WinAnsi; base is the baseline, measured from the top of the page
+    this.raw((gray ? gray + ' g ' : '0 g ') + 'BT /F' + (bold ? 2 : 1) + ' ' + size + ' Tf ' + x.toFixed(2) + ' ' + (this.H - base).toFixed(2) + ' Td (' + pdfEsc(enc) + ') Tj ET');
+  },
+  rule(y, w, gray, x1, x2) {
+    this.raw((gray || 0) + ' G ' + w + ' w ' + (x1 == null ? this.mx : x1).toFixed(2) + ' ' + (this.H - y).toFixed(2) + ' m ' + (x2 == null ? this.W - this.mx : x2).toFixed(2) + ' ' + (this.H - y).toFixed(2) + ' l S');
+  },
+  box(x, y, st) {                            // check box, 10 pt: 0 empty, 1 checked, 2 needs attention
+    const s = 10, Y = this.H - y;
+    this.raw('0 G 1.1 w ' + x.toFixed(2) + ' ' + (Y - s).toFixed(2) + ' ' + s + ' ' + s + ' re S');
+    if (st === 1) this.raw('0 G 1.7 w ' + (x + 2).toFixed(2) + ' ' + (Y - 5.4).toFixed(2) + ' m ' + (x + 4.2).toFixed(2) + ' ' + (Y - 7.9).toFixed(2) + ' l ' + (x + 8.3).toFixed(2) + ' ' + (Y - 2.2).toFixed(2) + ' l S');
+    if (st === 2) this.text('!', x + 3.4, y + 8.2, 9, true);
+  },
+  para(s, size, opts) {
+    opts = opts || {}; const ind = opts.indent || 0, lead = size * 1.32, maxW = this.W - this.mx * 2 - ind;
+    this.wrap(s, size, !!opts.bold, maxW).forEach(l => {
+      this.ensure(lead); if (l) this.text(l, this.mx + ind, this.y + size * 0.9, size, !!opts.bold, opts.gray); this.y += lead;
+    });
+  },
+  h1(s) { this.ensure(40); this.text(pdfEnc(s), this.mx, this.y + 18, 20, true); this.y += 26; },
+  h2(s) { this.ensure(34); this.y += 10; this.text(pdfEnc(s.toUpperCase()), this.mx, this.y + 10, 10.5, true); this.y += 15; this.rule(this.y, 1.2, 0); this.y += 6; },
+  sub(s, keepWith) { this.ensure(26 + (keepWith || 0)); this.y += 8; this.text(pdfEnc(s.toUpperCase()), this.mx, this.y + 10, 10, true); this.y += 14; this.rule(this.y, 0.8, 0.35); this.y += 3; },
+  kv(k, v) {
+    const lw = 128, lines = this.wrap(v, 10.5, false, this.W - this.mx * 2 - lw);
+    this.ensure(lines.length * 14);
+    this.text(pdfEnc(k), this.mx, this.y + 10, 10.5, true);
+    lines.forEach(l => { this.text(l, this.mx + lw, this.y + 10, 10.5, false); this.y += 14; });
+  },
+  item(st, s) {
+    const ind = 20, lines = this.wrap(s, 10.5, false, this.W - this.mx * 2 - ind), h = lines.length * 13.6 + 8;
+    this.ensure(h);
+    this.box(this.mx + 1, this.y + 4.5, st);
+    lines.forEach((l, i) => this.text(l, this.mx + ind, this.y + 4 + 10 + i * 13.6, 10.5, false));
+    this.y += h; this.rule(this.y - 1, 0.4, 0.7);
+  },
+  fieldLine(items) {                         // labelled blank lines for writing in, e.g. Date / Time
+    this.ensure(26); this.y += 14;
+    const total = this.W - this.mx * 2, gap = 22; let x = this.mx;
+    items.forEach(f => {
+      const w = (total - gap * (items.length - 1)) * f[1], lw = this.width(pdfEnc(f[0]), 10, true) + 6;
+      this.text(pdfEnc(f[0]), x, this.y + 8, 10, true); this.rule(this.y + 10, 0.8, 0, x + lw, x + w); x += w + gap;
+    });
+    this.y += 12;
+  },
+  finish() {
+    const n = this.pages.length, objs = [], pageIds = [];
+    for (let i = 0; i < n; i++) pageIds.push(5 + i * 2);
+    objs[1] = '<< /Type /Catalog /Pages 2 0 R >>';
+    objs[2] = '<< /Type /Pages /Kids [' + pageIds.map(i => i + ' 0 R').join(' ') + '] /Count ' + n + ' >>';
+    objs[3] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';
+    objs[4] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>';
+    for (let i = 0; i < n; i++) {
+      const foot = pdfEnc(this.footer), pg = 'Page ' + (i + 1) + ' of ' + n;
+      this.pages[i].push('0.45 g BT /F1 8 Tf ' + this.mx + ' ' + (this.H - (this.H - 30)).toFixed(2) + ' Td (' + pdfEsc(foot) + ') Tj ET');
+      this.pages[i].push('0.45 g BT /F1 8 Tf ' + (this.W - this.mx - this.width(pg, 8, false)).toFixed(2) + ' ' + (this.H - (this.H - 30)).toFixed(2) + ' Td (' + pg + ') Tj ET');
+      const data = this.pages[i].join('\n');
+      objs[5 + i * 2] = '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + this.W + ' ' + this.H + '] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ' + (6 + i * 2) + ' 0 R >>';
+      objs[6 + i * 2] = '<< /Length ' + data.length + ' >>\nstream\n' + data + '\nendstream';
+    }
+    const infoId = 5 + n * 2;
+    objs[infoId] = '<< /Title (' + pdfEsc(pdfEnc(this.title)) + ') /Producer (UAS Flight Checklists) >>';
+    let out = '%PDF-1.4\n%âãÏÓ\n'; const off = [];
+    for (let i = 1; i <= infoId; i++) { off[i] = out.length; out += i + ' 0 obj\n' + objs[i] + '\nendobj\n'; }
+    const xr = out.length;
+    out += 'xref\n0 ' + (infoId + 1) + '\n0000000000 65535 f \n';
+    for (let i = 1; i <= infoId; i++) out += String(off[i]).padStart(10, '0') + ' 00000 n \n';
+    out += 'trailer\n<< /Size ' + (infoId + 1) + ' /Root 1 0 R /Info ' + infoId + ' 0 R >>\nstartxref\n' + xr + '\n%%EOF';
+    const bytes = new Uint8Array(out.length);
+    for (let i = 0; i < out.length; i++) bytes[i] = out.charCodeAt(i) & 255;
+    return bytes;
+  }
+};
+function recVersion() {
+  const m = (document.querySelector('.header p') || {}).textContent || '';
+  return (m.match(/v\d+(?:\.\d+)*[a-z]?/) || [''])[0];
+}
+function recCollect(panelEl, includeAll) {  // the items on a tab, in order, as { name, rows: [{ txt, st }] } (st: 0 open, 1 checked, 2 needs attention)
+  let total = 0, done = 0, flagged = 0; const secs = [];
+  panelEl.querySelectorAll('.section').forEach(sec => {
+    const hdr = sec.querySelector('.section-header');
+    const name = hdr ? recClean(hdr.firstChild ? hdr.firstChild.textContent : hdr.textContent) : 'Items';
+    const rows = [];
+    sec.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').forEach(it => {
+      const te = it.querySelector('.item-text'), txt = recClean(te ? te.textContent : '');
+      const ck = it.classList.contains('checked'), fl = it.classList.contains('flagged');
+      total++; if (ck) done++; if (fl) flagged++;
+      if (!ck && !fl && !includeAll) return;
+      rows.push({ txt: txt, st: fl ? 2 : ck ? 1 : 0 });
+    });
+    if (rows.length) secs.push({ name: name, rows: rows });
+  });
+  return { secs: secs, total: total, done: done, flagged: flagged };
+}
+function recPdfFoot() { const v = recVersion(); return 'UAS Flight Checklists' + (v ? ' ' + v : '') + ' · checklist.johnstonaerial.com'; }
+function buildRecordPdf(o) {
+  const d = new PdfDoc(recPdfFoot(), 'Preflight Record');
+  d.h1('Preflight Record');
+  d.para(new Date().toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }), 10.5, { gray: 0.3 });
+  d.gap(6);
+  const co = o.coords ? recCoords() : '', tab = recNoEmoji(recTabName());
+  [['Customer', o.customer], ['Site', o.site], ['Coordinates', co], ['Checklist', tab], ['Airspace authorization', o.laanc], ['Flight time', o.flightTime], ['Visual observer', o.observer]]
+    .forEach(p => { if (p[1]) d.kv(p[0], p[1]); });
+  if (o.weather) { d.h2('Conditions'); recWeatherLines().forEach(l => { d.para(l, 10.5); d.gap(1.5); }); }
+  const c = recCollect(document.getElementById('panel-' + current), o.unchecked);
+  d.h2('Checklist — ' + c.done + ' of ' + c.total + ' complete' + (c.flagged ? ', ' + c.flagged + ' need' + (c.flagged === 1 ? 's' : '') + ' attention' : ''));
+  c.secs.forEach(s => { d.sub(s.name, 30); s.rows.forEach(r => d.item(r.st, (r.st === 2 ? 'NEEDS ATTENTION: ' : '') + r.txt)); });
+  if (o.notes) { d.h2('Notes'); d.para(o.notes, 10.5); }
+  return d.finish();
+}
+function buildChecklistPdf(panelEl, tabName) {
+  const d = new PdfDoc(recPdfFoot(), 'UAS Flight Checklist');
+  d.h1('UAS Flight Checklists');
+  const v = recVersion();
+  d.para('Free Drone Preflight Checklist' + (v ? ' · ' + v : ''), 9.5, { gray: 0.3 });
+  d.gap(2); d.rule(d.y, 1.8, 0); d.gap(8);
+  if (tabName) { d.ensure(24); d.text(pdfEnc(tabName), d.mx, d.y + 13, 13, true); d.y += 20; d.rule(d.y, 1.8, 0); }
+  d.fieldLine([['Date', 0.5], ['Time', 0.5]]);
+  d.fieldLine([['Site', 1]]);
+  d.fieldLine([['Pilot', 0.5], ['Visual observer', 0.5]]);
+  const c = recCollect(panelEl, true);
+  c.secs.forEach(s => { d.sub(s.name, 30); s.rows.forEach(r => d.item(r.st, r.txt)); });
+  return d.finish();
+}
+function recPdfName(prefix, o) {
+  const d = new Date(), p = n => String(n).padStart(2, '0');
+  let nm = prefix + '-' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  if (o && o.time) nm += '-' + p(d.getHours()) + p(d.getMinutes());
+  const c = ((o && o.customer) || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 30);
+  if (c) nm += '-' + c;
+  return nm + '.pdf';
+}
 let recForceDownload = false, recLastErr = '';
 async function recDeliver(text, name) {
+  const isPdf = /\.pdf$/i.test(name), mime = isPdf ? 'application/pdf' : 'text/plain';
   try {
     if (typeof File === 'function' && navigator.canShare && navigator.share) {
-      const f = new File([text], name, { type: 'text/plain' });
+      const f = new File([text], name, { type: mime });
       if (navigator.canShare({ files: [f] })) { await navigator.share({ files: [f] }); return 'shared'; }
     }
   } catch (e) {
     if (e && e.name === 'AbortError') return 'cancelled';
     if (!recForceDownload) { recLastErr = (e && e.name) || 'error'; return 'refused'; }
   }
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const blob = new Blob([text], { type: isPdf ? 'application/pdf' : 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 4000);
@@ -2849,7 +3034,7 @@ function recOffer(text, name) {
   ov.innerHTML = '<div class="rec-box" role="dialog" aria-modal="true" aria-labelledby="rec-ot">' +
     '<h2 id="rec-ot">Your record is ready</h2>' +
     '<p style="margin:0 0 4px;font-size:14px;color:var(--text-muted)">Your browser didn\'t open the Share sheet this time. Tap Share to try again, or Download to save the file.</p>' +
-    '<div class="rec-actions"><button type="button" class="rec-cancel">Close</button><button type="button" class="rec-dl">Download</button><button type="button" class="rec-save">Share…</button></div></div>';
+    '<div class="rec-actions"><button type="button" class="rec-cancel">Close</button><button type="button" class="rec-dl">Download</button><button type="button" class="rec-save rec-primary">Share…</button></div></div>';
   document.body.appendChild(ov);
   const done = () => ov.remove();
   ov.addEventListener('click', e => { if (e.target === ov) done(); });
@@ -2893,7 +3078,7 @@ function openRecord(btn) {
     '<label class="rec-check" id="rec-gps-row"><input type="checkbox" id="rec-gps"> Include GPS coordinates</label>' +
     '<div class="rec-hint" id="rec-gps-hint"></div>' +
     '<button type="button" class="rec-copy" id="rec-copy">Copy as text instead</button>' +
-    '<div class="rec-actions"><button type="button" class="rec-cancel">Cancel</button><button type="button" class="rec-save">Save</button></div>' +
+    '<div class="rec-actions"><button type="button" class="rec-cancel">Cancel</button><button type="button" class="rec-pdf">Save as PDF</button><button type="button" class="rec-save">Save text</button></div>' +
     '</div>';
   document.body.appendChild(ov);
   const $ = (id) => ov.querySelector(id);
@@ -2910,6 +3095,14 @@ function openRecord(btn) {
     : 'Location not available.';
   ov.addEventListener('click', (e) => { if (e.target === ov) closeRecord(); });
   $('.rec-cancel').onclick = closeRecord;
+  let curFmt = prefs.fmt;
+  const showFmt = () => {                      // the last-used format is the filled button on the right
+    const pb = $('.rec-pdf'), tb = $('.rec-save'), pdfFirst = curFmt === 'pdf';
+    const prim = pdfFirst ? pb : tb, alt = pdfFirst ? tb : pb;
+    prim.classList.add('rec-primary'); prim.classList.remove('rec-alt'); alt.classList.add('rec-alt'); alt.classList.remove('rec-primary');
+    prim.parentNode.appendChild(prim);
+  };
+  showFmt();
   const collect = () => {
     const o = {
       customer: recClean($('#rec-cust').value), site: recClean($('#rec-site').value),
@@ -2917,7 +3110,7 @@ function openRecord(btn) {
       laanc: recClean($('#rec-laanc').value), flightTime: recClean($('#rec-ft').value), observer: recClean($('#rec-vo').value),
       weather: $('#rec-wx').checked, unchecked: $('#rec-un').checked, coords: gpsOk && $('#rec-gps').checked
     };
-    store(REC_KEY, { weather: o.weather, unchecked: o.unchecked, coords: gpsOk ? o.coords : prefs.coords, more: !!(o.laanc || o.flightTime || o.observer) });
+    store(REC_KEY, { weather: o.weather, unchecked: o.unchecked, coords: gpsOk ? o.coords : prefs.coords, more: !!(o.laanc || o.flightTime || o.observer), fmt: curFmt });
     return o;
   };
   $('#rec-copy').onclick = async () => {
@@ -2925,15 +3118,19 @@ function openRecord(btn) {
     if (ok) { closeRecord(); try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); } recToast('\u2713 Copied to your clipboard', 5000); }
     else recToast('Couldn\'t copy. Use Save instead.', 5000);
   };
-  $('.rec-save').onclick = async () => {
-    const o = collect();
-    const text = buildRecord(o), name = recFileName(o);
-    const how = await recDeliver(text, name);
+  const finishSave = async (data, name) => {
+    const how = await recDeliver(data, name);
     closeRecord();
-    if (how === 'refused') { recOffer(text, name); return; }
+    if (how === 'refused') { recOffer(data, name); return; }
     if (how === 'downloaded' || how === 'shared') { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); } }
     if (how === 'downloaded') recToast('✓ Record saved to your downloads');
     else if (how === 'shared') recToast('✓ Record ready');
+  };
+  $('.rec-save').onclick = () => { curFmt = 'text'; const o = collect(); return finishSave(buildRecord(o), recFileName(o)); };
+  $('.rec-pdf').onclick = () => {
+    curFmt = 'pdf'; const o = collect(); o.time = true;
+    let pdf; try { pdf = buildRecordPdf(o); } catch (e) { recToast('Couldn\'t make the PDF. Use Save text instead.', 5000); return; }
+    return finishSave(pdf, recPdfName('preflight-record', o));
   };
   document.addEventListener('keydown', recKey);
   setTimeout(() => { const f = $('#rec-cust'); if (f) f.focus(); }, 50);
@@ -2950,10 +3147,22 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
   pb.onclick = () => {
     const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const app = navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
-    if (ios && app) { recToast('Printing isn\'t available in the Home Screen app. Open this page in Safari, then tap Share \u2192 Print.', 7000); return; }
+    if (ios && app) { recToast('Printing isn\'t available in the Home Screen app. Tap Save checklist as PDF instead, or open this page in Safari and use Share \u2192 Print.', 7000); return; }
     try { window.print(); } catch (e) {}
   };
   col.prepend(pb);
+  const fb = document.createElement('button');
+  fb.type = 'button'; fb.className = 'rec-btn pdf-btn'; fb.textContent = 'Save checklist as PDF';
+  fb.setAttribute('aria-label', 'Save this checklist as a PDF to print or share');
+  fb.onclick = async () => {
+    const panelEl = col.closest('.panel'), t = document.querySelector('.tab[data-pid="' + panelEl.id.replace('panel-', '') + '"] .tab-lbl');
+    let pdf; try { pdf = buildChecklistPdf(panelEl, t ? recClean(t.textContent) : ''); } catch (e) { recToast('Couldn\'t make the PDF.', 5000); return; }
+    const tabSlug = ((t ? t.textContent : 'checklist').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 24)) || 'checklist';
+    const how = await recDeliver(pdf, recPdfName('flight-checklist-' + tabSlug, null));
+    if (how === 'refused') { recOffer(pdf, recPdfName('flight-checklist-' + tabSlug, null)); return; }
+    if (how === 'downloaded') recToast('✓ PDF saved to your downloads'); else if (how === 'shared') recToast('✓ PDF ready');
+  };
+  b.after(fb);
 });
 </script>
 

@@ -127,11 +127,11 @@ Want a copy of what you checked? Tap **Save record**, next to **Print checklist*
 1. Tap **Save record**.
 2. Fill in what you want to keep: the customer, the site (type an address or place name, or leave it blank) and any notes. **More details** has boxes for airspace authorization (for example a LAANC reference, altitude and times), flight time and visual observer. Everything is optional.
 3. Choose whether to include the weather conditions, the items you didn't check, and your GPS coordinates (off unless you tick it).
-4. Tap **Save**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files**, AirDrop, Mail or Messages. On a computer the file goes to your Downloads folder.
+4. Tap **Save as PDF** or **Save text**. The one you used last is the filled button on the right, and the app remembers it. PDF is the filled button until you choose text. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files**, AirDrop, Mail or Messages. On a computer the file goes to your Downloads folder.
 
-You get one plain text file, named like `preflight-record-2026-10-06-1415-smith-roofing.txt`, that opens on any device. Items you flagged are listed as NEEDS ATTENTION. Items you hid are left out and items you added are included. The record is made on your device and isn't sent anywhere.
+You get one file, named like `preflight-record-2026-10-06-1415-smith-roofing.pdf` (or `.txt` for text), that opens on any device. The PDF has real check boxes and page numbers. Items you flagged are listed as NEEDS ATTENTION. Items you hid are left out and items you added are included. The record is made on your device and isn't sent anywhere.
 
-Prefer to paste it into a note or email? Tap **Copy as text instead**. The record is copied to your clipboard and no file is made.
+Prefer to paste it into a note or email? Tap **Copy as text instead**. The record is copied to your clipboard and no file is made. That doesn't change which button is filled.
 
 If the Share sheet doesn't open, the app shows a box with **Share…** and **Download** buttons instead.
 
@@ -140,6 +140,8 @@ If the Share sheet doesn't open, the app shows a box with **Share…** and **Dow
 ## Print it and use a pencil
 
 You can print the checklist and take it to the site. Open the tab you want, then tap **Print checklist** in Safari. In the Home Screen app, open the page in Safari first, since the Home Screen app can't print. Check items off with a pencil during preflight and again after the flight. Print each tab you need, since only the open tab prints.
+
+No printer, or using the Home Screen app? Tap **Save checklist as PDF** instead. It makes the same blank sheet as a PDF, with lines for date, time, site, pilot and visual observer, that you can save to Files, email or print later. It works in the Home Screen app too, and like printing it covers only the open tab.
 
 The app also works offline once it has loaded (see above), so paper is a choice, not a requirement. You can also save a record afterward and print that.
 
