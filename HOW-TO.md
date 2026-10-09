@@ -18,7 +18,7 @@ Your checklist setup is stored on your device. If you get a new phone, clear you
 
 **What a backup includes**
 
-- Your tab names, which tabs and items are hidden, the items you added, and the order you set
+- Your tab names and icons, which tabs and items are hidden, the items you added, and the order you set
 - Your units, your region (USA or another country) and your saved places
 - Optionally, your current progress (the boxes you've ticked), which only restores if it hasn't expired (see Good to know)
 
@@ -47,19 +47,19 @@ Back up on the first device, send the file or code to the second (AirDrop, email
 - **Restoring replaces everything on that device:** tabs, hidden and added items, units and saved places. If you want to keep what you have, save a backup of it first.
 - **Each place keeps its own copy.** Safari and the Home Screen icon on the same iPhone store their settings separately. You can back up from one and restore into the other. That's an easy way to move to the Home Screen app.
 - **You can restore on the same device too.** It's a quick way to undo a round of changes you regret, if you saved a backup first.
-- **Reset and Restore original list are different.** **Reset** on the main screen clears only your ticks and flags on that tab. **Restore original list**, in the customize panel, undoes your customizing on that tab: hidden items come back, items you added are removed and the tab name is reset.
+- **Reset and Restore original list are different.** **Reset** on the main screen clears only your ticks and flags on that tab. **Restore original list**, in the customize panel, undoes your customizing on that tab: hidden items come back, items you added are removed and the tab name and icon are reset.
 - **Your files are yours.** They're plain text files that stay on your device or wherever you put them. Nothing is sent to the website.
 
 ---
 
 ## Make your own profiles
 
-The app keeps one setup at a time on your device: your tab names, which items are shown, items you added, your units and your saved places. A **backup file** is a snapshot of that setup. Keep one backup file per kind of job, and you can switch between them in a few taps.
+The app keeps one setup at a time on your device: your tab names and icons, which items are shown, items you added, your units and your saved places. A **backup file** is a snapshot of that setup. Keep one backup file per kind of job, and you can switch between them in a few taps.
 
 **Example: a "Timelapse" setup**
 
 1. Open **Settings & customize** and tap **✎ Customize list**.
-2. Rename a tab (for example, **Timelapse**) in the **Tab name** box.
+2. Rename a tab (for example, **Timelapse**) in the **Tab name** box. You can also change its icon under **Tab icon**: pick one, type your own emoji, or choose **No icon**.
 3. Tap **Hide** on items you don't need, and add your own at the bottom of any section. Use **Hide this tab** on tabs you don't want to see. Tap **✓ Done**.
 4. In **💾 Back up & restore**, untick **Include current progress**, then tap **Save file**.
 5. Rename the file so you can tell it apart, for example `uas-checklist-backup-TIMELAPSE.json`.
