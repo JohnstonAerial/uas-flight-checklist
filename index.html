@@ -398,7 +398,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.2</p>
+      <p>Free Drone Preflight Checklist · v3.7.3</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1179,7 +1179,7 @@ function applyRegion(r, changeUnits) {
   document.body.classList.toggle('intl', intl);
   document.querySelectorAll('.item[data-region="us"]').forEach(it => it.classList.toggle('region-hidden', intl));
   document.querySelectorAll('.item[data-orig]').forEach(it => { it.querySelector('.item-text').textContent = intl ? it.dataset.intl : it.dataset.orig; });
-  const q = document.getElementById('wx-q'); if (q) q.placeholder = intl ? 'Town, postcode, or lat, lon' : 'Town, ZIP, or lat, lon';
+  const q = document.getElementById('wx-q'); if (q) q.placeholder = intl ? 'Town, postal code, or lat, lon' : 'Town, ZIP, or lat, lon';
   document.querySelectorAll('.region-sel').forEach(sel => { sel.value = r; });
   const card = document.getElementById('region-card'); if (card) card.remove();
   if (changeUnits && (intl || prev === 'intl') && typeof toggleUnits === 'function') {
@@ -2201,9 +2201,18 @@ async function searchSite(e) {
   }
 
   // "Angier NC" / "Angier, NC" -> search the town, then prefer that state
+  // Also accepts the full state name ("Ocala Florida", "Ocala, Florida") and a trailing "USA"
   let name = q, state = null;
-  const m = q.match(/^(.*?)[,\s]+([A-Za-z]{2})$/);
+  const qq = q.replace(/[,\s]+(?:USA|US|United States)$/i, '');
+  const m = qq.match(/^(.*?)[,\s]+([A-Za-z]{2})$/);
   if (m && STATES[m[2].toUpperCase()]) { name = m[1].trim(); state = STATES[m[2].toUpperCase()]; }
+  else {
+    const names = Object.values(STATES).sort((a, b) => b.length - a.length);
+    for (const sn of names) {
+      const fm = qq.match(new RegExp('^(.+?)[,\\s]+' + sn.replace(/ /g, '\\s+') + '$', 'i'));
+      if (fm && fm[1].trim()) { name = fm[1].trim().replace(/,$/, ''); state = sn; break; }
+    }
+  }
 
   note('Searching…');
   try {
@@ -2214,7 +2223,7 @@ async function searchSite(e) {
     if (state) { const f = list.filter(r => r.admin1 === state); if (f.length) list = f; }
     list = list.slice(0, 6);
     out.innerHTML = '';
-    if (!list.length) { note('No matches. Try a nearby town, a postcode or ZIP code, or coordinates.'); return; }
+    if (!list.length) { note('No matches. Try a nearby town, a postal code or ZIP code, or coordinates.'); return; }
     list.forEach(r => {
       const region = r.admin1 ? (r.country_code === 'US' && STATE_ABBR[r.admin1] ? STATE_ABBR[r.admin1] : r.admin1) : '';
       const label = r.name + (region ? ', ' + region : '') + (r.country_code && r.country_code !== 'US' ? ', ' + r.country_code : '');

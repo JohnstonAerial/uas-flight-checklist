@@ -1,13 +1,53 @@
 # How to use the UAS Flight Checklist
 
-Short guides for six things people ask about: saving different setups ("profiles"), using the app with no signal, saving a record of your preflight, printing the checklist, using it outside the USA, and checking TFRs and NOTAMs (USA only).
+Short guides for seven things people ask about: backing up and restoring your setup, saving different setups ("profiles"), using the app with no signal, saving a record of your preflight, printing the checklist, using it outside the USA, and checking TFRs and NOTAMs (USA only).
 
+- [Back up and restore your setup](#back-up-and-restore-your-setup)
 - [Make your own profiles](#make-your-own-profiles)
 - [Use it with no signal](#use-it-with-no-signal)
 - [Save a preflight record](#save-a-preflight-record)
 - [Print it and use a pencil](#print-it-and-use-a-pencil)
 - [Use it outside the USA](#use-it-outside-the-usa)
 - [Check TFRs and NOTAMs before you fly (USA only)](#check-tfrs-and-notams-before-you-fly-usa)
+
+---
+
+## Back up and restore your setup
+
+Your checklist setup is stored on your device. If you get a new phone, clear your browser data, or want the same setup on a tablet, you'd have to rebuild it. A backup saves it so you can bring it back, or copy it to another device, in a minute.
+
+**What a backup includes**
+
+- Your tab names, which tabs and items are hidden, the items you added, and the order you set
+- Your units, your region (USA or another country) and your saved places
+- Optionally, your current progress (the boxes you've ticked)
+
+It does not include saved preflight records. Those are separate files that you keep yourself.
+
+**To back up**
+
+1. Open **Settings & customize** and scroll to **💾 Back up & restore**.
+2. Leave **Include current progress** ticked if you want your ticks saved too, or untick it to save only your setup.
+3. Tap **Save file**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files** or send it to yourself. On a computer the file goes to your Downloads folder.
+
+Or tap **Copy code**. The code is the same backup as text, handy for sending yourself a message.
+
+**To restore**
+
+- **From a file:** tap **Restore from file…** and choose your backup. The page reloads with that setup.
+- **From a code:** paste it into the box, then tap **Restore from code**.
+
+**Move your setup to another device**
+
+Back up on the first device, send the file or code to the second (AirDrop, email, a cloud folder or a message to yourself), then restore it there.
+
+**Good to know**
+
+- **Restoring replaces everything on that device:** tabs, hidden and added items, units and saved places. If you want to keep what you have, save a backup of it first.
+- **Each place keeps its own copy.** Safari and the Home Screen icon on the same iPhone store their settings separately. You can back up from one and restore into the other. That's an easy way to move to the Home Screen app.
+- **You can restore on the same device too.** It's a quick way to undo a round of changes you regret, if you saved a backup first.
+- **Reset and Restore original list are different.** **Reset** on the main screen clears only your ticks and flags on that tab. **Restore original list**, in the customize panel, undoes your customizing on that tab: hidden items come back, items you added are removed and the tab name is reset.
+- **Your files are yours.** They're plain text files that stay on your device or wherever you put them. Nothing is sent to the website.
 
 ---
 
@@ -55,9 +95,7 @@ I did the same thing for my other kinds of work: one backup file each for Genera
 
 - **Restoring replaces everything on that device:** tabs, hidden and added items, units and saved places. If you want to keep your normal setup, save a backup of it first, before you start experimenting.
 - **Untick "Include current progress"** when you save a profile. Otherwise it also saves which boxes you had ticked.
-- **Copy code** gives you the same snapshot as text. Paste it into **Restore from code** on another phone, tablet or browser to move your setup across.
-- **Where files go:** the file is saved to your phone's Files app, or your computer's downloads folder. Put your profile files somewhere you'll find them, such as a cloud folder.
-- **Different devices keep their own settings.** A Home Screen icon on an iPhone has its own storage, separate from Safari, so restore the profile in the one you actually use.
+- **Where files go and moving between devices:** see [Back up and restore your setup](#back-up-and-restore-your-setup). Put your profile files somewhere you'll find them, such as a cloud folder.
 - **Your files are yours.** They're plain text files that stay on your device or wherever you put them. Nothing is sent to the website.
 
 ---
