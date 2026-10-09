@@ -20,14 +20,14 @@ Your checklist setup is stored on your device. If you get a new phone, clear you
 
 - Your tab names, which tabs and items are hidden, the items you added, and the order you set
 - Your units, your region (USA or another country) and your saved places
-- Optionally, your current progress (the boxes you've ticked)
+- Optionally, your current progress (the boxes you've ticked), which only restores if it hasn't expired (see Good to know)
 
 It does not include saved preflight records. Those are separate files that you keep yourself.
 
 **To back up**
 
 1. Open **Settings & customize** and scroll to **💾 Back up & restore**.
-2. Leave **Include current progress** ticked if you want your ticks saved too, or untick it to save only your setup.
+2. Leave **Include current progress** ticked if you're moving to another device today and want your ticks to come with you. Untick it to save only your setup, which is best for a backup you'll keep.
 3. Tap **Save file**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files** or send it to yourself. On a computer the file goes to your Downloads folder.
 
 Or tap **Copy code**. The code is the same backup as text, handy for sending yourself a message.
@@ -43,6 +43,7 @@ Back up on the first device, send the file or code to the second (AirDrop, email
 
 **Good to know**
 
+- **Progress expires, even in a backup.** Your ticks are kept for the time set under **Clear saved progress after** (12 hours unless you changed it), counted from the last time you ticked something. If you restore a backup after that time has passed, the app restores your setup, leaves the old ticks out and tells you the progress has expired. So a backup with progress works for moving to another device today, not for storing for later.
 - **Restoring replaces everything on that device:** tabs, hidden and added items, units and saved places. If you want to keep what you have, save a backup of it first.
 - **Each place keeps its own copy.** Safari and the Home Screen icon on the same iPhone store their settings separately. You can back up from one and restore into the other. That's an easy way to move to the Home Screen app.
 - **You can restore on the same device too.** It's a quick way to undo a round of changes you regret, if you saved a backup first.
