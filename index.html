@@ -232,7 +232,7 @@
   .rec-box .rec-check input { width: 20px; height: 20px; flex-shrink: 0; }
   .rec-box .rec-hint { font-size: 12px; color: var(--text-muted); line-height: 1.35; margin: 4px 0 0 30px; }
   .rec-box .rec-check.rec-off { opacity: 0.5; }
-  .rec-box .rec-copy { display: block; background: none; border: 0; padding: 12px 0 0; margin: 0; color: var(--blue); font-family: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; }
+  .rec-box .rec-copy { display: block; background: none; border: 0; padding: 0; margin: 16px auto 0; color: var(--blue); font-family: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; }
   .rec-more { margin-top: 12px; border: 1px solid var(--border); border-radius: 10px; padding: 0 12px; }
   .rec-more summary { cursor: pointer; font-size: 14px; color: var(--blue); padding: 10px 0; min-height: 24px; font-weight: 600; }
   .rec-more[open] summary { border-bottom: 1px solid var(--border); margin-bottom: 2px; }
@@ -241,6 +241,11 @@
   .rec-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
   .rec-actions button { font: inherit; font-size: 14.5px; border-radius: 22px; padding: 9px 13px; min-height: 40px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--text-muted); }
   .rec-actions { flex-wrap: wrap; gap: 8px; }
+  .rec-actions-2 { display: grid; grid-template-columns: 1fr 1fr; }
+  .rec-actions-2 button { width: 100%; white-space: nowrap; padding: 10px 8px; }
+  .rec-actions-2 .rec-primary { grid-column: 1 / -1; order: 1; }
+  .rec-actions-2 .rec-alt { order: 2; }
+  .rec-actions-2 .rec-cancel { order: 3; }
   .rec-actions .rec-dl, .rec-actions .rec-alt { color: var(--blue); border-color: var(--blue); }
   .rec-actions .rec-primary { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
   .xfer { max-width: 600px; margin: 14px auto 6px; padding: 12px 16px 4px; border-top: 1px solid var(--border); text-align: center; font-size: 11px; color: var(--text-light); }
@@ -415,7 +420,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.5</p>
+      <p>Free Drone Preflight Checklist · v3.7.6</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -3077,8 +3082,8 @@ function openRecord(btn) {
     '<label class="rec-check"><input type="checkbox" id="rec-un"> Include items not checked</label>' +
     '<label class="rec-check" id="rec-gps-row"><input type="checkbox" id="rec-gps"> Include GPS coordinates</label>' +
     '<div class="rec-hint" id="rec-gps-hint"></div>' +
+    '<div class="rec-actions rec-actions-2"><button type="button" class="rec-cancel">Cancel</button><button type="button" class="rec-pdf">Save as PDF</button><button type="button" class="rec-save">Save text</button></div>' +
     '<button type="button" class="rec-copy" id="rec-copy">Copy as text instead</button>' +
-    '<div class="rec-actions"><button type="button" class="rec-cancel">Cancel</button><button type="button" class="rec-pdf">Save as PDF</button><button type="button" class="rec-save">Save text</button></div>' +
     '</div>';
   document.body.appendChild(ov);
   const $ = (id) => ov.querySelector(id);

@@ -32,6 +32,12 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.7.6
+
+- **Tidier Save record pop-up** — **Save as PDF** is one wide button, with **Save text** and **Cancel** side by side under it, so the labels no longer wrap on a phone. **Copy as text instead** moved below the buttons.
+
+---
+
 ## What's new in v3.7.5
 
 - **Save as PDF** — the **Save record** pop-up now has **Save as PDF** next to **Save text**. The PDF has the same details as the text record (customer, site, weather, every section with what was checked, flagged items, notes) with real check boxes and page numbers. The button you used last is the filled one, so it remembers your choice. PDF is the filled button until you pick text.
