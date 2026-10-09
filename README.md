@@ -14,18 +14,18 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 <table>
   <tr>
+    <td align="center" width="33%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions: wind, cloud ceiling, temperature, Kp index, precipitation, humidity, sunrise and sunset, with TFR, NOTAM and radar buttons" width="240"></picture><br><sub><b>Live conditions (light or dark, it follows your phone)</b></sub></td>
     <td align="center" width="33%"><img src="screenshots/01-checklist.png" alt="Checklist with live weather, progress bar and checked items" width="240"><br><sub><b>Live weather and checklist</b></sub></td>
     <td align="center" width="33%"><img src="screenshots/05-ready-to-fly.png" alt="Ready to fly banner after the pre-flight sections are complete" width="240"><br><sub><b>"Ready to fly" banner</b></sub></td>
-    <td align="center" width="33%"><img src="screenshots/04-reorder.png" alt="Customize mode with drag handles and Hide buttons" width="240"><br><sub><b>Customize: drag, hide, add</b></sub></td>
   </tr>
   <tr>
+    <td align="center"><img src="screenshots/04-reorder.png" alt="Customize mode with drag handles and Hide buttons" width="240"><br><sub><b>Customize: drag, hide, add</b></sub></td>
     <td align="center"><img src="screenshots/02-settings.png" alt="Settings panel with region, progress retention and Back up and restore" width="240"><br><sub><b>Settings &amp; Back up / restore</b></sub></td>
     <td align="center"><img src="screenshots/03-customize.png" alt="Customize panel with tab rename, hide tab and Done" width="240"><br><sub><b>Rename or hide tabs</b></sub></td>
-    <td align="center"><img src="screenshots/06-save-record.png" alt="Save preflight record pop-up with customer, site, notes and options" width="240"><br><sub><b>Save a preflight record</b></sub></td>
   </tr>
   <tr>
+    <td align="center"><img src="screenshots/06-save-record.png" alt="Save preflight record pop-up with customer, site, notes and options" width="240"><br><sub><b>Save a preflight record</b></sub></td>
     <td align="center"><img src="screenshots/07-printed.png" alt="Printed checklist with blank date, time, site and pilot lines" width="240"><br><sub><b>Print it for a pencil</b></sub></td>
-    <td></td>
     <td></td>
   </tr>
 </table>
