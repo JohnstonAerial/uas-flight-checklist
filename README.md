@@ -32,6 +32,13 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.7.4
+
+- **Bigger tabs with your own icons** — each tab now shows a larger icon above a larger name. In **Customize**, pick a different icon for the tab you're on from the presets (including two drone drawings), type any emoji you like, or choose no icon. **Original icon** puts it back. Icons are saved with your tab names, so a backup carries them.
+- **Search by full state name** (since v3.7.3) — location search now understands "Ocala Florida" and "Ocala, Florida", not just "Ocala FL".
+
+---
+
 ## What's new in v3.7.2
 
 - **Fewer false radar warnings** — a single stray radar echo (birds, insects, dust) no longer triggers the precipitation warning. Radar now has to show a small cluster of echoes within about 3 miles. When radar is the only sign of wet weather, the card says **Radar echoes nearby** with a **No rain reported** note instead of "Precip. nearby", so it doesn't imply rain that nobody has reported.
@@ -198,7 +205,7 @@ Version 3.1 makes the weather card much more useful on a rainy or low-cloud day:
 
 Version 3 is a major update built around making the checklist *yours*:
 
-- **⚙ Settings & customize panel** — everything that configures the checklist now lives in one tidy, collapsible panel at the top of each tab: how long progress is kept, where you fly (USA or outside), Customize, tab names, and backup
+- **⚙ Settings & customize panel** — everything that configures the checklist now lives in one tidy, collapsible panel at the top of each tab: how long progress is kept, where you fly (USA or outside), Customize, tab names and icons, and backup
 - **Reorder items** — in Customize mode, drag the **≡** handle to move any item up or down within its section
 - **Back up & restore** — copy a code or save a file of your settings (and, optionally, your current progress), then restore it on another phone, tablet or browser — or on the same one after a reset
 - **Two-stage banner** — a green banner tells you when your pre-flight checks are done (**ready to fly**) and again when the whole flight is finished (**flight complete**)
@@ -211,7 +218,7 @@ Version 3 is a major update built around making the checklist *yours*:
 
 ## Features
 
-- **3 mission-specific tabs** — General, Mapping, and Commercial (rename or hide any of them)
+- **3 mission-specific tabs** — General, Mapping, and Commercial (rename, change the icon of, or hide any of them)
 - **Live Preflight Conditions panel** showing:
   - Wind speed, gusts, and direction arrow, plus wind at 400 ft
   - Cloud ceiling in feet AGL from nearby airport (METAR) reports
@@ -227,7 +234,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
 - **Works outside the USA** — the first time you open it, choose **USA** or **Outside the USA**. Choosing outside the USA hides the items marked "(US)" (TFR and LAANC checks and the TFR recheck on site), rewords the NOTAM item so it isn't tied to a US website, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. Change it any time in **⚙ Settings**
 - **Customize the list** — open **⚙ Settings & customize** and tap **✎ Customize list** to hide items that don't apply where you fly, add your own items to any section, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
-- **Rename or hide tabs** — in Customize mode, rename the tab you're on or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Renaming changes the tab's name only; use Hide and Add to change what's inside it
+- **Rename, re-icon or hide tabs** — in Customize mode, rename the tab you're on, give it a different icon (pick one, type your own emoji, or choose none) or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Renaming and changing the icon change only how the tab looks; use Hide and Add to change what's inside it
 - **Back up & restore** — see below
 - **Collapsible sections** — tap a section header to fold it up or open it, or use **Collapse all / Expand all**. Finished sections fold themselves and the next unfinished one opens, and on your first visit only the first section of each tab is open. Each header shows its count (like 9/12), a ✓ when it's finished and an amber ⚠ if something in it needs attention, even when folded. Your fold state is remembered
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it in Settings (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
@@ -255,7 +262,7 @@ Your settings and progress are stored in the browser on the device you're using.
 2. Paste the code and tap **Restore from code**, or tap **Restore from file…** and choose your backup
 3. Confirm — the checklist reloads, collapses Settings and scrolls to the top, and a short message confirms it worked
 
-Restoring **replaces** that device's settings with the backup. A backup includes your region, units, tab names and hidden tabs, hidden/added/reordered items, fold state, recent flight sites and progress retention — and, if you chose it, your checks and flags. Progress that has already expired is not restored.
+Restoring **replaces** that device's settings with the backup. A backup includes your region, units, tab names, tab icons and hidden tabs, hidden/added/reordered items, fold state, recent flight sites and progress retention — and, if you chose it, your checks and flags. Progress that has already expired is not restored.
 
 ---
 
@@ -295,7 +302,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 8. Tap **Reset** (next to the progress bar) to clear all checks and flags on the current tab — it asks you to confirm first
 9. Tap **Save record** to keep a text copy of the checklist, or **Print checklist** to print the tab (in Safari or a computer browser)
 
-**To make it yours:** open **⚙ Settings & customize**, tap **✎ Customize list**, and hide items you don't need, add your own, drag items into your order, and rename or hide whole tabs — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
+**To make it yours:** open **⚙ Settings & customize**, tap **✎ Customize list**, and hide items you don't need, add your own, drag items into your order, and rename, change the icon of, or hide whole tabs — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
 
 ---
 

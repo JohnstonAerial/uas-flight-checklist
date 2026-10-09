@@ -79,12 +79,24 @@
 
   .tabs { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .tabs::-webkit-scrollbar { display: none; }
-  .tab { flex: 1 0 auto; white-space: nowrap; padding: 10px 8px; text-align: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.85); border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; letter-spacing: 0.2px; }
+  .tab { flex: 1 0 auto; white-space: nowrap; padding: 8px 12px 9px; text-align: center; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; letter-spacing: 0.2px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 1px; }
+  .tab-ico { font-size: 26px; line-height: 1.15; }
+  .tab-lbl { line-height: 1.2; }
+  .tab-ico svg { display: block; width: 28px; height: 28px; }
+  .ti-btn { color: var(--text); }
+  .ti-btn svg { display: block; width: 26px; height: 26px; margin: 0 auto; }
   .tab.tab-hidden { display: none; }
   .tab-edit { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
   .tab-edit input { font-family: inherit; font-size: 16px; width: 11em; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px; }
   .tab-edit .cust-btn:disabled { opacity: 0.4; cursor: default; }
   .tab-note { margin-top: 4px; }
+  .tab-icons { margin-top: 10px; text-align: center; }
+  .ti-label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+  .ti-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+  .ti-btn { font-size: 22px; line-height: 1; width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); cursor: pointer; padding: 0; }
+  .ti-btn.sel { border: 2px solid var(--blue-mid); }
+  .ti-more { margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+  .ti-more input { font-family: inherit; font-size: 16px; width: 11em; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px; text-align: center; }
   .tab-hidden-list { margin-top: 6px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
   .tab.active { color: white; border-bottom-color: white; }
 
@@ -368,6 +380,9 @@
     .hdr-help { display: none !important; }
     .tabs { display: block; overflow: visible; }
     .tab:not(.active) { display: none !important; }
+    .tab-ico { display: inline; font-size: inherit; }
+    .tab-ico svg { display: inline; width: 1em; height: 1em; vertical-align: -0.12em; }
+    .tab-lbl { display: inline; }
     .tab.active { display: block; padding: 6px 0 0; font-size: 13pt; text-align: left; color: #000 !important; border: 0; }
     .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .progress-card, .complete-banner, .flag-hint, .saved-note, .coffee-note,
     .edit-bar, .toast, .rec-overlay, .rec-btn, .pc-btns, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
@@ -398,7 +413,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.3</p>
+      <p>Free Drone Preflight Checklist · v3.7.4</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1369,16 +1384,29 @@ function toggleEdit(btn) {
   }
   refreshCust(panelEl);
 }
+const TAB_SVGS = { 'svg:drone-top': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><circle cx="25" cy="7" r="4.5"/><circle cx="7" cy="25" r="4.5"/><circle cx="25" cy="25" r="4.5"/><path d="M10.2 10.2L13 13M21.8 10.2L19 13M10.2 21.8L13 19M21.8 21.8L19 19"/><rect x="12" y="12" width="8" height="8" rx="2" fill="currentColor"/></svg>', 'svg:drone-side': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M19 8h10M8 8v5M24 8v5M8 13l3 1M24 13l-3 1M10 18l-3 7M22 18l3 7M5 25h5M22 25h5"/><rect x="11" y="12" width="10" height="6" rx="2" fill="currentColor"/><circle cx="16" cy="21.5" r="2.5" fill="currentColor"/></svg>' };
+const TAB_ICONS = ['🏞','🗺','📋','🚁','svg:drone-top','svg:drone-side','📷','🎥','🔋','⚠️','🏗','🏠','🏢','🌉','⚡','🔧','📡','🧭','✅','⭐','📍','🌲','🌅','📝','🔍','🌤'];
+function firstIcon(v) {
+  v = (v || '').trim(); if (!v) return '';
+  try { if (window.Intl && Intl.Segmenter) { for (const g of new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(v)) return g.segment; } } catch (e) {}
+  return Array.from(v)[0];
+}
+function setTabIcon(el, val) {
+  if (val === undefined) return;
+  const pid = el.closest('.panel').id.replace('panel-', '');
+  if (val === null) delete tabsCfg.icons[pid]; else if (val === '' && el.classList.contains('tab-icon-in')) return; else tabsCfg.icons[pid] = val;
+  tabsSave(); refreshTabs();
+}
 function restoreDefaults(btn) {
   const panelEl = btn.closest('.panel'), c = cust[panelEl.id], pid = panelEl.id.replace('panel-', '');
-  const hasItems = c && ((c.hidden || []).length || (c.added || []).length || (c.order && Object.keys(c.order).length)), hasName = !!tabsCfg.names[pid];
+  const hasItems = c && ((c.hidden || []).length || (c.added || []).length || (c.order && Object.keys(c.order).length)), hasName = !!tabsCfg.names[pid] || (pid in tabsCfg.icons);
   if (!hasItems && !hasName) return;
-  if (!confirm('Restore this tab to the original list? Hidden items come back, the items you added are removed, the order is reset and the tab name is reset.')) return;
+  if (!confirm('Restore this tab to the original list? Hidden items come back, the items you added are removed, the order is reset and the tab name and icon are reset.')) return;
   panelEl.querySelectorAll('.item.custom').forEach(i => i.remove());
   panelEl.querySelectorAll('.section-card').forEach(card => [...card.querySelectorAll(':scope > .item')].sort((a, b) => a.dataset.i - b.dataset.i).forEach(it => card.appendChild(it)));
   panelEl.querySelectorAll('.item.is-hidden').forEach(i => i.classList.remove('is-hidden'));
   delete cust[panelEl.id];
-  if (hasName) { delete tabsCfg.names[pid]; tabsSave(); refreshTabs(); }
+  if (hasName) { delete tabsCfg.names[pid]; delete tabsCfg.icons[pid]; tabsSave(); refreshTabs(); }
   custSave(); refreshCust(panelEl); saveProgress();
 }
 
@@ -1410,7 +1438,10 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     '<div class="cust-tip">💡 Drag the <b>≡</b> handle to move an item up or down within its section. To customize another tab, just tap it at the top — Settings stays open. Press <b>Done</b> when you\'re finished.</div>' +
     '<div class="tab-edit"><label>Tab name <input class="tab-name" type="text" maxlength="24" autocomplete="off" oninput="saveTabName(this)" onblur="refreshTabs()"></label>' +
     '<button type="button" class="cust-btn tab-hide-btn" onclick="hideTab(this)">Hide this tab</button></div>' +
-    '<div class="tab-note">Renaming changes the tab\'s name only. Use Hide and Add to change what\'s in it.</div>' +
+    '<div class="tab-icons"><span class="ti-label">Tab icon</span><div class="ti-grid">' + TAB_ICONS.map(e => '<button type="button" class="ti-btn" data-i="' + e + '" aria-label="Use this icon" onclick="setTabIcon(this, this.dataset.i)">' + (TAB_SVGS[e] || e) + '</button>').join('') + '</div>' +
+    '<div class="ti-more"><input class="tab-icon-in" type="text" maxlength="12" autocomplete="off" placeholder="or type your own" oninput="setTabIcon(this, firstIcon(this.value))">' +
+    '<button type="button" class="cust-btn" onclick="setTabIcon(this, \'\')">No icon</button><button type="button" class="cust-btn" onclick="setTabIcon(this, null)">Original icon</button></div></div>' +
+    '<div class="tab-note">Renaming changes the tab\'s name and icon only. Use Hide and Add to change what\'s in it.</div>' +
     '<div class="tab-hidden-list"></div>' +
     '<div class="cust-actions"><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button><button type="button" class="cust-btn" onclick="restoreDefaults(this)">Restore original list</button></div></div>';
   panelEl.querySelector('.keep-row').after(row);
@@ -1571,8 +1602,8 @@ if (!region) {
 // ── Tabs: rename or hide (saved on this device) ──
 const TABS_KEY = 'uasTabs';
 let tabsCfg = (function () {
-  try { const v = JSON.parse(localStorage.getItem(TABS_KEY)); return { names: (v && v.names) || {}, hidden: (v && v.hidden) || [] }; }
-  catch (e) { return { names: {}, hidden: [] }; }
+  try { const v = JSON.parse(localStorage.getItem(TABS_KEY)); return { names: (v && v.names) || {}, hidden: (v && v.hidden) || [], icons: (v && v.icons) || {} }; }
+  catch (e) { return { names: {}, hidden: [], icons: {} }; }
 })();
 function tabsSave() { try { localStorage.setItem(TABS_KEY, JSON.stringify(tabsCfg)); } catch (e) {} }
 const tabEls = [...document.querySelectorAll('.tabs .tab')];
@@ -1582,9 +1613,16 @@ tabEls.forEach(t => {
   if (m && !/[A-Za-z0-9]/.test(m[1])) { t.dataset.emoji = m[1]; t.dataset.name = m[2]; } else { t.dataset.emoji = ''; t.dataset.name = txt; }
 });
 const tabName = (t) => tabsCfg.names[t.dataset.pid] || t.dataset.name;
+const tabIcon = (t) => {
+  const v = (t.dataset.pid in tabsCfg.icons) ? tabsCfg.icons[t.dataset.pid] : t.dataset.emoji;
+  return (typeof v === 'string' && v.indexOf('svg:') === 0 && !TAB_SVGS[v]) ? t.dataset.emoji : (typeof v === 'string' ? v : t.dataset.emoji);
+};
 function refreshTabs() {
   tabEls.forEach(t => {
-    t.textContent = (t.dataset.emoji ? t.dataset.emoji + ' ' : '') + tabName(t);
+    const ic = tabIcon(t);
+    t.textContent = '';
+    if (ic) { const i = document.createElement('span'); i.className = 'tab-ico'; if (TAB_SVGS[ic]) i.innerHTML = TAB_SVGS[ic]; else i.textContent = ic; t.appendChild(i); t.appendChild(document.createTextNode(' ')); }
+    const l = document.createElement('span'); l.className = 'tab-lbl'; l.textContent = tabName(t); t.appendChild(l);
     t.classList.toggle('tab-hidden', tabsCfg.hidden.includes(t.dataset.pid));
   });
   const visible = tabEls.filter(t => !t.classList.contains('tab-hidden'));
@@ -1592,6 +1630,11 @@ function refreshTabs() {
     const t = tabEls.find(x => x.dataset.pid === p.id.replace('panel-', ''));
     const inp = p.querySelector('.tab-name');
     if (inp && t && document.activeElement !== inp) inp.value = tabName(t);
+    if (t) {
+      const cur = tabIcon(t), more = p.querySelector('.tab-icon-in');
+      p.querySelectorAll('.ti-btn').forEach(b => b.classList.toggle('sel', b.dataset.i === cur));
+      if (more && document.activeElement !== more) more.value = (cur && !TAB_ICONS.includes(cur)) ? cur : '';
+    }
     const hb = p.querySelector('.tab-hide-btn'); if (hb) hb.disabled = visible.length <= 1;
     const list = p.querySelector('.tab-hidden-list');
     if (list) {
