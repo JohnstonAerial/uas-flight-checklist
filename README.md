@@ -4,9 +4,9 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 **Use it now:** [checklist.johnstonaerial.com](https://checklist.johnstonaerial.com)
 
-☕ **Free to use.** If it helps you, you can [buy me a coffee](https://buymeacoffee.com/JohnstonAerial).
+📘 **New here?** Start with the [How-to guides](HOW-TO.md). You can also open them in the app: **⚙ Settings & customize → 📘 Help & guides**.
 
-📘 **New here?** See the [How-to guides](HOW-TO.md): back up and restore your setup, make your own profiles (with a real timelapse example), use it with no signal, save a preflight record, print it and use a pencil, use it outside the USA, and check TFRs and NOTAMs (USA). Inside the app, tap **⚙ Settings & customize → 📘 Help & guides**.
+☕ **Free to use.** If it helps you, you can [buy me a coffee](https://buymeacoffee.com/JohnstonAerial).
 
 ---
 
