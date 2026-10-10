@@ -5,7 +5,7 @@ Short guides for seven things people ask about: backing up and restoring your se
 - [Back up and restore your setup](#back-up-and-restore-your-setup)
 - [Make your own profiles](#make-your-own-profiles)
 - [Use it with no signal](#use-it-with-no-signal)
-- [Save a preflight record](#save-a-preflight-record)
+- [Save a flight record](#save-a-flight-record)
 - [Print it and use a pencil](#print-it-and-use-a-pencil)
 - [Use it outside the USA](#use-it-outside-the-usa)
 - [Check TFRs and NOTAMs before you fly (USA only)](#check-tfrs-and-notams-before-you-fly-usa)
@@ -22,7 +22,7 @@ Your checklist setup is stored on your device. If you get a new phone, clear you
 - Your units, your region (USA or another country) and your saved places
 - Optionally, your current progress (the boxes you've ticked), which only restores if it hasn't expired (see Good to know)
 
-It does not include saved preflight records. Those are separate files that you keep yourself.
+It does not include saved flight records. Those are separate files that you keep yourself.
 
 **To back up**
 
@@ -120,14 +120,14 @@ Still worth doing: the checklist's own tip to screenshot your mission brief. The
 
 ---
 
-## Save a preflight record
+## Save a flight record
 
-Want a copy of what you checked? Tap **Save record**, next to **Print checklist** at the top of the checklist.
+Want a copy of what you checked, plus the details of the flight? Tap **Save flight record**, on the right of the buttons at the top of the checklist (under **Print | PDF** on a narrow screen).
 
-1. Tap **Save record**.
+1. Tap **Save flight record**.
 2. Fill in what you want to keep: the customer, the site (type an address or place name, or leave it blank) and any notes. **More details** has boxes for airspace authorization (for example a LAANC reference, altitude and times), flight time and visual observer. Everything is optional.
 3. Choose whether to include the weather conditions, the items you didn't check, and your GPS coordinates (off unless you tick it).
-4. Tap **Save as PDF** or **Save text**. The one you used last is the filled button on the right, and the app remembers it. PDF is the filled button until you choose text. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files**, AirDrop, Mail or Messages. On a computer the file goes to your Downloads folder.
+4. Tap **Save PDF** or **Save text**. The one you used last is the filled button at the left of the row, and the app remembers it. PDF is the filled button until you choose text. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files**, AirDrop, Mail or Messages. On a computer the file goes to your Downloads folder.
 
 You get one file, named like `preflight-record-2026-10-06-1415-smith-roofing.pdf` (or `.txt` for text), that opens on any device. The PDF has real check boxes and page numbers. Items you flagged are listed as NEEDS ATTENTION. Items you hid are left out and items you added are included. The record is made on your device and isn't sent anywhere.
 
@@ -139,11 +139,11 @@ If the Share sheet doesn't open, the app shows a box with **Share…** and **Dow
 
 ## Print it and use a pencil
 
-You can print the checklist and take it to the site. Open the tab you want, then tap **Print checklist** in Safari. In the Home Screen app, open the page in Safari first, since the Home Screen app can't print. Check items off with a pencil during preflight and again after the flight. Print each tab you need, since only the open tab prints.
+You can print the checklist and take it to the site. Open the tab you want, then tap **Print** in Safari. In the Home Screen app, open the page in Safari first, since the Home Screen app can't print. Check items off with a pencil during preflight and again after the flight. Print each tab you need, since only the open tab prints.
 
-No printer, or using the Home Screen app? Tap **Save checklist as PDF** instead. It makes the same blank sheet as a PDF, with lines for date, time, site, pilot and visual observer, that you can save to Files, email or print later. It works in the Home Screen app too, and like printing it covers only the open tab.
+No printer, or using the Home Screen app? Tap **PDF** instead. It makes the same sheet as a PDF file, with your checked and flagged items marked and lines for date, time, site, pilot and visual observer, that you can save to Files, email or print later. It works in the Home Screen app too, and like printing it covers only the open tab.
 
-The app also works offline once it has loaded (see above), so paper is a choice, not a requirement. You can also save a record afterward and print that.
+The app also works offline once it has loaded (see above), so paper is a choice, not a requirement. You can also save a flight record afterward and print that.
 
 ---
 

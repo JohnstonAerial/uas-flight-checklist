@@ -205,10 +205,21 @@
   .panel.editing .set-heads { display: none; }
   .settings-note { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; text-align: center; font-size: 11px; color: var(--text-light); line-height: 1.4; }
   .progress-card { flex-wrap: wrap; padding: 12px 14px; gap: 10px; }
-  .progress-info { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; }
-  .progress-info .progress-label { margin-top: 0; }
-  .progress-info .progress-track { flex: 0 0 100%; margin-top: 8px; }
-  .pc-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; flex: 1 1 100%; }
+  .progress-info { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; row-gap: 8px; }
+  .progress-info .progress-label { margin-top: 0; flex: 1 1 0; min-width: 7.5em; }
+  .pc-mini { display: flex; justify-content: space-between; align-items: center; flex: 1 1 100%; border-top: 1px solid var(--border); padding-top: 6px; margin-top: 2px; }
+  .pc-mini .reset-inline::before { content: '\21BA\00a0'; } .pc-mini .sec-all::before { content: '\21D5\00a0'; }
+  .pc-mini .reset-inline, .pc-mini .sec-all { width: auto; margin: 0; padding: 4px 2px; font-size: 13px; min-height: 36px; white-space: nowrap; text-align: center; border-radius: 0; color: var(--text-muted); background: transparent; border: 0; font-family: inherit; cursor: pointer; }
+  .progress-info .progress-track { flex: 0 0 100%; margin-top: 0; }
+  .pc-btns { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 6px; flex: 1 1 100%; container-type: inline-size; }
+  @container (max-width: 305px) { .pc-btns > .rec-btn.rec-record { flex-direction: row; gap: 8px; min-height: 40px; padding: 6px 8px; } .pc-btns .rec-btn.rec-record small { display: none; } }
+  .pc-btns > .rec-btn { flex: 5 1 120px; }
+  .pc-pair { flex: 6 1 190px; min-width: 0; }
+  .pc-cap { font-size: 10px; letter-spacing: .5px; color: var(--text-muted); text-align: center; margin: 0 0 3px; font-weight: 600; }
+  .pc-join { display: flex; border: 1px solid var(--blue); border-radius: 20px; overflow: hidden; }
+  .pc-btns .pc-join .rec-btn { flex: 1 1 0; width: auto; border: 0; border-radius: 0; flex-direction: row; gap: 6px; min-height: 40px; padding: 6px 4px; }
+  .pc-btns .pc-join .rec-btn + .rec-btn { border-left: 1px solid var(--blue); }
+  .pc-btns .rec-btn.rec-record small { font-size: 10px; font-weight: 400; opacity: .85; }
   .pc-btns .reset-inline, .pc-btns .sec-all { width: 100%; text-align: center; border-radius: 20px; padding: 6px 12px; font-size: 12px; margin: 0; color: var(--text-muted); background: transparent; border: 1px solid var(--border); font-family: inherit; cursor: pointer; }
   .saved-note { font-size: 11px; color: var(--text-light); text-align: center; padding: 0 16px 8px; }
   .edit-bar { display: none; position: fixed; left: 0; right: 0; bottom: 0; max-width: 600px; margin: 0 auto; z-index: 50; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--border); border-bottom: none; border-radius: 14px 14px 0 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.18); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)) 16px; font-size: 13px; font-weight: 600; color: var(--text); }
@@ -221,10 +232,12 @@
   /* ── Preflight record ── */
   .pc-btns .rec-btn { width: 100%; text-align: center; border-radius: 20px; padding: 6px 12px; font-size: 12px; margin: 0; color: var(--blue); background: transparent; border: 1px solid var(--blue); font-family: inherit; cursor: pointer; min-height: 32px; font-weight: 600; }
   .pc-btns .rec-btn:active { background: var(--blue-light); }
-  .pc-btns .print-btn { white-space: nowrap; font-weight: 500; }
-  .pc-btns .pdf-btn { grid-column: 1 / -1; }
-  .pc-btns .reset-inline, .pc-btns .sec-all, .pc-btns .rec-btn { white-space: nowrap; min-height: 30px; padding: 5px 6px; }
+  .pc-btns .print-btn { white-space: nowrap; }
+  .pc-btns .rec-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; line-height: 1.2; padding: 8px 2px; min-height: 52px; border-radius: 20px; font-weight: 600; }
+  .pc-btns .rec-btn .ic { font-size: 17px; line-height: 1.1; }
+  .pc-btns .rec-btn { white-space: nowrap; }
   .panel.editing .rec-btn { display: none; }
+  .panel.editing .pc-mini, .panel.editing .pc-pair { display: none; }
   .rec-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.5); display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 5vh 12px 24px; -webkit-overflow-scrolling: touch; }
   .rec-box { width: 100%; max-width: 420px; background: var(--card); color: var(--text); border-radius: 16px; padding: 18px 18px 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.35); }
   .rec-box h2 { font-size: 17px; margin: 0 0 12px; }
@@ -244,9 +257,9 @@
   .rec-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
   .rec-actions button { font: inherit; font-size: 14.5px; border-radius: 22px; padding: 9px 13px; min-height: 40px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--text-muted); }
   .rec-actions { flex-wrap: wrap; gap: 8px; }
-  .rec-actions-2 { display: grid; grid-template-columns: 1fr 1fr; }
-  .rec-actions-2 button { width: 100%; white-space: nowrap; padding: 10px 8px; }
-  .rec-actions-2 .rec-primary { grid-column: 1 / -1; order: 1; }
+  .rec-actions-2 { display: flex; flex-wrap: nowrap; gap: 6px; }
+  .rec-actions-2 button { flex: 1 1 auto; width: auto; min-width: 0; white-space: nowrap; padding: 10px 4px; font-size: 13.5px; }
+  .rec-actions-2 .rec-primary { order: 1; }
   .rec-actions-2 .rec-alt { order: 2; }
   .rec-actions-2 .rec-cancel { order: 3; }
   .rec-actions .rec-dl, .rec-actions .rec-alt { color: var(--blue); border-color: var(--blue); }
@@ -427,7 +440,7 @@
     .tab-lbl { display: inline; }
     .tab.active { display: block; padding: 6px 0 0; font-size: 13pt; text-align: left; color: #000 !important; border: 0; }
     .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .progress-card, .complete-banner, .flag-hint, .saved-note, .coffee-note, .foot-links,
-    .edit-bar, .toast, .rec-overlay, .rec-btn, .pc-btns, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
+    .edit-bar, .toast, .rec-overlay, .rec-btn, .pc-btns, .pc-mini, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
     .content { max-width: none; padding: 0; margin: 0; }
     .panel { padding: 0; }
     .print-fields { display: block; margin: 0 0 4px; }
@@ -455,7 +468,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.7</p>
+      <p>Free Drone Preflight Checklist · v3.7.8</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -516,7 +529,7 @@
   <div class="progress-card">
     <div class="progress-info">
       <div class="progress-pct" id="pct-zeitview">0%</div>
-      <div class="progress-label" id="lbl-zeitview">0 of 0 items complete</div>
+      <div class="progress-label" id="lbl-zeitview">0 of 0 complete</div>
       <div class="progress-track"><div class="progress-track-fill" id="bar-zeitview" style="width:0%"></div></div>
     </div>
   </div>
@@ -630,7 +643,7 @@
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Let site contact know you're finished — if you notified them</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Pack drone properly in case — confirm all parts undamaged and stowed securely</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Put batteries on charger when home — don't leave discharged</div></div>
-      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Log the flight — site, flight time and any issues (tap Save record)</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Log the flight — site, flight time and any issues (tap Save flight record)</div></div>
     </div>
   </div>
 </div>
@@ -640,7 +653,7 @@
   <div class="progress-card">
     <div class="progress-info">
       <div class="progress-pct" id="pct-mapping">0%</div>
-      <div class="progress-label" id="lbl-mapping">0 of 0 items complete</div>
+      <div class="progress-label" id="lbl-mapping">0 of 0 complete</div>
       <div class="progress-track"><div class="progress-track-fill" id="bar-mapping" style="width:0%"></div></div>
     </div>
   </div>
@@ -757,7 +770,7 @@
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Let site contact know you're finished — if you notified them</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Pack drone properly in case — confirm all parts undamaged and stowed securely</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Put batteries on charger when home — don't leave discharged</div></div>
-      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Log the flight — site, flight time and any issues (tap Save record)</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Log the flight — site, flight time and any issues (tap Save flight record)</div></div>
     </div>
   </div>
 
@@ -768,7 +781,7 @@
   <div class="progress-card">
     <div class="progress-info">
       <div class="progress-pct" id="pct-general">0%</div>
-      <div class="progress-label" id="lbl-general">0 of 0 items complete</div>
+      <div class="progress-label" id="lbl-general">0 of 0 complete</div>
       <div class="progress-track"><div class="progress-track-fill" id="bar-general" style="width:0%"></div></div>
     </div>
   </div>
@@ -866,7 +879,7 @@
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Let site contact know you're finished — if you notified them</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Pack drone properly in case — confirm all parts undamaged and stowed securely</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Put batteries on charger when home — don't leave discharged</div></div>
-      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Log the flight — site, flight time and any issues (tap Save record)</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Log the flight — site, flight time and any issues (tap Save flight record)</div></div>
     </div>
   </div>
 
@@ -912,7 +925,8 @@ const RENAMED = {
   "Loss of signal action — RTH": "Loss of signal action — set to RTH (not Hover or Land)",
   "Monitor battery — begin return by 30%, land by 20%": "Monitor battery — start back early enough to land with a reserve, allowing for distance and wind",
   "Safe landing — props stopped before approaching drone": "Safe landing — props stopped before approaching the drone",
-  "Log flight time in your records": "Log the flight — site, flight time and any issues (tap Save record)",
+  "Log flight time in your records": "Log the flight — site, flight time and any issues (tap Save flight record)",
+  "Log the flight — site, flight time and any issues (tap Save record)": "Log the flight — site, flight time and any issues (tap Save flight record)",
   "Check weather — wind under 23 mph (37 km/h), no rain, good visibility": "Check the forecast — wind and gusts within your drone's limits, no rain, good visibility",
   "All batteries fully charged": "All drone batteries fully charged, spares included",
   "Remote ID — if your drone requires an external module, confirm it is charged and attached": "Remote ID — if your drone needs an external module, confirm it's charged and packed",
@@ -938,7 +952,8 @@ const RENAMED = {
   "Loss of signal action — RTH": "Loss of signal action — set to RTH (not Hover or Land)",
   "Monitor battery — begin return by 30%, land by 20%": "Monitor battery — start back early enough to land with a reserve, allowing for distance and wind",
   "Safe landing — props stopped before approaching drone": "Safe landing — props stopped before approaching the drone",
-  "Log flight time in your records": "Log the flight — site, flight time and any issues (tap Save record)",
+  "Log flight time in your records": "Log the flight — site, flight time and any issues (tap Save flight record)",
+  "Log the flight — site, flight time and any issues (tap Save record)": "Log the flight — site, flight time and any issues (tap Save flight record)",
   "Define mapping area — confirm boundaries in DJI Pilot / mission planner": "Define mapping area — confirm boundaries in your mission planner",
   "Check weather — winds under 15mph ideal, no rain, good visibility": "Check the forecast — wind and gusts within your drone's limits, no rain, good visibility",
   "Check Air Aware for airspace restrictions": "Check airspace — use an airspace app or your country's official drone map to confirm class and restrictions",
@@ -977,7 +992,8 @@ const RENAMED = {
   "Loss of signal action — RTH": "Loss of signal action — set to RTH (not Hover or Land)",
   "Monitor battery — begin return by 30%, land by 20%": "Monitor battery — start back early enough to land with a reserve, allowing for distance and wind",
   "Safe landing — props stopped before approaching drone": "Safe landing — props stopped before approaching the drone",
-  "Log flight time in your records": "Log the flight — site, flight time and any issues (tap Save record)",
+  "Log flight time in your records": "Log the flight — site, flight time and any issues (tap Save flight record)",
+  "Log the flight — site, flight time and any issues (tap Save record)": "Log the flight — site, flight time and any issues (tap Save flight record)",
   "Check weather forecast — wind speed, gusts, cloud cover, precipitation": "Check the forecast — wind and gusts within your drone's limits, no rain, good visibility",
   "All drone batteries fully charged": "All drone batteries fully charged, spares included",
   "Controller fully charged": "Controller and phone/tablet fully charged",
@@ -1118,7 +1134,7 @@ function updateProgress(panel) {
   const total = items.length;
   const pct = total ? Math.round(checked / total * 100) : 0;
   document.getElementById('pct-' + panel).textContent = pct + '%';
-  document.getElementById('lbl-' + panel).innerHTML = checked + ' of ' + total + ' items complete' +
+  document.getElementById('lbl-' + panel).innerHTML = checked + ' of ' + total + ' complete' +
     (flagged ? ' · <span class="attn-count">⚠ ' + flagged + ' need' + (flagged === 1 ? 's' : '') + ' attention</span>' : '');
   document.getElementById('bar-' + panel).style.width = pct + '%';
   document.getElementById('header-bar').style.width = pct + '%';
@@ -1873,7 +1889,9 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   card.before(wrap);
   const reset = card.querySelector('.reset-inline'), all = cust.querySelector('.sec-all');
   const col = document.createElement('div'); col.className = 'pc-btns';
-  card.appendChild(col); col.appendChild(reset); if (all) col.appendChild(all);
+  card.appendChild(col);
+  const mini = document.createElement('div'); mini.className = 'pc-mini'; mini.appendChild(reset); if (all) mini.appendChild(all);
+  card.appendChild(mini);
   const tip = panelEl.querySelector('.flag-hint');
   const sn = document.createElement('div'); sn.className = 'saved-note';
   sn.innerHTML = '💾 Saved on this device only · clears after <span class="saved-hours"></span>';
@@ -1882,7 +1900,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   bar.innerHTML = '<span>✎ Editing your list</span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button>';
   panelEl.prepend(bar);
   const coffee = document.createElement('div'); coffee.className = 'coffee-note';
-  coffee.innerHTML = 'Free to use. If it saved you a step, you can <a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee ☕</a>';
+  coffee.innerHTML = 'Built by a Part 107 pilot, for pilots. Free to use. If it helped you fly smarter, <a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee ☕</a>';
   panelEl.appendChild(coffee);
   panelEl.appendChild(help);
 });
@@ -3145,7 +3163,7 @@ function openRecord(btn) {
   const ov = document.createElement('div'); ov.className = 'rec-overlay';
   ov.innerHTML =
     '<div class="rec-box" role="dialog" aria-modal="true" aria-labelledby="rec-title">' +
-    '<h2 id="rec-title">Save preflight record</h2>' +
+    '<h2 id="rec-title">Save flight record</h2>' +
     '<label class="rec-lbl" for="rec-cust">Customer (optional)</label><input type="text" id="rec-cust" autocomplete="off" autocapitalize="words" maxlength="120">' +
     '<label class="rec-lbl" for="rec-site">Site</label><input type="text" id="rec-site" autocomplete="off" maxlength="160" placeholder="Address or place name">' +
     '<label class="rec-lbl" for="rec-notes">Notes (optional)</label><textarea id="rec-notes" rows="3" maxlength="2000"></textarea>' +
@@ -3158,7 +3176,7 @@ function openRecord(btn) {
     '<label class="rec-check"><input type="checkbox" id="rec-un"> Include items not checked</label>' +
     '<label class="rec-check" id="rec-gps-row"><input type="checkbox" id="rec-gps"> Include GPS coordinates</label>' +
     '<div class="rec-hint" id="rec-gps-hint"></div>' +
-    '<div class="rec-actions rec-actions-2"><button type="button" class="rec-cancel">Cancel</button><button type="button" class="rec-pdf">Save as PDF</button><button type="button" class="rec-save">Save text</button></div>' +
+    '<div class="rec-actions rec-actions-2"><button type="button" class="rec-cancel">Cancel</button><button type="button" class="rec-pdf">Save PDF</button><button type="button" class="rec-save">Save text</button></div>' +
     '<button type="button" class="rec-copy" id="rec-copy">Copy as text instead</button>' +
     '</div>';
   document.body.appendChild(ov);
@@ -3218,22 +3236,22 @@ function openRecord(btn) {
 }
 document.querySelectorAll('.panel .pc-btns').forEach(col => {
   const b = document.createElement('button');
-  b.type = 'button'; b.className = 'rec-btn'; b.textContent = 'Save record';
+  b.type = 'button'; b.className = 'rec-btn'; b.className = 'rec-btn rec-record'; b.innerHTML = '<span class="ic" aria-hidden="true">📋</span>Save flight record';
   b.setAttribute('aria-label', 'Save a preflight record of this checklist');
   b.onclick = () => openRecord(b);
   col.prepend(b);
   const pb = document.createElement('button');
-  pb.type = 'button'; pb.className = 'rec-btn print-btn'; pb.textContent = 'Print checklist';
+  pb.type = 'button'; pb.className = 'rec-btn print-btn'; pb.innerHTML = '<span class="ic" aria-hidden="true">🖨</span>Print';
   pb.setAttribute('aria-label', 'Print this checklist');
   pb.onclick = () => {
     const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const app = navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
-    if (ios && app) { recToast('Printing isn\'t available in the Home Screen app. Tap Save checklist as PDF instead, or open this page in Safari and use Share \u2192 Print.', 7000); return; }
+    if (ios && app) { recToast('Printing isn\'t available in the Home Screen app. Tap PDF instead, or open this page in Safari and use Share \u2192 Print.', 7000); return; }
     try { window.print(); } catch (e) {}
   };
   col.prepend(pb);
   const fb = document.createElement('button');
-  fb.type = 'button'; fb.className = 'rec-btn pdf-btn'; fb.textContent = 'Save checklist as PDF';
+  fb.type = 'button'; fb.className = 'rec-btn pdf-btn'; fb.innerHTML = '<span class="ic" aria-hidden="true">📄</span>PDF';
   fb.setAttribute('aria-label', 'Save this checklist as a PDF to print or share');
   fb.onclick = async () => {
     const panelEl = col.closest('.panel'), t = document.querySelector('.tab[data-pid="' + panelEl.id.replace('panel-', '') + '"] .tab-lbl');
@@ -3244,6 +3262,10 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
     if (how === 'downloaded') recToast('✓ PDF saved to your downloads'); else if (how === 'shared') recToast('✓ PDF ready');
   };
   b.after(fb);
+  const pw = document.createElement('div'); pw.className = 'pc-pair';
+  pw.innerHTML = '<div class="pc-cap">CHECKLIST</div><div class="pc-join"></div>';
+  pw.querySelector('.pc-join').append(pb, fb);
+  col.append(pw, b);
 });
 </script>
 

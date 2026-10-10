@@ -24,11 +24,21 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
     <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/03-customize-dark.png"><img src="screenshots/03-customize-light.png" alt="Customize panel with tab name, Hide this tab and the Tab icon picker" width="240"></picture><br><sub><b>Rename tabs, pick an icon</b></sub></td>
   </tr>
   <tr>
-    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/06-save-record-dark.png"><img src="screenshots/06-save-record-light.png" alt="Save preflight record pop-up with customer, site, notes and options" width="240"></picture><br><sub><b>Save a preflight record</b></sub></td>
-    <td align="center"><img src="screenshots/07-printed.png" alt="Printed checklist with blank date, time, site and pilot lines" width="240"><br><sub><b>Print it for a pencil</b></sub></td>
+    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/06-save-record-dark.png"><img src="screenshots/06-save-record-light.png" alt="Save flight record pop-up with customer, site, notes and options" width="240"></picture><br><sub><b>Save a flight record</b></sub></td>
+    <td align="center"><img src="screenshots/07-printed.png" alt="Printed checklist with date, time, site and pilot lines to fill in" width="240"><br><sub><b>Print it for a pencil</b></sub></td>
     <td></td>
   </tr>
 </table>
+
+---
+
+## What's new in v3.7.8
+
+- **A tidier progress card** — the percentage and count sit on top with the bar under them, then the buttons: **Print | PDF** together on the left under a small **CHECKLIST** label, and **📋 Save flight record** on the right. **Reset** and **Expand all** moved to a quiet row at the bottom of the card, away from the top edge of the screen. On a narrow phone, or with larger text, the buttons stack and nothing overlaps.
+- **Save record is now Save flight record** — the button, the pop-up title and the "Log the flight" item all use the same name. If you have ticked, flagged or customized that item, your progress carries over.
+- **Save flight record pop-up** — **Save PDF**, **Save text** and **Cancel** are in one row. The button you used last is still the filled one.
+- **Print and PDF show your ticks** — **Print** and **PDF** (it was Save checklist as PDF) make the checklist as it stands, with your checked and flagged items marked and blank lines for date, time, site, pilot and visual observer. Neither is a blank sheet.
+- **A new footer line** — "Built by a Part 107 pilot, for pilots. Free to use. If it helped you fly smarter, buy me a coffee ☕"
 
 ---
 
@@ -263,8 +273,8 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention** — press and hold any item to mark it amber. Flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag
-- **Save a preflight record** — tap **Save record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-preflight-record)
-- **Print it, or save it as a PDF** — **Print checklist** prints the open tab as a clean paper checklist with blank date, time, site and pilot lines, for use with a pencil. **Save checklist as PDF** makes the same sheet as a PDF, and works in the Home Screen app too. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil)
+- **Save a flight record** — tap **Save flight record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-flight-record)
+- **Print it, or save it as a PDF** — **Print** prints the open tab as a clean paper checklist, with your checked and flagged items marked and blank date, time, site and pilot lines, for use with a pencil. **PDF** makes the same sheet as a PDF file, and works in the Home Screen app too. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil)
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
 - **Completely free** to host and run
 
@@ -321,8 +331,8 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 5. Press and hold an item to flag it as **needs attention** (amber). Tap a flagged item once it's resolved to check it off, or press and hold it again to clear the flag
 6. When you check off the last item in a section, it folds itself and the next unfinished section opens. Tap any header to open a section again. A section with a flagged item stays open until the flag is resolved
 7. The progress bar tracks your completion percentage and shows how many items need attention. When your pre-flight sections are done, a **ready to fly** banner appears; after the last section, **flight complete**
-8. Tap **Reset** (next to the progress bar) to clear all checks and flags on the current tab — it asks you to confirm first
-9. Tap **Save record** to keep a PDF or text copy of the checklist, **Save checklist as PDF** for a blank printable sheet, or **Print checklist** to print the tab (in Safari or a computer browser)
+8. Tap **Reset** (bottom of the progress card) to clear all checks and flags on the current tab — it asks you to confirm first
+9. Tap **Save flight record** to keep a PDF or text copy of the flight, **PDF** to save the checklist as a printable file, or **Print** to print the tab (in Safari or a computer browser)
 
 **To make it yours:** open **⚙ Settings**, tap **✎ Customize**, and hide items you don't need, add your own, drag items into your order, and rename, change the icon of, or hide whole tabs — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
 
@@ -371,8 +381,8 @@ Yes. It's free to fork, and you can host your own copy and change the default it
 - **Weather defaults to your current GPS location** — to check a different flight site, tap **Change** on the weather panel and search for a town, postal code (ZIP code in the USA), or coordinates. Place search works best for towns and cities; for a specific job site, use a nearby town or enter coordinates. Cloud ceiling comes from the nearest METAR station, which can be several miles from the site (the station is shown on the panel). The **Radar — NWS** button opens the national map.
 - **Cloud ceiling depends on the METAR proxy** — if it is unreachable the Cloud Ceiling tile shows "No METAR data" and everything else still works.
 - **Altitude and speed limits** — defaults shown are US FAA limits, and cloud ceiling depends on a nearby airport's weather report, which can be missing in areas with few airports. Always verify the regulations for your country and airspace class, and use Customize to hide or replace items that don't match.
-- **Printing needs a browser** — **Print checklist** works in Safari, other browsers and on computers, but not in the iPhone or iPad Home Screen app, because iOS doesn't allow printing from there. Open the page in Safari to print, or tap **Save checklist as PDF**, which works in the Home Screen app
-- **Records stay on your device** — **Save record** makes a PDF or a plain text (`.txt`) file, and nothing is uploaded anywhere. You can also copy it as text
+- **Printing needs a browser** — **Print** works in Safari, other browsers and on computers, but not in the iPhone or iPad Home Screen app, because iOS doesn't allow printing from there. Open the page in Safari to print, or tap **PDF**, which works in the Home Screen app
+- **Records stay on your device** — **Save flight record** makes a PDF or a plain text (`.txt`) file, and nothing is uploaded anywhere. You can also copy it as text
 - **Items move within their section** — you can reorder an item inside its section, but not move it to a different section.
 
 ---
@@ -418,7 +428,7 @@ This is a single HTML file — everything is in `index.html`. Without touching a
 
 Originally built by **Johnston Aerial** — FAA-certified commercial drone pilot based in Johnston County, North Carolina.
 
-**Save record** came from a suggestion by Mac in the Pilot Institute community. Thanks, Mac!
+**Save flight record** came from a suggestion by Mac in the Pilot Institute community. Thanks, Mac!
 
 Many of the checklist items, like the IMSAFE self check, max distance, the TFR recheck, the flight plan item and the External pressures check, came from discussions and articles shared by the [Pilot Institute](https://pilotinstitute.com) community. Thank you!
 
