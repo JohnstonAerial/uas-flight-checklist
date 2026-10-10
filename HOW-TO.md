@@ -26,7 +26,7 @@ It does not include saved preflight records. Those are separate files that you k
 
 **To back up**
 
-1. Open **Settings & customize** and scroll to **💾 Back up & restore**.
+1. Tap **💾 Back up & restore** under the page header.
 2. Leave **Include current progress** ticked if you're moving to another device today and want your ticks to come with you. Untick it to save only your setup, which is best for a backup you'll keep.
 3. Tap **Save file**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files** or send it to yourself. On a computer the file goes to your Downloads folder.
 
@@ -58,7 +58,7 @@ The app keeps one setup at a time on your device: your tab names and icons, whic
 
 **Example: a "Timelapse" setup**
 
-1. Open **Settings & customize** and tap **✎ Customize list**.
+1. Tap **⚙ Settings**, then **✎ Customize**.
 2. Rename a tab (for example, **Timelapse**) in the **Tab name** box. You can also change its icon under **Tab icon**: pick one, type your own emoji, or choose **No icon**.
 3. Tap **Hide** on items you don't need, and add your own at the bottom of any section. Use **Hide this tab** on tabs you don't want to see. Tap **✓ Done**.
 4. In **💾 Back up & restore**, untick **Include current progress**, then tap **Save file**.
@@ -90,7 +90,7 @@ I did the same thing for my other kinds of work: one backup file each for Genera
 
 **Make yours:** start from whatever tab is closest to your work. Hide what you never use, add the checks you keep forgetting, and write them in your own words and for your own gear. The best items come from the mistakes you've already made once.
 
-**To switch to it later:** open **Settings & customize**, tap **Restore from file…**, and choose the file. The page reloads with that setup.
+**To switch to it later:** tap **💾 Back up & restore**, then **Restore from file…**, and choose the file. The page reloads with that setup.
 
 **Good to know**
 
@@ -149,7 +149,7 @@ The app also works offline once it has loaded (see above), so paper is a choice,
 
 ## Use it outside the USA
 
-The first time you open the app it asks **Where do you fly?** Choose **Outside the USA**. You can change this at any time from **Checklist for** under **Settings & customize**.
+The first time you open the app it asks **Where do you fly?** Choose **Outside USA**. You can change this at any time from **Checklist for** under **⚙ Settings**.
 
 **What changes**
 

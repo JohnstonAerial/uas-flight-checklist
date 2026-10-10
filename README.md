@@ -4,7 +4,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 **Use it now:** [checklist.johnstonaerial.com](https://checklist.johnstonaerial.com)
 
-📘 **New here?** Start with the [How-to guides](HOW-TO.md). You can also open them in the app: **⚙ Settings & customize → 📘 Help & guides**.
+📘 **New here?** Start with the [How-to guides](HOW-TO.md). You can also open them in the app with the **📘 Help** button at the top of the page, or the **Help & guides** link at the bottom of any tab.
 
 ☕ **Free to use.** If it helps you, you can [buy me a coffee](https://buymeacoffee.com/JohnstonAerial).
 
@@ -29,6 +29,15 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
     <td></td>
   </tr>
 </table>
+
+---
+
+## What's new in v3.7.7
+
+- **Your own wind limit** — in **⚙ Settings**, set the sustained wind and gust limits your drone can handle. The wind card turns amber at about two-thirds of your limit and red at the limit, and gusts now count too. Leave the boxes empty for the standard limits (23 mph sustained, 25 mph gusts). The boxes follow your units (mph or km/h) and are saved in Back up & restore.
+- **Settings and Back up & restore are two buttons** under the page header, each opening its own card, so the checklist starts higher on the page. **Settings** is one short list: Checklist for, Checklist items, Clear saved progress after and Wind limit, with the "saved on this device only" note at the top. **Back up & restore** has clear Back up and Restore halves.
+- **Help, feedback and coffee at the bottom** — **📘 Help & guides** and **✉ Send feedback** now sit on one line at the bottom of each tab, under the coffee line. **Send feedback** opens an email to info@JohnstonAerial.com with your app version and device filled in, so you can add what works, what's missing or what's confusing.
+- Small wording changes: the **✎ Customize list** button now reads **✎ Customize**, and **Outside the USA** now reads **Outside USA**.
 
 ---
 
@@ -240,13 +249,13 @@ Version 3 is a major update built around making the checklist *yours*:
   - Humidity and dew point, with a fog and lens-fogging warning
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times
-- **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at 15 mph and red at 23 mph. The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility under 3 miles is red. KP index turns amber at 3 and red at 4. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
+- **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility under 3 miles is red. KP index turns amber at 3 and red at 4. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
 - **Night notice** — after sunset or before sunrise, the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules)
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)
 - **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
-- **Works outside the USA** — the first time you open it, choose **USA** or **Outside the USA**. Choosing outside the USA hides the items marked "(US)" (TFR and LAANC checks and the TFR recheck on site), rewords the NOTAM item so it isn't tied to a US website, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. Change it any time in **⚙ Settings**
-- **Customize the list** — open **⚙ Settings & customize** and tap **✎ Customize list** to hide items that don't apply where you fly, add your own items to any section, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
+- **Works outside the USA** — the first time you open it, choose **USA** or **Outside USA**. Choosing outside the USA hides the items marked "(US)" (TFR and LAANC checks and the TFR recheck on site), rewords the NOTAM item so it isn't tied to a US website, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. Change it any time in **⚙ Settings**
+- **Customize the list** — open **⚙ Settings** and tap **✎ Customize** to hide items that don't apply where you fly, add your own items to any section, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
 - **Rename, re-icon or hide tabs** — in Customize mode, rename the tab you're on, give it a different icon (pick one, type your own emoji, or choose none) or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Renaming and changing the icon change only how the tab looks; use Hide and Add to change what's inside it
 - **Back up & restore** — see below
 - **Collapsible sections** — tap a section header to fold it up or open it, or use **Collapse all / Expand all**. Finished sections fold themselves and the next unfinished one opens, and on your first visit only the first section of each tab is open. Each header shows its count (like 9/12), a ✓ when it's finished and an amber ⚠ if something in it needs attention, even when folded. Your fold state is remembered
@@ -263,17 +272,17 @@ Version 3 is a major update built around making the checklist *yours*:
 
 ## Back up & restore
 
-Your settings and progress are stored in the browser on the device you're using. They don't sync by themselves, and a checklist added to your Home Screen can keep its own separate copy from the browser tab (iPhones and iPads always do). It works the same on any phone, tablet or computer, in any current browser. **Back up & restore** (in ⚙ Settings, and also visible while you customize) saves a copy of your setup. Use it to move to another device, to move from your browser to the Home Screen app (or back), to get your settings back on the same device after clearing your browser, or to keep several setups and switch between them. See [Make your own profiles](HOW-TO.md#make-your-own-profiles).
+Your settings and progress are stored in the browser on the device you're using. They don't sync by themselves, and a checklist added to your Home Screen can keep its own separate copy from the browser tab (iPhones and iPads always do). It works the same on any phone, tablet or computer, in any current browser. **Back up & restore** (the **💾 Back up & restore** button under the page header) saves a copy of your setup. Use it to move to another device, to move from your browser to the Home Screen app (or back), to get your settings back on the same device after clearing your browser, or to keep several setups and switch between them. See [Make your own profiles](HOW-TO.md#make-your-own-profiles).
 
 **To back up**
-1. Open **⚙ Settings & customize** and find **Back up & restore**
+1. Tap **💾 Back up & restore** under the page header
 2. Choose whether to **Include current progress** (leave it off to move only your settings)
 3. Tap **Copy code** to copy a code you can paste into a message or note, or **Save file** to save or share a small backup file
 
 **To restore**
-1. Open **⚙ Settings & customize** where you want your setup: on a new device, in the Home Screen app, or on the same device
+1. Tap **💾 Back up & restore** where you want your setup: on a new device, in the Home Screen app, or on the same device
 2. Paste the code and tap **Restore from code**, or tap **Restore from file…** and choose your backup
-3. Confirm — the checklist reloads, collapses Settings and scrolls to the top, and a short message confirms it worked
+3. Confirm — the checklist reloads, closes the cards and scrolls to the top, and a short message confirms it worked
 
 Restoring **replaces** that device's settings with the backup. A backup includes your region, units, tab names, tab icons and hidden tabs, hidden/added/reordered items, fold state, recent flight sites and progress retention — and, if you chose it, your checks and flags. Progress that has already expired is not restored.
 
@@ -315,7 +324,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 8. Tap **Reset** (next to the progress bar) to clear all checks and flags on the current tab — it asks you to confirm first
 9. Tap **Save record** to keep a PDF or text copy of the checklist, **Save checklist as PDF** for a blank printable sheet, or **Print checklist** to print the tab (in Safari or a computer browser)
 
-**To make it yours:** open **⚙ Settings & customize**, tap **✎ Customize list**, and hide items you don't need, add your own, drag items into your order, and rename, change the icon of, or hide whole tabs — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
+**To make it yours:** open **⚙ Settings**, tap **✎ Customize**, and hide items you don't need, add your own, drag items into your order, and rename, change the icon of, or hide whole tabs — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
 
 ---
 
@@ -370,7 +379,7 @@ Yes. It's free to fork, and you can host your own copy and change the default it
 
 ## Feedback & bugs
 
-Suggestions are very welcome. The easiest way is to open an **[Issue](https://github.com/JohnstonAerial/uas-flight-checklist/issues)** on this repository (the **Issues** tab at the top of this page). If something looks wrong, please include:
+Suggestions are very welcome. Tap **✉ Send feedback** at the bottom of any tab to send an email, or open an **[Issue](https://github.com/JohnstonAerial/uas-flight-checklist/issues)** on this repository (the **Issues** tab at the top of this page). If something looks wrong, please include:
 
 - Your device and browser (for example "Pixel 8, Chrome" or "iPhone 15, Safari")
 - Whether you opened it in the browser or from a Home Screen icon
@@ -383,7 +392,7 @@ You can also reach Johnston Aerial through the links under *Credits*.
 
 ## Customization
 
-This is a single HTML file — everything is in `index.html`. Without touching any code you can hide, add, reorder and rename from **⚙ Settings & customize**. If you fork it, you can also:
+This is a single HTML file — everything is in `index.html`. Without touching any code you can hide, add, reorder and rename from **⚙ Settings**. If you fork it, you can also:
 
 - Add your own company name and branding in the header
 - Change the default checklist items to match your operation
