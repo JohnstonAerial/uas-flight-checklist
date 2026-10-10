@@ -269,10 +269,12 @@
   .body-bak .xfer { max-width: none; margin: 0; padding: 0; border-top: 0; text-align: left; font-size: 14px; color: var(--text); }
   .body-bak .xfer-sub { font-size: 11px; color: var(--text-light); padding: 12px 16px 10px; border-bottom: 1px solid var(--border); margin: 0; }
   .bk-h { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; padding: 12px 16px 6px; }
-  .body-bak .xfer-incl { display: flex; flex-direction: row-reverse; justify-content: space-between; padding: 6px 16px 8px; margin: 0; }
+  .body-bak .xfer-incl { display: flex; flex-direction: row; justify-content: flex-start; align-items: center; gap: 10px; padding: 6px 16px 8px; margin: 0; }
   .body-bak .xfer-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; padding: 4px 16px 14px; }
   .body-bak .xfer-btns .cust-btn { font-size: 14px; padding: 8px 6px; min-height: 40px; }
   .body-bak .xfer-btns.rs { padding-top: 10px; }
+  .body-bak .xfer-btns.has-share { grid-template-columns: 1fr 1fr 1fr; }
+  @media (max-width: 340px) { .body-bak .xfer-btns.has-share { grid-template-columns: 1fr 1fr; } .body-bak .xfer-btns.has-share .share-btn { grid-column: 1 / -1; } }
   .bk-div { border-top: 1px solid var(--border); }
   .body-bak .xfer-box { margin: 0 16px; width: calc(100% - 32px); font-size: 16px; }
   .body-bak .xfer-msg { padding: 0 16px 10px; margin: 0; min-height: 0; }
@@ -394,6 +396,8 @@
     text-decoration: line-through;
     text-decoration-color: var(--text-light);
   }
+  /* While customizing, strikethrough means "hidden" only: checked items read as normal text */
+  .panel.editing .item.checked:not(.is-hidden) .item-text { color: var(--text); text-decoration: none; }
 
   /* Weather Panel */
   .wx-panel { background: var(--card); border-radius: 14px; padding: 12px 14px; margin: 12px 12px 0; box-shadow: var(--shadow); max-width: 600px; margin-left: auto; margin-right: auto; }
@@ -406,6 +410,8 @@
   .wx-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
   .wx-value { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.1; }
   .wx-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .wx-model { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+  .wx-model strong { font-weight: 700; }
   .wx-loc { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: -4px 0 10px; font-size: 13px; color: var(--text); }
   .wx-loc-label { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .wx-loc-btn { flex-shrink: 0; font-size: 12px; color: var(--link); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 14px; font-family: inherit; padding: 3px 10px; }
@@ -488,7 +494,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.10</p>
+      <p>Free Drone Preflight Checklist · v3.7.11</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1755,12 +1761,30 @@ refreshTabs();
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
 const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasFileName', XFER_PROGRESS];
+// Share… shows where the browser can share but Save file does not already open a share sheet
+// (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
+const XFER_HAS_SHARE = (() => {
+  try {
+    if (typeof navigator.share !== 'function') return false;
+    const f = new File(['{}'], 'x.json', { type: 'application/json' });
+    const fileShare = !!(navigator.canShare && navigator.canShare({ files: [f] }));
+    const touch = !!(window.matchMedia && matchMedia('(pointer: coarse)').matches);   // phones and tablets
+    return !!window.showSaveFilePicker || !fileShare || !touch;
+  } catch (e) { return false; }
+})();
+let xferPre = null;                                                  // backup code made ahead of the tap, so Share runs inside the tap
+function xferWarm(el) {
+  const box = el.closest('.xfer'); if (!box) return;
+  const snap = xferSnapshot(box.querySelector('.xfer-prog').checked), key = JSON.stringify(snap.data);
+  if (xferPre && xferPre.key === key) return;
+  xferEncode(snap).then(code => { xferPre = { key, code }; }).catch(() => {});
+}
 function makeXfer() {
   const d = document.createElement('div');
   d.className = 'xfer';
   d.innerHTML = '<div class="xfer-sub">Save your settings and progress, or move them to another device or browser.</div>' +
     '<div class="bk-h">Back up</div><label class="xfer-incl"><input type="checkbox" class="xfer-prog" checked> Include current progress</label>' +
-    '<div class="xfer-btns"><button type="button" class="cust-btn" onclick="xferCopy(this)">Copy code</button><button type="button" class="cust-btn" onclick="xferSave(this)">Save file</button></div>' +
+    '<div class="xfer-btns' + (XFER_HAS_SHARE ? ' has-share' : '') + '"><button type="button" class="cust-btn" onclick="xferCopy(this)">Copy code</button><button type="button" class="cust-btn" onclick="xferSave(this)">Save file</button>' + (XFER_HAS_SHARE ? '<button type="button" class="cust-btn share-btn" onclick="xferShare(this)" onpointerdown="xferWarm(this)" aria-label="Share a backup">Share…</button>' : '') + '</div>' +
     '<div class="bk-div"></div><div class="bk-h">Restore</div><textarea class="xfer-box" rows="2" placeholder="Paste a backup code here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>' +
     '<div class="xfer-btns rs"><button type="button" class="cust-btn primary" onclick="xferRestore(this)">Restore from code</button><button type="button" class="cust-btn" onclick="xferFile(this)">Restore from file…</button>' +
     '<input type="file" class="xfer-file" accept=".json,application/json,text/plain" hidden onchange="xferFileChosen(this)"></div>' +
@@ -1818,10 +1842,34 @@ async function xferCopy(btn) {
   const ta = box.querySelector('.xfer-box'); ta.value = code; ta.focus(); ta.select();
   xferMsg(btn, 'Couldn\'t copy automatically. Touch and hold the code in the box, then choose Copy.', true);
 }
+async function xferShare(btn) {
+  // Share the backup CODE as text. Called straight from the tap with no waiting before navigator.share,
+  // because Safari drops the tap's permission if anything slow happens first. (Phones never show this button.)
+  // No title is sent: some share sheets show title and text as two separate items.
+  // (Attaching a .json file was refused by desktop Chrome, so the file route stays with Save file.)
+  const snap = xferSnapshot(btn.closest('.xfer').querySelector('.xfer-prog').checked);
+  const key = JSON.stringify(snap.data);
+  const code = xferPre && xferPre.key === key ? xferPre.code : 'UAS0.' + b64enc(new TextEncoder().encode(JSON.stringify(snap)));
+  try {
+    await navigator.share({ text: code });
+    xferMsg(btn, '✓ Shared. To restore it, paste the code into Back up & restore and tap Restore from code.'); return;
+  } catch (e) {
+    if (e && e.name === 'AbortError') return;
+    xferMsg(btn, 'Sharing isn\'t available here' + (e && e.name ? ' (' + e.name + ')' : '') + '. Use Copy code or Save file.', true);
+  }
+}
 async function xferSave(btn) {
   const json = JSON.stringify(xferSnapshot(btn.closest('.xfer').querySelector('.xfer-prog').checked));
   const name = 'uas-checklist-backup-' + new Date().toISOString().slice(0, 10) + '.json';
   const file = new File([json], name, { type: 'application/json' });
+  // Desktop Chrome and Edge: a real Save dialog, so you choose the folder and the name
+  if (window.showSaveFilePicker) {
+    try {
+      const h = await window.showSaveFilePicker({ suggestedName: name, types: [{ description: 'Checklist backup', accept: { 'application/json': ['.json'] } }] });
+      const w = await h.createWritable(); await w.write(file); await w.close();
+      xferMsg(btn, '✓ Backup complete. Restore it any time with Restore from file…'); return;
+    } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
   try {
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({ files: [file] });
@@ -2172,6 +2220,7 @@ async function fetchRadar(lat, lon) {
 
 const METAR_RADIUS_MI = 30;      // look at every reporting station within this distance
 const METAR_MAX_AGE_MIN = 180;   // ignore reports older than 3 hours when fresher ones exist
+const WIND_OBS_MAX_AGE_MIN = 75;  // observed wind is shown only from a report this recent
 
 const SKY_CLEAR = ['CLR', 'SKC', 'NSC', 'NCD', 'CAVOK'];
 function lowestLayer(metar) {
@@ -2221,7 +2270,20 @@ async function fetchMetar(lat, lon) {
       const t = decodePrecip(x.st.wxString);
       if (t && (!precipReport || x.d < precipReport.dist)) precipReport = { station: x.st.icaoId || '?', dist: x.d, text: t };
     }
-    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, precipReport };
+    // Observed wind: the nearest recent report that carries a wind (knots in the feed)
+    let wind = null;
+    const wsrc = all.find(x => x.d <= METAR_RADIUS_MI && x.age !== null && x.age <= WIND_OBS_MAX_AGE_MIN && typeof x.st.wspd === 'number' && isFinite(x.st.wspd));
+    if (wsrc) {
+      const KT = 1.15078, w = wsrc.st;
+      wind = {
+        station: w.icaoId || '?', dist: wsrc.d, ageMin: wsrc.age,
+        mph: w.wspd * KT,
+        gust: typeof w.wgst === 'number' && isFinite(w.wgst) ? w.wgst * KT : null,
+        deg: typeof w.wdir === 'number' && isFinite(w.wdir) ? w.wdir : null,
+        variable: w.wdir === 'VRB'
+      };
+    }
+    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, precipReport, wind };
   } catch (e) {
     console.warn('METAR fetch failed:', e.message);
     throw e;   // the caller tells "service failed" apart from "no station nearby"
@@ -2702,12 +2764,27 @@ async function renderWeather(lat, lon, attempt = 1) {
           const d = isSunDown(); el.hidden = !d; el.innerHTML = d ? nightTxt() : '';
         };
         const wind120Txt = wx.wind120 != null ? ` · ${isMetric() ? '120 m' : '400 ft'}: ${fmtSpeed(wx.wind120)}` : '';
+        // Wind card: the nearest airport's observed wind leads; the model figure for this spot sits under it. Each number is coloured by its own reading against your limits.
+        const ow = metarData2 && metarData2.wind ? metarData2.wind : null;
+        const owMph = ow ? Math.round(ow.mph) : null;
+        const owGust = ow && ow.gust != null && Math.round(ow.gust) > owMph ? Math.round(ow.gust) : null;
+        const owDirTxt = ow && owMph > 0 ? (ow.variable ? 'Variable' : (ow.deg != null ? windCardinal(ow.deg) : '')) : '';
+        const owArrow = ow && owMph > 0 && !ow.variable && ow.deg != null ? ' ' + windArrow(ow.deg) : '';
+        const modelTxt = windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() : '';
+        const windHTML = ow ? `
+            <div class="wx-label">Wind</div>
+            <div class="wx-value ${windColor(owMph, owGust)}">${fmtSpeedNum(owMph) + (owGust ? ' / ' + fmtSpeedNum(owGust) : '') + ' ' + speedUnit() + owArrow}</div>
+            <div class="wx-sub">${owGust ? 'Sustained / Gusts' : 'No gusts reported'}${owDirTxt ? ' · ' + owDirTxt : ''}</div>
+            <div class="wx-sub" data-rec-age="${Date.now() - ow.ageMin * 60000}">${ow.station} · ${fmtDist(ow.dist)} away · ${ageText(ow.ageMin * 60000)}</div>
+            ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${modelTxt}</strong></div>` : ''}
+            ${wx.wind120 != null ? `<div class="wx-sub">${isMetric() ? '120 m' : '400 ft'}: ${fmtSpeed(wx.wind120)}</div>` : ''}` : `
+            <div class="wx-label">Wind</div>
+            <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() + (dirOk ? ' ' + windArrow(wx.wind.deg) : '') : '—'}</div>
+            <div class="wx-sub">${windOk ? (gustMph ? 'Sustained / Gusts' : 'No gusts reported') + (dirOk ? ' · ' + windCardinal(wx.wind.deg) : '') + wind120Txt : 'No wind data'}</div>`;
         body.innerHTML = `
         <div class="wx-grid">
           <div class="wx-item">
-            <div class="wx-label">Wind</div>
-            <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() + (dirOk ? ' ' + windArrow(wx.wind.deg) : '') : '—'}</div>
-            <div class="wx-sub">${windOk ? (gustMph ? 'Sustained / Gusts' : 'No gusts reported') + (dirOk ? ' · ' + windCardinal(wx.wind.deg) : '') + wind120Txt : 'No wind data'}</div>
+            ${windHTML}
           </div>
           <div class="wx-item">
             <div class="wx-label">Cloud Ceiling</div>
@@ -2751,7 +2828,7 @@ async function renderWeather(lat, lon, attempt = 1) {
       goodDraw = draw; goodKey = site ? site.lat + ',' + site.lon : 'gps'; lastCoords = { lat: lat, lon: lon };
       body.style.opacity = '';
       draw();
-      srSay('Weather updated. Wind ' + (windOk ? fmtSpeedNum(windMph) + (gustMph ? ', gusting ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() : 'unavailable') + '. Cloud ceiling ' + (metarData2 ? ceilingText(ceilFt, m) : 'unavailable') + '. Precipitation ' + precipBlock().val + '.');
+      srSay('Weather updated. Wind ' + (metarData2 && metarData2.wind ? (() => { const w = metarData2.wind, m = Math.round(w.mph), g = w.gust != null && Math.round(w.gust) > m ? Math.round(w.gust) : null; return fmtSpeedNum(m) + (g ? ', gusting ' + fmtSpeedNum(g) : '') + ' ' + speedUnit() + ' at ' + w.station + (windOk ? '; model for your spot ' + fmtSpeedNum(windMph) + (gustMph ? ', gusting ' + fmtSpeedNum(gustMph) : '') : ''); })() : (windOk ? fmtSpeedNum(windMph) + (gustMph ? ', gusting ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() : 'unavailable')) + '. Cloud ceiling ' + (metarData2 ? ceilingText(ceilFt, m) : 'unavailable') + '. Precipitation ' + precipBlock().val + '.');
   } catch (e) {
     if (my !== wxReq) return;
     // One automatic retry for a flaky connection (not for a rate limit, which a retry would only worsen)

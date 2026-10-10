@@ -28,7 +28,9 @@ It does not include saved flight records. Those are separate files that you keep
 
 1. Tap **💾 Back up & restore** under the page header.
 2. Leave **Include current progress** ticked if you're moving to another device today and want your ticks to come with you. Untick it to save only your setup, which is best for a backup you'll keep.
-3. Tap **Save file**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files** or send it to yourself. On a computer the file goes to your Downloads folder.
+3. Tap **Save file**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files** or send it to yourself. In Chrome or Edge on a computer a Save dialog opens, so you choose the folder. In Safari or Firefox the file goes to your Downloads folder, unless your browser is set to ask where to save.
+
+On a computer you can also tap **Share…** to send the backup code with AirDrop, Mail or Messages. To restore it, paste the code into **Restore from code**.
 
 Or tap **Copy code**. The code is the same backup as text. Paste it into **Back up & restore** in another browser or app (for example, from Safari into your Home Screen app), or keep it somewhere safe, such as a note.
 

@@ -32,6 +32,16 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.7.11
+
+- **The wind card now shows what the airport is actually reporting** — when a weather station within 30 miles has reported in the last 75 minutes, the card leads with that measured wind: sustained speed, gusts (or "No gusts reported") and direction, with the station, how far away it is and how old the report is. Below it, a **Model for your spot** line shows the forecast model's wind for exactly where you are, then the wind at 400 ft. Each number is colored by its own reading against your wind limit. If no station is close enough or recent enough, the card shows the model wind as before. The flight record includes both readings.
+- **Checked items look right while you customize** — an item you had ticked off used to look crossed out and hidden when you opened Customize. Ticked items now look normal there, and only items you've actually hidden are crossed out and faded.
+- **Share… on computers** — in **Back up & restore** on a desktop or laptop (Safari, Chrome, Edge and other browsers that can share), a new **Share…** button opens your computer's share sheet, so you can AirDrop, email or message your backup code. To restore, paste the code into **Restore from code**. Phones and tablets already share from **Save file**, so they don't show it. Firefox on a computer can't share from a web page, so use **Copy code** or **Save file** there.
+- **Save file asks where to put it** — in Chrome and Edge on a computer, **Save file** now opens a Save dialog so you choose the folder and the name. In Safari on a Mac, turn on "Ask for each download" in Safari's settings if you'd like to pick the folder.
+- **Tidier Back up box** — the "Include current progress" checkbox now sits right beside its label instead of at the far edge.
+
+---
+
 ## What's new in v3.7.10
 
 - **Clearer Back up & restore messages** — a small wording update, nothing else changed. The restore box now says **Paste a backup code here**. After **Copy code** the message reads "Code copied. Paste it into Back up & restore in another browser or app, or keep it somewhere safe," which also covers moving between Safari and your Home Screen app. After **Save file** it reads "Backup complete. Restore it any time with Restore from file…," so it works on the same device later as well as on a new one.
@@ -304,7 +314,7 @@ Your settings and progress are stored in the browser on the device you're using.
 **To back up**
 1. Tap **💾 Back up & restore** under the page header
 2. Choose whether to **Include current progress** (leave it off to move only your settings)
-3. Tap **Copy code** to copy a code you can paste into a message or note, or **Save file** to save or share a small backup file
+3. Tap **Copy code** to copy a code you can paste into a message or note, **Save file** to save or share a small backup file, or (on a computer) **Share…** to send the code with AirDrop, Mail or Messages
 
 **To restore**
 1. Tap **💾 Back up & restore** where you want your setup: on a new device, in the Home Screen app, or on the same device
