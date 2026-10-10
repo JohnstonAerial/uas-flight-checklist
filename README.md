@@ -20,13 +20,13 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
   </tr>
   <tr>
     <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/04-reorder-dark.png"><img src="screenshots/04-reorder-light.png" alt="Customize mode with drag handles, Hide buttons and the Editing your list bar" width="240"></picture><br><sub><b>Customize: drag, hide, add</b></sub></td>
-    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/02-settings-dark.png"><img src="screenshots/02-settings-light.png" alt="Settings panel with progress retention, region, customize tips and Back up and restore" width="240"></picture><br><sub><b>Settings &amp; Back up / restore</b></sub></td>
+    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/02-settings-dark.png"><img src="screenshots/02-settings-light.png" alt="Settings panel with Where you fly, Checklist items, Clear saved progress after, Wind limit and Record file name" width="240"></picture><br><sub><b>Settings</b></sub></td>
     <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/03-customize-dark.png"><img src="screenshots/03-customize-light.png" alt="Customize panel with tab name, Hide this tab and the Tab icon picker" width="240"></picture><br><sub><b>Rename tabs, pick an icon</b></sub></td>
   </tr>
   <tr>
     <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/06-save-record-dark.png"><img src="screenshots/06-save-record-light.png" alt="Save flight record pop-up with customer, site, notes and options" width="240"></picture><br><sub><b>Save a flight record</b></sub></td>
     <td align="center"><img src="screenshots/07-printed.png" alt="Printed checklist with date, time, site and pilot lines to fill in" width="240"><br><sub><b>Print it for a pencil</b></sub></td>
-    <td></td>
+    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/09-backup-restore-dark.png"><img src="screenshots/09-backup-restore-light.png" alt="Back up and restore panel with Copy code, Save file, the Paste a backup code here box, Restore from code and Restore from file" width="240"></picture><br><sub><b>Back up &amp; restore</b></sub></td>
   </tr>
 </table>
 
