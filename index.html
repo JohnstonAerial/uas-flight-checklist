@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>UAS Flight Checklists</title>
+<title>UAS Test</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<meta name="apple-mobile-web-app-title" content="UAS Checklist">
+<meta name="apple-mobile-web-app-title" content="UAS Test">
 <meta name="theme-color" content="#0f2a4a">
 <style>
   :root {
@@ -194,12 +195,15 @@
   .panel.editing .cust-toggle, .panel.editing .sec-all { display: none; }
   .cust-actions { display: flex; justify-content: center; gap: 16px; margin-top: 12px; }
   .settings { margin-bottom: 12px; }
-  .settings-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; font-family: inherit; font-size: 13px; color: var(--text-muted); background: var(--card); border: none; border-radius: 14px; padding: 11px 16px; box-shadow: var(--shadow); cursor: pointer; }
-  .settings-toggle .chev { transition: transform 0.2s; }
-  .settings.open .settings-toggle .chev { transform: rotate(180deg); }
-  .settings-body { display: none; background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 12px 4px 6px; margin-top: 8px; }
-  .settings.open .settings-body, .panel.editing .settings-body { display: block; }
-  .panel.editing .settings-toggle { display: none; }
+  .set-heads { display: flex; gap: 8px; }
+  .settings-toggle { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: normal; line-height: 1.2; min-height: 44px; font-family: inherit; font-size: 13px; color: var(--text-muted); background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 8px 10px; box-shadow: var(--shadow); cursor: pointer; }
+  .settings-toggle .chev { font-size: 10px; margin-left: 2px; transition: transform 0.2s; }
+  .settings.open .tg-set .chev, .settings.open-bak .tg-bak .chev { transform: rotate(180deg); }
+  .settings.open .tg-set, .settings.open-bak .tg-bak { border-color: var(--blue); }
+  .settings.open .tg-set, .settings.open-bak .tg-bak { color: var(--text); font-weight: 600; }
+  .settings-body { display: none; background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 4px 0; margin-top: 8px; }
+  .settings.open .body-set, .settings.open-bak .body-bak, .panel.editing .body-set { display: block; }
+  .panel.editing .set-heads { display: none; }
   .settings-note { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; text-align: center; font-size: 11px; color: var(--text-light); line-height: 1.4; }
   .progress-card { flex-wrap: wrap; padding: 12px 14px; gap: 10px; }
   .progress-info { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; }
@@ -249,8 +253,36 @@
   .rec-actions .rec-dl, .rec-actions .rec-alt { color: var(--blue); border-color: var(--blue); }
   .rec-actions .rec-primary { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
   .xfer { max-width: 600px; margin: 14px auto 6px; padding: 12px 16px 4px; border-top: 1px solid var(--border); text-align: center; font-size: 11px; color: var(--text-light); }
+  .body-bak { padding: 0; }
+  .body-bak .xfer { max-width: none; margin: 0; padding: 0; border-top: 0; text-align: left; font-size: 14px; color: var(--text); }
+  .body-bak .xfer-sub { font-size: 11px; color: var(--text-light); padding: 12px 16px 10px; border-bottom: 1px solid var(--border); margin: 0; }
+  .bk-h { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; padding: 12px 16px 6px; }
+  .body-bak .xfer-incl { display: flex; flex-direction: row-reverse; justify-content: space-between; padding: 6px 16px 8px; margin: 0; }
+  .body-bak .xfer-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; padding: 4px 16px 14px; }
+  .body-bak .xfer-btns .cust-btn { font-size: 14px; padding: 8px 6px; min-height: 40px; }
+  .body-bak .xfer-btns.rs { padding-top: 10px; }
+  .bk-div { border-top: 1px solid var(--border); }
+  .body-bak .xfer-box { margin: 0 16px; width: calc(100% - 32px); font-size: 16px; }
+  .body-bak .xfer-msg { padding: 0 16px 10px; margin: 0; min-height: 0; }
+  .wl-block { max-width: 600px; margin: 4px auto 6px; padding: 10px 16px 4px; border-top: 1px solid var(--border); text-align: center; font-size: 12px; color: var(--text-light); }
+  .wl-row { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+  .wl-row input { width: 58px; font-family: inherit; font-size: 16px; text-align: center; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 6px 4px; }
+  .wl-row input::placeholder { color: var(--text-light); opacity: 0.7; }
+  .wl-hint { line-height: 1.4; }
+  .body-set .keep-row, .body-set .region-row, .body-set .cust-row { display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 10px; text-align: left; max-width: none; margin: 0; padding: 8px 16px; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text); }
+  .body-set .keep-row select { font-size: 15px; max-width: 55%; }
+  .body-set .cust-row::before { content: '📝 Checklist items'; }
+  .body-set .cust-row .cust-btn { font-size: 14px; }
+  .body-set .wl-block { max-width: none; margin: 0; padding: 8px 16px; border-top: 0; text-align: left; }
+  .body-set .wl-row { flex-wrap: nowrap; justify-content: space-between; font-size: 14px; color: var(--text); margin: 0 0 4px; }
+  .body-set .wl-row > span:first-child { white-space: nowrap; }
+  .wl-ctl { display: flex; align-items: center; gap: 6px; }
+  .wl-hint { font-size: 11px; }
+  .body-set .settings-note { max-width: none; margin: 0; padding: 12px 16px 10px; text-align: left; border-bottom: 1px solid var(--border); }
   .settings-help { max-width: 600px; margin: 6px auto 10px; padding: 0 16px; text-align: center; font-size: 14px; }
-  .settings-help a { color: var(--link); display: inline-block; padding: 6px 0; }
+  .settings-help a { padding: 6px 0; }
+  @media (max-width: 340px) { .wl-row { gap: 5px; } .wl-row input { width: 48px; } }
+  .settings-help a { color: var(--link); display: inline-block; }
   .coffee-note { font-size: 11px; color: var(--text-light); text-align: center; padding: 16px 16px 28px; }
   .coffee-note a { color: var(--link); }
   .xfer-title { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 2px; }
@@ -420,11 +452,11 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.6</p>
+      <p>🧪 TEST COPY · Drone Preflight Checklist · v3.7.7f</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
-      <a class="hdr-help" href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener" aria-label="Help and guides (opens in a new tab)">📘 Help</a>
+      <a class="hdr-help" href="https://github.com/JohnstonAerial/uas-flight-checklist-test#readme" target="_blank" rel="noopener" aria-label="Help and guides (opens in a new tab)">📘 Help</a>
     </div>
   </div>
   <div class="tabs" role="tablist" aria-label="Checklists">
@@ -1131,7 +1163,7 @@ function showPanel(panel, tab) {
     prevP.classList.remove('editing'); if (pst) pst.classList.remove('open');
     if (wasEditing) nextP.classList.add('editing');
     if (nst && wasOpen) nst.classList.add('open');
-    if (wasEditing || wasOpen) { const t = nextP.querySelector('.settings-toggle'); if (t) t.setAttribute('aria-expanded', 'true'); if (typeof refreshCust === 'function') refreshCust(nextP); }
+    if (wasEditing || wasOpen) { const t = nextP.querySelector('.tg-set'); if (t) t.setAttribute('aria-expanded', 'true'); if (typeof refreshCust === 'function') refreshCust(nextP); }
   }
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1386,7 +1418,7 @@ function toggleEdit(btn) {
   const on = panelEl.classList.toggle('editing');
   if (!on) {
     const st = panelEl.querySelector('.settings');
-    if (st) { st.classList.remove('open'); const t = st.querySelector('.settings-toggle'); if (t) t.setAttribute('aria-expanded', 'false'); }
+    if (st) { st.classList.remove('open'); st.classList.remove('open-bak'); st.querySelectorAll('.settings-toggle').forEach(t => t.setAttribute('aria-expanded', 'false')); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   refreshCust(panelEl);
@@ -1684,16 +1716,15 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', XFER_PROGRESS];
+const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', XFER_PROGRESS];
 function makeXfer() {
   const d = document.createElement('div');
   d.className = 'xfer';
-  d.innerHTML = '<div class="xfer-title">💾 Back up &amp; restore</div>' +
-    '<div class="xfer-sub">Save your settings and progress, or move them to another phone, tablet or browser.</div>' +
-    '<label class="xfer-incl"><input type="checkbox" class="xfer-prog" checked> Include current progress</label>' +
+  d.innerHTML = '<div class="xfer-sub">Save your settings and progress, or move them to another device or browser.</div>' +
+    '<div class="bk-h">Back up</div><label class="xfer-incl"><input type="checkbox" class="xfer-prog" checked> Include current progress</label>' +
     '<div class="xfer-btns"><button type="button" class="cust-btn" onclick="xferCopy(this)">Copy code</button><button type="button" class="cust-btn" onclick="xferSave(this)">Save file</button></div>' +
-    '<textarea class="xfer-box" rows="2" placeholder="On the other device, paste the code here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>' +
-    '<div class="xfer-btns"><button type="button" class="cust-btn primary" onclick="xferRestore(this)">Restore from code</button><button type="button" class="cust-btn" onclick="xferFile(this)">Restore from file…</button>' +
+    '<div class="bk-div"></div><div class="bk-h">Restore</div><textarea class="xfer-box" rows="2" placeholder="On the other device, paste the code here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>' +
+    '<div class="xfer-btns rs"><button type="button" class="cust-btn primary" onclick="xferRestore(this)">Restore from code</button><button type="button" class="cust-btn" onclick="xferFile(this)">Restore from file…</button>' +
     '<input type="file" class="xfer-file" accept=".json,application/json,text/plain" hidden onchange="xferFileChosen(this)"></div>' +
     '<div class="xfer-msg" role="status"></div>';
   return d;
@@ -1811,16 +1842,31 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const cust = panelEl.querySelector('.cust-row');
   keep.querySelector('span').textContent = '💾 Clear saved progress after';
   const wrap = document.createElement('div'); wrap.className = 'settings';
-  const tg = document.createElement('button'); tg.type = 'button'; tg.className = 'settings-toggle'; tg.setAttribute('aria-expanded', 'false');
-  tg.innerHTML = '<span>⚙ Settings &amp; customize</span><span class="chev">▾</span>';
-  tg.onclick = () => { const o = wrap.classList.toggle('open'); tg.setAttribute('aria-expanded', String(o)); };
-  const body = document.createElement('div'); body.className = 'settings-body';
+  const heads = document.createElement('div'); heads.className = 'set-heads';
+  const mkTg = (cls, label, key, other) => {
+    const t = document.createElement('button'); t.type = 'button'; t.className = 'settings-toggle ' + cls; t.setAttribute('aria-expanded', 'false');
+    t.innerHTML = '<span>' + label + '</span><span class="chev" aria-hidden="true">▾</span>';
+    t.onclick = () => { const o = !wrap.classList.contains(key); wrap.classList.remove('open', 'open-bak'); if (o) wrap.classList.add(key);
+      tgSet.setAttribute('aria-expanded', String(wrap.classList.contains('open'))); tgBak.setAttribute('aria-expanded', String(wrap.classList.contains('open-bak'))); };
+    return t;
+  };
+  const tgSet = mkTg('tg-set', '⚙ Settings', 'open'), tgBak = mkTg('tg-bak', '💾 Back up &amp; restore', 'open-bak');
+  heads.append(tgSet, tgBak);
+  const bodySet = document.createElement('div'); bodySet.className = 'settings-body body-set';
+  const bodyBak = document.createElement('div'); bodyBak.className = 'settings-body body-bak';
   const note = document.createElement('div'); note.className = 'settings-note';
-  note.textContent = 'Your progress and these settings are saved on this device only. They don\'t sync by themselves, and on some devices a Home Screen app keeps its own separate copy. To copy them to another phone, tablet or browser, use Back up & restore below.';
+  note.textContent = 'Your progress and settings are saved on this device only and don\'t sync. Each browser, and each Home Screen app, keeps its own copy. To move them to another device or browser, use Back up & restore.';
   const help = document.createElement('div'); help.className = 'settings-help';
-  help.innerHTML = '<a href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener">📘 Help &amp; guides</a><br><a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">☕ Buy me a coffee</a>';
-  body.append(keep, reg, note, cust, makeXfer(), help);
-  wrap.append(tg, body);
+  help.innerHTML = '<a href="https://github.com/JohnstonAerial/uas-flight-checklist-test#readme" target="_blank" rel="noopener">📘 Help &amp; guides</a><br><a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">☕ Buy me a coffee</a><br><a class="fb-link" href="#">✉ Send feedback</a>';
+  const fbl = help.querySelector('.fb-link');
+  const fbVer = (((document.querySelector('.header p') || {}).textContent || '').match(/v\d+(?:\.\d+)*[a-z]?/) || [''])[0];
+  fbl.href = 'mailto:info@JohnstonAerial.com?subject=' + encodeURIComponent('Checklist feedback ' + fbVer) +
+    '&body=' + encodeURIComponent('What works, what is missing, or what is confusing:\n\n\n\n---\nApp version: ' + fbVer + '\nDevice and browser: ' + navigator.userAgent);
+  const wl = document.createElement('div'); wl.className = 'wl-block';
+  wl.innerHTML = '<div class="wl-row"><span>🌬 Wind limit</span><span class="wl-ctl"><input type="number" inputmode="numeric" min="1" max="999" class="wl-w" aria-label="Maximum sustained wind"> / <input type="number" inputmode="numeric" min="1" max="999" class="wl-g" aria-label="Maximum gust"><span class="wl-unit">mph</span></span></div>' +
+    '<div class="wl-hint">sustained / gusts · amber at about two-thirds, red at the limit.</div>';
+  bodySet.append(note, reg, cust, keep, wl); bodyBak.append(makeXfer());
+  wrap.append(heads, bodySet, bodyBak, help);
   card.before(wrap);
   const reset = card.querySelector('.reset-inline'), all = cust.querySelector('.sec-all');
   const col = document.createElement('div'); col.className = 'pc-btns';
@@ -1868,9 +1914,17 @@ function kpColor(kp) {
   if (kp >= 3) return 'wx-warn';
   return 'wx-good';
 }
-function windColor(mph) {
-  if (mph >= 23) return 'wx-alert';
-  if (mph >= 15) return 'wx-warn';
+const WIND_DEF = { w: 23, g: 25 };   // standard limits in mph; the amber point is two-thirds of each limit
+function windLimits() {
+  let o = null; try { o = JSON.parse(localStorage.getItem('uasWindLimits')); } catch (e) {}
+  const ok = (v) => typeof v === 'number' && isFinite(v) && v > 0 ? v : null;
+  return { w: ok(o && o.w), g: ok(o && o.g) };
+}
+function windColor(mph, gust) {
+  const l = windLimits(), W = l.w || WIND_DEF.w, G = l.g || WIND_DEF.g;
+  const g = typeof gust === 'number' && isFinite(gust) ? gust : null;
+  if (mph >= W || (g !== null && g >= G)) return 'wx-alert';
+  if (mph >= Math.round(W * 2 / 3) || (g !== null && g >= Math.round(G * 2 / 3))) return 'wx-warn';
   return 'wx-good';
 }
 
@@ -2175,8 +2229,26 @@ function toggleUnits() {
   units = isMetric() ? 'imperial' : 'metric';
   store('wxUnits', units);
   updateUnitsButton();
+  wlSync();
   if (lastDraw) { lastDraw(); }
 }
+// Wind limit boxes: stored in mph, shown in the units in use; an empty box means the standard limit (shown greyed)
+function wlSync() {
+  const l = windLimits(), act = document.activeElement;
+  document.querySelectorAll('.wl-w').forEach(i => { i.placeholder = fmtSpeedNum(WIND_DEF.w); if (i !== act) i.value = l.w ? fmtSpeedNum(l.w) : ''; });
+  document.querySelectorAll('.wl-g').forEach(i => { i.placeholder = fmtSpeedNum(WIND_DEF.g); if (i !== act) i.value = l.g ? fmtSpeedNum(l.g) : ''; });
+  document.querySelectorAll('.wl-unit').forEach(u => { u.textContent = speedUnit(); });
+}
+function wlSave() {
+  const a = document.activeElement, w = a && a.classList.contains('wl-w') ? a : null, g = a && a.classList.contains('wl-g') ? a : null;
+  const cur = windLimits(), toMph = (i) => { const v = parseFloat(i.value); return isFinite(v) && v > 0 ? Math.round((isMetric() ? v / 1.609344 : v) * 10) / 10 : null; };
+  const o = { w: w ? toMph(w) : cur.w, g: g ? toMph(g) : cur.g };
+  try { if (o.w || o.g) localStorage.setItem('uasWindLimits', JSON.stringify(o)); else localStorage.removeItem('uasWindLimits'); } catch (e) {}
+  wlSync();
+  if (lastDraw) { lastDraw(); }
+}
+document.querySelectorAll('.wl-w, .wl-g').forEach(i => i.addEventListener('input', wlSave));
+wlSync();
 
 let site = recall('wxSite', null);       // {name, lat, lon}, or null = use my current location
 let recentSites = recall('wxRecent', []);
@@ -2551,7 +2623,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         <div class="wx-grid">
           <div class="wx-item">
             <div class="wx-label">Wind</div>
-            <div class="wx-value ${windOk ? windColor(windMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() + (dirOk ? ' ' + windArrow(wx.wind.deg) : '') : '—'}</div>
+            <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() + (dirOk ? ' ' + windArrow(wx.wind.deg) : '') : '—'}</div>
             <div class="wx-sub">${windOk ? (gustMph ? 'Sustained / Gusts' : 'No gusts reported') + (dirOk ? ' · ' + windCardinal(wx.wind.deg) : '') + wind120Txt : 'No wind data'}</div>
           </div>
           <div class="wx-item">
@@ -3171,8 +3243,5 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
 });
 </script>
 
-<!-- Cloudflare Web Analytics -->
-<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "c41cbc64f3df4328bf1dbf99475124af"}'></script>
-<!-- End Cloudflare Web Analytics -->
 </body>
 </html>
