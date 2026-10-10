@@ -488,7 +488,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.9</p>
+      <p>Free Drone Preflight Checklist · v3.7.10</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1761,7 +1761,7 @@ function makeXfer() {
   d.innerHTML = '<div class="xfer-sub">Save your settings and progress, or move them to another device or browser.</div>' +
     '<div class="bk-h">Back up</div><label class="xfer-incl"><input type="checkbox" class="xfer-prog" checked> Include current progress</label>' +
     '<div class="xfer-btns"><button type="button" class="cust-btn" onclick="xferCopy(this)">Copy code</button><button type="button" class="cust-btn" onclick="xferSave(this)">Save file</button></div>' +
-    '<div class="bk-div"></div><div class="bk-h">Restore</div><textarea class="xfer-box" rows="2" placeholder="On the other device, paste the code here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>' +
+    '<div class="bk-div"></div><div class="bk-h">Restore</div><textarea class="xfer-box" rows="2" placeholder="Paste a backup code here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>' +
     '<div class="xfer-btns rs"><button type="button" class="cust-btn primary" onclick="xferRestore(this)">Restore from code</button><button type="button" class="cust-btn" onclick="xferFile(this)">Restore from file…</button>' +
     '<input type="file" class="xfer-file" accept=".json,application/json,text/plain" hidden onchange="xferFileChosen(this)"></div>' +
     '<div class="xfer-msg" role="status"></div>';
@@ -1806,7 +1806,7 @@ function xferMsg(el, text, bad) {
 }
 async function xferCopy(btn) {
   const box = btn.closest('.xfer'), codeP = xferEncode(xferSnapshot(box.querySelector('.xfer-prog').checked));
-  const ok = '✓ Code copied. On your other device, open Settings and paste it into the box.';
+  const ok = '✓ Code copied. Paste it into Back up & restore in another browser or app, or keep it somewhere safe.';
   try {
     if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
       await navigator.clipboard.write([new ClipboardItem({ 'text/plain': codeP.then(t => new Blob([t], { type: 'text/plain' })) })]);
@@ -1825,7 +1825,7 @@ async function xferSave(btn) {
   try {
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({ files: [file] });
-      xferMsg(btn, '✓ Backup ready. Save it or send it to your other device.'); return;
+      xferMsg(btn, '✓ Backup complete. Restore it any time with Restore from file…'); return;
     }
   } catch (e) { if (e && e.name === 'AbortError') return; }
   const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = name;

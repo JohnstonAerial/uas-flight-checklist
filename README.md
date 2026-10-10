@@ -32,6 +32,12 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.7.10
+
+- **Clearer Back up & restore messages** — a small wording update, nothing else changed. The restore box now says **Paste a backup code here**. After **Copy code** the message reads "Code copied. Paste it into Back up & restore in another browser or app, or keep it somewhere safe," which also covers moving between Safari and your Home Screen app. After **Save file** it reads "Backup complete. Restore it any time with Restore from file…," so it works on the same device later as well as on a new one.
+
+---
+
 ## What's new in v3.7.9
 
 - **Customize is easier to follow** — the instructions now sit in a card right above the checklist, where you're working: **Hide** (tap Hide on items you don't need), **Add** (use "Add your own item" at the bottom of any section) and **Move** (drag ≡ to reorder within a section). While you customize, the progress card is hidden to give the list more room, and it comes back when you tap **Done**. The tab name, icon and **Hide this tab** controls stay in Settings, and they now use the full width of the screen, including on a narrow phone or with larger text.

@@ -30,12 +30,12 @@ It does not include saved flight records. Those are separate files that you keep
 2. Leave **Include current progress** ticked if you're moving to another device today and want your ticks to come with you. Untick it to save only your setup, which is best for a backup you'll keep.
 3. Tap **Save file**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files** or send it to yourself. On a computer the file goes to your Downloads folder.
 
-Or tap **Copy code**. The code is the same backup as text, handy for sending yourself a message.
+Or tap **Copy code**. The code is the same backup as text. Paste it into **Back up & restore** in another browser or app (for example, from Safari into your Home Screen app), or keep it somewhere safe, such as a note.
 
 **To restore**
 
 - **From a file:** tap **Restore from file…** and choose your backup. The page reloads with that setup.
-- **From a code:** paste it into the box, then tap **Restore from code**.
+- **From a code:** paste it into the box (it says **Paste a backup code here**), then tap **Restore from code**.
 
 **Move your setup to another device**
 
