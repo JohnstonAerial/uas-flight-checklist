@@ -129,7 +129,7 @@ Want a copy of what you checked, plus the details of the flight? Tap **Save flig
 3. Choose whether to include the weather conditions, the items you didn't check, and your GPS coordinates (off unless you tick it).
 4. Tap **Save PDF** or **Save text**. The one you used last is the filled button at the left of the row, and the app remembers it. PDF is the filled button until you choose text. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files**, AirDrop, Mail or Messages. On a computer the file goes to your Downloads folder.
 
-You get one file, named like `preflight-record-2026-10-06-1415-smith-roofing.pdf` (or `.txt` for text), that opens on any device. The PDF has real check boxes and page numbers. Items you flagged are listed as NEEDS ATTENTION. Items you hid are left out and items you added are included. The record is made on your device and isn't sent anywhere.
+You get one file, named like `flight-record-2026-10-06-1415-smith-roofing.pdf` (or `.txt` for text), that opens on any device. The PDF has real check boxes and page numbers. Items you flagged are listed as NEEDS ATTENTION. Items you hid are left out and items you added are included. The record is made on your device and isn't sent anywhere. To put your own name at the front of the file, such as `johnston-aerial`, type it in **Record file name starts with** at the bottom of **⚙ Settings**. The date, time and customer are still added.
 
 Prefer to paste it into a note or email? Tap **Copy as text instead**. The record is copied to your clipboard and no file is made. That doesn't change which button is filled.
 
@@ -149,7 +149,7 @@ The app also works offline once it has loaded (see above), so paper is a choice,
 
 ## Use it outside the USA
 
-The first time you open the app it asks **Where do you fly?** Choose **Outside USA**. You can change this at any time from **Checklist for** under **⚙ Settings**.
+The first time you open the app it asks **Where do you fly?** Choose **Outside USA**. You can change this at any time from **Where you fly** under **⚙ Settings**.
 
 **What changes**
 

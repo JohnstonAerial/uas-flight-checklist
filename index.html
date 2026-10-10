@@ -287,6 +287,17 @@
   .body-set .keep-row select { font-size: 15px; flex: 1 1 52%; min-width: 0; }
   .body-set .cust-row::before { content: '📝 Checklist items'; }
   .body-set .cust-row .cust-btn { font-size: 14px; }
+  .fn-block { padding: 8px 16px 10px; border-top: 1px solid var(--border); text-align: left; }
+  .fn-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; color: var(--text); }
+  .fn-row > span { flex: 1 1 auto; }
+  .fn-row input { flex: 1 1 9em; min-width: 0; font-family: ui-monospace, Menlo, monospace; font-size: 16px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px; }
+  .fn-row input::placeholder { color: var(--text-light); opacity: 0.7; }
+  .fn-hint { font-size: 11px; line-height: 1.4; color: var(--text-light); margin-top: 6px; overflow-wrap: anywhere; }
+  .region-hint { flex: 1 1 100%; font-size: 11px; line-height: 1.4; color: var(--text-light); margin-top: -2px; }
+  .panel.editing .body-set .cust-row { flex-direction: column; align-items: stretch; gap: 6px; text-align: left; }
+  .panel.editing .body-set .cust-row::before { font-weight: 600; font-size: 14px; color: var(--text); }
+  .panel.editing .body-set .cust-row .tab-edit { justify-content: flex-start; }
+  .panel.editing .body-set .cust-row .cust-help { margin-top: 0; }
   .body-set .wl-block { max-width: none; margin: 0; padding: 8px 16px; border-top: 0; text-align: left; }
   .body-set .wl-row { flex-wrap: nowrap; justify-content: space-between; font-size: 14px; color: var(--text); margin: 0 0 4px; }
   .body-set .wl-row > span:first-child { white-space: nowrap; }
@@ -318,6 +329,12 @@
   .item.drop-before { box-shadow: inset 0 3px 0 var(--blue-mid); }
   .item.drop-end { box-shadow: inset 0 -3px 0 var(--blue-mid); }
   .cust-help { display: none; margin-top: 6px; line-height: 1.4; }
+  .pc-btns { margin-bottom: 2px; }
+  .panel.editing .progress-card, .panel.editing .flag-hint, .panel.editing .saved-note { display: none; }
+  .edit-note { display: none; margin: 0 0 12px; padding: 12px 14px; background: var(--card); border-radius: 14px; box-shadow: var(--shadow); font-size: 14px; line-height: 1.45; color: var(--text); }
+  .panel.editing .edit-note { display: block; }
+  .edit-note .en-line { margin-bottom: 4px; }
+  .edit-note .en-foot { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); }
   .panel.editing .cust-help { display: block; }
   .section-header { display: flex; align-items: center; gap: 8px; cursor: pointer; -webkit-user-select: none; user-select: none; }
   .sec-meta { margin-left: auto; display: flex; align-items: center; gap: 8px; text-transform: none; letter-spacing: 0; font-weight: 600; }
@@ -439,7 +456,7 @@
     .tab-ico svg { display: inline; width: 1em; height: 1em; vertical-align: -0.12em; }
     .tab-lbl { display: inline; }
     .tab.active { display: block; padding: 6px 0 0; font-size: 13pt; text-align: left; color: #000 !important; border: 0; }
-    .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .progress-card, .complete-banner, .flag-hint, .saved-note, .coffee-note, .foot-links,
+    .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .edit-note, .progress-card, .complete-banner, .flag-hint, .saved-note, .coffee-note, .foot-links,
     .edit-bar, .toast, .rec-overlay, .rec-btn, .pc-btns, .pc-mini, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
     .content { max-width: none; padding: 0; margin: 0; }
     .panel { padding: 0; }
@@ -468,7 +485,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.8</p>
+      <p>Free Drone Preflight Checklist · v3.7.9</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1492,14 +1509,13 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const row = document.createElement('div');
   row.className = 'cust-row';
   row.innerHTML = '<button type="button" class="cust-btn cust-toggle" onclick="toggleEdit(this)">✎ Customize</button>' +
-    '<div class="cust-help">Tap <b>Hide</b> on items that don\'t apply where you fly (for example, rules or services your country doesn\'t have), or add your own at the bottom of any section. Saved on this device only. ' +
-    '<div class="cust-tip">💡 Drag the <b>≡</b> handle to move an item up or down within its section. To customize another tab, just tap it at the top — Settings stays open. Press <b>Done</b> when you\'re finished.</div>' +
+    '<div class="cust-help">' +
     '<div class="tab-edit"><label>Tab name <input class="tab-name" type="text" maxlength="24" autocomplete="off" oninput="saveTabName(this)" onblur="refreshTabs()"></label>' +
     '<button type="button" class="cust-btn tab-hide-btn" onclick="hideTab(this)">Hide this tab</button></div>' +
     '<div class="tab-icons"><span class="ti-label">Tab icon</span><div class="ti-grid">' + TAB_ICONS.map(e => '<button type="button" class="ti-btn" data-i="' + e + '" aria-label="Use this icon" onclick="setTabIcon(this, this.dataset.i)">' + (TAB_SVGS[e] || e) + '</button>').join('') + '</div>' +
     '<div class="ti-more"><input class="tab-icon-in" type="text" maxlength="12" autocomplete="off" placeholder="or type your own" oninput="setTabIcon(this, firstIcon(this.value))">' +
     '<button type="button" class="cust-btn" onclick="setTabIcon(this, \'\')">No icon</button><button type="button" class="cust-btn" onclick="setTabIcon(this, null)">Original icon</button></div></div>' +
-    '<div class="tab-note">Renaming changes the tab\'s name and icon only. Use Hide and Add to change what\'s in it.</div>' +
+    '<div class="tab-note">Renaming changes the tab\'s name and icon only.</div>' +
     '<div class="tab-hidden-list"></div>' +
     '<div class="cust-actions"><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button><button type="button" class="cust-btn" onclick="restoreDefaults(this)">Restore original list</button></div></div>';
   panelEl.querySelector('.keep-row').after(row);
@@ -1644,7 +1660,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
 document.querySelectorAll('.panel').forEach(panelEl => {
   const row = document.createElement('div');
   row.className = 'keep-row region-row';
-  row.innerHTML = '<span>🌍 Checklist for</span><select class="region-sel" aria-label="Where you fly" onchange="applyRegion(this.value, true)"><option value="us">USA</option><option value="intl">Outside USA</option></select>';
+  row.innerHTML = '<span>🌍 Where you fly</span><select class="region-sel" aria-label="Where you fly" onchange="applyRegion(this.value, true)"><option value="us">USA</option><option value="intl">Outside USA</option></select><div class="region-hint">Sets checklist items, weather units and US-only airspace links.</div>';
   row.querySelector('select').value = region || 'us';
   panelEl.querySelector('.keep-row').after(row);
 });
@@ -1735,7 +1751,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', XFER_PROGRESS];
+const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasFileName', XFER_PROGRESS];
 function makeXfer() {
   const d = document.createElement('div');
   d.className = 'xfer';
@@ -1853,6 +1869,22 @@ async function xferFileChosen(inp) {
   xferApply(inp, obj);
 }
 
+// ── Record file name: what saved flight records start with (saved on this device; default flight-record) ──
+function fnClean(v) { return String(v || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40); }
+function fnRaw() { let v = ''; try { v = localStorage.getItem('uasFileName') || ''; } catch (e) {} return v; }
+function fnPrefix() { return fnClean(fnRaw()) || 'flight-record'; }
+function fnSync() {
+  const act = document.activeElement, raw = fnRaw(), d = new Date(), p = n => String(n).padStart(2, '0');
+  const ex = '-' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) + '-smith-roofing.pdf';
+  document.querySelectorAll('.fn-in').forEach(i => { if (i !== act) i.value = raw; });
+  document.querySelectorAll('.fn-ex').forEach(e => { e.innerHTML = ''; const b = document.createElement('b'); b.textContent = fnPrefix(); e.append('Saved as: ', b, ex); });
+}
+function fnSave(inp) {
+  const v = inp.value.trim();
+  try { if (v) localStorage.setItem('uasFileName', v); else localStorage.removeItem('uasFileName'); } catch (e) {}
+  fnSync();
+}
+
 // ── Layout: collapsed Settings panel, progress + Collapse all next to the list, sticky Editing bar ──
 document.querySelectorAll('.panel').forEach(panelEl => {
   const card = panelEl.querySelector('.progress-card');
@@ -1884,18 +1916,27 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const wl = document.createElement('div'); wl.className = 'wl-block';
   wl.innerHTML = '<div class="wl-row"><span>🌬 Wind limit</span><span class="wl-ctl"><input type="number" inputmode="numeric" min="1" max="999" class="wl-w" aria-label="Maximum sustained wind"> / <input type="number" inputmode="numeric" min="1" max="999" class="wl-g" aria-label="Maximum gust"><span class="wl-unit">mph</span></span></div>' +
     '<div class="wl-hint">sustained / gusts · amber at about two-thirds, red at the limit.</div>';
-  bodySet.append(note, reg, cust, keep, wl); bodyBak.append(makeXfer());
+  const fnb = document.createElement('div'); fnb.className = 'fn-block';
+  fnb.innerHTML = '<div class="fn-row"><span>📋 Record file name starts with</span><input type="text" class="fn-in" maxlength="40" placeholder="flight-record" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Saved flight record file names start with" oninput="fnSave(this)"></div>' +
+    '<div class="fn-hint"><div class="fn-ex"></div>Date, time and customer are added for you.</div>';
+  bodySet.append(note, reg, cust, keep, wl, fnb); bodyBak.append(makeXfer());
   wrap.append(heads, bodySet, bodyBak);
   card.before(wrap);
   const reset = card.querySelector('.reset-inline'), all = cust.querySelector('.sec-all');
   const col = document.createElement('div'); col.className = 'pc-btns';
-  card.appendChild(col);
+  card.prepend(col);
   const mini = document.createElement('div'); mini.className = 'pc-mini'; mini.appendChild(reset); if (all) mini.appendChild(all);
   card.appendChild(mini);
   const tip = panelEl.querySelector('.flag-hint');
   const sn = document.createElement('div'); sn.className = 'saved-note';
-  sn.innerHTML = '💾 Saved on this device only · clears after <span class="saved-hours"></span>';
+  sn.innerHTML = '💾 Saved on this device and browser only · clears after <span class="saved-hours"></span>';
   tip.after(sn);
+  const en = document.createElement('div'); en.className = 'edit-note';
+  en.innerHTML = '<div class="en-line"><b>Hide:</b> tap Hide on items you don\'t need.</div>' +
+    '<div class="en-line"><b>Add:</b> use "Add your own item" at the bottom of any section.</div>' +
+    '<div class="en-line"><b>Move:</b> drag <b>≡</b> to reorder within a section.</div>' +
+    '<div class="en-foot">Tap another tab to customize it too. Press <b>Done</b> when finished. Saved on this device and browser only.</div>';
+  sn.after(en);
   const bar = document.createElement('div'); bar.className = 'edit-bar';
   bar.innerHTML = '<span>✎ Editing your list</span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button>';
   panelEl.prepend(bar);
@@ -2270,7 +2311,7 @@ function wlSave() {
   if (lastDraw) { lastDraw(); }
 }
 document.querySelectorAll('.wl-w, .wl-g').forEach(i => i.addEventListener('input', wlSave));
-wlSync();
+wlSync(); fnSync();
 
 let site = recall('wxSite', null);       // {name, lat, lon}, or null = use my current location
 let recentSites = recall('wxRecent', []);
@@ -2864,7 +2905,7 @@ function buildRecord(o) {
   const B = (k, v) => k + ': ' + v;
   const L = [];
   const now = new Date();
-  L.push(H1('Preflight Record'));
+  L.push(H1('Flight Record'));
   L.push(now.toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }));
   L.push('');
   if (o.customer) L.push(B('Customer', o.customer));
@@ -2911,7 +2952,7 @@ function buildRecord(o) {
 }
 function recFileName(o) {
   const d = new Date(), p = n => String(n).padStart(2, '0');
-  let nm = 'preflight-record-' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes());
+  let nm = fnPrefix() + '-' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes());
   const c = (o.customer || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 30);
   if (c) nm += '-' + c;
   return nm + '.txt';
@@ -3062,8 +3103,8 @@ function recCollect(panelEl, includeAll) {  // the items on a tab, in order, as 
 }
 function recPdfFoot() { const v = recVersion(); return 'UAS Flight Checklists' + (v ? ' ' + v : '') + ' · checklist.johnstonaerial.com'; }
 function buildRecordPdf(o) {
-  const d = new PdfDoc(recPdfFoot(), 'Preflight Record');
-  d.h1('Preflight Record');
+  const d = new PdfDoc(recPdfFoot(), 'Flight Record');
+  d.h1('Flight Record');
   d.para(new Date().toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }), 10.5, { gray: 0.3 });
   d.gap(6);
   const co = o.coords ? recCoords() : '', tab = recNoEmoji(recTabName());
@@ -3229,7 +3270,7 @@ function openRecord(btn) {
   $('.rec-pdf').onclick = () => {
     curFmt = 'pdf'; const o = collect(); o.time = true;
     let pdf; try { pdf = buildRecordPdf(o); } catch (e) { recToast('Couldn\'t make the PDF. Use Save text instead.', 5000); return; }
-    return finishSave(pdf, recPdfName('preflight-record', o));
+    return finishSave(pdf, recPdfName(fnPrefix(), o));
   };
   document.addEventListener('keydown', recKey);
   setTimeout(() => { const f = $('#rec-cust'); if (f) f.focus(); }, 50);
@@ -3237,7 +3278,7 @@ function openRecord(btn) {
 document.querySelectorAll('.panel .pc-btns').forEach(col => {
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'rec-btn'; b.className = 'rec-btn rec-record'; b.innerHTML = '<span class="ic" aria-hidden="true">📋</span>Save flight record';
-  b.setAttribute('aria-label', 'Save a preflight record of this checklist');
+  b.setAttribute('aria-label', 'Save a flight record of this checklist');
   b.onclick = () => openRecord(b);
   col.prepend(b);
   const pb = document.createElement('button');

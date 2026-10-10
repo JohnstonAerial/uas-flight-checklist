@@ -32,6 +32,16 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
+## What's new in v3.7.9
+
+- **Customize is easier to follow** — the instructions now sit in a card right above the checklist, where you're working: **Hide** (tap Hide on items you don't need), **Add** (use "Add your own item" at the bottom of any section) and **Move** (drag ≡ to reorder within a section). While you customize, the progress card is hidden to give the list more room, and it comes back when you tap **Done**. The tab name, icon and **Hide this tab** controls stay in Settings, and they now use the full width of the screen, including on a narrow phone or with larger text.
+- **Where you fly** — the setting that was called "Checklist for" now reads **Where you fly**, with a line under it saying what it changes: the checklist items, the weather units and the US-only airspace links.
+- **Buttons first on the progress card** — **Print | PDF** and **Save flight record** are at the top of the card, then the percentage and bar, then **Reset** and **Expand all** at the bottom.
+- **Flight record file names** — saved records are named `flight-record-…` (they were `preflight-record-…`), and the title inside the record now reads **Flight Record**. A new setting at the bottom of **⚙ Settings**, **Record file name starts with**, lets you put your own name at the front, for example `johnston-aerial`. The date, time and customer are still added for you. Leave it empty for `flight-record`. It's saved in **Back up & restore**.
+- **A clearer saved note** — it now says **Saved on this device and browser only**, because Safari and a Home Screen app each keep their own copy.
+
+---
+
 ## What's new in v3.7.8
 
 - **A tidier progress card** — the percentage and count sit on top with the bar under them, then the buttons: **Print | PDF** together on the left under a small **CHECKLIST** label, and **📋 Save flight record** on the right. **Reset** and **Expand all** moved to a quiet row at the bottom of the card, away from the top edge of the screen. On a narrow phone, or with larger text, the buttons stack and nothing overlaps.
