@@ -311,6 +311,9 @@
   .coffee-note { font-size: 11px; color: var(--text-light); text-align: center; padding: 16px 16px 4px; }
   .foot-links { margin: 0 auto; padding: 0 16px 28px; font-size: 13px; color: var(--text-light); }
   .foot-links a { padding: 8px 4px; }
+  .ver-line { text-align: center; font-size: 11px; color: var(--text-light); padding: 0 16px 24px; margin-top: -20px; }
+  .foot-links { container-type: inline-size; }
+  @container (max-width: 270px) { .foot-links .foot-sep { display: none; } .foot-links a { display: block; } }
   .coffee-note a { color: var(--link); }
   .xfer-title { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 2px; }
   .xfer-sub { margin-bottom: 8px; line-height: 1.4; }
@@ -1869,6 +1872,14 @@ async function xferFileChosen(inp) {
   xferApply(inp, obj);
 }
 
+// ── App version: read from the header; on the live site the header shows just the tagline and the version sits at the bottom of the page ──
+function appVer() {
+  const d = document.documentElement.dataset.ver; if (d) return d;
+  const m = ((document.querySelector('.header p') || {}).textContent || '').match(/v\d+(?:\.\d+)*[a-z]?/);
+  return m ? m[0] : '';
+}
+(function () { const v = appVer(); if (v) document.documentElement.dataset.ver = v; })();
+
 // ── Record file name: what saved flight records start with (saved on this device; default flight-record) ──
 function fnClean(v) { return String(v || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40); }
 function fnRaw() { let v = ''; try { v = localStorage.getItem('uasFileName') || ''; } catch (e) {} return v; }
@@ -1908,9 +1919,9 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const note = document.createElement('div'); note.className = 'settings-note';
   note.textContent = 'Your progress and settings are saved on this device only and don\'t sync. Each browser, and each Home Screen app, keeps its own copy. To move them to another device or browser, use Back up & restore.';
   const help = document.createElement('div'); help.className = 'settings-help foot-links';
-  help.innerHTML = '<a href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener">📘 Help &amp; guides</a><span aria-hidden="true"> · </span><a class="fb-link" href="#">✉ Send feedback</a>';
+  help.innerHTML = '<a href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener">📘 Help &amp; guides</a><span class="foot-sep" aria-hidden="true"> · </span><a class="fb-link" href="#">✉ Send feedback</a>';
   const fbl = help.querySelector('.fb-link');
-  const fbVer = (((document.querySelector('.header p') || {}).textContent || '').match(/v\d+(?:\.\d+)*[a-z]?/) || [''])[0];
+  const fbVer = appVer();
   fbl.href = 'mailto:info@JohnstonAerial.com?subject=' + encodeURIComponent('Checklist feedback ' + fbVer) +
     '&body=' + encodeURIComponent('What works, what is missing, or what is confusing:\n\n\n\n---\nApp version: ' + fbVer + '\nDevice and browser: ' + navigator.userAgent);
   const wl = document.createElement('div'); wl.className = 'wl-block';
@@ -1946,6 +1957,15 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   panelEl.appendChild(help);
 });
 setKeepHours(keepHours());
+(function moveVersionDown() {      // live site only: the test copy keeps its version in the header
+  const hp = document.querySelector('.header p'), v = appVer();
+  if (!hp || !v || /TEST COPY/.test(hp.textContent)) return;
+  hp.textContent = hp.textContent.replace(/\s*·\s*v\d+(?:\.\d+)*[a-z]?\s*$/, '');
+  document.querySelectorAll('.panel').forEach(pn => {
+    const f = pn.querySelector('.foot-links'); if (!f) return;
+    const d = document.createElement('div'); d.className = 'ver-line'; d.textContent = v; f.after(d);
+  });
+})();
 
 restoreProgress();
 if (restoredAt) {
@@ -2943,8 +2963,7 @@ function buildRecord(o) {
 
   if (o.notes) { L.push(H2('Notes')); L.push(o.notes); }
 
-  const m = (document.querySelector('.header p') || {}).textContent || '';
-  const v = (m.match(/v\d+(?:\.\d+)*[a-z]?/) || [''])[0];
+  const v = appVer();
   L.push('');
   const foot = 'UAS Flight Checklists' + (v ? ' ' + v : '') + ' · checklist.johnstonaerial.com';
   L.push(foot);
@@ -3081,8 +3100,7 @@ PdfDoc.prototype = {
   }
 };
 function recVersion() {
-  const m = (document.querySelector('.header p') || {}).textContent || '';
-  return (m.match(/v\d+(?:\.\d+)*[a-z]?/) || [''])[0];
+  return appVer();
 }
 function recCollect(panelEl, includeAll) {  // the items on a tab, in order, as { name, rows: [{ txt, st }] } (st: 0 open, 1 checked, 2 needs attention)
   let total = 0, done = 0, flagged = 0; const secs = [];

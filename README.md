@@ -39,6 +39,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 - **Buttons first on the progress card** — **Print | PDF** and **Save flight record** are at the top of the card, then the percentage and bar, then **Reset** and **Expand all** at the bottom.
 - **Flight record file names** — saved records are named `flight-record-…` (they were `preflight-record-…`), and the title inside the record now reads **Flight Record**. A new setting at the bottom of **⚙ Settings**, **Record file name starts with**, lets you put your own name at the front, for example `johnston-aerial`. The date, time and customer are still added for you. Leave it empty for `flight-record`. It's saved in **Back up & restore**.
 - **A clearer saved note** — it now says **Saved on this device and browser only**, because Safari and a Home Screen app each keep their own copy.
+- **Version at the bottom** — the header now shows just the name and tagline, and the version number sits under the links at the bottom of the page. **Help & guides** and **Send feedback** also stack cleanly on a narrow screen.
 
 ---
 
