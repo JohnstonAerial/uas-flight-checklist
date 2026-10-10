@@ -200,6 +200,11 @@
   .settings.open .tg-set .chev, .settings.open-bak .tg-bak .chev { transform: rotate(180deg); }
   .settings.open .tg-set, .settings.open-bak .tg-bak { border-color: var(--blue); }
   .settings.open .tg-set, .settings.open-bak .tg-bak { color: var(--text); font-weight: 600; }
+  .set-up { position: absolute; right: 6px; bottom: 4px; width: 32px; height: 28px; margin: 0; padding: 0; font-family: inherit; font-size: 16px; line-height: 1; color: var(--text-light); background: none; border: 0; cursor: pointer; border-radius: 8px; }
+  .settings-body { position: relative; }
+  .ac-block .fn-hint { padding-right: 44px; }
+  .set-up:hover, .set-up:focus-visible { color: var(--text); }
+  .panel.editing .set-up { display: none; }
   .settings-body { display: none; background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 4px 0; margin-top: 8px; }
   .settings.open .body-set, .settings.open-bak .body-bak, .panel.editing .body-set { display: block; }
   .panel.editing .set-heads { display: none; }
@@ -294,6 +299,11 @@
   .fn-row > span { flex: 1 1 auto; }
   .fn-row input { flex: 1 1 9em; min-width: 0; font-family: ui-monospace, Menlo, monospace; font-size: 16px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px; }
   .fn-row input::placeholder { color: var(--text-light); opacity: 0.7; }
+  .ac-block { border-top: 0; padding-top: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: 10px; row-gap: 8px; align-items: center; }
+  .ac-block .fn-row { display: contents; }
+  .ac-block .fn-row > span { white-space: nowrap; }
+  .ac-block .fn-row input { width: 100%; box-sizing: border-box; font-family: inherit; }
+  .ac-block .fn-hint { grid-column: 1 / -1; margin-top: 0; }
   .fn-hint { font-size: 11px; line-height: 1.4; color: var(--text-light); margin-top: 6px; overflow-wrap: anywhere; }
   .region-hint { flex: 1 1 100%; font-size: 11px; line-height: 1.4; color: var(--text-light); margin-top: -2px; }
   .panel.editing .body-set .cust-row { flex-direction: column; align-items: stretch; gap: 6px; text-align: left; }
@@ -494,7 +504,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.11</p>
+      <p>Free Drone Preflight Checklist · v3.7.12</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1760,7 +1770,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasFileName', XFER_PROGRESS];
+const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -1935,13 +1945,31 @@ function fnPrefix() { return fnClean(fnRaw()) || 'flight-record'; }
 function fnSync() {
   const act = document.activeElement, raw = fnRaw(), d = new Date(), p = n => String(n).padStart(2, '0');
   const ex = '-' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) + '-smith-roofing.pdf';
-  document.querySelectorAll('.fn-in').forEach(i => { if (i !== act) i.value = raw; });
+  document.querySelectorAll('.fn-in:not(.ac-in)').forEach(i => { if (i !== act) i.value = raw; });
   document.querySelectorAll('.fn-ex').forEach(e => { e.innerHTML = ''; const b = document.createElement('b'); b.textContent = fnPrefix(); e.append('Saved as: ', b, ex); });
 }
 function fnSave(inp) {
   const v = inp.value.trim();
   try { if (v) localStorage.setItem('uasFileName', v); else localStorage.removeItem('uasFileName'); } catch (e) {}
   fnSync();
+}
+
+// ── Drone and registration number: printed on saved flight records and the checklist PDF (saved on this device; both optional) ──
+function acGet(k) { let v = ''; try { v = (localStorage.getItem(k) || '').trim(); } catch (e) {} return v; }
+function acPair() {                           // [label, value] for one line on a record, or null when nothing is saved
+  const d = acGet('uasDrone'), r = acGet('uasRegNo');
+  if (d) return ['Drone', d + (r ? ' · Reg ' + r : '')];
+  if (r) return ['Registration', r];
+  return null;
+}
+function acSync() {
+  const act = document.activeElement;
+  document.querySelectorAll('.ac-in').forEach(i => { if (i !== act) i.value = acGet(i.dataset.k); });
+}
+function acSave(inp) {
+  const v = inp.value.trim();
+  try { if (v) localStorage.setItem(inp.dataset.k, v); else localStorage.removeItem(inp.dataset.k); } catch (e) {}
+  acSync();
 }
 
 // ── Layout: collapsed Settings panel, progress + Collapse all next to the list, sticky Editing bar ──
@@ -1978,7 +2006,21 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const fnb = document.createElement('div'); fnb.className = 'fn-block';
   fnb.innerHTML = '<div class="fn-row"><span>📋 Record file name starts with</span><input type="text" class="fn-in" maxlength="40" placeholder="flight-record" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Saved flight record file names start with" oninput="fnSave(this)"></div>' +
     '<div class="fn-hint"><div class="fn-ex"></div>Date, time and customer are added for you.</div>';
-  bodySet.append(note, reg, cust, keep, wl, fnb); bodyBak.append(makeXfer());
+  const acb = document.createElement('div'); acb.className = 'fn-block ac-block';
+  acb.innerHTML = '<div class="fn-row"><span>👤 Pilot</span><input type="text" class="fn-in ac-in" data-k="uasPilot" maxlength="40" placeholder="Your name" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Pilot name" oninput="acSave(this)"></div>' +
+    '<div class="fn-row"><span>🚁 Drone</span><input type="text" class="fn-in ac-in" data-k="uasDrone" maxlength="40" placeholder="e.g. Mavic 4 Pro" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Drone name or model" oninput="acSave(this)"></div>' +
+    '<div class="fn-row"><span>🪪 Reg. #</span><input type="text" class="fn-in ac-in" data-k="uasRegNo" maxlength="30" placeholder="e.g. FA3XXXXXXX" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-label="Drone registration number" oninput="acSave(this)"></div>' +
+    '<div class="fn-hint">Printed at the top of saved flight records and the checklist PDF. Saved on this device only.</div>';
+  bodySet.append(note, reg, cust, keep, wl, fnb, acb); bodyBak.append(makeXfer());
+  [bodySet, bodyBak].forEach(bd => {           // a small arrow at the bottom closes the section and goes back up to the buttons
+    const up = document.createElement('button'); up.type = 'button'; up.className = 'set-up'; up.textContent = '\u25B4';
+    up.setAttribute('aria-label', 'Close this section');
+    up.onclick = () => {
+      wrap.classList.remove('open', 'open-bak'); tgSet.setAttribute('aria-expanded', 'false'); tgBak.setAttribute('aria-expanded', 'false');
+      try { const r = heads.getBoundingClientRect(); if (r.top < 110 || r.bottom > window.innerHeight) heads.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
+    };
+    bd.appendChild(up);
+  });
   wrap.append(heads, bodySet, bodyBak);
   card.before(wrap);
   const reset = card.querySelector('.reset-inline'), all = cust.querySelector('.sec-all');
@@ -2393,7 +2435,7 @@ function wlSave() {
   if (lastDraw) { lastDraw(); }
 }
 document.querySelectorAll('.wl-w, .wl-g').forEach(i => i.addEventListener('input', wlSave));
-wlSync(); fnSync();
+wlSync(); fnSync(); acSync();
 
 let site = recall('wxSite', null);       // {name, lat, lon}, or null = use my current location
 let recentSites = recall('wxRecent', []);
@@ -3009,6 +3051,8 @@ function buildRecord(o) {
   if (o.site) L.push(B('Site', o.site));
   const co = o.coords ? recCoords() : ''; if (co) L.push(B('Coordinates', co));
   const tab = recNoEmoji(recTabName()); if (tab) L.push(B('Checklist', tab));
+  const pl = acGet('uasPilot'); if (pl) L.push(B('Pilot', pl));
+  const ac = acPair(); if (ac) L.push(B(ac[0], ac[1]));
   if (o.laanc) L.push(B('Airspace authorization', o.laanc));
   if (o.flightTime) L.push(B('Flight time', o.flightTime));
   if (o.observer) L.push(B('Visual observer', o.observer));
@@ -3144,7 +3188,9 @@ PdfDoc.prototype = {
     const total = this.W - this.mx * 2, gap = 22; let x = this.mx;
     items.forEach(f => {
       const w = (total - gap * (items.length - 1)) * f[1], lw = this.width(pdfEnc(f[0]), 10, true) + 6;
-      this.text(pdfEnc(f[0]), x, this.y + 8, 10, true); this.rule(this.y + 10, 0.8, 0, x + lw, x + w); x += w + gap;
+      this.text(pdfEnc(f[0]), x, this.y + 8, 10, true); this.rule(this.y + 10, 0.8, 0, x + lw, x + w);
+      if (f[2]) this.text(pdfEnc(f[2]), x + lw + 3, this.y + 7, 10, false);      // a saved value, written on the line
+      x += w + gap;
     });
     this.y += 12;
   },
@@ -3203,7 +3249,7 @@ function buildRecordPdf(o) {
   d.para(new Date().toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }), 10.5, { gray: 0.3 });
   d.gap(6);
   const co = o.coords ? recCoords() : '', tab = recNoEmoji(recTabName());
-  [['Customer', o.customer], ['Site', o.site], ['Coordinates', co], ['Checklist', tab], ['Airspace authorization', o.laanc], ['Flight time', o.flightTime], ['Visual observer', o.observer]]
+  [['Customer', o.customer], ['Site', o.site], ['Coordinates', co], ['Checklist', tab], ['Pilot', acGet('uasPilot')], acPair() || ['', ''], ['Airspace authorization', o.laanc], ['Flight time', o.flightTime], ['Visual observer', o.observer]]
     .forEach(p => { if (p[1]) d.kv(p[0], p[1]); });
   if (o.weather) { d.h2('Conditions'); recWeatherLines().forEach(l => { d.para(l, 10.5); d.gap(1.5); }); }
   const c = recCollect(document.getElementById('panel-' + current), o.unchecked);
@@ -3221,7 +3267,8 @@ function buildChecklistPdf(panelEl, tabName) {
   if (tabName) { d.ensure(24); d.text(pdfEnc(tabName), d.mx, d.y + 13, 13, true); d.y += 20; d.rule(d.y, 1.8, 0); }
   d.fieldLine([['Date', 0.5], ['Time', 0.5]]);
   d.fieldLine([['Site', 1]]);
-  d.fieldLine([['Pilot', 0.5], ['Visual observer', 0.5]]);
+  d.fieldLine([['Pilot', 0.5, acGet('uasPilot')], ['Visual observer', 0.5]]);
+  d.fieldLine([['Drone', 0.5, acGet('uasDrone')], ['Registration', 0.5, acGet('uasRegNo')]]);
   const c = recCollect(panelEl, true);
   c.secs.forEach(s => { d.sub(s.name, 30); s.rows.forEach(r => d.item(r.st, r.txt)); });
   return d.finish();
@@ -3234,6 +3281,21 @@ function recPdfName(prefix, o) {
   if (c) nm += '-' + c;
   return nm + '.pdf';
 }
+// ── Draft of the Save record box: kept (on this device, 12 hours) so a stray tap outside the box or a closed Share sheet never loses what was typed ──
+const REC_DRAFT_KEY = 'uasRecordDraft', REC_DRAFT_IDS = ['cust', 'site', 'notes', 'laanc', 'ft', 'vo'];
+function recDraftGet() {
+  try {
+    const d = JSON.parse(localStorage.getItem(REC_DRAFT_KEY) || 'null');
+    if (d && d.at && Date.now() - d.at < 12 * 3600000 && d.v && typeof d.v === 'object') return d.v;
+  } catch (e) {}
+  return null;
+}
+function recDraftSave(ov) {
+  const v = {}; let any = false;
+  REC_DRAFT_IDS.forEach(k => { const el = ov.querySelector('#rec-' + k); if (el && el.value.trim()) { v[k] = el.value; any = true; } });
+  try { if (any) localStorage.setItem(REC_DRAFT_KEY, JSON.stringify({ at: Date.now(), v: v })); else localStorage.removeItem(REC_DRAFT_KEY); } catch (e) {}
+}
+function recDraftClear() { try { localStorage.removeItem(REC_DRAFT_KEY); } catch (e) {} }
 let recForceDownload = false, recLastErr = '';
 async function recDeliver(text, name) {
   const isPdf = /\.pdf$/i.test(name), mime = isPdf ? 'application/pdf' : 'text/plain';
@@ -3274,11 +3336,12 @@ function recOffer(text, name) {
   const done = () => ov.remove();
   ov.addEventListener('click', e => { if (e.target === ov) done(); });
   ov.querySelector('.rec-cancel').onclick = done;
-  ov.querySelector('.rec-dl').onclick = async () => { recForceDownload = true; const h = await recDeliver(text, name); recForceDownload = false; done(); recToast('✓ Record saved to your downloads'); };
+  ov.querySelector('.rec-dl').onclick = async () => { recForceDownload = true; const h = await recDeliver(text, name); recForceDownload = false; done(); recDraftClear(); recToast('✓ ' + (/\.pdf$/i.test(name) ? 'PDF' : 'Record') + ' saved to your downloads'); };
   ov.querySelector('.rec-save').onclick = async () => {
     const h = await recDeliver(text, name);
     if (h === 'refused') { recToast('Sharing is not available right now — use Download'); return; }
-    done(); if (h === 'shared') recToast('✓ Record ready');
+    if (h === 'cancelled') return;
+    done(); recDraftClear(); if (h === 'shared') recToast('✓ ' + (/\.pdf$/i.test(name) ? 'PDF' : 'Record') + ' shared');
   };
 }
 async function recCopy(text) {
@@ -3318,9 +3381,12 @@ function openRecord(btn) {
   document.body.appendChild(ov);
   const $ = (id) => ov.querySelector(id);
   $('#rec-site').value = recSiteDefault();
+  const draft = recDraftGet();
+  if (draft) REC_DRAFT_IDS.forEach(k => { if (typeof draft[k] === 'string') $('#rec-' + k).value = draft[k]; });
+  ov.addEventListener('input', () => recDraftSave(ov));
   $('#rec-wx').checked = prefs.weather;
   $('#rec-un').checked = prefs.unchecked;
-  $('#rec-more').open = prefs.more;
+  $('#rec-more').open = prefs.more || !!(draft && (draft.laanc || draft.ft || draft.vo));
   const gpsOk = !!recCoords();
   $('#rec-gps').checked = gpsOk && prefs.coords;
   $('#rec-gps').disabled = !gpsOk;
@@ -3329,7 +3395,7 @@ function openRecord(btn) {
     ? 'Adds the latitude and longitude the weather is using: your phone\'s location, or the flight site you chose. Accurate to about 35 feet (11 m).'
     : 'Location not available.';
   ov.addEventListener('click', (e) => { if (e.target === ov) closeRecord(); });
-  $('.rec-cancel').onclick = closeRecord;
+  $('.rec-cancel').onclick = () => { recDraftClear(); closeRecord(); };
   let curFmt = prefs.fmt;
   const showFmt = () => {                      // the last-used format is the filled button on the right
     const pb = $('.rec-pdf'), tb = $('.rec-save'), pdfFirst = curFmt === 'pdf';
@@ -3350,16 +3416,19 @@ function openRecord(btn) {
   };
   $('#rec-copy').onclick = async () => {
     const ok = await recCopy(buildRecord(collect()));
-    if (ok) { closeRecord(); try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); } recToast('\u2713 Copied to your clipboard', 5000); }
+    if (ok) { recDraftClear(); closeRecord(); try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); } recToast('\u2713 Copied to your clipboard', 5000); }
     else recToast('Couldn\'t copy. Use Save instead.', 5000);
   };
   const finishSave = async (data, name) => {
     const how = await recDeliver(data, name);
+    if (how === 'cancelled') return;                 // Share sheet closed without choosing: the box stays open with everything typed
     closeRecord();
     if (how === 'refused') { recOffer(data, name); return; }
+    recDraftClear();
+    const what = /\.pdf$/i.test(name) ? 'PDF' : 'Record';
     if (how === 'downloaded' || how === 'shared') { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); } }
-    if (how === 'downloaded') recToast('✓ Record saved to your downloads');
-    else if (how === 'shared') recToast('✓ Record ready');
+    if (how === 'downloaded') recToast('✓ ' + what + ' saved to your downloads');
+    else if (how === 'shared') recToast('✓ ' + what + ' shared');
   };
   $('.rec-save').onclick = () => { curFmt = 'text'; const o = collect(); return finishSave(buildRecord(o), recFileName(o)); };
   $('.rec-pdf').onclick = () => {
@@ -3395,7 +3464,7 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
     const tabSlug = ((t ? t.textContent : 'checklist').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 24)) || 'checklist';
     const how = await recDeliver(pdf, recPdfName('flight-checklist-' + tabSlug, null));
     if (how === 'refused') { recOffer(pdf, recPdfName('flight-checklist-' + tabSlug, null)); return; }
-    if (how === 'downloaded') recToast('✓ PDF saved to your downloads'); else if (how === 'shared') recToast('✓ PDF ready');
+    if (how === 'downloaded') recToast('✓ PDF saved to your downloads'); else if (how === 'shared') recToast('✓ PDF shared');
   };
   b.after(fb);
   const pw = document.createElement('div'); pw.className = 'pc-pair';

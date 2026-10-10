@@ -133,6 +133,10 @@ Want a copy of what you checked, plus the details of the flight? Tap **Save flig
 
 You get one file, named like `flight-record-2026-10-06-1415-smith-roofing.pdf` (or `.txt` for text), that opens on any device. The PDF has real check boxes and page numbers. Items you flagged are listed as NEEDS ATTENTION. Items you hid are left out and items you added are included. The record is made on your device and isn't sent anywhere. To put your own name at the front of the file, such as `johnston-aerial`, type it in **Record file name starts with** at the bottom of **⚙ Settings**. The date, time and customer are still added.
 
+Want your name and aircraft printed on every record? In **⚙ Settings**, type your name in **Pilot**, your drone in **Drone** and its registration number in **Reg. #**. They are printed near the top of each saved record, and filled in on the checklist **PDF** too. They stay on that device, and **Back up & restore** carries them, so you can keep one backup for each drone and restore the one you're flying. Leave a box empty and nothing is printed for it.
+
+If you close the Share sheet without choosing anything, the Save record box stays open with what you typed. If you close the box by tapping outside it, what you typed comes back for the next 12 hours. It is cleared once you save or copy the record, or tap **Cancel**.
+
 Prefer to paste it into a note or email? Tap **Copy as text instead**. The record is copied to your clipboard and no file is made. That doesn't change which button is filled.
 
 If the Share sheet doesn't open, the app shows a box with **Share…** and **Download** buttons instead.

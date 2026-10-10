@@ -32,8 +32,12 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 ---
 
-## What's new in v3.7.11
+## What's new in v3.7.12
 
+- **Pilot, Drone and Reg. # in Settings** — three new boxes in **⚙ Settings**, under **Record file name starts with**. Type your name, your drone and its registration number once and the app remembers them on that device. They are printed near the top of your saved flight records (text and PDF) as, for example, "Pilot: Jane Smith" and "Drone: Mavic 4 Pro · Reg FA12345678", and they fill in the Pilot, Drone and Registration lines on the checklist **PDF**. Leave a box empty and nothing is printed for it. They are included in **Back up & restore**, so a backup per drone is an easy way to switch between aircraft.
+- **Save flight record no longer loses what you typed** — if you close the Share sheet without choosing anything, the Save record box stays open with everything still filled in. If you tap outside the box or reload the page, your customer, site and notes are kept for 12 hours and come back the next time you open it. They are cleared once you save, copy, or tap **Cancel**.
+- **Clearer messages after sharing** — after you choose where to send a record from the Share sheet, the message now says **Record shared** or **PDF shared**. When a file goes to your Downloads folder it still says it was saved to your downloads.
+- **A small ▴ arrow closes Settings and Back up & restore** — at the bottom corner of each open section, so you don't have to scroll back to the top to close it.
 - **The wind card now shows what the airport is actually reporting** — when a weather station within 30 miles has reported in the last 75 minutes, the card leads with that measured wind: sustained speed, gusts (or "No gusts reported") and direction, with the station, how far away it is and how old the report is. Below it, a **Model for your spot** line shows the forecast model's wind for exactly where you are, then the wind at 400 ft. Each number is colored by its own reading against your wind limit. If no station is close enough or recent enough, the card shows the model wind as before. The flight record includes both readings.
 - **Checked items look right while you customize** — an item you had ticked off used to look crossed out and hidden when you opened Customize. Ticked items now look normal there, and only items you've actually hidden are crossed out and faded.
 - **Share… on computers** — in **Back up & restore** on a desktop or laptop (Safari, Chrome, Edge and other browsers that can share), a new **Share…** button opens your computer's share sheet, so you can AirDrop, email or message your backup code. To restore, paste the code into **Restore from code**. Phones and tablets already share from **Save file**, so they don't show it. Firefox on a computer can't share from a web page, so use **Copy code** or **Save file** there.
@@ -300,8 +304,8 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention** — press and hold any item to mark it amber. Flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag
-- **Save a flight record** — tap **Save flight record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-flight-record)
-- **Print it, or save it as a PDF** — **Print** prints the open tab as a clean paper checklist, with your checked and flagged items marked and blank date, time, site and pilot lines, for use with a pencil. **PDF** makes the same sheet as a PDF file, and works in the Home Screen app too. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil)
+- **Save a flight record** — tap **Save flight record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, your pilot name, drone and registration number from Settings, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-flight-record)
+- **Print it, or save it as a PDF** — **Print** prints the open tab as a clean paper checklist, with your checked and flagged items marked and blank date, time, site and pilot lines, for use with a pencil. **PDF** makes the same sheet as a PDF file, with your pilot name, drone and registration filled in if you saved them in Settings, and works in the Home Screen app too. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil)
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
 - **Completely free** to host and run
 
@@ -321,7 +325,7 @@ Your settings and progress are stored in the browser on the device you're using.
 2. Paste the code and tap **Restore from code**, or tap **Restore from file…** and choose your backup
 3. Confirm — the checklist reloads, closes the cards and scrolls to the top, and a short message confirms it worked
 
-Restoring **replaces** that device's settings with the backup. A backup includes your region, units, tab names, tab icons and hidden tabs, hidden/added/reordered items, fold state, recent flight sites and progress retention — and, if you chose it, your checks and flags. Progress that has already expired is not restored.
+Restoring **replaces** that device's settings with the backup. A backup includes your region, units, tab names, tab icons and hidden tabs, hidden/added/reordered items, fold state, recent flight sites, progress retention, record file name, and your pilot name, drone and registration number — and, if you chose it, your checks and flags. Progress that has already expired is not restored.
 
 ---
 
