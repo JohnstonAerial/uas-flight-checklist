@@ -14,21 +14,83 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 <table>
   <tr>
-    <td align="center" width="33%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions: wind, cloud ceiling, temperature, Kp index, precipitation, humidity, sunrise and sunset, with TFR, NOTAM and radar buttons" width="240"></picture><br><sub><b>Live conditions</b></sub></td>
-    <td align="center" width="33%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/01-checklist-dark.png"><img src="screenshots/01-checklist-light.png" alt="Checklist with progress bar, Before leaving home items and checked boxes" width="240"></picture><br><sub><b>Checklist</b></sub></td>
-    <td align="center" width="33%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/05-ready-to-fly-dark.png"><img src="screenshots/05-ready-to-fly-light.png" alt="Ready to fly banner after the pre-flight sections are complete" width="240"></picture><br><sub><b>&quot;Ready to fly&quot; banner</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions: wind, cloud ceiling, temperature, Kp index, precipitation, humidity, sunrise and sunset, with TFR, NOTAM and radar buttons" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/01-checklist-dark.png"><img src="screenshots/01-checklist-light.png" alt="Checklist with progress bar, Before leaving home items and checked boxes" width="170"></picture><br><sub><b>Checklist</b></sub></td>
   </tr>
   <tr>
-    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/04-reorder-dark.png"><img src="screenshots/04-reorder-light.png" alt="Customize mode with drag handles, Hide buttons and the Editing your list bar" width="240"></picture><br><sub><b>Customize: drag, hide, add</b></sub></td>
-    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/02-settings-dark.png"><img src="screenshots/02-settings-light.png" alt="Settings panel with Where you fly, Checklist items, Clear saved progress after, Wind limit and Record file name" width="240"></picture><br><sub><b>Settings</b></sub></td>
-    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/03-customize-dark.png"><img src="screenshots/03-customize-light.png" alt="Customize panel with tab name, Hide this tab and the Tab icon picker" width="240"></picture><br><sub><b>Rename tabs, pick an icon</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/05-ready-to-fly-dark.png"><img src="screenshots/05-ready-to-fly-light.png" alt="Ready to fly banner after the pre-flight sections are complete" width="170"></picture><br><sub><b>&quot;Ready to fly&quot; banner</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/04-reorder-dark.png"><img src="screenshots/04-reorder-light.png" alt="Customize mode with drag handles, Hide buttons and the Editing your list bar" width="170"></picture><br><sub><b>Customize: drag, hide, add</b></sub></td>
   </tr>
   <tr>
-    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/06-save-record-dark.png"><img src="screenshots/06-save-record-light.png" alt="Save flight record pop-up with customer, site, notes and options" width="240"></picture><br><sub><b>Save a flight record</b></sub></td>
-    <td align="center"><img src="screenshots/07-printed.png" alt="Printed checklist with date, time, site and pilot lines to fill in" width="240"><br><sub><b>Print it for a pencil</b></sub></td>
-    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/09-backup-restore-dark.png"><img src="screenshots/09-backup-restore-light.png" alt="Back up and restore panel with Copy code, Save file, the Paste a backup code here box, Restore from code and Restore from file" width="240"></picture><br><sub><b>Back up &amp; restore</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/02-settings-dark.png"><img src="screenshots/02-settings-light.png" alt="Settings panel with Where you fly, Checklist items, Clear saved progress after, Wind limit and Record file name" width="170"></picture><br><sub><b>Settings</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/03-customize-dark.png"><img src="screenshots/03-customize-light.png" alt="Customize panel with tab name, Hide this tab and the Tab icon picker" width="170"></picture><br><sub><b>Rename tabs, pick an icon</b></sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/06-save-record-dark.png"><img src="screenshots/06-save-record-light.png" alt="Save flight record pop-up with customer, site, notes and options" width="170"></picture><br><sub><b>Save a flight record</b></sub></td>
+    <td align="center" width="50%"><img src="screenshots/07-printed.png" alt="Printed checklist with date, time, site and pilot lines to fill in" width="170"><br><sub><b>Print it for a pencil</b></sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/09-backup-restore-dark.png"><img src="screenshots/09-backup-restore-light.png" alt="Back up and restore panel with Copy code, Save file, the Paste a backup code here box, Restore from code and Restore from file" width="170"></picture><br><sub><b>Back up &amp; restore</b></sub></td>
+    <td></td>
   </tr>
 </table>
+
+### What a saved flight record looks like
+
+**Save flight record** makes a plain text file (or a PDF with real check boxes) of your preflight: who, where, the weather you saw, and every item you checked. Nothing is uploaded; it is made on your device. Here is a shortened example (the real one lists every item):
+
+<details>
+<summary><b>Show an example record</b></summary>
+
+```
+FLIGHT RECORD
+=============
+Sat, Oct 10, 2026 at 2:15 PM
+
+Customer: Smith Roofing
+Site: 123 Main St, Anytown
+Checklist: Mavic 4 Pro
+Pilot: Jane Smith
+Drone: Mavic 4 Pro · Reg FA12345678
+
+CONDITIONS
+Wind: 8 mph (Gusts 14 mph · From NW; KXYZ · 6 mi away · observed 2:00 PM;
+      Model for your spot: 9 / 17 mph; 400 ft: 16 mph)
+Cloud Ceiling: 4,500 ft AGL
+Temperature: 72°F (Visibility 10.0 mi)
+KP Index: 2.0
+Precipitation: None (Radar: no echoes within 30 mi · 2:10 PM)
+Humidity: 48% (Dew point 51°F)
+Sunrise 07:16 AM · Sunset 06:45 PM
+Weather as of 2:12 PM · Open-Meteo · METAR KXYZ · Radar 2:10 PM
+
+CHECKLIST — 56 OF 72 COMPLETE
+
+Before leaving home
+  [x] Check the forecast — wind and gusts within your drone's limits, no
+      rain, good visibility
+  [x] Check airspace — use an airspace app or your country's official drone
+      map to confirm class and restrictions
+  [x] All drone batteries fully charged, spares included
+  ...
+
+On site — pre-flight
+  [x] Assess the area — obstacles, people, animals, power lines, trees,
+      antennas, structures
+  [x] Choose a safe takeoff and landing zone — level, clear overhead, away
+      from people and obstacles
+  ...
+
+During flight
+  [ ] Hover check at 10ft (3m) — confirm stability, no drift, no warnings
+  ...
+
+UAS Flight Checklists v3.7.12 · checklist.johnstonaerial.com
+```
+
+</details>
+
+Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out, and the **Pilot** and **Drone** lines come from **⚙ Settings**. Anything you leave blank is left out of the record.
 
 ---
 
