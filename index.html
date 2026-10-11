@@ -277,7 +277,9 @@
   .body-bak .xfer-incl { display: flex; flex-direction: row; justify-content: flex-start; align-items: center; gap: 10px; padding: 6px 16px 8px; margin: 0; }
   .body-bak .xfer-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; padding: 4px 16px 14px; }
   .body-bak .xfer-btns .cust-btn { font-size: 14px; padding: 8px 6px; min-height: 40px; }
-  .body-bak .xfer-btns.rs { padding-top: 10px; }
+  .body-bak .xfer-btns.rs { grid-template-columns: 1fr; padding-top: 10px; padding-bottom: 6px; }
+  .body-bak .xfer-btns.rc { grid-template-columns: 1fr; padding-top: 10px; }
+  .body-bak .bk-or { font-size: 13px; color: var(--text-light); padding: 10px 16px 6px; }
   .body-bak .xfer-btns.has-share { grid-template-columns: 1fr 1fr 1fr; }
   @media (max-width: 340px) { .body-bak .xfer-btns.has-share { grid-template-columns: 1fr 1fr; } .body-bak .xfer-btns.has-share .share-btn { grid-column: 1 / -1; } }
   .bk-div { border-top: 1px solid var(--border); }
@@ -504,7 +506,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.7.12</p>
+      <p>Free Drone Preflight Checklist · v3.7.13</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -644,6 +646,7 @@
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Max distance — set a limit that keeps the drone within sight</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Loss of signal action — set to RTH (not Hover or Land)</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Low-battery return level — confirm the RTH battery warning is set</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Start screen recording on your controller or phone — if you record your flights</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">No drone app warnings or errors — clear before arming</div></div>
     </div>
   </div>
@@ -669,6 +672,7 @@
     <div class="section-header">Post-flight</div>
     <div class="section-card">
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Safe landing — props stopped before approaching the drone</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Stop screen recording — before you power off the controller</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Power off drone, then controller</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Inspect drone after landing — props, body, gimbal, no damage</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Review captured images on controller — confirm coverage, no gaps</div></div>
@@ -772,6 +776,7 @@
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Max distance — set a limit that keeps the drone within sight</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Loss of signal action — set to RTH (not Hover or Land)</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Low-battery return level — confirm the RTH battery warning is set</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Start screen recording on your controller or phone — if you record your flights</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">No drone app warnings or errors — clear before arming</div></div>
     </div>
   </div>
@@ -797,6 +802,7 @@
     <div class="section-header">Post-flight</div>
     <div class="section-card">
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Safe landing — props stopped before approaching the drone</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Stop screen recording — before you power off the controller</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Power off drone, then controller</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Inspect drone after landing — props, body, gimbal, no damage</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Review image count — matches expected total for coverage area</div></div>
@@ -887,6 +893,7 @@
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Max distance — set a limit that keeps the drone within sight</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Loss of signal action — set to RTH (not Hover or Land)</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Low-battery return level — confirm the RTH battery warning is set</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Start screen recording on your controller or phone — if you record your flights</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">No drone app warnings or errors — clear before arming</div></div>
     </div>
   </div>
@@ -909,6 +916,7 @@
     <div class="section-header">Post-flight</div>
     <div class="section-card">
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Safe landing — props stopped before approaching the drone</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Stop screen recording — before you power off the controller</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Power off drone, then controller</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Inspect drone after landing — props, body, gimbal, no damage</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Transfer/back up footage if needed — copy files to backup drive</div></div>
@@ -1794,10 +1802,13 @@ function makeXfer() {
   d.className = 'xfer';
   d.innerHTML = '<div class="xfer-sub">Save your settings and progress, or move them to another device or browser.</div>' +
     '<div class="bk-h">Back up</div><label class="xfer-incl"><input type="checkbox" class="xfer-prog" checked> Include current progress</label>' +
-    '<div class="xfer-btns' + (XFER_HAS_SHARE ? ' has-share' : '') + '"><button type="button" class="cust-btn" onclick="xferCopy(this)">Copy code</button><button type="button" class="cust-btn" onclick="xferSave(this)">Save file</button>' + (XFER_HAS_SHARE ? '<button type="button" class="cust-btn share-btn" onclick="xferShare(this)" onpointerdown="xferWarm(this)" aria-label="Share a backup">Share…</button>' : '') + '</div>' +
-    '<div class="bk-div"></div><div class="bk-h">Restore</div><textarea class="xfer-box" rows="2" placeholder="Paste a backup code here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>' +
-    '<div class="xfer-btns rs"><button type="button" class="cust-btn primary" onclick="xferRestore(this)">Restore from code</button><button type="button" class="cust-btn" onclick="xferFile(this)">Restore from file…</button>' +
+    '<div class="xfer-btns' + (XFER_HAS_SHARE ? ' has-share' : '') + '"><button type="button" class="cust-btn" onclick="xferCopy(this)">Copy code</button>' + (XFER_HAS_SHARE ? '<button type="button" class="cust-btn share-btn" onclick="xferShare(this)" onpointerdown="xferWarm(this)" aria-label="Share a backup">Share…</button>' : '') + '<button type="button" class="cust-btn" onclick="xferSave(this)">Save file</button>' + '</div>' +
+    '<div class="bk-div"></div><div class="bk-h">Restore</div>' +
+    '<div class="xfer-btns rs"><button type="button" class="cust-btn primary" onclick="xferFile(this)">Restore from file…</button>' +
     '<input type="file" class="xfer-file" accept=".json,application/json,text/plain" hidden onchange="xferFileChosen(this)"></div>' +
+    '<div class="bk-or">Or paste a backup code</div>' +
+    '<textarea class="xfer-box" rows="2" placeholder="Paste a backup code here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>' +
+    '<div class="xfer-btns rc"><button type="button" class="cust-btn" onclick="xferRestore(this)">Restore from code</button></div>' +
     '<div class="xfer-msg" role="status"></div>';
   return d;
 }
@@ -1875,13 +1886,14 @@ async function xferSave(btn) {
   // Desktop Chrome and Edge: a real Save dialog, so you choose the folder and the name
   if (window.showSaveFilePicker) {
     try {
-      const h = await window.showSaveFilePicker({ suggestedName: name, types: [{ description: 'Checklist backup', accept: { 'application/json': ['.json'] } }] });
+      const h = await window.showSaveFilePicker({ id: 'uas-checklist-backup', startIn: 'documents', suggestedName: name, types: [{ description: 'Checklist backup', accept: { 'application/json': ['.json'] } }] });
       const w = await h.createWritable(); await w.write(file); await w.close();
       xferMsg(btn, '✓ Backup complete. Restore it any time with Restore from file…'); return;
     } catch (e) { if (e && e.name === 'AbortError') return; }
   }
   try {
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    // Phones and tablets (no Share… button): Save file opens the share sheet. Where Share… is shown (computers), Save file is a plain download.
+    if (!XFER_HAS_SHARE && navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({ files: [file] });
       xferMsg(btn, '✓ Backup complete. Restore it any time with Restore from file…'); return;
     }
@@ -3017,6 +3029,9 @@ function recWeatherLines() {
     if (label) out.push(label + ': ' + (val || '—') + (subs.length ? ' (' + subs.join('; ') + ')' : ''));
   });
   const sun = body.querySelector('.wx-sun'); if (sun) out.push(recNoEmoji(sun.textContent).replace(/\s*·\s*/g, ' · '));
+  // Night notice: if the card is showing "Sun is down" at the moment of saving, the record carries the same line
+  if (typeof nightUpdate === 'function' && nightUpdate) { try { nightUpdate(); } catch (e) {} }
+  const nt = body.querySelector('#wx-night'); if (nt && !nt.hidden && nt.textContent.trim()) out.push(recNoEmoji(nt.textContent));
   const upd = body.querySelector('.wx-updated');
   if (upd) { const u = upd.cloneNode(true); const ag = u.querySelector('#wx-age'); if (ag) ag.remove(); out.push(recNoEmoji(u.textContent).replace(/^\s*Updated /, 'Weather as of ')); }
   const st = body.querySelector('.wx-status'); if (st) out.push('Note: ' + recNoEmoji(st.textContent));

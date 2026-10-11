@@ -94,6 +94,15 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.7.13
+
+- **The night-flight reminder is on your saved record** — when the sun is down as you save a flight record, the record (text and PDF) now carries the same line the weather card shows, right under the sunrise and sunset times: in the USA "Sun is down — night flight needs an anti-collision light visible 3 mi", elsewhere "Sun is down — check your local rules for night flying". In daylight nothing is added.
+- **Start and stop screen recording** — two new checklist items, on every tab. **Start screen recording on your controller or phone — if you record your flights** comes near the end of **On site — pre-flight**, just before the final "No drone app warnings or errors" check. **Stop screen recording — before you power off the controller** comes in **Post-flight**, right after the safe landing. Hide them in **Customize** if you don't record. Your saved progress is not affected.
+- **Save file is a plain download on computers** — on a desktop or laptop, **Save file** now saves the file and **Share…** is the only button that opens the share sheet (before, both opened the same pop-up on a Mac). Phones and tablets still open the Share sheet from **Save file**. In Chrome and Edge the Save dialog now remembers the folder you picked last time.
+- **A clearer Back up & restore card** — **Restore from file…** is now the first, wide button in **Restore**, then "Or paste a backup code" with the box and **Restore from code** underneath it. On a computer the Back up row reads **Copy code | Share… | Save file**, so **Save file** sits right above **Restore from file…**.
+
+---
+
 ## What's new in v3.7.12
 
 - **Pilot, Drone and Reg. # in Settings** — three new boxes in **⚙ Settings**, under **Record file name starts with**. Type your name, your drone and its registration number once and the app remembers them on that device. They are printed near the top of your saved flight records (text and PDF) as, for example, "Pilot: Jane Smith" and "Drone: Mavic 4 Pro · Reg FA12345678", and they fill in the Pilot, Drone and Registration lines on the checklist **PDF**. Leave a box empty and nothing is printed for it. They are included in **Back up & restore**, so a backup per drone is an easy way to switch between aircraft.
@@ -301,7 +310,7 @@ Version 3.2 makes the checklist work in more places and for more people:
 
 - **Works with no signal** — open it once with a connection and it opens again with none (for example at a remote site). The checklist, your own items and your settings all work offline; weather says so and refreshes when you're back online. When you do have a signal you always get the newest version
 - **Max altitude line (USA)** — when the cloud ceiling is above 500 ft but below 900 ft, the Cloud Ceiling card adds **Max legal altitude about … ft AGL (500 ft below clouds)**, so you know how high you can actually go. A ceiling of **500 ft or lower is now red: Cannot fly**
-- **Night notice** — after sunset or before sunrise the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules). It follows the clock, even if the weather hasn't refreshed
+- **Night notice** — after sunset or before sunrise the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules). It follows the clock, even if the weather hasn't refreshed, and it is printed on the saved flight record
 - **Best window is smarter** — when it is raining now, it shows the *longest* dry stretch of at least 2 hours in the next 12 hours, not just the next dry hour
 - **Humidity** — fog risk is amber; it turns red only when fog is likely and visibility is already under 3 miles
 - **Far-away flight sites** — if your flight site is in a different time zone, rain, storm and sunrise/sunset times are marked **(site time)**
@@ -353,7 +362,7 @@ Version 3 is a major update built around making the checklist *yours*:
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times
 - **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility under 3 miles is red. KP index turns amber at 3 and red at 4. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
-- **Night notice** — after sunset or before sunrise, the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules)
+- **Night notice** — after sunset or before sunrise, the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules), and the reminder is printed on the saved flight record
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)
 - **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
