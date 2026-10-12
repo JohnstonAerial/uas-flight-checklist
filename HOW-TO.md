@@ -167,7 +167,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 
 **What works worldwide**
 
-- Forecast weather, wind, visibility, dew point, sunrise/sunset times and golden hour windows.
+- Forecast weather, wind, visibility, dew point, sunrise/sunset times, golden hour windows and the best window of the next 12 daylight hours.
 - Radar, wherever RainViewer has coverage (the card tells you where it doesn't).
 - Airport reports (METAR) from airports near you.
 - The KP index.

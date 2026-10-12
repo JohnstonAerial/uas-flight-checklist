@@ -447,6 +447,11 @@
   .wx-disclaimer { font-size: 10px; color: var(--text-light); text-align: center; margin-top: 8px; line-height: 1.4; }
   .wx-golden { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 3px; }
   .wx-golden .wx-link { margin-top: 2px; }
+  .wx-window { margin: 10px 0 2px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; text-align: center; color: var(--text-muted); }
+  .wx-window b { color: var(--text); }
+  .wx-window-s { margin-top: 2px; }
+  .wx-window.none { border-color: var(--amber); background: var(--amber-light); }
+  .wx-window.none .wx-window-t { color: var(--amber); font-weight: 600; }
   .wx-sun { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 8px; }
   .wx-tfr-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
   .wx-tfr { display: block; width: 100%; padding: 9px; background: #c0392b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
@@ -508,7 +513,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.1</p>
+      <p>Free Drone Preflight Checklist · v3.8.2</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2133,6 +2138,63 @@ function windColor(mph, gust) {
   return 'wx-good';
 }
 
+// Best window: the longest stretch of daylight hours in the next 12 where wind and gusts stay under the amber point of your limits,
+// with no rain, storms or low visibility. Returns null when the data is missing, {kind:'ok'} when every daylight hour is fine.
+function calmWindow(om, hIdx) {
+  const H = om && om.hourly;
+  if (hIdx < 0 || !H || !H.time || !H.wind_speed_10m || !H.wind_gusts_10m || !H.precipitation_probability) return null;
+  const n = Math.min(12, H.time.length - hIdx);
+  if (n < 3) return null;
+  const l = windLimits(), W = l.w || WIND_DEF.w, G = l.g || WIND_DEF.g;
+  const D = om.daily || {}, d0 = String(H.time[0]).slice(0, 10);
+  const day = (i) => String(H.time[i]).slice(0, 10) === d0 ? 0 : 1;
+  const sun = (i) => {
+    const r = D.sunrise && D.sunrise[day(i)], s = D.sunset && D.sunset[day(i)];
+    return r && s ? [new Date(r).getTime(), new Date(s).getTime()] : null;
+  };
+  const info = [];
+  for (let k = 0; k < n; k++) {
+    const i = hIdx + k, w = H.wind_speed_10m[i], g = H.wind_gusts_10m[i];
+    if (typeof w !== 'number' || typeof g !== 'number' || !isFinite(w) || !isFinite(g)) return null;
+    const t = new Date(H.time[i]).getTime(), sv = sun(i);
+    const dayHr = !sv || (t + 3600000 > sv[0] && t < sv[1]);   // the hour overlaps daylight
+    const prob = H.precipitation_probability[i], pr = (H.precipitation || [])[i], wc = (H.weather_code || [])[i], cape = (H.cape || [])[i], vis = (H.visibility || [])[i];
+    const windBad = windColor(w, g) !== 'wx-good';
+    const wet = prob >= 30 || pr >= 0.2 || wc >= 95 || (cape >= 1000 && prob >= 30);
+    const visBad = typeof vis === 'number' && vis < 4828;   // under 3 mi
+    info.push({ dayHr, w, g, windBad, wet, visBad, good: dayHr && !windBad && !wet && !visBad });
+  }
+  const day_ = info.filter(x => x.dayHr);
+  if (day_.length < 2) return null;
+  if (day_.every(x => x.good)) return { kind: 'ok' };
+  let best = null;
+  for (let k = 0; k < n; ) {
+    if (!info[k].good) { k++; continue; }
+    let e = k; while (e + 1 < n && info[e + 1].good) e++;
+    if (e - k + 1 >= 2 && (!best || e - k > best.b - best.a)) best = { a: k, b: e };
+    k = e + 1;
+  }
+  if (best) {
+    const run = info.slice(best.a, best.b + 1);
+    return { kind: 'window', a: best.a, b: best.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && best.a > 0 };
+  }
+  const cnt = (f) => day_.filter(f).length;
+  const cw = cnt(x => x.windBad), cr = cnt(x => x.wet), cv = cnt(x => x.visBad);
+  return { kind: 'none', cause: cw >= cr && cw >= cv ? 'wind' : cr >= cv ? 'wet' : 'vis', aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3), W, G };
+}
+function calmHtml(c, H, hIdx, siteTag) {
+  if (!c || c.kind === 'ok') return '';
+  const hr = (i) => new Date(H.time[i]).toLocaleTimeString([], { hour: 'numeric' });
+  if (c.kind === 'window') {
+    const from = c.a === 0 ? 'Now' : hr(hIdx + c.a), to = hr(Math.min(hIdx + c.b + 1, H.time.length - 1));
+    return '<div class="wx-window"><div class="wx-window-t">🕊 Best window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
+      (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
+  }
+  const why = c.cause === 'wind' ? 'Wind or gusts stay above your amber point (' + fmtSpeedNum(c.aw) + ' / ' + fmtSpeedNum(c.ag) + ' ' + speedUnit() + ') · your limits are ' + fmtSpeedNum(c.W) + ' / ' + fmtSpeedNum(c.G) + ' ' + speedUnit()
+    : c.cause === 'wet' ? 'Rain or storms in the forecast for most of the daylight hours' : 'Low visibility in the forecast for most of the daylight hours';
+  return '<div class="wx-window none"><div class="wx-window-t">🕊 No calm window in the next 12 hrs</div><div class="wx-window-s">' + why + '</div></div>';
+}
+
 function windArrow(deg) {
   // Arrow points the direction wind is GOING (blowing toward)
   // dirs indexed by compass direction: N=↑, NE=↗, E=→, SE=↘, S=↓, SW=↙, W=←, NW=↖
@@ -2660,7 +2722,7 @@ async function renderWeather(lat, lon, attempt = 1) {
   lastDraw = null;
   try {
       const [wxRes, kpData, metarData, radarRes] = await Promise.allSettled([
-        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_120m,precipitation_probability,precipitation,weather_code,cape&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`),
+        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_10m,wind_gusts_10m,wind_speed_120m,precipitation_probability,precipitation,weather_code,cape&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`),
         fetchKP(),
         fetchMetar(lat, lon),
         fetchRadar(lat, lon)
@@ -2838,7 +2900,8 @@ async function renderWeather(lat, lon, attempt = 1) {
         lines.push(precipSub());
         // Live evidence (radar echoes nearby or an airport reporting precipitation) outranks the model's timing
         const liveWet = !!pm || !!(rd && rd.covered && rd.near);
-        if (wx.outlook && wx.outlook.rain && !liveWet) lines.push(wx.outlook.rain + siteTag);
+        const calmC = calmWindow(om, hIdx);
+        if (wx.outlook && wx.outlook.rain && !liveWet && !(calmC && calmC.kind === 'window' && /^(Best window|No clear window)/.test(wx.outlook.rain))) lines.push(wx.outlook.rain + siteTag);
         if (wx.outlook && wx.outlook.storm) lines.push(wx.outlook.storm + siteTag);
         return { val, cls, lines };
       };
@@ -2922,6 +2985,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         </div>
         <div class="wx-sun">🌅 Sunrise ${fmtT(wx.sunrise)} &nbsp;·&nbsp; 🌇 Sunset ${fmtT(wx.sunset)}${siteTag}</div>
         ${goldenLine}
+        ${calmHtml(calmWindow(om, hIdx), om.hourly, hIdx, siteTag)}
         <div class="wx-night" id="wx-night" hidden></div>
         <div class="wx-updated" id="wx-updated">Updated ${now} · ${srcText}<span id="wx-age"></span></div>
         <div class="wx-disclaimer">Guide only. Conditions can differ at your site. Check your own weather sources and look at the sky before you fly. Radar: <a href="https://www.rainviewer.com" target="_blank" rel="noopener">RainViewer</a>.</div>
@@ -2981,6 +3045,18 @@ function refreshIfStale() {
 
 updateUnitsButton();
 setInterval(refreshAge, 60000);
+// If the same site is open in another window and its tab or item settings change there, this window would still hold the old copy and
+// overwrite the new one the next time it saved. So when those settings change elsewhere, reload this window to pick them up
+// (straight away if the window is in the background, otherwise the next time you come back to it). Progress and drafts are already saved.
+let settingsStale = false;
+function settingsReloadIfStale() { if (settingsStale && document.visibilityState === 'visible') { settingsStale = false; location.reload(); } }
+window.addEventListener('storage', (e) => {
+  if (e.key !== TABS_KEY && e.key !== CUSTOM_KEY) return;
+  settingsStale = true;
+  if (document.visibilityState !== 'visible') location.reload();
+});
+document.addEventListener('visibilitychange', settingsReloadIfStale);
+window.addEventListener('focus', settingsReloadIfStale);
 document.addEventListener('visibilitychange', refreshIfStale);
 window.addEventListener('pageshow', (e) => { if (e.persisted) refreshIfStale(); });
 window.addEventListener('offline', showOffline);

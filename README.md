@@ -95,6 +95,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.2
+
+- **A best window for flying** — when the next 12 hours of daylight are not all good, the weather card shows the longest stretch (2 hours or more) when wind, gusts, rain and visibility are all fine, for example **Best window 10 AM – 7 PM · Wind up to 5 mph, gusts up to 8 mph**. It uses your own **Wind limit** in **⚙ Settings**: an hour counts as calm when sustained wind and gusts are below the amber point, about two-thirds of your limits. It also needs rain chance under 30%, no storms in the forecast and visibility of at least 3 mi (5 km). If the rain is clearing, it says so (**Rain clears by 1 PM**). When there is no such stretch you see **No calm window in the next 12 hrs** and the reason. When every daylight hour is fine, the line stays out of the way. Like the rest of the card it is a forecast guide, so check the sky and your own sources.
+- **Tab names and custom items no longer get lost with several windows open** — if the checklist was open in more than one browser tab or window, an older one could overwrite a tab name, icon or hidden tab (or your own items) that you had just changed in another. Now, when those settings change in another window, this one reloads to pick them up: right away if it is in the background, otherwise when you come back to it. Your progress and any unsaved record draft are kept.
+
+---
+
 ## What's new in v3.8.1
 
 New checklist items, on top of v3.8. Each is a plain item you can hide in **Customize**, and your saved progress is not affected.
@@ -384,6 +391,7 @@ Version 3 is a major update built around making the checklist *yours*:
   - Humidity and dew point, with a fog and lens-fogging warning
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times, and the golden hour windows, with a link to the AfterGlow sky forecast for the same place
+  - The best window of the next 12 daylight hours, worked out from your own Wind limit
 - **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility under 3 miles is red. KP index turns amber at 3 and red at 4. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
 - **Night notice** — after sunset or before sunrise, the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules), and the reminder is printed on the saved flight record
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
