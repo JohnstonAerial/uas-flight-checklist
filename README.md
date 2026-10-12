@@ -95,6 +95,20 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.1
+
+New checklist items, on top of v3.8. Each is a plain item you can hide in **Customize**, and your saved progress is not affected.
+
+- **Lens and sensors clear** (every tab, after **Gimbal check**) — no fog, dew or smudges, and let the drone adjust if it came from a hot car or a house.
+- **Temperature** (every tab, after **Battery installed and latched**) — stay within your drone's operating range. Cold: keep batteries warm until launch and expect a shorter flight. Heat: keep the drone and batteries out of the sun and a hot car.
+- **Let batteries cool before charging** (every tab, in **Post-flight**, just before **Put batteries on charger when home**) — a hot battery should rest first.
+- **Fly the upwind leg first** (General and Commercial, after **Flight plan**) — so the drone returns with the wind behind it.
+- **Video shutter** (General, after **Set camera**) — if you shoot video, about twice your frame rate (1/60 at 30 fps), and fix exposure with the ND filter, not the shutter.
+- **Compass calibration now also covers a prompt from the app or controller** — it reads "calibrate if the app or controller asks for it, in a new location, or near large metal structures". If you had it checked, hidden or placed in your own order, that carries over.
+- **Other calibrations** (every tab, right after the compass item) — IMU, gimbal, vision sensors and controller sticks: calibrate when the app warns, or after a crash or hard landing.
+
+---
+
 ## What's new in v3.8
 
 - **Golden hour on the weather card** — under the sunrise and sunset times you now see the two golden-hour windows for your flight site, for example **Golden hour 07:05 AM – 07:54 AM · 06:13 PM – 07:03 PM**. It is worked out on your device from where the sun is (between 4° below and 6° above the horizon), so it needs no extra connection, works in any country, follows your flight site's time zone and uses your device's 12 or 24 hour clock. Expect it to be within a few minutes of other sources. It is left out when the sun never reaches that range, for example in the polar winter.
@@ -519,6 +533,8 @@ This is a single HTML file — everything is in `index.html`. Without touching a
 - Change the default checklist items to match your operation
 - Add additional tabs for mission types specific to your work
 - Adjust the weather color thresholds to match your personal minimums
+
+Ideas for items of your own: a tracker tag in the drone or case (charged and on before flight, off after landing), a site-specific check, a client's own requirement.
 
 ---
 
