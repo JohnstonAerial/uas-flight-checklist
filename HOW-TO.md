@@ -131,6 +131,8 @@ Want a copy of what you checked, plus the details of the flight? Tap **Save flig
 3. Choose whether to include the weather conditions, the items you didn't check, and your GPS coordinates (off unless you tick it).
 4. Tap **Save PDF** or **Save text**. The one you used last is the filled button at the left of the row, and the app remembers it. PDF is the filled button until you choose text. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files**, AirDrop, Mail or Messages. On a computer the file goes to your Downloads folder.
 
+The line above the buttons shows the PDF layout and paper size in use, for example **PDF: Compact · A4**. Tap **(change in Settings)** to go straight to them; what you typed stays in the box.
+
 You get one file, named like `flight-record-2026-10-06-1415-smith-roofing.pdf` (or `.txt` for text), that opens on any device. The PDF has real check boxes and page numbers. Items you flagged are listed as NEEDS ATTENTION. Items you hid are left out and items you added are included. The record is made on your device and isn't sent anywhere. To put your own name at the front of the file, such as `johnston-aerial`, type it in **Record file name starts with** at the bottom of **⚙ Settings**. The date, time and customer are still added.
 
 Want your name and aircraft printed on every record? In **⚙ Settings**, type your name in **Pilot**, your drone in **Drone** and its registration number in **Reg. #**. They are printed near the top of each saved record, and filled in on the checklist **PDF** too. They stay on that device, and **Back up & restore** carries them, so you can keep one backup for each drone and restore the one you're flying. Leave a box empty and nothing is printed for it.
@@ -148,6 +150,8 @@ If the Share sheet doesn't open, the app shows a box with **Share…** and **Dow
 You can print the checklist and take it to the site. Open the tab you want, then tap **Print** in Safari. In the Home Screen app, open the page in Safari first, since the Home Screen app can't print. Check items off with a pencil during preflight and again after the flight. Print each tab you need, since only the open tab prints.
 
 No printer, or using the Home Screen app? Tap **PDF** instead. It makes the same sheet as a PDF file, with your checked and flagged items marked and lines for date, time, site, pilot and visual observer, that you can save to Files, email or print later. It works in the Home Screen app too, and like printing it covers only the open tab.
+
+**Choose how the PDF looks.** Open **⚙ Settings** and look for **PDF layout** and **PDF paper** near the bottom. **Compact** puts the items in two columns at a slightly smaller size, so a full checklist takes about half the pages (the General list is 2 pages instead of 4 on Letter). **Large print** keeps the bigger, one-column layout. **Letter** and **A4** pick the paper size. The first time, the app chooses Letter for English and North American browsers and A4 elsewhere, and then remembers your choice. It applies to the checklist **PDF** and to the PDF in a saved flight record, and **Back up & restore** carries it with your other settings. After you save a PDF, the message tells you which layout and paper it used.
 
 The app also works offline once it has loaded (see above), so paper is a choice, not a requirement. You can also save a flight record afterward and print that.
 

@@ -95,6 +95,15 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.3
+
+- **A shorter PDF: Compact layout** — the checklist **PDF** and the **flight record PDF** now run the items in two columns at a slightly smaller size, so a full list takes about half the pages (the General checklist is 2 pages instead of 4 on Letter). If you want bigger text, choose **Large print** and you get the one-column layout you had before. Pick it in **⚙ Settings**, under **PDF layout**. Hidden items stay out of the PDF and your own items are in it, as before.
+- **Letter or A4 paper** — **⚙ Settings**, under **PDF paper**. The first time, the app picks Letter for English and North American browsers and A4 everywhere else, and then remembers what you choose. The flight record PDF uses the same paper size.
+- **A reminder of where to change it** — after you save or share a PDF, the message says which layout and paper it used, with **Change in Settings**. The **Save flight record** box shows the same choice above its buttons, and tapping **(change in Settings)** takes you straight to it. What you had typed in the box is kept.
+- **In your backup** — your PDF layout and paper choices are carried by **Back up & restore** like your other settings.
+
+---
+
 ## What's new in v3.8.2
 
 - **A best window for flying** — when the next 12 hours of daylight are not all good, the weather card shows the longest stretch (2 hours or more) when wind, gusts, rain and visibility are all fine, for example **Best window 10 AM – 7 PM · Wind up to 5 mph, gusts up to 8 mph**. It uses your own **Wind limit** in **⚙ Settings**: an hour counts as calm when sustained wind and gusts are below the amber point, about two-thirds of your limits. It also needs rain chance under 30%, no storms in the forecast and visibility of at least 3 mi (5 km). If the rain is clearing, it says so (**Rain clears by 1 PM**). When there is no such stretch you see **No calm window in the next 12 hrs** and the reason. When every daylight hour is fine, the line stays out of the way. Like the rest of the card it is a forecast guide, so check the sky and your own sources.
@@ -407,7 +416,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention** — press and hold any item to mark it amber. Flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag
 - **Save a flight record** — tap **Save flight record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, your pilot name, drone and registration number from Settings, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-flight-record)
-- **Print it, or save it as a PDF** — **Print** prints the open tab as a clean paper checklist, with your checked and flagged items marked and blank date, time, site and pilot lines, for use with a pencil. **PDF** makes the same sheet as a PDF file, with your pilot name, drone and registration filled in if you saved them in Settings, and works in the Home Screen app too. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil)
+- **Print it, or save it as a PDF** — **Print** prints the open tab as a clean paper checklist, with your checked and flagged items marked and blank date, time, site and pilot lines, for use with a pencil. **PDF** makes the same sheet as a PDF file, with your pilot name, drone and registration filled in if you saved them in Settings, and works in the Home Screen app too. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil) The PDF is **Compact** (two columns, fewer pages) or **Large print**, on **Letter** or **A4**, as you choose in **⚙ Settings**.
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
 - **Completely free** to host and run
 
