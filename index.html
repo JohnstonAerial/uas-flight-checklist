@@ -197,7 +197,13 @@
   .panel.editing .item.is-hidden .item-text { text-decoration: line-through; }
   .section.all-hidden { display: none; }
   .panel.editing .section.all-hidden { display: block; }
-  .add-row { display: none; gap: 8px; padding: 8px 4px 0; }
+  .add-row { display: none; gap: 8px; padding: 8px 4px 0; flex-wrap: wrap; }
+  .add-row input.add-url { flex: 1 1 100%; order: 3; font-size: 14px; }
+  .add-row input.bad, .add-row input.add-url.bad { border-color: var(--red, #c0392b); }
+  .item.has-link { flex-wrap: wrap; }
+  .item-link { flex: 0 0 calc(100% - 36px); box-sizing: border-box; margin: -6px 0 0 36px; font-size: 13px; font-weight: 600; color: var(--blue); text-decoration: none; word-break: break-all; -webkit-user-select: none; user-select: none; }
+  .item-link:active { opacity: .6; }
+  .item.na .item-link { opacity: .6; }
   .panel.editing .add-row { display: flex; }
   .add-row input { flex: 1; min-width: 0; font-family: inherit; font-size: 16px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; }
   .add-row button { font-family: inherit; font-size: 13px; color: #fff; background: var(--blue-mid); border: none; border-radius: 10px; padding: 8px 14px; cursor: pointer; }
@@ -319,8 +325,10 @@
   .body-set .keep-row, .body-set .region-row { flex-wrap: wrap; }
   .body-set .keep-row > span, .body-set .region-row > span { flex: 1 1 auto; }
   .body-set .keep-row select { font-size: 15px; flex: 1 1 52%; min-width: 0; }
-  .body-set .cust-row::before { content: '📝 Checklist items'; }
-  .body-set .cust-row .cust-btn { font-size: 14px; }
+  .body-set .cust-row { flex-wrap: wrap; row-gap: 8px; }
+  .body-set .cust-row::before { content: '📝 Your checklist & tab'; font-size: 14px; white-space: nowrap; flex: 1 1 auto; min-width: 0; }
+  .body-set .cust-row .cust-btn { font-size: 13px; padding: 6px 12px; white-space: nowrap; flex: 0 0 auto; }
+  .body-set .cust-row .cust-toggle { margin-left: auto; }
   .fn-block { padding: 8px 16px 10px; border-top: 1px solid var(--border); text-align: left; }
   .fn-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; color: var(--text); }
   .fn-row > span { flex: 1 1 auto; }
@@ -373,9 +381,14 @@
   .cust-help { display: none; margin-top: 6px; line-height: 1.4; }
   .pc-btns { margin-bottom: 2px; }
   .panel.editing .progress-card, .panel.editing .flag-hint, .panel.editing .saved-note { display: none; }
-  .edit-note { display: none; margin: 0 0 12px; padding: 12px 14px; background: var(--card); border-radius: 14px; box-shadow: var(--shadow); font-size: 14px; line-height: 1.45; color: var(--text); }
+  .edit-note { display: none; margin: 2px 0 12px; padding: 12px 14px; background: var(--section-bg, var(--card)); border: 1px solid var(--border); border-radius: 12px; font-size: 14px; line-height: 1.45; color: var(--text); }
   .panel.editing .edit-note { display: block; }
   .edit-note .en-line { margin-bottom: 4px; }
+  .edit-note .en-got { display: block; margin: 10px 0 0 auto; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--blue); background: transparent; border: 1px solid var(--border); border-radius: 18px; padding: 8px 16px; cursor: pointer; }
+  .edit-note .en-mini { display: none; width: 100%; text-align: left; font-family: inherit; font-size: 14px; color: var(--blue); background: transparent; border: 0; padding: 4px 0; cursor: pointer; }
+  .edit-note.collapsed { padding: 6px 14px; }
+  .edit-note.collapsed .en-full { display: none; }
+  .edit-note.collapsed .en-mini { display: block; }
   .edit-note .en-foot { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); }
   .panel.editing .cust-help { display: block; }
   .section-header { display: flex; align-items: center; gap: 8px; cursor: pointer; -webkit-user-select: none; user-select: none; }
@@ -510,7 +523,7 @@
     .tab-lbl { display: inline; }
     .tab.active { display: block; padding: 6px 0 0; font-size: 13pt; text-align: left; color: #000 !important; border: 0; }
     .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .edit-note, .progress-card, .complete-banner, .flag-hint, .saved-note, .coffee-note, .foot-links,
-    .edit-bar, .toast, .item-menu, .rec-overlay, .rec-btn, .pc-btns, .pc-mini, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
+    .edit-bar, .toast, .item-menu, .item-link, .rec-overlay, .rec-btn, .pc-btns, .pc-mini, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
     .content { max-width: none; padding: 0; margin: 0; }
     .panel { padding: 0; }
     .print-fields { display: block; margin: 0 0 4px; }
@@ -541,7 +554,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.6</p>
+      <p>Free Drone Preflight Checklist · v3.8.7</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1523,12 +1536,42 @@ function gripUp() {
 }
 function gripCancel() { gripEnd(); }
 
-function makeItem(text) {
+// Optional link on your own items: a web address or an app address (for example dji://). Anything that could run code is refused.
+const LINK_BLOCK = /^(javascript|data|vbscript|file|blob|about|chrome|view-source|ms-|intent):/i;
+function cleanLink(raw) {
+  let v = String(raw || '').trim();
+  if (!v || v.length > 300 || /\s/.test(v)) return null;
+  if (LINK_BLOCK.test(v)) return null;
+  if (/^(mailto|tel|sms|facetime):/i.test(v)) return v;
+  if (/^[a-z][a-z0-9+.\-]*:\/\/\S*$/i.test(v)) return v;                     // https://..., dji://..., googlemaps://...
+  if (/^[^\/:@]+\.[^\/:@]{2,}(\/.*)?$/.test(v)) return 'https://' + v;       // airaware.aloft.ai  ->  https://airaware.aloft.ai
+  return null;
+}
+function linkLabel(u) {
+  let m = u.match(/^(https?):\/\/([^\/?#]+)/i);
+  if (m) return 'Open ' + m[2].replace(/^www\./i, '') + ' \u203A';
+  m = u.match(/^([a-z][a-z0-9+.\-]*):/i);
+  const sc = m ? m[1].toLowerCase() : '';
+  if (sc === 'tel') return 'Call \u203A';
+  if (sc === 'mailto') return 'Email \u203A';
+  if (sc === 'sms') return 'Text \u203A';
+  return 'Open ' + sc + ' app \u203A';
+}
+function makeItem(text, url) {
   const it = document.createElement('div');
   it.className = 'item custom';
   it.setAttribute('onclick', 'toggle(this)');
   it.innerHTML = document.querySelector('.item .check-circle').outerHTML + '<div class="item-text"></div>';
   it.querySelector('.item-text').textContent = text;
+  const lk = cleanLink(url);
+  if (lk) {
+    const a = document.createElement('a');
+    a.className = 'item-link'; a.href = lk; a.textContent = linkLabel(lk);
+    if (/^https?:/i.test(lk)) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+    a.addEventListener('click', e => e.stopPropagation());
+    a.addEventListener('pointerdown', e => e.stopPropagation());
+    it.appendChild(a); it.classList.add('has-link');
+  }
   addItemButton(it);
   return it;
 }
@@ -1578,20 +1621,40 @@ function itemX(e, btn) {
   }
   custSave(); refreshCust(panelEl); saveProgress();
 }
-function addCustomItem(e, form) {
-  e.preventDefault();
-  const input = form.querySelector('input'), text = input.value.trim();
-  if (!text) return;
+function addCustomItem(e, form, quiet) {
+  if (e) e.preventDefault();
+  const input = form.querySelector('input'), urlIn = form.querySelector('.add-url');
+  const text = input.value.trim();
+  const rawUrl = urlIn ? urlIn.value.trim() : '', lk = rawUrl ? cleanLink(rawUrl) : '';
+  if (!text) { if (!quiet) { input.classList.add('bad'); input.setAttribute('placeholder', 'Enter the checklist item first'); input.focus(); } return false; }
+  if (rawUrl && !lk) { if (quiet) return false; urlIn.classList.add('bad'); urlIn.focus(); urlIn.setAttribute('placeholder', 'Not a valid link. Try https://... or app://...'); return false; }
   const secEl = form.closest('.section'), panelEl = form.closest('.panel');
-  custFor(panelEl.id).added.push({ sec: sectionTitleOf(secEl), text });
-  secEl.querySelector('.section-card').appendChild(makeItem(text));
-  input.value = '';
+  const rec = { sec: sectionTitleOf(secEl), text }; if (lk) rec.url = lk;
+  custFor(panelEl.id).added.push(rec);
+  secEl.querySelector('.section-card').appendChild(makeItem(text, lk));
+  input.value = ''; input.classList.remove('bad'); input.setAttribute('placeholder', ADD_PH);
+  if (urlIn) { urlIn.value = ''; urlIn.classList.remove('bad'); urlIn.setAttribute('placeholder', URL_PH); }
   custSave(); refreshCust(panelEl); saveProgress();
+  return true;
 }
+const ADD_PH = '* Checklist item, e.g. Check airspace', URL_PH = 'Link or app address (optional)';
+function flushAddRows(panelEl) {            // Done: save a complete add box, then clear any leftover draft
+  panelEl.querySelectorAll('.add-row').forEach(f => {
+    addCustomItem(null, f, true);
+    f.querySelectorAll('input').forEach(i => { i.value = ''; i.classList.remove('bad'); });
+    const a = f.querySelector('input'), u = f.querySelector('.add-url');
+    a.setAttribute('placeholder', ADD_PH); if (u) u.setAttribute('placeholder', URL_PH);
+  });
+}
+function editTipIsOff() { try { return localStorage.getItem('uasEditTipOff') === '1'; } catch (e) { return false; } }
+function editTipOff() { try { localStorage.setItem('uasEditTipOff', '1'); } catch (e) {} document.querySelectorAll('.edit-note').forEach(n => n.classList.add('collapsed')); }
+function editTipShow() { document.querySelectorAll('.edit-note').forEach(n => n.classList.remove('collapsed')); }
 function toggleEdit(btn) {
   const panelEl = btn.closest('.panel');
   const on = panelEl.classList.toggle('editing');
+  if (on) setTimeout(() => { const r = panelEl.querySelector('.cust-row'); if (r) window.scrollTo({ top: Math.max(0, r.getBoundingClientRect().top + window.scrollY - 76), behavior: 'smooth' }); }, 60);
   if (!on) {
+    flushAddRows(panelEl);
     const st = panelEl.querySelector('.settings');
     if (st) { st.classList.remove('open'); st.classList.remove('open-bak'); st.querySelectorAll('.settings-toggle').forEach(t => t.setAttribute('aria-expanded', 'false')); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1632,14 +1695,16 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     const form = document.createElement('form');
     form.className = 'add-row';
     form.setAttribute('onsubmit', 'addCustomItem(event, this)');
-    form.innerHTML = '<input type="text" maxlength="140" placeholder="Add your own item" enterkeyhint="done" autocomplete="off"><button type="submit">Add</button>';
+    form.innerHTML = '<input type="text" maxlength="140" placeholder="* Checklist item, e.g. Check airspace" enterkeyhint="done" autocomplete="off"><button type="submit">Add</button><input type="text" class="add-url" maxlength="300" inputmode="url" placeholder="Link or app address (optional)" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">';
+    form.querySelector('.add-url').addEventListener('input', e => e.target.classList.remove('bad'));
+    form.querySelector('input').addEventListener('input', e => e.target.classList.remove('bad'));
     sec.appendChild(form);
   });
   if (c) {
     const secs = [...panelEl.querySelectorAll('.section')];
     (c.added || []).forEach(a => {
       const sec = secs.find(s => sectionTitleOf(s) === a.sec) || secs[secs.length - 1];
-      if (sec) sec.querySelector('.section-card').appendChild(makeItem(a.text));
+      if (sec) sec.querySelector('.section-card').appendChild(makeItem(a.text, a.url));
     });
     const keys = baseKeyMap(panelEl);
     keys.forEach((k, it) => { if ((c.hidden || []).includes(k)) it.classList.add('is-hidden'); });
@@ -1647,7 +1712,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   }
   const row = document.createElement('div');
   row.className = 'cust-row';
-  row.innerHTML = '<button type="button" class="cust-btn cust-toggle" onclick="toggleEdit(this)">✎ Customize</button>' +
+  row.innerHTML = '<button type="button" class="cust-btn cust-toggle" onclick="toggleEdit(this)">Customize</button>' +
     '<div class="cust-help">' +
     '<div class="tab-edit"><label>Tab name <input class="tab-name" type="text" maxlength="24" autocomplete="off" oninput="saveTabName(this)" onblur="refreshTabs()"></label>' +
     '<button type="button" class="cust-btn tab-hide-btn" onclick="hideTab(this)">Hide this tab</button></div>' +
@@ -1892,7 +1957,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasPrintTipOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -2170,13 +2235,17 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   sn.innerHTML = '💾 Saved on this device and browser only · clears after <span class="saved-hours"></span>';
   tip.after(sn);
   const en = document.createElement('div'); en.className = 'edit-note';
-  en.innerHTML = '<div class="en-line"><b>Hide:</b> tap Hide on items you don\'t need.</div>' +
-    '<div class="en-line"><b>Add:</b> use "Add your own item" at the bottom of any section.</div>' +
+  en.innerHTML = '<button type="button" class="en-mini" onclick="editTipShow()">ⓘ How to customize ›</button><div class="en-full">' +
+    '<div class="en-line"><b>Tabs:</b> rename this tab, change its icon, or hide it using the boxes just below.</div>' +
+    '<div class="en-line"><b>Hide:</b> tap Hide on items you don\'t need.</div>' +
+    '<div class="en-line"><b>Add:</b> type a checklist item in the box at the bottom of any section (add a link or app address if you like), then tap Add.</div>' +
     '<div class="en-line"><b>Move:</b> drag <b>≡</b> to reorder within a section.</div>' +
-    '<div class="en-foot">Tap another tab to customize it too. Press <b>Done</b> when finished. Saved on this device and browser only.</div>';
-  sn.after(en);
+    '<div class="en-foot">Tap another tab to customize it too. Press <b>Done</b> when finished. Saved on this device and browser only.</div>' +
+    '<button type="button" class="en-got" onclick="editTipOff()">Got it</button></div>';
+  if (editTipIsOff()) en.classList.add('collapsed');
+  const ch = cust.querySelector('.cust-help'); if (ch) ch.prepend(en); else sn.after(en);
   const bar = document.createElement('div'); bar.className = 'edit-bar';
-  bar.innerHTML = '<span>✎ Editing your list</span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button>';
+  bar.innerHTML = '<span>✎ Editing this checklist and tab</span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button>';
   panelEl.prepend(bar);
   const coffee = document.createElement('div'); coffee.className = 'coffee-note';
   coffee.innerHTML = 'Built by a Part 107 pilot, for pilots. Free to use. If it helped you fly smarter, <a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee ☕</a>';

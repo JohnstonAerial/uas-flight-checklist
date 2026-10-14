@@ -60,7 +60,7 @@ The app keeps one setup at a time on your device: your tab names and icons, whic
 
 **Example: a "Timelapse" setup**
 
-1. Tap **⚙ Settings**, then **✎ Customize**.
+1. Tap **⚙ Settings**, then **Customize** in the **Your checklist & tab** row.
 2. Rename a tab (for example, **Timelapse**) in the **Tab name** box. You can also change its icon under **Tab icon**: pick one, type your own emoji, or choose **No icon**.
 3. Tap **Hide** on items you don't need, and add your own at the bottom of any section. Use **Hide this tab** on tabs you don't want to see. Tap **✓ Done**.
 4. In **💾 Back up & restore**, untick **Include current progress**, then tap **Save file**.

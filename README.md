@@ -95,6 +95,15 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.7
+
+- **Customize is easier to find and follow** — in **⚙ Settings**, the row now reads **📝 Your checklist & tab** with a **Customize** button, so it's clear that Customize covers the tab itself (its name, icon and Hide) as well as the items on it. While you customize, the bar at the bottom says **Editing this checklist and tab**, and the page scrolls to the controls for you.
+- **A "How to customize" card at the top** — the instructions (**Tabs**, **Hide**, **Add**, **Move**) now sit at the top of that block, above the **Tab name** box, instead of further down the page. Tap **Got it** and the card shrinks to a one-line **ⓘ How to customize ›** that you can tap to bring it back. **Back up & restore** remembers that you tapped **Got it**.
+- **Adding your own item is clearer** — the box now reads **\* Checklist item, e.g. Check airspace**. If you tap **Add** with nothing typed, the box turns red and asks for the checklist item. Tapping **Done** saves a filled-in box, and clears one that is only half filled in, so nothing is left behind.
+- **Fix: the Customize button fits on small or zoomed phone screens** — it is no longer cut off at the right edge.
+
+---
+
 ## What's new in v3.8.6
 
 - **More of what airports report, worldwide** — the weather card now reads the full standard set of airport weather codes. A **funnel cloud** or **tornado/waterspout** report turns the Precipitation card red with the airport and distance; **squalls** show in amber. **Sandstorms and duststorms** show on the Humidity card, and blowing or drifting dust, sand and snow, dust whirls and spray are named in words. **Freezing rain and drizzle** keep the word "freezing", showers and thunderstorms with rain or hail read clearly, and several conditions at once (for example "rain and snow") are all shown. Anything near the airport but not at it says "in the vicinity". Unknown codes are skipped.
@@ -435,7 +444,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)
 - **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
 - **Works outside the USA** — the first time you open it, choose **USA** or **Outside USA**. Choosing outside the USA hides the items marked "(US)" (TFR and LAANC checks and the TFR recheck on site), rewords the NOTAM item so it isn't tied to a US website, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. Change it any time in **⚙ Settings**
-- **Customize the list** — open **⚙ Settings** and tap **✎ Customize** to hide items that don't apply where you fly, add your own items to any section, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
+- **Customize the list** — open **⚙ Settings** and tap **Customize** (in the **Your checklist & tab** row) to hide items that don't apply where you fly, add your own items to any section, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
 - **Rename, re-icon or hide tabs** — in Customize mode, rename the tab you're on, give it a different icon (pick one, type your own emoji, or choose none) or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Renaming and changing the icon change only how the tab looks; use Hide and Add to change what's inside it
 - **Back up & restore** — see below
 - **Collapsible sections** — tap a section header to fold it up or open it, or use **Collapse all / Expand all**. Finished sections fold themselves and the next unfinished one opens, and on your first visit only the first section of each tab is open. Each header shows its count (like 9/12), a ✓ when it's finished and an amber ⚠ if something in it needs attention, even when folded. Your fold state is remembered
@@ -504,7 +513,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 8. Tap **Reset** (bottom of the progress card) to clear all checks, flags and N/A marks on the current tab — it asks you to confirm first
 9. Tap **Save flight record** to keep a PDF or text copy of the flight, **PDF** to save the checklist as a printable file, or **Print** to print the tab (in Safari or a computer browser)
 
-**To make it yours:** open **⚙ Settings**, tap **✎ Customize**, and hide items you don't need, add your own, drag items into your order, and rename, change the icon of, or hide whole tabs — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
+**To make it yours:** open **⚙ Settings**, tap **Customize**, and hide items you don't need, add your own, drag items into your order, and rename, change the icon of, or hide whole tabs — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
 
 ---
 
