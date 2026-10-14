@@ -95,6 +95,15 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.4
+
+- **Mark an item N/A** — press and hold any item and a small menu appears: **Needs attention** or **N/A for this flight**. An N/A item is greyed with an **N/A** tag and doesn't count for or against your progress (for example "12 of 78 complete · 2 N/A"). A section where everything is N/A counts as done. Tap an N/A item to put it back. It's remembered like your ticks and cleared by **Reset**. If you'd rather never see an item, **Hide** it in customize instead.
+- **N/A in your records** — **Print**, **PDF** and the **flight record** show N/A items greyed with "(N/A)" and a dash in the box, so the paper copy says why an item wasn't ticked.
+- **Ceiling from the nearest station** — the weather card now takes the cloud ceiling from the nearest airport report within 30 miles. If a farther station is lower, it shows as a plain note, "Lower nearby", and doesn't color the card.
+- **Visibility from the nearest airport report** — when a report no older than 75 minutes is available, **Visibility** shows that reading with the airport code (for example "10+ mi · KJNX"), and the red **Below 3 mi minimum** warning applies to what was actually reported. The weather forecast is the fallback, labeled as the forecast model. Lower readings at farther stations appear as a "Lower nearby" note.
+
+---
+
 ## What's new in v3.8.3
 
 - **A shorter PDF: Compact layout** — the checklist **PDF** and the **flight record PDF** now run the items in two columns at a slightly smaller size, so a full list takes about half the pages (the General checklist is 2 pages instead of 4 on Letter). If you want bigger text, choose **Large print** and you get the one-column layout you had before. Pick it in **⚙ Settings**, under **PDF layout**. Hidden items stay out of the PDF and your own items are in it, as before.
@@ -414,7 +423,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it in Settings (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
 - **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
-- **Flag items that need attention** — press and hold any item to mark it amber. Flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag
+- **Flag items that need attention, or mark them N/A** — press and hold any item for a small menu. **Needs attention** marks it amber; flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag. **N/A for this flight** greys it out and takes it out of your progress; tap it to put it back
 - **Save a flight record** — tap **Save flight record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, your pilot name, drone and registration number from Settings, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-flight-record)
 - **Print it, or save it as a PDF** — **Print** prints the open tab as a clean paper checklist, with your checked and flagged items marked and blank date, time, site and pilot lines, for use with a pencil. **PDF** makes the same sheet as a PDF file, with your pilot name, drone and registration filled in if you saved them in Settings, and works in the Home Screen app too. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil) The PDF is **Compact** (two columns, fewer pages) or **Large print**, on **Letter** or **A4**, as you choose in **⚙ Settings**.
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
@@ -470,10 +479,10 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 2. Select the tab that matches your mission type
 3. Review the **Preflight Conditions** panel — tap **↻ Refresh** to update weather. It shows your current location by default; tap **Change** to look up a different flight site, and **Use my location** to switch back
 4. Tap each item to check it off as you complete it
-5. Press and hold an item to flag it as **needs attention** (amber). Tap a flagged item once it's resolved to check it off, or press and hold it again to clear the flag
+5. Press and hold an item for a menu: **Needs attention** (amber) or **N/A for this flight** (greyed, not counted). Tap a flagged item once it's resolved to check it off, or press and hold it again to clear the flag. Tap an N/A item to put it back
 6. When you check off the last item in a section, it folds itself and the next unfinished section opens. Tap any header to open a section again. A section with a flagged item stays open until the flag is resolved
-7. The progress bar tracks your completion percentage and shows how many items need attention. When your pre-flight sections are done, a **ready to fly** banner appears; after the last section, **flight complete**
-8. Tap **Reset** (bottom of the progress card) to clear all checks and flags on the current tab — it asks you to confirm first
+7. The progress bar tracks your completion percentage and shows how many items need attention and how many are N/A. When your pre-flight sections are done, a **ready to fly** banner appears; after the last section, **flight complete**
+8. Tap **Reset** (bottom of the progress card) to clear all checks, flags and N/A marks on the current tab — it asks you to confirm first
 9. Tap **Save flight record** to keep a PDF or text copy of the flight, **PDF** to save the checklist as a printable file, or **Print** to print the tab (in Safari or a computer browser)
 
 **To make it yours:** open **⚙ Settings**, tap **✎ Customize**, and hide items you don't need, add your own, drag items into your order, and rename, change the icon of, or hide whole tabs — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).

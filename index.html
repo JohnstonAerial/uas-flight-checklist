@@ -173,6 +173,19 @@
   .item.flagged .check-circle { background: var(--amber); border-color: var(--amber); }
   .item.flagged .check-circle::after { content: '!'; color: #fff; font-weight: 800; font-size: 14px; line-height: 1; }
   .attn-count { color: var(--amber); font-weight: 600; }
+  .na-count { color: var(--text-light); }
+  /* N/A: this item doesn't apply to this flight */
+  .item.na { background: var(--section-bg); }
+  .item.na .check-circle { background: transparent; border: 2px dashed var(--text-light); }
+  .item.na .check-circle::after { content: 'N/A'; color: var(--text-light); font-weight: 700; font-size: 7.5px; letter-spacing: -0.2px; line-height: 1; }
+  .item.na .item-text { color: var(--text-light); }
+  .item.na .item-text::after { content: 'N/A'; margin-left: 8px; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--border); color: var(--text-muted); white-space: nowrap; vertical-align: 1px; }
+  .panel.editing .item.na .item-text::after { display: none; }
+  .item-menu { position: absolute; z-index: 60; min-width: 230px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+  .item-menu button { display: block; width: 100%; text-align: left; font: inherit; font-size: 15px; padding: 13px 16px; background: none; border: 0; color: var(--text); cursor: pointer; }
+  .item-menu button + button { border-top: 1px solid var(--border); }
+  .item-menu button.na-act { color: var(--link); font-weight: 600; }
+  .item-menu button:active { background: var(--section-bg); }
   .reset-inline { flex-shrink: 0; background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-family: inherit; cursor: pointer; }
   .reset-inline:active { background: var(--section-bg); }
   .item-x { display: none; flex-shrink: 0; margin-left: auto; align-self: center; font-family: inherit; font-size: 11px; color: var(--text-muted); background: transparent; border: 1px solid var(--border); border-radius: 12px; padding: 3px 9px; cursor: pointer; }
@@ -493,7 +506,7 @@
     .tab-lbl { display: inline; }
     .tab.active { display: block; padding: 6px 0 0; font-size: 13pt; text-align: left; color: #000 !important; border: 0; }
     .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .edit-note, .progress-card, .complete-banner, .flag-hint, .saved-note, .coffee-note, .foot-links,
-    .edit-bar, .toast, .rec-overlay, .rec-btn, .pc-btns, .pc-mini, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
+    .edit-bar, .toast, .item-menu, .rec-overlay, .rec-btn, .pc-btns, .pc-mini, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
     .content { max-width: none; padding: 0; margin: 0; }
     .panel { padding: 0; }
     .print-fields { display: block; margin: 0 0 4px; }
@@ -510,6 +523,9 @@
     .check-circle, .item.checked .check-circle, .item.flagged .check-circle { width: 14px; height: 14px; border-radius: 2px; border: 1.5px solid #000 !important; background: #fff !important; margin-top: 1px; }
     .item.checked .check-circle { background: #000 !important; }
     .item.flagged .check-circle::after { color: #000; font-size: 11px; }
+    .item.na .check-circle::after { content: '\2013'; color: #000; font-size: 11px; font-weight: 700; letter-spacing: 0; }
+    .item.na .item-text { color: #555 !important; }
+    .item.na .item-text::after { content: ' (N/A)'; margin: 0; padding: 0; background: none; color: #000; font-size: 10.5pt; font-weight: 700; vertical-align: baseline; }
     .check-icon { width: 10px; height: 10px; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
@@ -521,7 +537,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.3</p>
+      <p>Free Drone Preflight Checklist · v3.8.4</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1111,7 +1127,7 @@ function progGet() {
     const d = JSON.parse(v);
     if (d && d.panels) Object.keys(d.panels).forEach(pid => {
       const p = d.panels[pid]; if (!p) return;
-      p.checked = renameList(pid, p.checked); p.flagged = renameList(pid, p.flagged);
+      p.checked = renameList(pid, p.checked); p.flagged = renameList(pid, p.flagged); p.na = renameList(pid, p.na);
     });
     return d;
   } catch (e) { return null; }
@@ -1131,12 +1147,13 @@ function itemKeys(panelEl) {
 function saveProgress() {
   const data = { savedAt: Date.now(), panels: {} };
   document.querySelectorAll('.panel').forEach(p => {
-    const keys = itemKeys(p), checked = [], flagged = [];
+    const keys = itemKeys(p), checked = [], flagged = [], na = [];
     p.querySelectorAll('.item').forEach((it, i) => {
       if (it.classList.contains('checked')) checked.push(keys[i]);
       else if (it.classList.contains('flagged')) flagged.push(keys[i]);
+      else if (it.classList.contains('na')) na.push(keys[i]);
     });
-    if (checked.length || flagged.length) data.panels[p.id.replace('panel-', '')] = { checked, flagged };
+    if (checked.length || flagged.length || na.length) data.panels[p.id.replace('panel-', '')] = { checked, flagged, na };
   });
   progSet(Object.keys(data.panels).length ? data : null);
 }
@@ -1148,10 +1165,11 @@ function restoreProgress() {
   document.querySelectorAll('.panel').forEach(p => {
     const d = data.panels && data.panels[p.id.replace('panel-', '')];
     if (!d) return;
-    const keys = itemKeys(p), c = new Set(d.checked || []), f = new Set(d.flagged || []);
+    const keys = itemKeys(p), c = new Set(d.checked || []), f = new Set(d.flagged || []), nn = new Set(d.na || []);
     p.querySelectorAll('.item').forEach((it, i) => {
       if (c.has(keys[i])) { it.classList.add('checked'); n++; }
       else if (f.has(keys[i])) { it.classList.add('flagged'); n++; }
+      else if (nn.has(keys[i])) { it.classList.add('na'); n++; }
     });
   });
   if (n) restoredAt = data.savedAt;
@@ -1180,6 +1198,12 @@ let lpFired = false;
 function toggle(el) {
   if (el.closest('.panel.editing')) return;
   if (lpFired) { lpFired = false; return; }
+  if (el.classList.contains('na')) {   // tap on an N/A item = put it back
+    el.classList.remove('na');
+    updateProgress(current);
+    saveProgress();
+    return;
+  }
   if (el.classList.contains('flagged')) {
     el.classList.remove('flagged');   // tap on a flagged item = resolved
     el.classList.add('checked');
@@ -1196,11 +1220,59 @@ function toggleFlag(el) {
   if (el.classList.contains('flagged')) {
     el.classList.remove('flagged');
   } else {
-    el.classList.remove('checked');
+    el.classList.remove('checked', 'na');
     el.classList.add('flagged');
   }
   updateProgress(current);
   saveProgress();
+}
+
+function toggleNA(el) {
+  if (el.closest('.panel.editing')) return;
+  if (el.classList.contains('na')) {
+    el.classList.remove('na');
+  } else {
+    el.classList.remove('checked', 'flagged');
+    el.classList.add('na');
+  }
+  updateProgress(current);
+  saveProgress();
+  autoAdvance(el);
+}
+
+// Press-and-hold menu: Needs attention / N/A for this flight
+let itemMenuEl = null, itemMenuAt = 0;
+function closeItemMenu() {
+  if (itemMenuEl) { itemMenuEl.remove(); itemMenuEl = null; }
+  document.removeEventListener('pointerdown', itemMenuOutside, true);
+  document.removeEventListener('keydown', itemMenuKey, true);
+}
+function itemMenuOutside(e) {
+  if (!itemMenuEl || itemMenuEl.contains(e.target)) return;
+  if (e.target.closest && e.target.closest('.item')) { lpFired = true; setTimeout(() => { lpFired = false; }, 350); }   // the tap that closes the menu doesn't also tick an item
+  closeItemMenu();
+}
+function itemMenuKey(e) { if (e.key === 'Escape') closeItemMenu(); }
+function openItemMenu(el) {
+  closeItemMenu();
+  const isFlag = el.classList.contains('flagged'), isNA = el.classList.contains('na');
+  const m = document.createElement('div'); m.className = 'item-menu'; m.setAttribute('role', 'menu');
+  const mk = (label, cls, fn) => {
+    const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'menuitem'); b.textContent = label; if (cls) b.className = cls;
+    b.onclick = () => { if (Date.now() - itemMenuAt < 250) return; closeItemMenu(); fn(el); };
+    m.appendChild(b);
+  };
+  mk(isFlag ? '\u2713  Clear the flag' : '\u2691  Needs attention', '', toggleFlag);
+  mk(isNA ? 'Not N/A \u2014 put it back' : 'N/A for this flight', 'na-act', toggleNA);
+  document.body.appendChild(m);
+  const r = el.getBoundingClientRect(), w = m.offsetWidth, h = m.offsetHeight;
+  const left = Math.max(8, Math.min(r.left + 12, window.innerWidth - w - 8));
+  let top = r.bottom + window.scrollY + 6;
+  if (r.bottom + h + 14 > window.innerHeight && r.top - h - 14 > 0) top = r.top + window.scrollY - h - 6;
+  m.style.left = left + 'px'; m.style.top = top + 'px';
+  itemMenuEl = m; itemMenuAt = Date.now();
+  document.addEventListener('pointerdown', itemMenuOutside, true);
+  document.addEventListener('keydown', itemMenuKey, true);
 }
 
 function updateProgress(panel) {
@@ -1208,10 +1280,12 @@ function updateProgress(panel) {
   const items = p.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)');
   const checked = p.querySelectorAll('.item.checked:not(.is-hidden):not(.region-hidden)').length;
   const flagged = p.querySelectorAll('.item.flagged:not(.is-hidden):not(.region-hidden)').length;
-  const total = items.length;
+  const na = p.querySelectorAll('.item.na:not(.is-hidden):not(.region-hidden)').length;
+  const total = items.length - na;                       // N/A items don't count for or against you
   const pct = total ? Math.round(checked / total * 100) : 0;
   document.getElementById('pct-' + panel).textContent = pct + '%';
   document.getElementById('lbl-' + panel).innerHTML = checked + ' of ' + total + ' complete' +
+    (na ? ' · <span class="na-count">' + na + ' N/A</span>' : '') +
     (flagged ? ' · <span class="attn-count">⚠ ' + flagged + ' need' + (flagged === 1 ? 's' : '') + ' attention</span>' : '');
   document.getElementById('bar-' + panel).style.width = pct + '%';
   document.getElementById('header-bar').style.width = pct + '%';
@@ -1221,8 +1295,8 @@ function updateProgress(panel) {
   const fi = secs.findIndex(sc => /^during flight/i.test(sc.querySelector('.section-header').firstChild.textContent.trim()));
   let preTotal = 0, preLeft = 0;
   if (fi > 0) secs.slice(0, fi).forEach(sc => {
-    preTotal += sc.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').length;
-    preLeft += sc.querySelectorAll('.item:not(.checked):not(.is-hidden):not(.region-hidden)').length;
+    preTotal += sc.querySelectorAll('.item:not(.is-hidden):not(.region-hidden):not(.na)').length;
+    preLeft += sc.querySelectorAll('.item:not(.checked):not(.na):not(.is-hidden):not(.region-hidden)').length;
   });
   const allDone = total > 0 && checked === total;
   const preReady = !allDone && preTotal > 0 && preLeft === 0;
@@ -1231,7 +1305,7 @@ function updateProgress(panel) {
   updateSectionMeta(p);
 }
 
-// Press and hold an item (~0.5 s) to flag it as "needs attention"
+// Press and hold an item (~0.5 s) for a small menu: needs attention / N/A for this flight
 (function () {
   let timer = null, startX = 0, startY = 0;
   const clear = () => { clearTimeout(timer); timer = null; };
@@ -1240,7 +1314,7 @@ function updateProgress(panel) {
     if (!el || el.closest('.panel.editing')) return;
     startX = e.clientX; startY = e.clientY;
     clear();
-    timer = setTimeout(() => { lpFired = true; toggleFlag(el); timer = null; }, 500);
+    timer = setTimeout(() => { lpFired = true; openItemMenu(el); timer = null; }, 500);
   });
   document.addEventListener('pointermove', (e) => {
     if (timer && Math.hypot(e.clientX - startX, e.clientY - startY) > 10) clear();
@@ -1250,6 +1324,7 @@ function updateProgress(panel) {
 })();
 
 function showPanel(panel, tab) {
+  closeItemMenu();
   current = panel;
   // while customizing, switching tabs keeps Settings and editing open on the new tab
   const prevP = document.querySelector('.panel.active'), nextP = document.getElementById('panel-' + panel);
@@ -1272,15 +1347,15 @@ function showPanel(panel, tab) {
 
 function resetCurrent() {
   const p = document.getElementById('panel-' + current);
-  const n = p.querySelectorAll('.item.checked, .item.flagged').length;
+  const n = p.querySelectorAll('.item.checked, .item.flagged, .item.na').length;
   if (!n) return;
-  if (!confirm('Reset this checklist? This clears ' + n + ' checked or flagged item' + (n === 1 ? '' : 's') + ' on this tab.')) return;
-  p.querySelectorAll('.item').forEach(i => i.classList.remove('checked', 'flagged'));
+  if (!confirm('Reset this checklist? This clears ' + n + ' checked, flagged or N/A item' + (n === 1 ? '' : 's') + ' on this tab.')) return;
+  p.querySelectorAll('.item').forEach(i => i.classList.remove('checked', 'flagged', 'na'));
   unfoldAuto(p);
   updateProgress(current);
   saveProgress();
   const h = p.querySelector('.flag-hint');
-  if (h) h.textContent = 'Tip: press and hold an item to flag it as needs attention';
+  if (h) h.textContent = 'Tip: press and hold an item to flag it or mark it N/A';
 }
 
 document.querySelectorAll('.panel .progress-card').forEach(c => {
@@ -1294,7 +1369,7 @@ document.querySelectorAll('.panel .progress-card').forEach(c => {
 document.querySelectorAll('.panel .complete-banner').forEach(b => {
   const h = document.createElement('div');
   h.className = 'flag-hint';
-  h.textContent = 'Tip: press and hold an item to flag it as needs attention';
+  h.textContent = 'Tip: press and hold an item to flag it or mark it N/A';
   b.after(h);
   const row = document.createElement('div');
   row.className = 'keep-row';
@@ -1492,7 +1567,7 @@ function itemX(e, btn) {
       it.classList.remove('is-hidden');
       c.hidden = c.hidden.filter(k => k !== key);
     } else {
-      it.classList.remove('checked', 'flagged');
+      it.classList.remove('checked', 'flagged', 'na');
       it.classList.add('is-hidden');
       if (!c.hidden.includes(key)) c.hidden.push(key);
     }
@@ -1594,12 +1669,14 @@ function updateSectionMeta(panelEl) {
   panelEl.querySelectorAll('.section').forEach(sec => {
     const cnt = sec.querySelector('.sec-count');
     if (!cnt) return;
-    const total = sec.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').length;
+    const all = sec.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').length;
+    const na = sec.querySelectorAll('.item.na:not(.is-hidden):not(.region-hidden)').length;
+    const total = all - na;
     const done = sec.querySelectorAll('.item.checked:not(.is-hidden):not(.region-hidden)').length;
     const fl = sec.querySelectorAll('.item.flagged:not(.is-hidden):not(.region-hidden)').length;
-    const complete = total > 0 && done === total;
+    const complete = all > 0 && done === total;
     cnt.className = 'sec-count' + (fl ? ' attn' : complete ? ' done' : '');
-    cnt.textContent = (fl ? '⚠ ' : complete ? '✓ ' : '') + done + '/' + total;
+    cnt.textContent = (fl ? '⚠ ' : complete ? '✓ ' : '') + (total === 0 && na ? 'N/A' : done + '/' + total);
   });
 }
 function syncAllButton(panelEl) {
@@ -1629,7 +1706,7 @@ function toggleSection(head) {
 // This is temporary (not saved), so a reload or Reset puts things back as you had them.
 function secComplete(sec) {
   const total = sec.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').length;
-  return total > 0 && sec.querySelectorAll('.item.checked:not(.is-hidden):not(.region-hidden)').length === total;
+  return total > 0 && sec.querySelectorAll('.item.checked:not(.is-hidden):not(.region-hidden), .item.na:not(.is-hidden):not(.region-hidden)').length === total;
 }
 function tempFold(sec, on) {
   sec.classList.toggle('collapsed', on);
@@ -1651,7 +1728,7 @@ function openTemp(sec) {
 }
 function autoAdvance(el) {
   const sec = el.closest('.section');
-  if (!sec || !el.classList.contains('checked') || !secComplete(sec)) return;
+  if (!sec || !(el.classList.contains('checked') || el.classList.contains('na')) || !secComplete(sec)) return;
   setTimeout(() => {
     const panelEl = sec.closest('.panel');
     if (panelEl.classList.contains('editing') || sec.classList.contains('collapsed') || !secComplete(sec)) return;
@@ -1675,7 +1752,7 @@ function unfoldAuto(panelEl) {
 // On reload with restored progress: fold finished sections, open the first unfinished one
 function foldFinishedOnLoad() {
   document.querySelectorAll('.panel').forEach(panelEl => {
-    if (!panelEl.querySelector('.item.checked')) return;
+    if (!panelEl.querySelector('.item.checked, .item.na')) return;
     const secs = [...panelEl.querySelectorAll('.section:not(.all-hidden)')];
     secs.forEach(s => { if (secComplete(s)) tempFold(s, true); });
     const nxt = secs.find(s => !secComplete(s));
@@ -2418,12 +2495,23 @@ async function fetchMetar(lat, lon) {
     if (!pool.length) pool = [all[0]];
     const fresh = pool.filter(x => x.age === null || x.age <= METAR_MAX_AGE_MIN);
     if (fresh.length) pool = fresh;
-    // Most conservative reading: lowest ceiling, then lowest cloud layer, then closest
-    pool.sort((a, b) => ((a.ceil ?? Infinity) - (b.ceil ?? Infinity)) || ((a.low ? a.low.base : Infinity) - (b.low ? b.low.base : Infinity)) || (a.d - b.d));
+    // Main reading: the nearest fresh station (pool is already nearest first). Lower ceilings at farther stations are listed as a note.
     const best = pool[0];
-    // Lowest cloud layer of any cover across all stations in range (for the 500 ft below clouds rule)
-    let lowCloud = null;
-    for (const x of pool) if (x.low && (!lowCloud || x.low.base < lowCloud.base)) lowCloud = { ...x.low, station: x.st.icaoId || '?' };
+    const lower = pool.slice(1).filter(x => x.ceil != null && (best.ceil == null || x.ceil < best.ceil)).sort((a, b) => a.ceil - b.ceil).slice(0, 2)
+      .map(x => ({ station: x.st.icaoId || '?', dist: x.d, ft: x.ceil }));
+    // Lowest cloud layer of any cover at the main station (for the 500 ft below clouds rule)
+    const lowCloud = best.low ? { ...best.low, station: best.st.icaoId || '?' } : null;
+    // Observed visibility: the nearest recent report that carries one; farther stations under 3 mi become a note
+    const visOf = (st) => { const v = st.visib; if (v == null || v === '') return null; const n = parseFloat(v); return isFinite(n) ? { mi: n, plus: typeof v === 'string' && /\+/.test(v) } : null; };
+    let vis = null; const lowVis = [];
+    for (const x of pool) {
+      if (x.age !== null && x.age > WIND_OBS_MAX_AGE_MIN) continue;
+      const v = visOf(x.st); if (!v) continue;
+      if (!vis) vis = { mi: v.mi, plus: v.plus, station: x.st.icaoId || '?', dist: x.d, ageMin: x.age };
+      else if (v.mi < 3) lowVis.push({ station: x.st.icaoId || '?', dist: x.d, mi: v.mi });
+    }
+    if (vis && vis.mi < 3) lowVis.length = 0;
+    lowVis.sort((a, b) => a.mi - b.mi); lowVis.length = Math.min(lowVis.length, 2);
     // Nearest station that is reporting rain, drizzle, snow or storms right now
     let precipReport = null;
     for (const x of pool) {
@@ -2443,7 +2531,7 @@ async function fetchMetar(lat, lon) {
         variable: w.wdir === 'VRB'
       };
     }
-    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, precipReport, wind };
+    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, lower, vis, lowVis, precipReport, wind };
   } catch (e) {
     console.warn('METAR fetch failed:', e.message);
     throw e;   // the caller tells "service failed" apart from "no station nearby"
@@ -2857,7 +2945,7 @@ async function renderWeather(lat, lon, attempt = 1) {
       }
       let ceilClass = metarData2 ? ceilingColor(ceilFt) : 'wx-good';
 
-      // Lowest cloud layer of any cover at any nearby station, when it is lower than what is shown above
+      // Lowest cloud layer of any cover at the nearest station, when it is lower than the ceiling shown
       const lc = metarData2 && metarData2.lowCloud;
       const lowCloudTxt = () => lc && (ceilFt === null ? lc.station !== stationId : lc.base < ceilFt && lc.station !== stationId)
         ? '☁️ Lowest cloud nearby: ' + lc.cover + ' ' + fmtAlt(lc.base) + ' (' + lc.station + ')' : '';
@@ -2870,17 +2958,25 @@ async function renderWeather(lat, lon, attempt = 1) {
         return lim > 0 && lim < 400 ? '✈️ Max legal altitude about ' + fmtAlt(lim) + ' AGL (500 ft below clouds)' : '';
       };
 
-      if (lc && lc.base < 1000 && ceilClass === 'wx-good') ceilClass = 'wx-warn';   // a low layer nearby is worth a caution colour
+      if (lc && lc.base < 1000 && ceilClass === 'wx-good') ceilClass = 'wx-warn';   // a low layer over the nearest station is worth a caution colour
 
       // Humidity and dew point: a small gap between temperature and dew point means fog, mist or lens fogging
       const dewOk = wx.dewPoint != null && wx.humidity != null && wx.main.temp != null;
       const dewSpreadF = dewOk ? wx.main.temp - wx.dewPoint : null;
       // Amber for fog risk; red only when fog is likely AND visibility is already under 3 statute miles (US minimum)
-      const dewClassNow = () => { const visLow = region !== 'intl' && typeof wx.visibility === 'number' && wx.visibility < 4828; return !dewOk ? '' : (dewSpreadF <= 2 && visLow) ? 'wx-alert' : dewSpreadF <= 4 ? 'wx-warn' : 'wx-good'; };
+      const dewClassNow = () => { const visLow = region !== 'intl' && typeof visM === 'number' && visM < 4828; return !dewOk ? '' : (dewSpreadF <= 2 && visLow) ? 'wx-alert' : dewSpreadF <= 4 ? 'wx-warn' : 'wx-good'; };
       const dewNote = !dewOk ? 'No data' : dewSpreadF <= 2 ? 'Fog likely' : dewSpreadF <= 4 ? 'Fog or lens fogging possible' : 'Low fog risk';
       const dewSub = () => !dewOk ? '' : 'Dew point ' + fmtTemp(wx.dewPoint) + ' · ' + dewNote + (dewClassNow() === 'wx-alert' ? ', visibility under 3 mi' : '');
+      // Visibility: the nearest recent airport report when there is one, otherwise the weather model
+      const ov = metarData2 && metarData2.vis;
+      const visM = ov ? ov.mi * 1609.34 : wx.visibility;
+      const fmtVisObs = (v) => isMetric() ? (v.mi * 1.609344 >= 16 ? '16+ km' : (+(v.mi * 1.609344).toFixed(1)) + ' km') : (v.plus || v.mi >= 10 ? '10+ mi' : (+v.mi.toFixed(2)) + ' mi');
+      const visTxt = () => ov ? fmtVisObs(ov) : fmtVis(wx.visibility);
+      const visSrc = () => ov ? ' · ' + ov.station : (wx.visibility != null ? ' · forecast model' : '');
+      const visNote = () => metarData2 && metarData2.lowVis && metarData2.lowVis.length ? '☁️ Lower nearby: ' + metarData2.lowVis.map(v => v.station + ' ' + fmtVisObs({ mi: v.mi, plus: false }) + ' (' + fmtDist(v.dist) + ')').join(' · ') : '';
+      const lowerTxt = () => metarData2 && metarData2.lower && metarData2.lower.length ? '☁️ Lower nearby: ' + metarData2.lower.map(l => l.station + ' ' + fmtAlt(l.ft) + ' (' + fmtDist(l.dist) + ')').join(' · ') : '';
       // US only: visibility under 3 statute miles (14 CFR 107.51) is shown in red with a short note
-      const visBelowMin = () => region !== 'intl' && typeof wx.visibility === 'number' && wx.visibility < 4828;
+      const visBelowMin = () => region !== 'intl' && typeof visM === 'number' && visM < 4828;
 
       // Precipitation: current conditions + next 6 hours
       const WX_CODES = { 51:'Light drizzle', 53:'Drizzle', 55:'Heavy drizzle', 56:'Freezing drizzle', 57:'Freezing drizzle',
@@ -2981,14 +3077,16 @@ async function renderWeather(lat, lon, attempt = 1) {
             <div class="wx-label">Cloud Ceiling</div>
             <div class="wx-value ${ceilClass}">${ceilTxt}</div>
             <div class="wx-sub">${ceilNote}</div>
-            ${metarData2 ? `<div class="wx-sub"${metarData2.ageMin != null ? ' data-rec-age="' + (Date.now() - metarData2.ageMin * 60000) + '"' : ''}>${stationId} · ${fmtDist(metarData2.dist)} away${metarData2.ageMin != null ? ' · ' + ageText(metarData2.ageMin * 60000) : ''}${metarData2.count > 1 ? ' · lowest of ' + metarData2.count + ' stations' : ''}</div>` : ''}
+            ${metarData2 ? `<div class="wx-sub"${metarData2.ageMin != null ? ' data-rec-age="' + (Date.now() - metarData2.ageMin * 60000) + '"' : ''}>${stationId} · ${fmtDist(metarData2.dist)} away${metarData2.ageMin != null ? ' · ' + ageText(metarData2.ageMin * 60000) : ''}</div>` : ''}
+            ${lowerTxt() ? `<div class="wx-sub">${lowerTxt()}</div>` : ''}
             ${lowCloudTxt() ? `<div class="wx-sub">${lowCloudTxt()}</div>` : ''}
             ${maxAltTxt() ? `<div class="wx-sub"><strong>${maxAltTxt()}</strong></div>` : ''}
           </div>
           <div class="wx-item">
             <div class="wx-label">Temperature</div>
             <div class="wx-value">${tempOk ? fmtTemp(wx.main.temp) : '—'}</div>
-            <div class="wx-sub">${visBelowMin() ? `<span class="wx-alert"><strong>Visibility ${fmtVis(wx.visibility)}</strong> · ⛔ Below 3 mi minimum</span>` : 'Visibility ' + fmtVis(wx.visibility)}</div>
+            <div class="wx-sub">${visBelowMin() ? `<span class="wx-alert"><strong>Visibility ${visTxt()}${visSrc()}</strong> · ⛔ Below 3 mi minimum</span>` : 'Visibility ' + visTxt() + visSrc()}</div>
+            ${visNote() ? `<div class="wx-sub">${visNote()}</div>` : ''}
           </div>
           <div class="wx-item">
             <div class="wx-label">KP Index</div>
@@ -3102,8 +3200,11 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     el.setAttribute('role', 'checkbox');
     el.setAttribute('tabindex', '0');
     el.setAttribute('aria-checked', el.classList.contains('checked') ? 'true' : 'false');
-    el.setAttribute('aria-keyshortcuts', 'F');
-    if (el.classList.contains('flagged')) {
+    el.setAttribute('aria-keyshortcuts', 'F N');
+    if (el.classList.contains('na')) {
+      const tx = el.querySelector('.item-text');
+      el.setAttribute('aria-label', (tx ? tx.textContent.trim() : 'Item') + ' — not applicable to this flight. Press Space to put it back.');
+    } else if (el.classList.contains('flagged')) {
       const tx = el.querySelector('.item-text');
       el.setAttribute('aria-label', (tx ? tx.textContent.trim() : 'Item') + ' — flagged. Press Space to mark it done.');
     } else el.removeAttribute('aria-label');
@@ -3131,6 +3232,7 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     if (!el || !el.matches || !el.matches('.item[role="checkbox"]')) return;
     if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(el); }
     else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFlag(el); }
+    else if (e.key === 'n' || e.key === 'N') { e.preventDefault(); toggleNA(el); }
   });
   tabEls.forEach(t => t.addEventListener('keydown', (e) => {
     const vis = tabEls.filter(x => !x.classList.contains('tab-hidden'));
@@ -3230,7 +3332,7 @@ function buildRecord(o) {
   }
 
   const panelEl = document.getElementById('panel-' + current);
-  let total = 0, done = 0, flagged = 0;
+  let total = 0, done = 0, flagged = 0, nas = 0;
   const secLines = [];
   panelEl.querySelectorAll('.section').forEach(sec => {
     const hdr = sec.querySelector('.section-header');
@@ -3239,14 +3341,15 @@ function buildRecord(o) {
     sec.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').forEach(it => {
       const te = it.querySelector('.item-text');
       const txt = recClean(te ? te.textContent : '');
-      const ck = it.classList.contains('checked'), fl = it.classList.contains('flagged');
-      total++; if (ck) done++; if (fl) flagged++;
-      if (!ck && !fl && !o.unchecked) return;
-      rows.push(recWrap((fl ? '[!] NEEDS ATTENTION: ' : ck ? '[x] ' : '[ ] ') + txt));
+      const ck = it.classList.contains('checked'), fl = it.classList.contains('flagged'), nx = it.classList.contains('na');
+      if (nx) nas++; else total++;
+      if (ck) done++; if (fl) flagged++;
+      if (!ck && !fl && !nx && !o.unchecked) return;
+      rows.push(recWrap((fl ? '[!] NEEDS ATTENTION: ' : ck ? '[x] ' : nx ? '[-] N/A: ' : '[ ] ') + txt));
     });
     if (rows.length) { secLines.push(H3(name)); rows.forEach(r => secLines.push(r)); }
   });
-  L.push(H2('Checklist — ' + done + ' of ' + total + ' complete' + (flagged ? ', ' + flagged + ' need' + (flagged === 1 ? 's' : '') + ' attention' : '')));
+  L.push(H2('Checklist — ' + done + ' of ' + total + ' complete' + (nas ? ', ' + nas + ' N/A' : '') + (flagged ? ', ' + flagged + ' need' + (flagged === 1 ? 's' : '') + ' attention' : '')));
   secLines.forEach(l => L.push(l));
 
   if (o.notes) { L.push(H2('Notes')); L.push(o.notes); }
@@ -3333,9 +3436,10 @@ PdfDoc.prototype = {
   rule(y, w, gray, x1, x2) {
     this.raw((gray || 0) + ' G ' + w + ' w ' + (x1 == null ? this.mx : x1).toFixed(2) + ' ' + (this.H - y).toFixed(2) + ' m ' + (x2 == null ? this.W - this.mx : x2).toFixed(2) + ' ' + (this.H - y).toFixed(2) + ' l S');
   },
-  box(x, y, st) {                            // check box, 10 pt: 0 empty, 1 checked, 2 needs attention
+  box(x, y, st) {                            // check box, 10 pt: 0 empty, 1 checked, 2 needs attention, 3 N/A (dash)
     const s = 10, Y = this.H - y;
-    this.raw('0 G 1.1 w ' + x.toFixed(2) + ' ' + (Y - s).toFixed(2) + ' ' + s + ' ' + s + ' re S');
+    this.raw((st === 3 ? '0.45' : '0') + ' G 1.1 w ' + x.toFixed(2) + ' ' + (Y - s).toFixed(2) + ' ' + s + ' ' + s + ' re S');
+    if (st === 3) this.raw('0.3 G 1.3 w ' + (x + 2.4).toFixed(2) + ' ' + (Y - 5).toFixed(2) + ' m ' + (x + 7.6).toFixed(2) + ' ' + (Y - 5).toFixed(2) + ' l S');
     if (st === 1) this.raw('0 G 1.7 w ' + (x + 2).toFixed(2) + ' ' + (Y - 5.4).toFixed(2) + ' m ' + (x + 4.2).toFixed(2) + ' ' + (Y - 7.9).toFixed(2) + ' l ' + (x + 8.3).toFixed(2) + ' ' + (Y - 2.2).toFixed(2) + ' l S');
     if (st === 2) this.text('!', x + 3.4, y + 8.2, 9, true);
   },
@@ -3368,14 +3472,14 @@ PdfDoc.prototype = {
       const F = 9, LEAD = 11.3, PAD = 3.4, ind = 19, cw = this.colWidth(), lines = this.wrap(s, F, false, cw - ind), h = lines.length * LEAD + PAD + 1;
       this.ensure(h); const x = this.colX();
       this.box(x + 1, this.y + PAD / 2 + 1.5, st);
-      lines.forEach((l, i) => this.text(l, x + ind, this.y + PAD / 2 + 9 + i * LEAD, F, false));
+      lines.forEach((l, i) => this.text(l, x + ind, this.y + PAD / 2 + 9 + i * LEAD, F, false, st === 3 ? 0.4 : 0));
       this.y += h; this.rule(this.y - 0.5, 0.4, 0.75, x, x + cw); this.colMax = Math.max(this.colMax, this.y);
       return;
     }
     const ind = 20, lines = this.wrap(s, 10.5, false, this.W - this.mx * 2 - ind), h = lines.length * 13.6 + 8;
     this.ensure(h);
     this.box(this.mx + 1, this.y + 4.5, st);
-    lines.forEach((l, i) => this.text(l, this.mx + ind, this.y + 4 + 10 + i * 13.6, 10.5, false));
+    lines.forEach((l, i) => this.text(l, this.mx + ind, this.y + 4 + 10 + i * 13.6, 10.5, false, st === 3 ? 0.4 : 0));
     this.y += h; this.rule(this.y - 1, 0.4, 0.7);
   },
   fieldLine(items) {                         // labelled blank lines for writing in, e.g. Date / Time
@@ -3421,22 +3525,23 @@ PdfDoc.prototype = {
 function recVersion() {
   return appVer();
 }
-function recCollect(panelEl, includeAll) {  // the items on a tab, in order, as { name, rows: [{ txt, st }] } (st: 0 open, 1 checked, 2 needs attention)
-  let total = 0, done = 0, flagged = 0; const secs = [];
+function recCollect(panelEl, includeAll) {  // the items on a tab, in order, as { name, rows: [{ txt, st }] } (st: 0 open, 1 checked, 2 needs attention, 3 N/A)
+  let total = 0, done = 0, flagged = 0, nas = 0; const secs = [];
   panelEl.querySelectorAll('.section').forEach(sec => {
     const hdr = sec.querySelector('.section-header');
     const name = hdr ? recClean(hdr.firstChild ? hdr.firstChild.textContent : hdr.textContent) : 'Items';
     const rows = [];
     sec.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').forEach(it => {
       const te = it.querySelector('.item-text'), txt = recClean(te ? te.textContent : '');
-      const ck = it.classList.contains('checked'), fl = it.classList.contains('flagged');
-      total++; if (ck) done++; if (fl) flagged++;
-      if (!ck && !fl && !includeAll) return;
-      rows.push({ txt: txt, st: fl ? 2 : ck ? 1 : 0 });
+      const ck = it.classList.contains('checked'), fl = it.classList.contains('flagged'), nx = it.classList.contains('na');
+      if (nx) nas++; else total++;
+      if (ck) done++; if (fl) flagged++;
+      if (!ck && !fl && !nx && !includeAll) return;
+      rows.push({ txt: txt, st: fl ? 2 : ck ? 1 : nx ? 3 : 0 });
     });
     if (rows.length) secs.push({ name: name, rows: rows });
   });
-  return { secs: secs, total: total, done: done, flagged: flagged };
+  return { secs: secs, total: total, done: done, flagged: flagged, nas: nas };
 }
 function recPdfFoot() { const v = recVersion(); return 'UAS Flight Checklists' + (v ? ' ' + v : '') + ' · checklist.johnstonaerial.com'; }
 function buildRecordPdf(o) {
@@ -3449,9 +3554,9 @@ function buildRecordPdf(o) {
     .forEach(p => { if (p[1]) d.kv(p[0], p[1]); });
   if (o.weather) { d.h2('Conditions'); recWeatherLines().forEach(l => { d.para(l, 10.5); d.gap(1.5); }); }
   const c = recCollect(document.getElementById('panel-' + current), o.unchecked);
-  d.h2('Checklist — ' + c.done + ' of ' + c.total + ' complete' + (c.flagged ? ', ' + c.flagged + ' need' + (c.flagged === 1 ? 's' : '') + ' attention' : ''));
+  d.h2('Checklist — ' + c.done + ' of ' + c.total + ' complete' + (c.nas ? ', ' + c.nas + ' N/A' : '') + (c.flagged ? ', ' + c.flagged + ' need' + (c.flagged === 1 ? 's' : '') + ' attention' : ''));
   d.startCols();                                       // compact: the items run in two columns; notes below return to full width
-  c.secs.forEach(s => { d.sub(s.name, 30); s.rows.forEach(r => d.item(r.st, (r.st === 2 ? 'NEEDS ATTENTION: ' : '') + r.txt)); });
+  c.secs.forEach(s => { d.sub(s.name, 30); s.rows.forEach(r => d.item(r.st, (r.st === 2 ? 'NEEDS ATTENTION: ' : '') + r.txt + (r.st === 3 ? ' (N/A)' : ''))); });
   d.endCols();
   if (o.notes) { d.h2('Notes'); d.para(o.notes, 10.5); }
   return d.finish();
@@ -3482,7 +3587,7 @@ function buildChecklistPdf(panelEl, tabName, layout, paper) {
   d.fieldLine([['Drone', 0.5, acGet('uasDrone')], ['Registration', 0.5, acGet('uasRegNo')]]);
   const c = recCollect(panelEl, true);
   d.startCols();
-  c.secs.forEach(s => { d.sub(s.name, 30); s.rows.forEach(r => d.item(r.st, r.txt)); });
+  c.secs.forEach(s => { d.sub(s.name, 30); s.rows.forEach(r => d.item(r.st, r.txt + (r.st === 3 ? ' (N/A)' : ''))); });
   return d.finish();
 }
 function recPdfName(prefix, o) {

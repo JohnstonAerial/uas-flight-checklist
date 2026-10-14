@@ -49,7 +49,7 @@ Back up on the first device, send the file or code to the second (AirDrop, email
 - **Restoring replaces everything on that device:** tabs, hidden and added items, units and saved places. If you want to keep what you have, save a backup of it first.
 - **Each place keeps its own copy.** Safari and the Home Screen icon on the same iPhone store their settings separately. You can back up from one and restore into the other. That's an easy way to move to the Home Screen app.
 - **You can restore on the same device too.** It's a quick way to undo a round of changes you regret, if you saved a backup first.
-- **Reset and Restore original list are different.** **Reset** on the main screen clears only your ticks and flags on that tab. **Restore original list**, in the customize panel, undoes your customizing on that tab: hidden items come back, items you added are removed and the tab name and icon are reset.
+- **Reset and Restore original list are different.** **Reset** on the main screen clears only your ticks, flags and N/A marks on that tab. **Restore original list**, in the customize panel, undoes your customizing on that tab: hidden items come back, items you added are removed and the tab name and icon are reset.
 - **Your files are yours.** They're plain text files that stay on your device or wherever you put them. Nothing is sent to the website.
 
 ---
