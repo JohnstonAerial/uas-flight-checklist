@@ -95,6 +95,15 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.6
+
+- **More of what airports report, worldwide** — the weather card now reads the full standard set of airport weather codes. A **funnel cloud** or **tornado/waterspout** report turns the Precipitation card red with the airport and distance; **squalls** show in amber. **Sandstorms and duststorms** show on the Humidity card, and blowing or drifting dust, sand and snow, dust whirls and spray are named in words. **Freezing rain and drizzle** keep the word "freezing", showers and thunderstorms with rain or hail read clearly, and several conditions at once (for example "rain and snow") are all shown. Anything near the airport but not at it says "in the vicinity". Unknown codes are skipped.
+- **PDF on a computer: Download or Share** — on a Mac or other computer with a mouse, **PDF** (the checklist and the flight record) opens a small box with **Download** and **Share…**. **Download** saves to your Downloads folder, where you can open it and print or move it. The Mac share sheet has no Print or Save to Files, so Download comes first. Phones and tablets work as before and go straight to the share sheet.
+- **Fix: Download really downloads** — in the box that appears when the share sheet doesn't open, **Download** no longer tries the share sheet first.
+- **A tip on Print** — a small tip under **Print | PDF** explains that Print uses your browser's page settings and that **PDF** gives you the compact layout or a different paper size. Tap **×** to dismiss it. **Back up & restore** remembers that you dismissed it.
+
+---
+
 ## What's new in v3.8.5
 
 - **Airport temperature and humidity** — **Temperature**, dew point and **Humidity** now come from the nearest airport report within 30 miles when it is no more than 75 minutes old, with the airport code and distance shown. The forecast model is the fallback, labeled as such.

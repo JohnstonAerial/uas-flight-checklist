@@ -233,6 +233,10 @@
   @container (max-width: 305px) { .pc-btns > .rec-btn.rec-record { flex-direction: row; gap: 8px; min-height: 40px; padding: 6px 8px; } .pc-btns .rec-btn.rec-record small { display: none; } }
   .pc-btns > .rec-btn { flex: 5 1 120px; }
   .pc-pair { flex: 6 1 190px; min-width: 0; }
+  .print-tip { flex: 1 1 100%; position: relative; margin: 2px 0 0; padding: 9px 38px 9px 11px; background: var(--section-bg); border: 1px solid var(--border); border-radius: 10px; font-size: 12.5px; line-height: 1.4; color: var(--text); text-align: left; }
+  .print-tip strong { font-weight: 700; }
+  .print-tip .pt-x { position: absolute; top: 0; right: 0; width: 38px; height: 38px; border: 0; background: transparent; color: var(--text-muted); font-size: 20px; line-height: 1; cursor: pointer; border-radius: 10px; }
+  .panel.editing .print-tip { display: none; }
   .pc-cap { font-size: 10px; letter-spacing: .5px; color: var(--text-muted); text-align: center; margin: 0 0 3px; font-weight: 600; }
   .pc-join { display: flex; border: 1px solid var(--blue); border-radius: 20px; overflow: hidden; }
   .pc-btns .pc-join .rec-btn { flex: 1 1 0; width: auto; border: 0; border-radius: 0; flex-direction: row; gap: 6px; min-height: 40px; padding: 6px 4px; }
@@ -537,7 +541,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.5</p>
+      <p>Free Drone Preflight Checklist · v3.8.6</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1888,7 +1892,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', XFER_PROGRESS];
+const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasPrintTipOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -2375,38 +2379,83 @@ function distMi(lat1, lon1, lat2, lon2) {
 }
 
 // ── Present weather from airport reports (rain, drizzle, snow, storms) ──
-function decodePrecip(wx) {
-  if (!wx) return null;
-  const NAMES = { DZ: 'drizzle', RA: 'rain', SN: 'snow', SG: 'snow grains', IC: 'ice crystals', PL: 'ice pellets', GR: 'hail', GS: 'small hail', UP: 'precipitation' };
+const WX_DESC = ['MI','PR','BC','DR','BL','SH','TS','FZ'];
+const WX_PREC = { DZ: 'drizzle', RA: 'rain', SN: 'snow', SG: 'snow grains', IC: 'ice crystals', PL: 'ice pellets', GR: 'hail', GS: 'small hail', UP: 'precipitation' };
+const WX_OBSC = { FG: 'fog', BR: 'mist', HZ: 'haze', FU: 'smoke', DU: 'dust', SA: 'sand', VA: 'volcanic ash', PY: 'spray', PO: 'dust whirls', SS: 'sandstorm', DS: 'duststorm' };
+const WX_OTHER = ['SQ','FC'];
+// Split the present-weather string into groups: intensity (- / +), VC (vicinity), descriptors (TS, SH, FZ, BL ...) and phenomena (RA, FG ...). Unknown groups are skipped.
+function parseWx(wx) {
+  const out = [];
+  if (!wx) return out;
   for (const g of String(wx).split(/\s+/)) {
-    const vic = g.startsWith('VC');
+    if (!g) continue;
     const inten = g[0] === '-' ? 'light ' : g[0] === '+' ? 'heavy ' : '';
-    const body = g.replace(/^[-+]|^VC/, '');
-    const types = (body.match(/DZ|RA|SN|SG|IC|PL|GR|GS|UP/g) || []).map(t => NAMES[t]);
-    let txt = null;
-    if (types.length) txt = inten + types.join(' and ');
-    else if (/TS/.test(body)) txt = 'thunderstorm';
-    else if (/SH/.test(body)) txt = 'showers';
-    if (!txt) continue;
-    if (/TS/.test(body) && types.length) txt = 'thunderstorm with ' + txt;
-    return vic ? txt + ' in the vicinity' : txt;
+    const vic = /^[-+]?VC/.test(g);
+    const body = g.replace(/^[-+]/, '').replace(/^VC/, '');
+    if (!body || body.length % 2) continue;
+    const pcs = body.match(/../g), desc = [], codes = [];
+    let ok = true;
+    for (const p of pcs) {
+      if (WX_DESC.includes(p)) desc.push(p);
+      else if (WX_PREC[p] || WX_OBSC[p] || WX_OTHER.includes(p)) codes.push(p);
+      else { ok = false; break; }
+    }
+    if (ok) out.push({ inten, vic, desc, codes, tornado: g[0] === '+' });
   }
-  return null;
+  return out;
+}
+const cap1 = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+// Rain, drizzle, snow, hail, showers and thunderstorms (every precipitation group, most important first, at most two)
+function decodePrecip(wx) {
+  const texts = [];
+  for (const g of parseWx(wx)) {
+    const types = g.codes.filter(c => WX_PREC[c]).map(c => WX_PREC[c]);
+    const ts = g.desc.includes('TS'), sh = g.desc.includes('SH');
+    if (!types.length && !ts && !sh) continue;
+    let t = '';
+    if (types.length) {
+      t = types.join(' and ');
+      if (g.desc.includes('FZ')) t = 'freezing ' + t;
+      if (g.desc.includes('BL')) t = 'blowing ' + t;
+      else if (g.desc.includes('DR')) t = 'drifting ' + t;
+      if (sh) t += ' showers';
+      t = g.inten + t;
+      if (ts) t = 'thunderstorm with ' + t;
+    } else if (ts) t = g.inten + 'thunderstorm';
+    else t = g.inten + 'showers';
+    if (g.vic) t += ' in the vicinity';
+    if (!texts.includes(t)) texts.push(t);
+  }
+  if (!texts.length) return null;
+  texts.sort((x, y) => (/thunderstorm|hail/.test(y) ? 1 : 0) - (/thunderstorm|hail/.test(x) ? 1 : 0));
+  return texts.slice(0, 2).join(' and ');
 }
 
-// ── Obscuring weather from airport reports (fog, mist, haze, smoke, dust) ──
+// ── Obscuring weather from airport reports (fog, mist, haze, smoke, dust, sandstorms) ──
 function decodeObsc(wx) {
-  if (!wx) return null;
-  const NAMES = { FG: 'fog', BR: 'mist', HZ: 'haze', FU: 'smoke', DU: 'dust', SA: 'sand', VA: 'volcanic ash', PY: 'spray' };
-  const MOD = { FZ: 'freezing ', BC: 'patchy ', MI: 'shallow ', PR: 'partial ' };
+  const MOD = { FZ: 'freezing ', BC: 'patchy ', MI: 'shallow ', PR: 'partial ', BL: 'blowing ', DR: 'drifting ' };
   let best = null;
-  for (const g of String(wx).split(/\s+/)) {
-    const vic = g.startsWith('VC');
-    const m = g.replace(/^[-+]|^VC/, '').match(/^(FZ|BC|MI|PR)?(FG|BR|HZ|FU|DU|SA|VA|PY)$/);
-    if (!m) continue;
-    const fog = (m[2] === 'FG' && m[1] !== 'MI') || m[2] === 'VA';     // real fog and volcanic ash colour the card; mist, haze, smoke and dust are a plain note
-    const text = (m[1] ? MOD[m[1]] : '') + NAMES[m[2]];
-    if (!best || (fog && !best.fog)) best = { text, fog, vic };
+  for (const g of parseWx(wx)) {
+    for (const c of g.codes) {
+      if (!WX_OBSC[c]) continue;
+      const d = g.desc.find(x => MOD[x]);
+      const storm = c === 'SS' || c === 'DS';
+      const text = (storm ? g.inten : '') + (d ? MOD[d] : '') + WX_OBSC[c];
+      const fog = (c === 'FG' && d !== 'MI' && d !== 'DR') || c === 'VA' || storm;   // fog, volcanic ash and sand/dust storms colour the card; mist, haze, smoke, dust are a plain note
+      if (!best || (fog && !best.fog)) best = { text, fog, vic: g.vic };
+    }
+  }
+  return best;
+}
+
+// ── Hazards the precipitation card should not hide: funnel cloud / tornado (red) and squalls (amber) ──
+function decodeHazard(wx) {
+  let best = null;
+  for (const g of parseWx(wx)) {
+    if (g.codes.includes('FC')) {
+      const text = (g.tornado ? 'tornado or waterspout' : 'funnel cloud') + (g.vic ? ' in the vicinity' : '');
+      best = { text, red: true };
+    } else if (g.codes.includes('SQ') && !best) best = { text: 'squalls' + (g.vic ? ' in the vicinity' : ''), red: false };
   }
   return best;
 }
@@ -2555,6 +2604,13 @@ async function fetchMetar(lat, lon) {
       const o = decodeObsc(x.st.wxString);
       if (o && (!obsc || x.d < obsc.dist)) obsc = { station: x.st.icaoId || '?', dist: x.d, text: o.text, fog: o.fog, vic: o.vic };
     }
+    // Nearest recent station reporting a funnel cloud, tornado or squalls
+    let hazard = null;
+    for (const x of pool) {
+      if (x.age !== null && x.age > WIND_OBS_MAX_AGE_MIN) continue;
+      const h = decodeHazard(x.st.wxString);
+      if (h && (!hazard || (h.red && !hazard.red) || (h.red === hazard.red && x.d < hazard.dist))) hazard = { station: x.st.icaoId || '?', dist: x.d, text: h.text, red: h.red };
+    }
     // Observed wind: the nearest recent report that carries a wind (knots in the feed)
     let wind = null;
     const wsrc = all.find(x => x.d <= METAR_RADIUS_MI && x.age !== null && x.age <= WIND_OBS_MAX_AGE_MIN && typeof x.st.wspd === 'number' && isFinite(x.st.wspd));
@@ -2572,7 +2628,7 @@ async function fetchMetar(lat, lon) {
     let obs = null;
     const tsrc = all.find(x => x.d <= METAR_RADIUS_MI && x.age !== null && x.age <= WIND_OBS_MAX_AGE_MIN && typeof x.st.temp === 'number' && isFinite(x.st.temp) && typeof x.st.dewp === 'number' && isFinite(x.st.dewp));
     if (tsrc) obs = { station: tsrc.st.icaoId || '?', dist: tsrc.d, ageMin: tsrc.age, tempC: tsrc.st.temp, dewC: Math.min(tsrc.st.dewp, tsrc.st.temp) };
-    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, lower, vis, lowVis, precipReport, wind, obs, obsc };
+    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, lower, vis, lowVis, precipReport, wind, obs, obsc, hazard };
   } catch (e) {
     console.warn('METAR fetch failed:', e.message);
     throw e;   // the caller tells "service failed" apart from "no station nearby"
@@ -3078,12 +3134,16 @@ async function renderWeather(lat, lon, attempt = 1) {
         else if (radarNear) { val = 'Radar echoes nearby'; cls = 'wx-warn'; }
         else if (pm) { val = 'Reported nearby'; cls = 'wx-warn'; }
         else { val = 'None now'; cls = (precipNext && (precipNext.prob >= 30 || precipNext.mm >= 0.2)) ? 'wx-warn' : 'wx-good'; }
+        const hz = metarData2 && metarData2.hazard;
+        if (hz && hz.red) { val = cap1(hz.text); cls = 'wx-alert'; }
+        else if (hz && val === 'None now') { val = cap1(hz.text); cls = 'wx-warn'; }
         const lines = [];
         if (!rd) lines.push('Radar unavailable');
         else if (!rd.covered) lines.push('No radar coverage here');
         else lines.push('Radar: ' + (rd.near ? 'echoes within ' + fmtDist(rd.nearMi) : 'nothing within ' + fmtDist(rd.nearMi)) + ' · ' + new Date(rd.frameTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' (' + ageText(rd.ageMin * 60000) + ')');
         if (radarNear && !pm && !precipLabel) lines.push('No rain reported');
         if (pm) lines.push(pm.station + ' reports ' + pm.text + ' · ' + fmtDist(pm.dist));
+        if (hz) lines.push(hz.station + ' reports ' + hz.text + ' · ' + fmtDist(hz.dist));
         if (forecastOnly) lines.push(rd && rd.covered ? 'Forecast only \u2014 nothing on radar' : 'Forecast only');
         lines.push(precipSub());
         // Live evidence (radar echoes nearby or an airport reporting precipitation) outranks the model's timing
@@ -3682,11 +3742,17 @@ function recDraftSave(ov) {
   try { if (any) localStorage.setItem(REC_DRAFT_KEY, JSON.stringify({ at: Date.now(), v: v })); else localStorage.removeItem(REC_DRAFT_KEY); } catch (e) {}
 }
 function recDraftClear() { try { localStorage.removeItem(REC_DRAFT_KEY); } catch (e) {} }
-let recForceDownload = false, recLastErr = '';
+function printTipOff() { try { return localStorage.getItem('uasPrintTipOff') === '1'; } catch (e) { return false; } }
+let recForceDownload = false, recForceShare = false, recLastErr = '';
+// A computer with a mouse and no touchscreen: its share sheet has no Print or Save to Files, so a PDF offers Download first
+function recDesktop() {
+  try { return navigator.maxTouchPoints === 0 && window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(any-pointer: coarse)').matches; } catch (e) { return false; }
+}
 async function recDeliver(text, name) {
   const isPdf = /\.pdf$/i.test(name), mime = isPdf ? 'application/pdf' : 'text/plain';
+  if (isPdf && recDesktop() && !recForceDownload && !recForceShare) { recLastErr = 'desktop'; return 'refused'; }   // desktop: let the person choose Download or Share
   try {
-    if (typeof File === 'function' && navigator.canShare && navigator.share) {
+    if (!recForceDownload && typeof File === 'function' && navigator.canShare && navigator.share) {   // the Download button never opens the share sheet
       const f = new File([text], name, { type: mime });
       if (navigator.canShare({ files: [f] })) { await navigator.share({ files: [f] }); return 'shared'; }
     }
@@ -3714,17 +3780,25 @@ let recOpener = null;
 function recKey(e) { if (e.key === 'Escape') closeRecord(); }
 function recOffer(text, name) {
   const ov = document.createElement('div'); ov.className = 'rec-overlay';
-  ov.innerHTML = '<div class="rec-box" role="dialog" aria-modal="true" aria-labelledby="rec-ot">' +
-    '<h2 id="rec-ot">Your record is ready</h2>' +
-    '<p style="margin:0 0 4px;font-size:14px;color:var(--text-muted)">Your browser didn\'t open the Share sheet this time. Tap Share to try again, or Download to save the file.</p>' +
-    '<div class="rec-actions"><button type="button" class="rec-cancel">Close</button><button type="button" class="rec-dl">Download</button><button type="button" class="rec-save rec-primary">Share…</button></div></div>';
+  const pdfDesk = /\.pdf$/i.test(name) && recLastErr === 'desktop';
+  const isMac = /Mac/i.test(navigator.platform || '');
+  ov.innerHTML = pdfDesk
+    ? '<div class="rec-box" role="dialog" aria-modal="true" aria-labelledby="rec-ot">' +
+      '<h2 id="rec-ot">Your PDF is ready</h2>' +
+      '<p style="margin:0 0 8px;font-size:14px;color:var(--text-muted)"><strong>Download</strong> saves it to your Downloads folder. Open it there to print or move it.</p>' +
+      '<p style="margin:0 0 4px;font-size:14px;color:var(--text-muted)"><strong>Share\u2026</strong> opens ' + (isMac ? 'the Mac share sheet (Mail, Messages, AirDrop, Notes)' : 'your browser\'s share menu') + '.</p>' +
+      '<div class="rec-actions"><button type="button" class="rec-cancel">Close</button><button type="button" class="rec-save">Share\u2026</button><button type="button" class="rec-dl rec-primary">Download</button></div></div>'
+    : '<div class="rec-box" role="dialog" aria-modal="true" aria-labelledby="rec-ot">' +
+      '<h2 id="rec-ot">Your record is ready</h2>' +
+      '<p style="margin:0 0 4px;font-size:14px;color:var(--text-muted)">Your browser didn\'t open the Share sheet this time. Tap Share to try again, or Download to save the file.</p>' +
+      '<div class="rec-actions"><button type="button" class="rec-cancel">Close</button><button type="button" class="rec-dl">Download</button><button type="button" class="rec-save rec-primary">Share…</button></div></div>';
   document.body.appendChild(ov);
   const done = () => ov.remove();
   ov.addEventListener('click', e => { if (e.target === ov) done(); });
   ov.querySelector('.rec-cancel').onclick = done;
   ov.querySelector('.rec-dl').onclick = async () => { recForceDownload = true; const h = await recDeliver(text, name); recForceDownload = false; done(); recDraftClear(); recToast('✓ ' + (/\.pdf$/i.test(name) ? 'PDF' : 'Record') + ' saved to your downloads'); };
   ov.querySelector('.rec-save').onclick = async () => {
-    const h = await recDeliver(text, name);
+    recForceShare = true; const h = await recDeliver(text, name); recForceShare = false;
     if (h === 'refused') { recToast('Sharing is not available right now — use Download'); return; }
     if (h === 'cancelled') return;
     done(); recDraftClear(); if (h === 'shared') recToast('✓ ' + (/\.pdf$/i.test(name) ? 'PDF' : 'Record') + ' shared');
@@ -3865,6 +3939,13 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
   pw.innerHTML = '<div class="pc-cap">CHECKLIST</div><div class="pc-join"></div>';
   pw.querySelector('.pc-join').append(pb, fb);
   col.append(pw, b);
+  if (!printTipOff()) {
+    const tip = document.createElement('div'); tip.className = 'print-tip'; tip.setAttribute('role', 'note');
+    tip.innerHTML = '<span aria-hidden="true">\uD83D\uDCA1</span> <strong>Tip:</strong> Print uses your browser\u2019s page settings. For the compact layout or a different paper size, tap <strong>PDF</strong>.' +
+      '<button type="button" class="pt-x" aria-label="Dismiss this tip">\u00D7</button>';
+    tip.querySelector('.pt-x').onclick = () => { try { localStorage.setItem('uasPrintTipOff', '1'); } catch (e) {} document.querySelectorAll('.print-tip').forEach(t => t.remove()); };
+    pw.after(tip);
+  }
 });
 </script>
 

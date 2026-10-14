@@ -129,7 +129,7 @@ Want a copy of what you checked, plus the details of the flight? Tap **Save flig
 1. Tap **Save flight record**.
 2. Fill in what you want to keep: the customer, the site (type an address or place name, or leave it blank) and any notes. **More details** has boxes for airspace authorization (for example a LAANC reference, altitude and times), flight time and visual observer. Everything is optional.
 3. Choose whether to include the weather conditions, the items you didn't check, and your GPS coordinates (off unless you tick it).
-4. Tap **Save PDF** or **Save text**. The one you used last is the filled button at the left of the row, and the app remembers it. PDF is the filled button until you choose text. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files**, AirDrop, Mail or Messages. On a computer the file goes to your Downloads folder.
+4. Tap **Save PDF** or **Save text**. The one you used last is the filled button at the left of the row, and the app remembers it. PDF is the filled button until you choose text. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files**, AirDrop, Mail or Messages. On a computer, **PDF** opens a box with **Download** (saves to your Downloads folder) and **Share…**; text records go to your Downloads folder.
 
 The line above the buttons shows the PDF layout and paper size in use, for example **PDF: Compact · A4**. Tap **(change in Settings)** to go straight to them; what you typed stays in the box.
 
@@ -141,7 +141,7 @@ If you close the Share sheet without choosing anything, the Save record box stay
 
 Prefer to paste it into a note or email? Tap **Copy as text instead**. The record is copied to your clipboard and no file is made. That doesn't change which button is filled.
 
-If the Share sheet doesn't open, the app shows a box with **Share…** and **Download** buttons instead.
+If the Share sheet doesn't open, the app shows a box with **Share…** and **Download** buttons instead. On a Mac or other computer, a PDF always offers that box first, because the Mac share sheet has no Print or Save to Files. **Download** saves the PDF to your Downloads folder, and you can open it there to print.
 
 ---
 
@@ -149,7 +149,7 @@ If the Share sheet doesn't open, the app shows a box with **Share…** and **Dow
 
 You can print the checklist and take it to the site. Open the tab you want, then tap **Print** in Safari. In the Home Screen app, open the page in Safari first, since the Home Screen app can't print. Check items off with a pencil during preflight and again after the flight. Print each tab you need, since only the open tab prints.
 
-No printer, or using the Home Screen app? Tap **PDF** instead. It makes the same sheet as a PDF file, with your checked and flagged items marked and lines for date, time, site, pilot and visual observer, that you can save to Files, email or print later. It works in the Home Screen app too, and like printing it covers only the open tab.
+**Print** uses your browser's page settings, so paper size and margins come from its print dialog. For the compact two-column layout or a different paper, tap **PDF** instead. Using the Home Screen app, or no printer? Tap **PDF** as well. It makes the same sheet as a PDF file, with your checked and flagged items marked and lines for date, time, site, pilot and visual observer, that you can save to Files, email or print later. It works in the Home Screen app too, and like printing it covers only the open tab.
 
 **Choose how the PDF looks.** Open **⚙ Settings** and look for **PDF layout** and **PDF paper** near the bottom. **Compact** puts the items in two columns at a slightly smaller size, so a full checklist takes about half the pages (the General list is 2 pages instead of 4 on Letter). **Large print** keeps the bigger, one-column layout. **Letter** and **A4** pick the paper size. The first time, the app chooses Letter for English and North American browsers and A4 elsewhere, and then remembers your choice. It applies to the checklist **PDF** and to the PDF in a saved flight record, and **Back up & restore** carries it with your other settings. After you save a PDF, the message tells you which layout and paper it used.
 
