@@ -537,7 +537,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.4</p>
+      <p>Free Drone Preflight Checklist · v3.8.5</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1888,7 +1888,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', XFER_PROGRESS];
+const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -2124,7 +2124,9 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     '&body=' + encodeURIComponent('What works, what is missing, or what is confusing:\n\n\n\n---\nApp version: ' + fbVer + '\nDevice and browser: ' + navigator.userAgent);
   const wl = document.createElement('div'); wl.className = 'wl-block';
   wl.innerHTML = '<div class="wl-row"><span>🌬 Wind limit</span><span class="wl-ctl"><input type="number" inputmode="numeric" min="1" max="999" class="wl-w" aria-label="Maximum sustained wind"> / <input type="number" inputmode="numeric" min="1" max="999" class="wl-g" aria-label="Maximum gust"><span class="wl-unit">mph</span></span></div>' +
-    '<div class="wl-hint">sustained / gusts · amber at about two-thirds, red at the limit.</div>';
+    '<div class="wl-hint">sustained / gusts · amber at about two-thirds, red at the limit.</div>' +
+    '<div class="wl-row kp-row"><span>🧲 Kp warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-a" aria-label="Kp index where the warning turns amber"> / <input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-r" aria-label="Kp index where the warning turns red"></span></div>' +
+    '<div class="wl-hint">amber at / red at · from 1 to 9, standard 4 / 5. Higher Kp can disturb GPS and the compass.</div>';
   const fnb = document.createElement('div'); fnb.className = 'fn-block';
   fnb.innerHTML = '<div class="fn-row"><span>📋 Record file name starts with</span><input type="text" class="fn-in" maxlength="40" placeholder="flight-record" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Saved flight record file names start with" oninput="fnSave(this)"></div>' +
     '<div class="fn-hint"><div class="fn-ex"></div>Date, time and customer are added for you.</div>';
@@ -2220,9 +2222,19 @@ foldFinishedOnLoad();
 </script>
 
 <script>
+const KP_DEF = { a: 4, r: 5 };   // standard Kp warning points: amber at 4 (active), red at 5 (storm)
+function kpLimits() {
+  let o = null; try { o = JSON.parse(localStorage.getItem('uasKpLimits')); } catch (e) {}
+  const ok = (v) => typeof v === 'number' && isFinite(v) && v >= 1 && v <= 9 ? v : null;
+  const a = ok(o && o.a) || KP_DEF.a;
+  let r = ok(o && o.r) || KP_DEF.r;
+  if (r < a) r = a;                        // red can never sit below amber
+  return { a: a, r: r, ua: ok(o && o.a), ur: ok(o && o.r) };
+}
 function kpColor(kp) {
-  if (kp >= 4) return 'wx-alert';
-  if (kp >= 3) return 'wx-warn';
+  const l = kpLimits();
+  if (kp >= l.r) return 'wx-alert';
+  if (kp >= l.a) return 'wx-warn';
   return 'wx-good';
 }
 const WIND_DEF = { w: 23, g: 25 };   // standard limits in mph; the amber point is two-thirds of each limit
@@ -2336,14 +2348,15 @@ async function fetchKP() {
     // to avoid low transient readings
     const recent = data.slice(-20);
     let maxKp = null;
+    const kpOf = (e) => { const v = parseFloat(e.estimated_kp); return isFinite(v) ? v : parseFloat(e.kp_index); };   // estimated_kp has the decimals (2.33); kp_index is a whole number
     for (const entry of recent) {
-      const kp = parseFloat(entry.kp_index);
+      const kp = kpOf(entry);
       if (!isNaN(kp) && (maxKp === null || kp > maxKp)) maxKp = kp;
     }
     if (maxKp !== null && maxKp > 0) return maxKp;
     // If all zeros, go back further
     for (let i = data.length - 1; i >= 0; i--) {
-      const kp = parseFloat(data[i].kp_index);
+      const kp = kpOf(data[i]);
       if (!isNaN(kp) && kp > 0) return kp;
     }
     if (maxKp !== null) return maxKp;   // every recent reading was 0: a quiet sun, not missing data
@@ -2365,7 +2378,7 @@ function distMi(lat1, lon1, lat2, lon2) {
 function decodePrecip(wx) {
   if (!wx) return null;
   const NAMES = { DZ: 'drizzle', RA: 'rain', SN: 'snow', SG: 'snow grains', IC: 'ice crystals', PL: 'ice pellets', GR: 'hail', GS: 'small hail', UP: 'precipitation' };
-  for (const g of String(wx).split(/\\s+/)) {
+  for (const g of String(wx).split(/\s+/)) {
     const vic = g.startsWith('VC');
     const inten = g[0] === '-' ? 'light ' : g[0] === '+' ? 'heavy ' : '';
     const body = g.replace(/^[-+]|^VC/, '');
@@ -2379,6 +2392,23 @@ function decodePrecip(wx) {
     return vic ? txt + ' in the vicinity' : txt;
   }
   return null;
+}
+
+// ── Obscuring weather from airport reports (fog, mist, haze, smoke, dust) ──
+function decodeObsc(wx) {
+  if (!wx) return null;
+  const NAMES = { FG: 'fog', BR: 'mist', HZ: 'haze', FU: 'smoke', DU: 'dust', SA: 'sand', VA: 'volcanic ash', PY: 'spray' };
+  const MOD = { FZ: 'freezing ', BC: 'patchy ', MI: 'shallow ', PR: 'partial ' };
+  let best = null;
+  for (const g of String(wx).split(/\s+/)) {
+    const vic = g.startsWith('VC');
+    const m = g.replace(/^[-+]|^VC/, '').match(/^(FZ|BC|MI|PR)?(FG|BR|HZ|FU|DU|SA|VA|PY)$/);
+    if (!m) continue;
+    const fog = (m[2] === 'FG' && m[1] !== 'MI') || m[2] === 'VA';     // real fog and volcanic ash colour the card; mist, haze, smoke and dust are a plain note
+    const text = (m[1] ? MOD[m[1]] : '') + NAMES[m[2]];
+    if (!best || (fog && !best.fog)) best = { text, fog, vic };
+  }
+  return best;
 }
 
 // ── Radar at your location: RainViewer (free, worldwide, no key) ──
@@ -2518,6 +2548,13 @@ async function fetchMetar(lat, lon) {
       const t = decodePrecip(x.st.wxString);
       if (t && (!precipReport || x.d < precipReport.dist)) precipReport = { station: x.st.icaoId || '?', dist: x.d, text: t };
     }
+    // Nearest recent station reporting fog, mist, haze, smoke or dust right now
+    let obsc = null;
+    for (const x of pool) {
+      if (x.age !== null && x.age > WIND_OBS_MAX_AGE_MIN) continue;
+      const o = decodeObsc(x.st.wxString);
+      if (o && (!obsc || x.d < obsc.dist)) obsc = { station: x.st.icaoId || '?', dist: x.d, text: o.text, fog: o.fog, vic: o.vic };
+    }
     // Observed wind: the nearest recent report that carries a wind (knots in the feed)
     let wind = null;
     const wsrc = all.find(x => x.d <= METAR_RADIUS_MI && x.age !== null && x.age <= WIND_OBS_MAX_AGE_MIN && typeof x.st.wspd === 'number' && isFinite(x.st.wspd));
@@ -2531,7 +2568,11 @@ async function fetchMetar(lat, lon) {
         variable: w.wdir === 'VRB'
       };
     }
-    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, lower, vis, lowVis, precipReport, wind };
+    // Observed temperature and dew point (deg C): the nearest recent report that carries both
+    let obs = null;
+    const tsrc = all.find(x => x.d <= METAR_RADIUS_MI && x.age !== null && x.age <= WIND_OBS_MAX_AGE_MIN && typeof x.st.temp === 'number' && isFinite(x.st.temp) && typeof x.st.dewp === 'number' && isFinite(x.st.dewp));
+    if (tsrc) obs = { station: tsrc.st.icaoId || '?', dist: tsrc.d, ageMin: tsrc.age, tempC: tsrc.st.temp, dewC: Math.min(tsrc.st.dewp, tsrc.st.temp) };
+    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, lower, vis, lowVis, precipReport, wind, obs, obsc };
   } catch (e) {
     console.warn('METAR fetch failed:', e.message);
     throw e;   // the caller tells "service failed" apart from "no station nearby"
@@ -2662,7 +2703,23 @@ function wlSave() {
   if (lastDraw) { lastDraw(); }
 }
 document.querySelectorAll('.wl-w, .wl-g').forEach(i => i.addEventListener('input', wlSave));
-wlSync(); fnSync(); acSync();
+// Kp warning boxes: an empty or out-of-range box means the standard point (shown greyed)
+function kpSync() {
+  const l = kpLimits(), act = document.activeElement;
+  document.querySelectorAll('.kp-a').forEach(i => { i.placeholder = String(KP_DEF.a); if (i !== act) i.value = l.ua != null ? String(l.ua) : ''; });
+  document.querySelectorAll('.kp-r').forEach(i => { i.placeholder = String(KP_DEF.r); if (i !== act) i.value = l.ur != null ? String(l.ur) : ''; });
+}
+function kpSave() {
+  const a = document.activeElement, ka = a && a.classList.contains('kp-a') ? a : null, kr = a && a.classList.contains('kp-r') ? a : null;
+  const cur = kpLimits(), num = (i) => { const v = parseFloat(i.value); return isFinite(v) && v >= 1 && v <= 9 ? Math.round(v * 10) / 10 : null; };
+  const o = { a: ka ? num(ka) : cur.ua, r: kr ? num(kr) : cur.ur };
+  try { if (o.a || o.r) localStorage.setItem('uasKpLimits', JSON.stringify(o)); else localStorage.removeItem('uasKpLimits'); } catch (e) {}
+  const l = kpLimits();
+  document.querySelectorAll('.kp-a, .kp-r').forEach(i => { if (i !== a) { const k = i.classList.contains('kp-a') ? l.ua : l.ur; i.value = k != null ? String(k) : ''; } });
+  if (lastDraw) { lastDraw(); }
+}
+document.querySelectorAll('.kp-a, .kp-r').forEach(i => i.addEventListener('input', kpSave));
+wlSync(); kpSync(); fnSync(); acSync();
 
 let site = recall('wxSite', null);       // {name, lat, lon}, or null = use my current location
 let recentSites = recall('wxRecent', []);
@@ -2907,6 +2964,14 @@ async function renderWeather(lat, lon, attempt = 1) {
         })()
       };
 
+      // Temperature, dew point and humidity: the nearest recent airport report when there is one (the model runs a few degrees off on calm nights, which hides fog), otherwise the weather model
+      const obsT = metarData2 && metarData2.obs;
+      if (obsT) {
+        const rhOf = (t, td) => Math.max(0, Math.min(100, 100 * Math.exp(17.625 * td / (243.04 + td)) / Math.exp(17.625 * t / (243.04 + t))));
+        wx.main.temp = obsT.tempC * 9 / 5 + 32;
+        wx.dewPoint = obsT.dewC * 9 / 5 + 32;
+        wx.humidity = rhOf(obsT.tempC, obsT.dewC);
+      }
       // A missing reading must show as missing, never as 0
       const windOk = wx.wind.speed != null && isFinite(wx.wind.speed);
       const tempOk = wx.main.temp != null && isFinite(wx.main.temp);
@@ -2966,7 +3031,10 @@ async function renderWeather(lat, lon, attempt = 1) {
       // Amber for fog risk; red only when fog is likely AND visibility is already under 3 statute miles (US minimum)
       const dewClassNow = () => { const visLow = region !== 'intl' && typeof visM === 'number' && visM < 4828; return !dewOk ? '' : (dewSpreadF <= 2 && visLow) ? 'wx-alert' : dewSpreadF <= 4 ? 'wx-warn' : 'wx-good'; };
       const dewNote = !dewOk ? 'No data' : dewSpreadF <= 2 ? 'Fog likely' : dewSpreadF <= 4 ? 'Fog or lens fogging possible' : 'Low fog risk';
-      const dewSub = () => !dewOk ? '' : 'Dew point ' + fmtTemp(wx.dewPoint) + ' · ' + dewNote + (dewClassNow() === 'wx-alert' ? ', visibility under 3 mi' : '');
+      const obscR = metarData2 && metarData2.obsc;
+      const obscTxt = () => obscR ? '<span class="' + (obscR.fog ? 'wx-warn' : '') + '"><strong>' + obscR.text.charAt(0).toUpperCase() + obscR.text.slice(1) + ' reported' + (obscR.vic ? ' nearby' : '') + '</strong></span> · ' + obscR.station + ' (' + fmtDist(obscR.dist) + ')' : '';
+      const humCls = () => { const c = dewClassNow(); return obscR && obscR.fog && (c === 'wx-good' || c === '') ? 'wx-warn' : c; };
+      const dewSub = () => !dewOk ? '' : 'Dew point ' + fmtTemp(wx.dewPoint) + ' · ' + dewNote + (dewClassNow() === 'wx-alert' ? ', visibility under 3 mi' : '') + (obsT ? ' · ' + obsT.station : '');
       // Visibility: the nearest recent airport report when there is one, otherwise the weather model
       const ov = metarData2 && metarData2.vis;
       const visM = ov ? ov.mi * 1609.34 : wx.visibility;
@@ -3036,8 +3104,7 @@ async function renderWeather(lat, lon, attempt = 1) {
 
       const kp = kpData2;
       const kpVal = kp !== null ? kp.toFixed(1) : '—';
-      const kpClass = kp !== null ? kpColor(kp) : '';
-      const kpNote = kp === null ? 'Unavailable — check another source before flying' : kp >= 4 ? '⛔ High — GPS/compass risk' : kp >= 3 ? '⚠️ Elevated — monitor' : 'Normal — good to fly';
+      const kpNoteFn = () => { const l = kpLimits(); return kp === null ? 'Unavailable — check another source before flying' : kp >= l.r ? '⛔ High — GPS/compass risk' : kp >= l.a ? '⚠️ Elevated — monitor' : 'Normal — good to fly'; };
 
       const now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
@@ -3085,13 +3152,14 @@ async function renderWeather(lat, lon, attempt = 1) {
           <div class="wx-item">
             <div class="wx-label">Temperature</div>
             <div class="wx-value">${tempOk ? fmtTemp(wx.main.temp) : '—'}</div>
+            ${obsT ? `<div class="wx-sub" data-rec-age="${Date.now() - obsT.ageMin * 60000}">${obsT.station} · ${fmtDist(obsT.dist)} away · ${ageText(obsT.ageMin * 60000)}</div>` : ''}
             <div class="wx-sub">${visBelowMin() ? `<span class="wx-alert"><strong>Visibility ${visTxt()}${visSrc()}</strong> · ⛔ Below 3 mi minimum</span>` : 'Visibility ' + visTxt() + visSrc()}</div>
             ${visNote() ? `<div class="wx-sub">${visNote()}</div>` : ''}
           </div>
           <div class="wx-item">
             <div class="wx-label">KP Index</div>
-            <div class="wx-value ${kpClass}">${kpVal}</div>
-            <div class="wx-sub">${kpNote}</div>
+            <div class="wx-value ${kp !== null ? kpColor(kp) : ''}">${kpVal}</div>
+            <div class="wx-sub">${kpNoteFn()}</div>
           </div>
           <div class="wx-item">
             <div class="wx-label">Precipitation</div>
@@ -3101,8 +3169,9 @@ async function renderWeather(lat, lon, attempt = 1) {
           </div>
           <div class="wx-item">
             <div class="wx-label">Humidity</div>
-            <div class="wx-value ${dewClassNow()}">${dewOk ? Math.round(wx.humidity) + '%' : '—'}</div>
+            <div class="wx-value ${humCls()}">${dewOk ? Math.round(wx.humidity) + '%' : '—'}</div>
             <div class="wx-sub">${dewSub()}</div>
+            ${obscTxt() ? `<div class="wx-sub">${obscTxt()}</div>` : ''}
           </div>
         </div>
         <div class="wx-sun">🌅 Sunrise ${fmtT(wx.sunrise)} &nbsp;·&nbsp; 🌇 Sunset ${fmtT(wx.sunset)}${siteTag}</div>

@@ -95,6 +95,16 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.5
+
+- **Airport temperature and humidity** — **Temperature**, dew point and **Humidity** now come from the nearest airport report within 30 miles when it is no more than 75 minutes old, with the airport code and distance shown. The forecast model is the fallback, labeled as such.
+- **Fog, mist and haze from the airport** — when the nearest airport report says fog, mist, haze, smoke, dust, sand or volcanic ash, the **Humidity** card says so in words with the airport and distance. Fog is shown in bold amber (red only when visibility is also under 3 miles); the others are a plain note. It is also written into your saved flight record.
+- **Set your own Kp warning** — **⚙ Settings** has a new **Kp warning** row for where the Kp card turns amber and red. The standard points are now amber at 4 (active) and red at 5 (storm); leave a box empty to use them. It is saved with your other settings and included in Back up & restore.
+- **Kp with decimals** — the Kp card shows the current estimate, for example 2.3, instead of a whole number.
+- **Fix: precipitation words** — airport reports that list rain and another condition together (for example "-RA BR") are now read correctly.
+
+---
+
 ## What's new in v3.8.4
 
 - **Mark an item N/A** — press and hold any item and a small menu appears: **Needs attention** or **N/A for this flight**. An N/A item is greyed with an **N/A** tag and doesn't count for or against your progress (for example "12 of 78 complete · 2 N/A"). A section where everything is N/A counts as done. Tap an N/A item to put it back. It's remembered like your ticks and cleared by **Reset**. If you'd rather never see an item, **Hide** it in customize instead.
@@ -195,7 +205,7 @@ New checklist items, on top of v3.8. Each is a plain item you can hide in **Cust
 ## What's new in v3.7.7
 
 - **Your own wind limit** — in **⚙ Settings**, set the sustained wind and gust limits your drone can handle. The wind card turns amber at about two-thirds of your limit and red at the limit, and gusts now count too. Leave the boxes empty for the standard limits (23 mph sustained, 25 mph gusts). The boxes follow your units (mph or km/h) and are saved in Back up & restore.
-- **Settings and Back up & restore are two buttons** under the page header, each opening its own card, so the checklist starts higher on the page. **Settings** is one short list: Checklist for, Checklist items, Clear saved progress after and Wind limit, with the "saved on this device only" note at the top. **Back up & restore** has clear Back up and Restore halves.
+- **Settings and Back up & restore are two buttons** under the page header, each opening its own card, so the checklist starts higher on the page. **Settings** is one short list: Checklist for, Checklist items, Clear saved progress after, Wind limit and Kp warning, with the "saved on this device only" note at the top. **Back up & restore** has clear Back up and Restore halves.
 - **Help, feedback and coffee at the bottom** — **📘 Help & guides** and **✉ Send feedback** now sit on one line at the bottom of each tab, under the coffee line. **Send feedback** opens an email to info@JohnstonAerial.com with your app version and device filled in, so you can add what works, what's missing or what's confusing.
 - Small wording changes: the **✎ Customize list** button now reads **✎ Customize**, and **Outside the USA** now reads **Outside USA**.
 
@@ -404,13 +414,13 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Live Preflight Conditions panel** showing:
   - Wind speed, gusts, and direction arrow, plus wind at 400 ft
   - Cloud ceiling in feet AGL from nearby airport (METAR) reports
-  - Temperature and visibility
+  - Temperature and visibility (from the nearest airport report when one is fresh)
   - Precipitation: live radar at your location, airport reports and the forecast, with a link to the radar map
-  - Humidity and dew point, with a fog and lens-fogging warning
+  - Humidity and dew point, with a fog and lens-fogging warning and any fog, mist or haze the airport reports
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times, and the golden hour windows, with a link to the AfterGlow sky forecast for the same place
   - The best window of the next 12 daylight hours, worked out from your own Wind limit
-- **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility under 3 miles is red. KP index turns amber at 3 and red at 4. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
+- **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility under 3 miles is red. KP index turns amber at 4 and red at 5 unless you set your own in Settings. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
 - **Night notice** — after sunset or before sunrise, the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules), and the reminder is printed on the saved flight record
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)
