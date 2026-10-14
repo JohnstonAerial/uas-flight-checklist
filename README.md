@@ -31,7 +31,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
   </tr>
   <tr>
     <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/09-backup-restore-dark.png"><img src="screenshots/09-backup-restore-light.png" alt="Back up and restore panel with Copy code and Save file, then Restore from file, a Paste a backup code here box and Restore from code" width="170"></picture><br><sub><b>Back up &amp; restore</b></sub></td>
-    <td></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/10-add-item-link-dark.png"><img src="screenshots/10-add-item-link-light.png" alt="A custom item added with a link, Check Airspace with Open airaware.aloft.ai, and below it the add box with Pack traffic cones typed and the optional link box empty" width="170"></picture><br><sub><b>Add an item, with or without a link</b></sub></td>
   </tr>
 </table>
 
