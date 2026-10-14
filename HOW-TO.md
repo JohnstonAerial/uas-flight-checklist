@@ -66,6 +66,19 @@ The app keeps one setup at a time on your device: your tab names and icons, whic
 4. In **💾 Back up & restore**, untick **Include current progress**, then tap **Save file**.
 5. Rename the file so you can tell it apart, for example `uas-checklist-backup-TIMELAPSE.json`.
 
+**Tip: add a link to an item.** When you add an item, the optional **Link or app address** box makes it a shortcut that sits under the item's text. Use it for a **Check airspace** item that opens your airspace app, or a number to call. It works for more than websites:
+
+| Type this in the link box | The item shows | What it does |
+|---|---|---|
+| `airaware.aloft.ai` or `https://airaware.aloft.ai` | **Open airaware.aloft.ai ›** | Opens the website. On an iPhone, a site with its own app may open in that app. |
+| `mailto:someone@example.com` | **Email ›** | Starts an email to that address. |
+| `tel:+19105551212` | **Call ›** | Starts a phone call. |
+| `sms:+19105551212` | **Text ›** | Starts a text message. |
+| `facetime:someone@example.com` | **Open facetime app ›** | Starts a FaceTime call. |
+| `dji://…` or any `name://…` | **Open name app ›** | Opens that app, if it's installed and publishes an address like this. |
+
+Spaces aren't allowed. Unsafe types such as `javascript:` and `file:` are refused. If the box turns red, the address wasn't accepted. The link sits under the item's text, so ticking the item works as before.
+
 ### What my Timelapse profile looks like
 
 I shoot repeat timelapses: same spot, same flight path, session after session, so the frames line up when they're stacked together. The standard checklist is built for a one-off job, so I made a version just for this:

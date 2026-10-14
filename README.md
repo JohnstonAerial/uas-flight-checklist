@@ -100,6 +100,19 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 - **Customize is easier to find and follow** — in **⚙ Settings**, the row now reads **📝 Your checklist & tab** with a **Customize** button, so it's clear that Customize covers the tab itself (its name, icon and Hide) as well as the items on it. While you customize, the bar at the bottom says **Editing this checklist and tab**, and the page scrolls to the controls for you.
 - **A "How to customize" card at the top** — the instructions (**Tabs**, **Hide**, **Add**, **Move**) now sit at the top of that block, above the **Tab name** box, instead of further down the page. Tap **Got it** and the card shrinks to a one-line **ⓘ How to customize ›** that you can tap to bring it back. **Back up & restore** remembers that you tapped **Got it**.
 - **Adding your own item is clearer** — the box now reads **\* Checklist item, e.g. Check airspace**. If you tap **Add** with nothing typed, the box turns red and asks for the checklist item. Tapping **Done** saves a filled-in box, and clears one that is only half filled in, so nothing is left behind.
+- **Add a link to your own items** — when you add an item, the optional **Link or app address** box turns it into a shortcut. Great for a **Check airspace** item that opens your airspace app. It isn't only websites; see the table below.
+
+| Type this in the link box | The item shows | What it does |
+|---|---|---|
+| `airaware.aloft.ai` or `https://airaware.aloft.ai` | **Open airaware.aloft.ai ›** | Opens the website. On an iPhone, a site with its own app may open in that app. |
+| `mailto:someone@example.com` | **Email ›** | Starts an email to that address. |
+| `tel:+19105551212` | **Call ›** | Starts a phone call. |
+| `sms:+19105551212` | **Text ›** | Starts a text message. |
+| `facetime:someone@example.com` | **Open facetime app ›** | Starts a FaceTime call. |
+| `dji://…` or any `name://…` | **Open name app ›** | Opens that app, if it's installed and publishes an address like this. |
+
+Spaces aren't allowed. Unsafe types such as `javascript:` and `file:` are refused. If the box turns red, the address wasn't accepted. The link sits under the item's text, so ticking the item works as before.
+
 - **Fix: the Customize button fits on small or zoomed phone screens** — it is no longer cut off at the right edge.
 
 ---
