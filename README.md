@@ -95,6 +95,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.11
+
+- **Visit counting can be turned off on your own devices** — this page uses Cloudflare Web Analytics to count visits. If you run the checklist, you can keep your own visits out of the numbers: open the page once with `?notrack` on the end of the address (for example `checklist.johnstonaerial.com/?notrack`). That browser then stops sending visits, until you open it once with `?track`. Nothing else about the app changes.
+
+---
+
 ## What's new in v3.8.10
 
 - **Back-up reminders, so you never lose your customizing** — your changes are saved only in that browser on that device, so the app now reminds you to back up. While you customize, a red line under **How to customize** says **After you change the list, back it up**. When you press **Done**, or change a setting such as **Pilot**, **Drone**, **Reg. #**, your wind or Kp limits or your PDF choices, a red banner appears under the **Settings** and **Back up & restore** buttons with a **Back up now** button. It stays until you back up or dismiss it. The how-to card also has a new **Back up** line, and the **How-to guides** now explain it first.
