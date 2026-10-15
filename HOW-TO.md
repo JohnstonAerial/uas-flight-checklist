@@ -14,6 +14,14 @@ Short guides for seven things people ask about: backing up and restoring your se
 
 ## Back up and restore your setup
 
+**Back it up after you make changes.** Your customized list lives only in that one browser on that one device. If the browser data gets cleared, you switch phones, or you open it somewhere else, your changes are gone and you'd have to rebuild them from scratch. A backup takes about a minute:
+
+1. Tap **💾 Back up & restore** under the page header.
+2. Tap **Save file** (or **Copy code** and paste it into a note).
+3. Keep the file somewhere you'll find it, like a cloud folder.
+
+If you ever need it back, **Restore from file…** brings your whole setup back in one tap. Get in the habit of backing up every time you change something, not just when you move to a new device. That's what lets you experiment without worrying. After you change your list or settings (including Pilot, Drone and Reg. #), a red reminder with a **Back up now** button appears (once you press **Done**, if you were customizing) under the **Settings** and **Back up & restore** buttons until you back up or dismiss it.
+
 Your checklist setup is stored on your device. If you get a new phone, clear your browser data, or want the same setup on a tablet, you'd have to rebuild it. A backup saves it so you can bring it back, or copy it to another device, in a minute.
 
 **What a backup includes**

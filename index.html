@@ -198,7 +198,9 @@
   .section.all-hidden { display: none; }
   .panel.editing .section.all-hidden { display: block; }
   .add-row { display: none; gap: 8px; padding: 8px 4px 0; flex-wrap: wrap; }
-  .add-row input.add-url { flex: 1 1 100%; order: 3; font-size: 14px; }
+  .add-row input.add-url { flex: 1 1 100%; order: 2; font-size: 14px; }
+  .add-row input:first-child { flex: 1 1 100%; }
+  .add-row button { order: 3; margin-left: auto; padding: 9px 18px; font-size: 14px; }
   .add-row input.bad, .add-row input.add-url.bad { border-color: var(--red, #c0392b); }
   .item.has-link { flex-wrap: wrap; }
   .item-link { flex: 0 0 calc(100% - 36px); box-sizing: border-box; margin: -6px 0 0 36px; font-size: 13px; font-weight: 600; color: var(--blue); text-decoration: none; word-break: break-all; -webkit-user-select: none; user-select: none; }
@@ -219,11 +221,12 @@
   .settings.open .tg-set .chev, .settings.open-bak .tg-bak .chev { transform: rotate(180deg); }
   .settings.open .tg-set, .settings.open-bak .tg-bak { border-color: var(--blue); }
   .settings.open .tg-set, .settings.open-bak .tg-bak { color: var(--text); font-weight: 600; }
-  .set-up { position: absolute; right: 6px; bottom: 4px; width: 32px; height: 28px; margin: 0; padding: 0; font-family: inherit; font-size: 16px; line-height: 1; color: var(--text-light); background: none; border: 0; cursor: pointer; border-radius: 8px; }
+  .set-up { display: block; position: static; width: 100%; height: auto; margin: 6px 0 0; padding: 12px 14px; font-family: inherit; font-size: 14px; font-weight: 600; line-height: 1.2; color: var(--text-muted); background: none; border: 0; border-top: 1px solid var(--border); border-radius: 0 0 14px 14px; cursor: pointer; text-align: center; }
   .settings-body { position: relative; }
-  .ac-block .fn-hint { padding-right: 44px; }
   .set-up:hover, .set-up:focus-visible { color: var(--text); }
   .panel.editing .set-up { display: none; }
+  /* Settings or Back up & restore open: nothing below it, so the Close bar is the end of the page (not while customizing) */
+  @media screen { .panel:not(.editing) .settings.open ~ *, .panel:not(.editing) .settings.open-bak ~ * { display: none !important; } }
   .settings-body { display: none; background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 4px 0; margin-top: 8px; }
   .settings.open .body-set, .settings.open-bak .body-bak, .panel.editing .body-set { display: block; }
   .panel.editing .set-heads { display: none; }
@@ -256,6 +259,17 @@
   .cust-tip { margin-top: 8px; padding: 8px 10px; background: var(--section-bg); border-radius: 10px; line-height: 1.4; }
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 200; max-width: 90%; background: var(--green); color: #fff; font-size: 13px; font-weight: 600; padding: 10px 16px; border-radius: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); text-align: center; transition: opacity 0.4s; }
   .toast.gone { opacity: 0; }
+  .bk-banner { display: none; margin: 8px 0 10px; padding: 10px 12px; border: 1px solid #c0392b; border-radius: 10px; background: rgba(192,57,43,.08); font-size: 13px; line-height: 1.35; color: var(--text); align-items: center; gap: 10px; }
+  body.bk-dirty .bk-banner { display: flex; }
+  .panel.editing .bk-banner { display: none !important; }
+  .bk-banner span { flex: 1; }
+  .bk-banner b { color: #c0392b; }
+  .bk-banner .bk-go { flex: none; font-family: inherit; font-size: 13px; font-weight: 700; color: #fff; background: #c0392b; border: 0; border-radius: 14px; padding: 7px 12px; cursor: pointer; }
+  .bk-banner .bk-x { flex: none; font-family: inherit; font-size: 16px; color: var(--text-muted); background: transparent; border: 0; padding: 4px 6px; cursor: pointer; }
+  .bk-warn { display: none; margin: 8px 0 10px; padding: 9px 11px; border: 1px solid #c0392b; border-radius: 10px; background: rgba(192,57,43,.08); font-size: 13px; line-height: 1.35; color: var(--text); }
+  .panel.editing .bk-warn { display: block; }
+  .bk-warn b.k { color: #c0392b; }
+  @media (prefers-color-scheme: dark) { .bk-banner b { color: #ff7b6e; } .bk-banner { border-color: #ff7b6e; background: rgba(255,123,110,.10); } .bk-warn b.k { color: #ff7b6e; } .bk-warn { border-color: #ff7b6e; background: rgba(255,123,110,.10); } }
 
   /* ── Preflight record ── */
   .pc-btns .rec-btn { width: 100%; text-align: center; border-radius: 20px; padding: 6px 12px; font-size: 12px; margin: 0; color: var(--blue); background: transparent; border: 1px solid var(--blue); font-family: inherit; cursor: pointer; min-height: 32px; font-weight: 600; }
@@ -514,6 +528,7 @@
   .print-fields { display: none; }
   /* ── Print: plain checklist you can tick with a pencil ── */
   @media print {
+    .bk-banner { display: none !important; }
     @page { margin: 14mm 12mm; }
     :root { --text:#000; --text-muted:#000; --text-light:#000; --card:#fff; --section-bg:#fff; --border:#999; --bg:#fff; --amber-light:#fff; }
     html, body { background: #fff !important; color: #000 !important; min-height: 0; }
@@ -559,7 +574,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.9</p>
+      <p>Free Drone Preflight Checklist · v3.8.10</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1708,7 +1723,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     const form = document.createElement('form');
     form.className = 'add-row';
     form.setAttribute('onsubmit', 'addCustomItem(event, this)');
-    form.innerHTML = '<input type="text" maxlength="140" placeholder="* Checklist item, e.g. Check airspace" enterkeyhint="done" autocomplete="off"><button type="submit">Add</button><input type="text" class="add-url" maxlength="300" inputmode="url" placeholder="Link or app address (optional)" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">';
+    form.innerHTML = '<input type="text" maxlength="140" placeholder="* Checklist item, e.g. Check airspace" enterkeyhint="done" autocomplete="off"><button type="submit">Add item</button><input type="text" class="add-url" maxlength="300" inputmode="url" placeholder="Link or app address (optional)" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">';
     form.querySelector('.add-url').addEventListener('input', e => e.target.classList.remove('bad'));
     form.querySelector('input').addEventListener('input', e => e.target.classList.remove('bad'));
     sec.appendChild(form);
@@ -1989,6 +2004,24 @@ function xferWarm(el) {
   if (xferPre && xferPre.key === key) return;
   xferEncode(snap).then(code => { xferPre = { key, code }; }).catch(() => {});
 }
+// Back-up reminder: shown under the Settings / Back up & restore buttons after anything that a backup carries is changed
+const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'wxUnits'];
+let bkReady = false;
+setTimeout(() => { bkReady = true; }, 2000);
+function bkMark() { if (bkReady) document.body.classList.add('bk-dirty'); }
+function bkClear() { document.body.classList.remove('bk-dirty'); }
+try {
+  const _si = Storage.prototype.setItem, _ri = Storage.prototype.removeItem;
+  Storage.prototype.setItem = function (k, v) { if (this === window.localStorage && BK_WATCH.indexOf(k) > -1 && this.getItem(k) !== String(v)) bkMark(); return _si.apply(this, arguments); };
+  Storage.prototype.removeItem = function (k) { if (this === window.localStorage && BK_WATCH.indexOf(k) > -1 && this.getItem(k) !== null) bkMark(); return _ri.apply(this, arguments); };
+} catch (e) {}
+function makeBkBanner(openBak) {
+  const d = document.createElement('div'); d.className = 'bk-banner'; d.setAttribute('role', 'status');
+  d.innerHTML = '<span>\u26A0 <b>Your changes are saved on this device only.</b> Back them up so you do not lose them.</span><button type="button" class="bk-go">Back up now</button><button type="button" class="bk-x" aria-label="Dismiss">\u2715</button>';
+  d.querySelector('.bk-go').onclick = () => { openBak(); bkClear(); };
+  d.querySelector('.bk-x').onclick = bkClear;
+  return d;
+}
 function makeXfer() {
   const d = document.createElement('div');
   d.className = 'xfer';
@@ -2040,6 +2073,7 @@ async function xferDecode(text) {
 function xferMsg(el, text, bad) {
   const m = el.closest('.xfer').querySelector('.xfer-msg');
   m.textContent = text; m.className = 'xfer-msg' + (bad ? ' bad' : '');
+  if (!bad && text.charAt(0) === '\u2713') bkClear();
 }
 async function xferCopy(btn) {
   const box = btn.closest('.xfer'), codeP = xferEncode(xferSnapshot(box.querySelector('.xfer-prog').checked));
@@ -2194,6 +2228,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   };
   const tgSet = mkTg('tg-set', '⚙ Settings', 'open'), tgBak = mkTg('tg-bak', '💾 Back up &amp; restore', 'open-bak');
   heads.append(tgSet, tgBak);
+  const bkb = makeBkBanner(() => { if (tgBak.getAttribute('aria-expanded') !== 'true') tgBak.click(); try { tgBak.scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) {} });
   const bodySet = document.createElement('div'); bodySet.className = 'settings-body body-set';
   const bodyBak = document.createElement('div'); bodyBak.className = 'settings-body body-bak';
   const note = document.createElement('div'); note.className = 'settings-note';
@@ -2227,16 +2262,16 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     pdfSetSync();
   });
   bodySet.append(note, reg, cust, keep, wl, fnb, acb, pdb); bodyBak.append(makeXfer());
-  [bodySet, bodyBak].forEach(bd => {           // a small arrow at the bottom closes the section and goes back up to the buttons
-    const up = document.createElement('button'); up.type = 'button'; up.className = 'set-up'; up.textContent = '\u25B4';
-    up.setAttribute('aria-label', 'Close this section');
+  [bodySet, bodyBak].forEach((bd, bi) => {           // a small arrow at the bottom closes the section and goes back up to the buttons
+    const up = document.createElement('button'); up.type = 'button'; up.className = 'set-up'; up.textContent = '\u25B4 ' + (bi ? 'Close back up & restore' : 'Close settings');
+    
     up.onclick = () => {
       wrap.classList.remove('open', 'open-bak'); tgSet.setAttribute('aria-expanded', 'false'); tgBak.setAttribute('aria-expanded', 'false');
       try { const r = heads.getBoundingClientRect(); if (r.top < 110 || r.bottom > window.innerHeight) heads.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
     };
     bd.appendChild(up);
   });
-  wrap.append(heads, bodySet, bodyBak);
+  wrap.append(heads, bkb, bodySet, bodyBak);
   card.before(wrap);
   const reset = card.querySelector('.reset-inline'), all = cust.querySelector('.sec-all');
   const col = document.createElement('div'); col.className = 'pc-btns';
@@ -2251,13 +2286,16 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   en.innerHTML = '<button type="button" class="en-mini" onclick="editTipShow()">ⓘ How to customize ›</button><div class="en-full">' +
     '<div class="en-line"><b>Tabs:</b> rename this tab, change its icon, or hide it using the boxes just below.</div>' +
     '<div class="en-line"><b>Hide:</b> tap Hide on items you don\'t need.</div>' +
-    '<div class="en-line"><b>Add:</b> type a checklist item in the box at the bottom of any section (add a link or app address if you like), then tap Add.</div>' +
+    '<div class="en-line"><b>Add:</b> type a checklist item in the box at the bottom of any section (add a link or app address if you like), then tap Add item.</div>' +
     '<div class="en-line"><b>Move:</b> drag <b>≡</b> to reorder within a section.</div>' +
     '<div class="en-line"><b>Restore:</b> <b>Restore original list</b> undoes your changes on this tab only. Hidden items come back, items you added are removed, and the order, name and icon reset.</div>' +
-    '<div class="en-foot">Tap another tab to customize it too. Press <b>Done</b> when finished. Saved on this device and browser only.</div>' +
+    '<div class="en-line"><b>Back up:</b> your changes are saved only in this browser on this device. Open <b>Back up &amp; restore</b> and tap <b>Save file</b> to keep a copy.</div>' +
+    '<div class="en-foot">Tap another tab to customize it too. Press <b>Done</b> when finished.</div>' +
     '<button type="button" class="en-got" onclick="editTipOff()">Got it</button></div>';
   if (editTipIsOff()) en.classList.add('collapsed');
-  const ch = cust.querySelector('.cust-help'); if (ch) ch.prepend(en); else sn.after(en);
+  const bw = document.createElement('div'); bw.className = 'bk-warn';
+  bw.innerHTML = '\u26A0 <b class="k">After you change the list, back it up.</b> Open <b>Back up &amp; restore</b>, then tap <b>Save file</b>.';
+  const ch = cust.querySelector('.cust-help'); if (ch) { ch.prepend(bw); ch.prepend(en); } else { sn.after(bw); sn.after(en); }
   const bar = document.createElement('div'); bar.className = 'edit-bar';
   bar.innerHTML = '<span>✎ Editing this checklist and tab</span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button>';
   panelEl.prepend(bar);

@@ -95,6 +95,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.10
+
+- **Back-up reminders, so you never lose your customizing** — your changes are saved only in that browser on that device, so the app now reminds you to back up. While you customize, a red line under **How to customize** says **After you change the list, back it up**. When you press **Done**, or change a setting such as **Pilot**, **Drone**, **Reg. #**, your wind or Kp limits or your PDF choices, a red banner appears under the **Settings** and **Back up & restore** buttons with a **Back up now** button. It stays until you back up or dismiss it. The how-to card also has a new **Back up** line, and the **How-to guides** now explain it first.
+- **The add button says Add item** — the box for a new checklist item is full width, the optional link box sits under it, and the button on the right reads **Add item**.
+- **A clear Close bar** — the small ▴ arrow at the bottom of **Settings** and **Back up & restore** is now a full-width bar, **▴ Close settings** or **▴ Close back up & restore**. While either is open, everything below it is hidden so the bar is the end of the page. Customize still shows your checklist.
+
+---
+
 ## What's new in v3.8.9
 
 - **Visibility is easier to read** — in the Temperature tile, visibility now has its own **Visibility** label and a larger value, such as **10+ SM · KJNX**. It is **green at 3 SM or more** and **red below 3 SM**, with **⛔ Below 3 SM minimum** underneath. In US units it now reads **SM** (statute miles), the way you scan for it. Metric still shows km, and distances to airports still show mi.
