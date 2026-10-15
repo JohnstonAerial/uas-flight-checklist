@@ -118,8 +118,17 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 | `sms:+19105551212` | **Text ›** | Starts a text message. |
 | `facetime:someone@example.com` | **Open facetime app ›** | Starts a FaceTime call. |
 | `dji://…` or any `name://…` | **Open name app ›** | Opens that app, if it's installed and publishes an address like this. |
+| `shortcuts://run-shortcut?name=AirAware` | **Open shortcuts app ›** | Runs an iPhone or iPad Shortcut by name. See the tip below. |
 
 Spaces aren't allowed. Unsafe types such as `javascript:` and `file:` are refused. If the box turns red, the address wasn't accepted. The link sits under the item's text, so ticking the item works as before.
+
+**iPhone tip: open an app that has no web address.** Some apps can't be opened with a link. Make a Shortcut that opens the app, then link to the Shortcut:
+
+1. In the **Shortcuts** app, tap **+** and add the **Open App** action. Choose the app, such as Air Aware.
+2. Name the shortcut with no spaces, for example `AirAware`.
+3. In the checklist's **Link or app address** box, type `shortcuts://run-shortcut?name=AirAware`. If the name has a space, write `%20` instead, for example `name=Air%20Aware`.
+
+The item then shows **Open shortcuts app ›**. Tapping it runs the shortcut, which opens your app. The Shortcuts app may flash on screen first, and iOS may ask you to allow it the first time. This works on iPhone and iPad only.
 
 - **Fix: the Customize button fits on small or zoomed phone screens** — it is no longer cut off at the right edge.
 
