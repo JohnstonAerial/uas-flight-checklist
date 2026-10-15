@@ -554,7 +554,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.7</p>
+      <p>Free Drone Preflight Checklist · v3.8.8</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1366,7 +1366,7 @@ function resetCurrent() {
   const p = document.getElementById('panel-' + current);
   const n = p.querySelectorAll('.item.checked, .item.flagged, .item.na').length;
   if (!n) return;
-  if (!confirm('Reset this checklist? This clears ' + n + ' checked, flagged or N/A item' + (n === 1 ? '' : 's') + ' on this tab.')) return;
+  if (!confirm('Uncheck all on this tab? This clears the ticks, flags and N/A marks on ' + n + ' item' + (n === 1 ? '' : 's') + '. Items you hid or added stay as they are.')) return;
   p.querySelectorAll('.item').forEach(i => i.classList.remove('checked', 'flagged', 'na'));
   unfoldAuto(p);
   updateProgress(current);
@@ -1378,7 +1378,7 @@ function resetCurrent() {
 document.querySelectorAll('.panel .progress-card').forEach(c => {
   const r = document.createElement('button');
   r.className = 'reset-inline';
-  r.textContent = 'Reset';
+  r.textContent = 'Uncheck all';
   r.onclick = resetCurrent;
   c.appendChild(r);
 });
@@ -1678,7 +1678,14 @@ function restoreDefaults(btn) {
   const panelEl = btn.closest('.panel'), c = cust[panelEl.id], pid = panelEl.id.replace('panel-', '');
   const hasItems = c && ((c.hidden || []).length || (c.added || []).length || (c.order && Object.keys(c.order).length)), hasName = !!tabsCfg.names[pid] || (pid in tabsCfg.icons);
   if (!hasItems && !hasName) return;
-  if (!confirm('Restore this tab to the original list? Hidden items come back, the items you added are removed, the order is reset and the tab name and icon are reset.')) return;
+  const nh = c ? (c.hidden || []).length : 0, na = c ? (c.added || []).length : 0, hasOrder = !!(c && c.order && Object.keys(c.order).length);
+  const parts = [];
+  if (nh) parts.push('brings back ' + nh + ' hidden item' + (nh === 1 ? '' : 's'));
+  if (na) parts.push('removes the ' + na + ' item' + (na === 1 ? '' : 's') + ' you added');
+  if (hasOrder) parts.push('resets the order');
+  if (hasName) parts.push('resets the tab name and icon');
+  const what = parts.length > 1 ? parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1] : parts[0];
+  if (!confirm('Restore this tab to the original list? This ' + what + '. Other tabs and your ticks are not changed.')) return;
   panelEl.querySelectorAll('.item.custom').forEach(i => i.remove());
   panelEl.querySelectorAll('.section-card').forEach(card => [...card.querySelectorAll(':scope > .item')].sort((a, b) => a.dataset.i - b.dataset.i).forEach(it => card.appendChild(it)));
   panelEl.querySelectorAll('.item.is-hidden').forEach(i => i.classList.remove('is-hidden'));
@@ -1772,7 +1779,7 @@ function toggleSection(head) {
   syncAllButton(sec.closest('.panel'));
 }
 // ── Auto-advance: when a section is finished it folds and the next unfinished one opens ──
-// This is temporary (not saved), so a reload or Reset puts things back as you had them.
+// This is temporary (not saved), so a reload or Uncheck all puts things back as you had them.
 function secComplete(sec) {
   const total = sec.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)').length;
   return total > 0 && sec.querySelectorAll('.item.checked:not(.is-hidden):not(.region-hidden), .item.na:not(.is-hidden):not(.region-hidden)').length === total;
@@ -2240,6 +2247,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     '<div class="en-line"><b>Hide:</b> tap Hide on items you don\'t need.</div>' +
     '<div class="en-line"><b>Add:</b> type a checklist item in the box at the bottom of any section (add a link or app address if you like), then tap Add.</div>' +
     '<div class="en-line"><b>Move:</b> drag <b>≡</b> to reorder within a section.</div>' +
+    '<div class="en-line"><b>Restore:</b> <b>Restore original list</b> undoes your changes on this tab only. Hidden items come back, items you added are removed, and the order, name and icon reset.</div>' +
     '<div class="en-foot">Tap another tab to customize it too. Press <b>Done</b> when finished. Saved on this device and browser only.</div>' +
     '<button type="button" class="en-got" onclick="editTipOff()">Got it</button></div>';
   if (editTipIsOff()) en.classList.add('collapsed');
@@ -2273,7 +2281,7 @@ setKeepHours(keepHours());
 restoreProgress();
 if (restoredAt) {
   document.querySelectorAll('.flag-hint').forEach(h => {
-    h.textContent = 'Progress restored (saved ' + ageText(Date.now() - restoredAt) + ') · tap Reset to start fresh';
+    h.textContent = 'Progress restored (saved ' + ageText(Date.now() - restoredAt) + ') · tap Uncheck all to start fresh';
   });
 }
 

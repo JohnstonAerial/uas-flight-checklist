@@ -95,6 +95,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.8
+
+- **Reset is now "Uncheck all"** — the button at the bottom of the progress card cleared only your ticks, flags and N/A marks, but the word "Reset" sounded like it wiped more. **↺ Uncheck all** says what it does, and the confirmation spells it out: "This clears the ticks, flags and N/A marks on 3 items. Items you hid or added stay as they are."
+- **Restore original list tells you what it will change** — the confirmation now lists only what applies to that tab, with counts, for example "This brings back 2 hidden items, removes the 3 items you added and resets the tab name and icon. Other tabs and your ticks are not changed." It only ever affects the tab you're editing.
+- **A Restore line in "How to customize"** — the card at the top of **Customize** now explains **Restore original list** alongside Tabs, Hide, Add and Move.
+
+---
+
 ## What's new in v3.8.7
 
 - **Customize is easier to find and follow** — in **⚙ Settings**, the row now reads **📝 Your checklist & tab** with a **Customize** button, so it's clear that Customize covers the tab itself (its name, icon and Hide) as well as the items on it. While you customize, the bar at the bottom says **Editing this checklist and tab**, and the page scrolls to the controls for you.
@@ -523,7 +531,7 @@ Or simply download `index.html` and open it locally in any browser. The weather 
 5. Press and hold an item for a menu: **Needs attention** (amber) or **N/A for this flight** (greyed, not counted). Tap a flagged item once it's resolved to check it off, or press and hold it again to clear the flag. Tap an N/A item to put it back
 6. When you check off the last item in a section, it folds itself and the next unfinished section opens. Tap any header to open a section again. A section with a flagged item stays open until the flag is resolved
 7. The progress bar tracks your completion percentage and shows how many items need attention and how many are N/A. When your pre-flight sections are done, a **ready to fly** banner appears; after the last section, **flight complete**
-8. Tap **Reset** (bottom of the progress card) to clear all checks, flags and N/A marks on the current tab — it asks you to confirm first
+8. Tap **Uncheck all** (bottom of the progress card) to clear all checks, flags and N/A marks on the current tab — it asks you to confirm first
 9. Tap **Save flight record** to keep a PDF or text copy of the flight, **PDF** to save the checklist as a printable file, or **Print** to print the tab (in Safari or a computer browser)
 
 **To make it yours:** open **⚙ Settings**, tap **Customize**, and hide items you don't need, add your own, drag items into your order, and rename, change the icon of, or hide whole tabs — then press **Done** in the bar at the bottom. Before you leave Settings, consider saving a backup. More in the [How-to guides](HOW-TO.md).
@@ -567,7 +575,7 @@ Yes. It's free to fork, and you can host your own copy and change the default it
 
 ## Limitations
 
-- **No automatic sync** — saved progress and settings live only in the browser on the device you're using (and progress is cleared when it expires or when you tap Reset). Use **Back up & restore** to move them to another device. Plan to use a single device per flight.
+- **No automatic sync** — saved progress and settings live only in the browser on the device you're using (and progress is cleared when it expires or when you tap Uncheck all). Use **Back up & restore** to move them to another device. Plan to use a single device per flight.
 - **No account or login** — by design. Keeps it simple, private, and free.
 - **Backup codes need a recent browser** — codes are compressed using a feature of current browsers (Chrome, Edge, Firefox and Safari from roughly 2023 on, including iOS/iPadOS 16.4 and newer). On older browsers a backup still works but the code is longer.
 - **Weather defaults to your current GPS location** — to check a different flight site, tap **Change** on the weather panel and search for a town, postal code (ZIP code in the USA), or coordinates. Place search works best for towns and cities; for a specific job site, use a nearby town or enter coordinates. Cloud ceiling comes from the nearest METAR station, which can be several miles from the site (the station is shown on the panel). The **Radar — NWS** button opens the national map.
