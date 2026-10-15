@@ -95,6 +95,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.12
+
+- **Easier to read in dark mode** — the green used for good conditions, the "Ready to fly" banner, section counts and the Back up message is now lighter in dark mode, so it no longer fades into the background.
+- **Back up & restore messages stand out** — "Backup complete" (or an error) now appears in a bordered box instead of a thin line of small text.
+
+---
+
 ## What's new in v3.8.11
 
 - **Visit counting can be turned off on your own devices** — this page uses Cloudflare Web Analytics to count visits. If you run the checklist, you can keep your own visits out of the numbers: open the page once with `?notrack` on the end of the address (for example `checklist.johnstonaerial.com/?notrack`). That browser then stops sending visits, until you open it once with `?track`. Nothing else about the app changes.
