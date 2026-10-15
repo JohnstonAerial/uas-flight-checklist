@@ -198,7 +198,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 - Airport reports (METAR) from airports near you.
 - The KP index.
 
-**US-only buttons:** the **FAA TFRs**, **NOTAMs** and **NWS radar** buttons are hidden outside the USA.
+**US-only buttons:** the **FAA TFRs**, **NOTAMs**, **NWS radar** and **Facility map** buttons are hidden outside the USA.
 
 **An honest limit:** this is a guide, not legal advice. The app doesn't know your country's drone rules. Check with your own aviation authority, such as Transport Canada, EASA or your national CAA, before you fly. Please also tell us which items don't fit where you fly. That feedback shapes the next version.
 
@@ -206,7 +206,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 
 ## Check TFRs and NOTAMs before you fly (USA)
 
-**This section is for flying in the USA only.** TFRs and NOTAMs here are the FAA's. Outside the USA the **TFRs**, **NOTAMs** and **NWS radar** buttons are hidden, so use your own country's aviation authority and drone airspace app instead (see [Use it outside the USA](#use-it-outside-the-usa)).
+**This section is for flying in the USA only.** TFRs and NOTAMs here are the FAA's. Outside the USA the **TFRs**, **NOTAMs**, **NWS radar** and **Facility map** buttons are hidden, so use your own country's aviation authority and drone airspace app instead (see [Use it outside the USA](#use-it-outside-the-usa)).
 
 ### TFRs
 
@@ -220,6 +220,10 @@ The **⚠️ TFRs** button opens the FAA's list for the whole country, so most o
 **Use a bigger view.** Both FAA sites (TFRs and NOTAMs) are built for a computer screen. If a link opens inside the app, open it in your browser instead. On iPhone, tap the compass icon. On Android, look for **Open in browser** (or **Open in Chrome**) in the menu. Then turn your phone sideways, since landscape gives the list and the map much more room.
 
 **Easier on a phone: an FAA-approved airspace app.** The FAA's TFR list is built for a desktop screen. The FAA's B4UFLY service is delivered through FAA-approved apps from private companies, and these show airspace advisories, including TFRs, on a map around you. That's much easier to read at the launch site. Treat the map as a quick look, and still confirm against the FAA's current TFR and NOTAM pages, because an app can lag behind or miss a notice.
+
+### UAS Facility Maps
+
+The **🗺 Facility map — FAA** button opens the FAA's UAS Facility Maps (also called "Visualize it"). Near airports in controlled airspace the map is split into grids, and each grid shows the highest altitude the FAA can approve automatically through LAANC. A grid showing 0 is not available for automatic approval. Like the TFR and NOTAM pages, it is easier to read in your browser, with your phone turned sideways. It is a planning aid: your airspace app and your LAANC authorization are still what you fly by.
 
 ### Reading NOTAMs
 

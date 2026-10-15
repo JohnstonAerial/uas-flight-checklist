@@ -411,7 +411,7 @@
   .region-card .rc-btns button { flex: 1; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--link); background: var(--section-bg); border: 1px solid var(--border); border-radius: 12px; padding: 10px 6px; cursor: pointer; }
   .keep-row { max-width: 600px; margin: 0 auto 10px; padding: 0 16px; display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; font-size: 11px; color: var(--text-light); text-align: center; }
   .keep-row select { font-family: inherit; font-size: 11px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 4px 8px; }
-  .flag-hint { font-size: 11px; color: var(--text-light); text-align: center; padding: 2px 16px 8px; }
+  .flag-hint { font-size: 11px; color: var(--text-light); text-align: center; padding: 2px 16px 8px;  text-wrap: balance; }
 
   .check-circle {
     width: 24px;
@@ -459,6 +459,8 @@
   .wx-item { background: var(--section-bg); border-radius: 10px; padding: 9px 11px; }
   .wx-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
   .wx-value { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.1; }
+  .wx-vislab { margin-top: 8px; }
+  .wx-vis-src { font-size: 11px; font-weight: 400; color: var(--text-muted); }
   .wx-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
   .wx-model { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
   .wx-model strong { font-weight: 700; }
@@ -485,15 +487,18 @@
   .wx-disclaimer { font-size: 10px; color: var(--text-light); text-align: center; margin-top: 8px; line-height: 1.4; }
   .wx-golden { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 3px; }
   .wx-golden .wx-link { margin-top: 2px; }
+  .gh-w { white-space: nowrap; }
+  @media (max-width: 560px) { .gh-t, .gh-w { display: block; } .gh-sep { display: none; } }
   .wx-window { margin: 10px 0 2px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; text-align: center; color: var(--text-muted); }
   .wx-window b { color: var(--text); }
   .wx-window-s { margin-top: 2px; }
   .wx-window.none { border-color: var(--amber); background: var(--amber-light); }
   .wx-window.none .wx-window-t { color: var(--amber); font-weight: 600; }
   .wx-sun { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 8px; }
-  .wx-tfr-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .wx-tfr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .wx-tfr { display: block; width: 100%; padding: 9px; background: #c0392b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-notam { display: block; width: 100%; padding: 9px; background: #7f3fbf; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-facmap { display: block; width: 100%; padding: 9px; background: #1f6f8b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-radar { display: block; width: 100%; padding: 9px; background: #1a6b3c; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
 
   /* Accessibility: screen-reader text, visible keyboard focus, bigger tap targets, 16px form text (stops iOS zoom-on-focus) */
@@ -554,7 +559,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.8</p>
+      <p>Free Drone Preflight Checklist · v3.8.9</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -605,6 +610,7 @@
     <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener">⚠️ TFRs — FAA.gov</a>
     <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener">📋 NOTAMs — AIM</a>
     <a class="wx-radar" href="https://radar.weather.gov" target="_blank" rel="noopener">🌧 Radar — NWS</a>
+    <a class="wx-facmap" href="https://experience.arcgis.com/experience/e6e8b84c6f1144f69a30f9632ebe4352" target="_blank" rel="noopener">🗺 Facility map — FAA</a>
   </div>
 </div>
 
@@ -1372,7 +1378,7 @@ function resetCurrent() {
   updateProgress(current);
   saveProgress();
   const h = p.querySelector('.flag-hint');
-  if (h) h.textContent = 'Tip: press and hold an item to flag it or mark it N/A';
+  if (h) h.textContent = 'Tip: press and hold an item for Needs attention or N/A';
 }
 
 document.querySelectorAll('.panel .progress-card').forEach(c => {
@@ -1386,7 +1392,7 @@ document.querySelectorAll('.panel .progress-card').forEach(c => {
 document.querySelectorAll('.panel .complete-banner').forEach(b => {
   const h = document.createElement('div');
   h.className = 'flag-hint';
-  h.textContent = 'Tip: press and hold an item to flag it or mark it N/A';
+  h.textContent = 'Tip: press and hold an item for Needs attention or N/A';
   b.after(h);
   const row = document.createElement('div');
   row.className = 'keep-row';
@@ -2805,7 +2811,7 @@ function goldenHours(dayISO, lat, lon, offSec) {
   return spans.filter(a => a[1] - a[0] >= 10);
 }
 const fmtTemp = (f) => isMetric() ? Math.round((f - 32) * 5 / 9) + '°C' : Math.round(f) + '°F';
-const fmtVis = (m) => m == null ? '—' : isMetric() ? (m / 1000).toFixed(1) + ' km' : (m / 1609.34).toFixed(1) + ' mi';
+const fmtVis = (m) => m == null ? '—' : isMetric() ? (m / 1000).toFixed(1) + ' km' : (m / 1609.34).toFixed(1) + ' SM';
 const fmtPrecip = (mm) => isMetric() ? (mm < 10 ? mm.toFixed(1) : Math.round(mm)) + '\u00a0mm' : (mm / 25.4).toFixed(2) + '\u00a0in';
 const fmtDist = (mi) => isMetric() ? Math.round(mi * 1.609344) + ' km' : Math.round(mi) + ' mi';
 const fmtAlt = (ft) => isMetric() ? (Math.round(ft * 0.3048 / 10) * 10).toLocaleString() + ' m' : Number(ft).toLocaleString() + ' ft';
@@ -3122,7 +3128,7 @@ async function renderWeather(lat, lon, attempt = 1) {
       };
       const nightTxt = () => region === 'intl'
         ? '🌙 Sun is down — check your local rules for night flying'
-        : '🌙 Sun is down — night flight needs an <span style="white-space:nowrap">anti-collision</span> light visible 3 mi';
+        : '🌙 Sun is down — night flight needs an <span style="white-space:nowrap">anti-collision</span> light visible 3 SM';
       const fmtT = (iso) => iso ? new Date(iso).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '—';
       // AfterGlow opens at this same spot (it reads lat, lon and name from the link)
       const agName = (typeof site !== 'undefined' && site && site.name) ? String(site.name).slice(0, 60) : 'Current location';
@@ -3131,7 +3137,7 @@ async function renderWeather(lat, lon, attempt = 1) {
       try {
         const gs = wx.sunrise ? goldenHours(String(wx.sunrise).slice(0, 10), lat, lon, siteOff || 0) : [];
         const hm = (mins) => fmtT(String(wx.sunrise).slice(0, 10) + 'T' + String(Math.floor(mins / 60) % 24).padStart(2, '0') + ':' + String(mins % 60).padStart(2, '0'));
-        if (gs.length) goldenLine = '<div class="wx-golden">✨ Golden hour ' + gs.map(a => hm(a[0]) + ' – ' + hm(a[1])).join(' · ') + '</div><div class="wx-golden"><a class="wx-link" href="' + agUrl + '" target="_blank" rel="noopener">Will the sky color up? AfterGlow sky forecast ›</a></div>';
+        if (gs.length) goldenLine = '<div class="wx-golden"><span class="gh-t">✨ Golden hour</span> ' + gs.map(a => '<span class="gh-w">' + hm(a[0]) + ' – ' + hm(a[1]) + '</span>').join('<span class="gh-sep"> · </span>') + '</div><div class="wx-golden"><a class="wx-link" href="' + agUrl + '" target="_blank" rel="noopener">Will the sky color up? AfterGlow sky forecast ›</a></div>';
       } catch (e) {}
 
       // Ceiling from METAR (kept in feet; converted for display)
@@ -3167,11 +3173,11 @@ async function renderWeather(lat, lon, attempt = 1) {
       const obscR = metarData2 && metarData2.obsc;
       const obscTxt = () => obscR ? '<span class="' + (obscR.fog ? 'wx-warn' : '') + '"><strong>' + obscR.text.charAt(0).toUpperCase() + obscR.text.slice(1) + ' reported' + (obscR.vic ? ' nearby' : '') + '</strong></span> · ' + obscR.station + ' (' + fmtDist(obscR.dist) + ')' : '';
       const humCls = () => { const c = dewClassNow(); return obscR && obscR.fog && (c === 'wx-good' || c === '') ? 'wx-warn' : c; };
-      const dewSub = () => !dewOk ? '' : 'Dew point ' + fmtTemp(wx.dewPoint) + ' · ' + dewNote + (dewClassNow() === 'wx-alert' ? ', visibility under 3 mi' : '') + (obsT ? ' · ' + obsT.station : '');
+      const dewSub = () => !dewOk ? '' : 'Dew point ' + fmtTemp(wx.dewPoint) + ' · ' + dewNote + (dewClassNow() === 'wx-alert' ? ', visibility under 3 SM' : '') + (obsT ? ' · ' + obsT.station : '');
       // Visibility: the nearest recent airport report when there is one, otherwise the weather model
       const ov = metarData2 && metarData2.vis;
       const visM = ov ? ov.mi * 1609.34 : wx.visibility;
-      const fmtVisObs = (v) => isMetric() ? (v.mi * 1.609344 >= 16 ? '16+ km' : (+(v.mi * 1.609344).toFixed(1)) + ' km') : (v.plus || v.mi >= 10 ? '10+ mi' : (+v.mi.toFixed(2)) + ' mi');
+      const fmtVisObs = (v) => isMetric() ? (v.mi * 1.609344 >= 16 ? '16+ km' : (+(v.mi * 1.609344).toFixed(1)) + ' km') : (v.plus || v.mi >= 10 ? '10+ SM' : (+v.mi.toFixed(2)) + ' SM');
       const visTxt = () => ov ? fmtVisObs(ov) : fmtVis(wx.visibility);
       const visSrc = () => ov ? ' · ' + ov.station : (wx.visibility != null ? ' · forecast model' : '');
       const visNote = () => metarData2 && metarData2.lowVis && metarData2.lowVis.length ? '☁️ Lower nearby: ' + metarData2.lowVis.map(v => v.station + ' ' + fmtVisObs({ mi: v.mi, plus: false }) + ' (' + fmtDist(v.dist) + ')').join(' · ') : '';
@@ -3290,19 +3296,21 @@ async function renderWeather(lat, lon, attempt = 1) {
             <div class="wx-label">Temperature</div>
             <div class="wx-value">${tempOk ? fmtTemp(wx.main.temp) : '—'}</div>
             ${obsT ? `<div class="wx-sub" data-rec-age="${Date.now() - obsT.ageMin * 60000}">${obsT.station} · ${fmtDist(obsT.dist)} away · ${ageText(obsT.ageMin * 60000)}</div>` : ''}
-            <div class="wx-sub">${visBelowMin() ? `<span class="wx-alert"><strong>Visibility ${visTxt()}${visSrc()}</strong> · ⛔ Below 3 mi minimum</span>` : 'Visibility ' + visTxt() + visSrc()}</div>
+            <div class="wx-label wx-vislab">Visibility</div>
+            <div class="wx-value wx-vis-val ${visBelowMin() ? 'wx-alert' : (typeof visM === 'number' && visM >= 4828 ? 'wx-good' : '')}">${visTxt()}<span class="wx-vis-src">${visSrc()}</span></div>
+            ${visBelowMin() ? '<div class="wx-sub wx-alert">⛔ Below 3 SM minimum</div>' : ''}
             ${visNote() ? `<div class="wx-sub">${visNote()}</div>` : ''}
-          </div>
-          <div class="wx-item">
-            <div class="wx-label">KP Index</div>
-            <div class="wx-value ${kp !== null ? kpColor(kp) : ''}">${kpVal}</div>
-            <div class="wx-sub">${kpNoteFn()}</div>
           </div>
           <div class="wx-item">
             <div class="wx-label">Precipitation</div>
             <div class="wx-value ${pb.cls}">${pb.val}</div>
             ${pb.lines.map(l => `<div class="wx-sub">${l}</div>`).join('')}
             <a class="wx-link" href="https://www.rainviewer.com/map.html?loc=${lat.toFixed(3)},${lon.toFixed(3)},8&layer=radar" target="_blank" rel="noopener">Radar map ›</a>
+          </div>
+          <div class="wx-item">
+            <div class="wx-label">KP Index</div>
+            <div class="wx-value ${kp !== null ? kpColor(kp) : ''}">${kpVal}</div>
+            <div class="wx-sub">${kpNoteFn()}</div>
           </div>
           <div class="wx-item">
             <div class="wx-label">Humidity</div>
@@ -3479,8 +3487,9 @@ function recWeatherLines() {
   body.querySelectorAll('.wx-item').forEach(it => {
     const q = (sel) => { const e = it.querySelector(sel); return e ? recNoEmoji(e.textContent) : ''; };
     const label = q('.wx-label'), val = q('.wx-value').replace(/\s*[\u2190-\u2199]\s*/g, ' ').trim();   // no wind arrow in the record; the "From NE" text says it
-    const subs = [...it.querySelectorAll('.wx-sub')].map(e => {
+    const subs = [...it.querySelectorAll('.wx-sub, .wx-vis-val')].map(e => {
       let t = recNoEmoji(e.textContent);
+      if (e.classList.contains('wx-vis-val')) t = 'Visibility ' + t;
       const ts = e.getAttribute('data-rec-age');              // record shows a clock time, not "21 min ago"
       if (ts) t = t.replace(/ · (just now|\d+ min ago|\d+ hrs? ago)/, ' · observed ' + new Date(+ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
       return t.replace(/ \((just now|\d+ min ago|\d+ hrs? ago)\)/, '');

@@ -14,7 +14,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 <table>
   <tr>
-    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions: wind, cloud ceiling, temperature, Kp index, precipitation, humidity, sunrise and sunset, with TFR, NOTAM and radar buttons" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions: wind, cloud ceiling, temperature, Kp index, precipitation, humidity, sunrise and sunset, with TFR, NOTAM, radar and facility map buttons" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
     <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/01-checklist-dark.png"><img src="screenshots/01-checklist-light.png" alt="Checklist with progress bar, Before leaving home items and checked boxes" width="170"></picture><br><sub><b>Checklist</b></sub></td>
   </tr>
   <tr>
@@ -57,9 +57,9 @@ CONDITIONS
 Wind: 8 mph (Gusts 14 mph · From NW; KXYZ · 6 mi away · observed 2:00 PM;
       Model for your spot: 9 / 17 mph; 400 ft: 16 mph)
 Cloud Ceiling: 4,500 ft AGL
-Temperature: 72°F (Visibility 10.0 mi)
-KP Index: 2.0
+Temperature: 72°F (Visibility 10+ SM · KXYZ)
 Precipitation: None (Radar: no echoes within 30 mi · 2:10 PM)
+KP Index: 2.0
 Humidity: 48% (Dew point 51°F)
 Sunrise 07:16 AM · Sunset 06:45 PM
 Golden hour 07:04 AM – 07:53 AM · 06:14 PM – 07:04 PM
@@ -92,6 +92,16 @@ UAS Flight Checklists v3.7.12 · checklist.johnstonaerial.com
 </details>
 
 Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out, and the **Pilot** and **Drone** lines come from **⚙ Settings**. Anything you leave blank is left out of the record.
+
+---
+
+## What's new in v3.8.9
+
+- **Visibility is easier to read** — in the Temperature tile, visibility now has its own **Visibility** label and a larger value, such as **10+ SM · KJNX**. It is **green at 3 SM or more** and **red below 3 SM**, with **⛔ Below 3 SM minimum** underneath. In US units it now reads **SM** (statute miles), the way you scan for it. Metric still shows km, and distances to airports still show mi.
+- **FAA UAS Facility Maps button** — a fourth button on the weather card, **🗺 Facility map — FAA**, opens the FAA's UAS Facility Maps (the **Visualize it** map) for LAANC grid altitudes. The buttons now sit in a 2×2 grid, and like the TFR, NOTAM and radar buttons it is hidden outside the USA.
+- **Golden hour fits your screen** — on a tablet or computer it stays on one line. On a narrow phone it splits into **✨ Golden hour**, the morning window and the evening window, so a time range never breaks in the middle.
+- **Tiles in a better order** — **Temperature** sits beside **Precipitation** (both tall) and **KP Index** beside **Humidity** (both short), so there is less blank space on the card. The saved record lists them in the same order.
+- **The press-and-hold tip matches the menu** — it now reads **Tip: press and hold an item for Needs attention or N/A**, the same words as the menu, and it wraps evenly on a narrow screen.
 
 ---
 
@@ -468,7 +478,7 @@ Version 3 is a major update built around making the checklist *yours*:
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times, and the golden hour windows, with a link to the AfterGlow sky forecast for the same place
   - The best window of the next 12 daylight hours, worked out from your own Wind limit
-- **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility under 3 miles is red. KP index turns amber at 4 and red at 5 unless you set your own in Settings. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
+- **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility is green at 3 statute miles (SM) or more and red below 3 SM. KP index turns amber at 4 and red at 5 unless you set your own in Settings. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
 - **Night notice** — after sunset or before sunrise, the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules), and the reminder is printed on the saved flight record
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)
@@ -479,7 +489,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Back up & restore** — see below
 - **Collapsible sections** — tap a section header to fold it up or open it, or use **Collapse all / Expand all**. Finished sections fold themselves and the next unfinished one opens, and on your first visit only the first section of each tab is open. Each header shows its count (like 9/12), a ✓ when it's finished and an amber ⚠ if something in it needs attention, even when folded. Your fold state is remembered
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it in Settings (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
-- **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/mi/ft and km/h/°C/km/m; your choice is remembered
+- **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/SM/ft and km/h/°C/km/m; your choice is remembered
 - **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention, or mark them N/A** — press and hold any item for a small menu. **Needs attention** marks it amber; flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag. **N/A for this flight** greys it out and takes it out of your progress; tap it to put it back
 - **Save a flight record** — tap **Save flight record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, your pilot name, drone and registration number from Settings, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-flight-record)
