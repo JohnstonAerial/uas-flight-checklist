@@ -95,6 +95,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.13
+
+- **Light or dark, your choice** — **⚙ Settings** has a new **Appearance** row: **Auto** follows your device (as before), or choose **Light** or **Dark**. Handy for Light in bright sun while your phone is in dark mode. Your choice is included in Back up & restore.
+- **Temperature now has warning colors** — the Temperature card is green in the normal range and turns amber and then red when it gets cold or hot. The standard points are cold amber at 40 °F (4 °C) and red at 14 °F (−10 °C), heat amber at 95 °F (35 °C) and red at 104 °F (40 °C). Set your own in **⚙ Settings** (**Cold warning** and **Heat warning**), based on your aircraft's operating range. They are included in Back up & restore.
+- **Clearer colors** — a truer red in both light and dark mode, and a gold amber in light mode, so caution and stop are easy to tell apart at a glance.
+
+---
+
 ## What's new in v3.8.12
 
 - **Easier to read in dark mode** — the green used for good conditions, the "Ready to fly" banner, section counts and the Back up message is now lighter in dark mode, so it no longer fades into the background.
@@ -499,7 +507,7 @@ Version 3 is a major update built around making the checklist *yours*:
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times, and the golden hour windows, with a link to the AfterGlow sky forecast for the same place
   - The best window of the next 12 daylight hours, worked out from your own Wind limit
-- **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility is green at 3 statute miles (SM) or more and red below 3 SM. KP index turns amber at 4 and red at 5 unless you set your own in Settings. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
+- **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility is green at 3 statute miles (SM) or more and red below 3 SM. KP index turns amber at 4 and red at 5 unless you set your own in Settings. Temperature is amber at 40 °F or below and 95 °F or above, and red at 14 °F or below and 104 °F or above, unless you set your own in Settings. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
 - **Night notice** — after sunset or before sunrise, the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules), and the reminder is printed on the saved flight record
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)

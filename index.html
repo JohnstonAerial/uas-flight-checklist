@@ -11,6 +11,9 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <meta name="apple-mobile-web-app-title" content="UAS Checklist">
 <meta name="theme-color" content="#0f2a4a">
+<script>/* manual light/dark choice (Settings > Appearance); Auto follows the device. Set before first paint to avoid a flash. */
+try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 <style>
   :root {
     --blue: #185FA5;
@@ -18,7 +21,7 @@
     --blue-mid: #378ADD;
     --green: #0F6E56;
     --green-light: #E1F5EE;
-    --amber: #B45309;
+    --amber: #CA8A04;
     --amber-light: #FFF4E0;
     --text: #1a1a1a;
     --text-muted: #666;
@@ -33,7 +36,7 @@
     --shadow: 0 2px 12px rgba(0,0,0,0.08);
   }
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       --text: #f0f0f0;
       --text-muted: #aaa;
       --text-light: #9a9a9a;
@@ -49,8 +52,25 @@
       --amber-light: #33240a;
       --shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
-    .wx-alert { color: #ff7b6e; }
+    :root:not([data-theme="light"]) .wx-alert { color: #ff3b30; }
   }
+  :root[data-theme="dark"] {
+      --text: #f0f0f0;
+      --text-muted: #aaa;
+      --text-light: #9a9a9a;
+      --link: #6db3f2;
+      --border: #333;
+      --bg: #111;
+      --card: #1e1e1e;
+      --section-bg: #181818;
+      --blue-light: #0c2a45;
+      --green: #3fcf9b;
+      --green-light: #0a2a22;
+      --amber: #F59E0B;
+      --amber-light: #33240a;
+      --shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  :root[data-theme="dark"] .wx-alert { color: #ff3b30; }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; width: 100%; overflow-x: hidden; margin: 0; padding: 0; }
   html { overflow-x: hidden; width: 100%; }
@@ -202,7 +222,7 @@
   .add-row input.add-url { flex: 1 1 100%; order: 2; font-size: 14px; }
   .add-row input:first-child { flex: 1 1 100%; }
   .add-row button { order: 3; margin-left: auto; padding: 9px 18px; font-size: 14px; }
-  .add-row input.bad, .add-row input.add-url.bad { border-color: var(--red, #c0392b); }
+  .add-row input.bad, .add-row input.add-url.bad { border-color: var(--red, #e0301e); }
   .item.has-link { flex-wrap: wrap; }
   .item-link { flex: 0 0 calc(100% - 36px); box-sizing: border-box; margin: -6px 0 0 36px; font-size: 13px; font-weight: 600; color: var(--blue); text-decoration: none; word-break: break-all; -webkit-user-select: none; user-select: none; }
   .item-link:active { opacity: .6; }
@@ -260,17 +280,18 @@
   .cust-tip { margin-top: 8px; padding: 8px 10px; background: var(--section-bg); border-radius: 10px; line-height: 1.4; }
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 200; max-width: 90%; background: #0F6E56; color: #fff; font-size: 13px; font-weight: 600; padding: 10px 16px; border-radius: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); text-align: center; transition: opacity 0.4s; }
   .toast.gone { opacity: 0; }
-  .bk-banner { display: none; margin: 8px 0 10px; padding: 10px 12px; border: 1px solid #c0392b; border-radius: 10px; background: rgba(192,57,43,.08); font-size: 13px; line-height: 1.35; color: var(--text); align-items: center; gap: 10px; }
+  .bk-banner { display: none; margin: 8px 0 10px; padding: 10px 12px; border: 1px solid #e0301e; border-radius: 10px; background: rgba(224,48,30,.08); font-size: 13px; line-height: 1.35; color: var(--text); align-items: center; gap: 10px; }
   body.bk-dirty .bk-banner { display: flex; }
   .panel.editing .bk-banner { display: none !important; }
   .bk-banner span { flex: 1; }
-  .bk-banner b { color: #c0392b; }
-  .bk-banner .bk-go { flex: none; font-family: inherit; font-size: 13px; font-weight: 700; color: #fff; background: #c0392b; border: 0; border-radius: 14px; padding: 7px 12px; cursor: pointer; }
+  .bk-banner b { color: #e0301e; }
+  .bk-banner .bk-go { flex: none; font-family: inherit; font-size: 13px; font-weight: 700; color: #fff; background: #e0301e; border: 0; border-radius: 14px; padding: 7px 12px; cursor: pointer; }
   .bk-banner .bk-x { flex: none; font-family: inherit; font-size: 16px; color: var(--text-muted); background: transparent; border: 0; padding: 4px 6px; cursor: pointer; }
-  .bk-warn { display: none; margin: 8px 0 10px; padding: 9px 11px; border: 1px solid #c0392b; border-radius: 10px; background: rgba(192,57,43,.08); font-size: 13px; line-height: 1.35; color: var(--text); }
+  .bk-warn { display: none; margin: 8px 0 10px; padding: 9px 11px; border: 1px solid #e0301e; border-radius: 10px; background: rgba(224,48,30,.08); font-size: 13px; line-height: 1.35; color: var(--text); }
   .panel.editing .bk-warn { display: block; }
-  .bk-warn b.k { color: #c0392b; }
-  @media (prefers-color-scheme: dark) { .bk-banner b { color: #ff7b6e; } .bk-banner { border-color: #ff7b6e; background: rgba(255,123,110,.10); } .bk-warn b.k { color: #ff7b6e; } .bk-warn { border-color: #ff7b6e; background: rgba(255,123,110,.10); } }
+  .bk-warn b.k { color: #e0301e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .bk-banner b { color: #ff3b30; } :root:not([data-theme="light"]) .bk-banner { border-color: #ff3b30; background: rgba(255,59,48,.10); } :root:not([data-theme="light"]) .bk-warn b.k { color: #ff3b30; } :root:not([data-theme="light"]) .bk-warn { border-color: #ff3b30; background: rgba(255,59,48,.10); } }
+  :root[data-theme="dark"] .bk-banner b { color: #ff3b30; } :root[data-theme="dark"] .bk-banner { border-color: #ff3b30; background: rgba(255,59,48,.10); } :root[data-theme="dark"] .bk-warn b.k { color: #ff3b30; } :root[data-theme="dark"] .bk-warn { border-color: #ff3b30; background: rgba(255,59,48,.10); }
 
   /* ── Preflight record ── */
   .pc-btns .rec-btn { width: 100%; text-align: center; border-radius: 20px; padding: 6px 12px; font-size: 12px; margin: 0; color: var(--blue); background: transparent; border: 1px solid var(--blue); font-family: inherit; cursor: pointer; min-height: 32px; font-weight: 600; }
@@ -383,10 +404,11 @@
   .xfer-btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 6px 0; }
   .xfer-box { width: 100%; font-family: ui-monospace, Menlo, monospace; font-size: 16px; color: var(--text); background: var(--section-bg); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; margin-top: 6px; resize: vertical; }
   .xfer-msg { min-height: 14px; margin-top: 6px; line-height: 1.4; color: var(--green); }
-  .xfer-msg.bad { color: var(--red, #c0392b); }
+  .xfer-msg.bad { color: var(--red, #e0301e); }
   .body-bak .xfer-msg:not(:empty) { margin: 4px 16px 14px; padding: 11px 14px; border: 1px solid var(--green); border-radius: 10px; background: var(--green-light); font-weight: 600; font-size: 14px; line-height: 1.35; }
-  .body-bak .xfer-msg.bad:not(:empty) { border-color: #c0392b; background: rgba(192,57,43,.08); }
-  @media (prefers-color-scheme: dark) { .body-bak .xfer-msg.bad:not(:empty) { border-color: #ff7b6e; background: rgba(255,123,110,.10); } }
+  .body-bak .xfer-msg.bad:not(:empty) { border-color: #e0301e; background: rgba(224,48,30,.08); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .body-bak .xfer-msg.bad:not(:empty) { border-color: #ff3b30; background: rgba(255,59,48,.10); } }
+  :root[data-theme="dark"] .body-bak .xfer-msg.bad:not(:empty) { border-color: #ff3b30; background: rgba(255,59,48,.10); }
   .item-grip { display: none; flex-shrink: 0; align-self: center; width: 28px; height: 32px; margin: -4px 0 -4px -6px; align-items: center; justify-content: center; font-size: 22px; line-height: 1; color: var(--text-light); cursor: grab; touch-action: none; -webkit-user-select: none; user-select: none; }
   .panel.editing .item-grip { display: flex; }
   .panel.editing .check-circle { display: none; }
@@ -495,7 +517,7 @@
   .wx-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .wx-chip { font-family: inherit; font-size: 12px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 5px 10px; cursor: pointer; }
   .wx-status { font-size: 12px; color: var(--text-muted); text-align: center; padding: 6px 0 2px; }
-  .wx-alert { color: #c0392b; } .wx-warn { color: var(--amber); } .wx-good { color: var(--green); }
+  .wx-alert { color: #e0301e; } .wx-warn { color: var(--amber); } .wx-good { color: var(--green); }
   .wx-key-prompt { font-size: 12px; color: var(--text-muted); background: var(--section-bg); border-radius: 8px; padding: 8px 10px; text-align: center; }
   .wx-key-prompt a { color: var(--link); }
   .wx-updated.wx-stale { color: var(--amber); font-weight: 600; }
@@ -514,7 +536,7 @@
   .wx-window.none .wx-window-t { color: var(--amber); font-weight: 600; }
   .wx-sun { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 8px; }
   .wx-tfr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-  .wx-tfr { display: block; width: 100%; padding: 9px; background: #c0392b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-tfr { display: block; width: 100%; padding: 9px; background: #e0301e; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-notam { display: block; width: 100%; padding: 9px; background: #7f3fbf; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-facmap { display: block; width: 100%; padding: 9px; background: #1f6f8b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-radar { display: block; width: 100%; padding: 9px; background: #1a6b3c; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
@@ -534,7 +556,7 @@
   @media print {
     .bk-banner { display: none !important; }
     @page { margin: 14mm 12mm; }
-    :root { --text:#000; --text-muted:#000; --text-light:#000; --card:#fff; --section-bg:#fff; --border:#999; --bg:#fff; --amber-light:#fff; }
+    :root:root:root { --green:#0F6E56; --green-light:#E1F5EE; --text:#000; --text-muted:#000; --text-light:#000; --card:#fff; --section-bg:#fff; --border:#999; --bg:#fff; --amber-light:#fff; }
     html, body { background: #fff !important; color: #000 !important; min-height: 0; }
     .header { position: static; background: none !important; color: #000 !important; box-shadow: none; padding: 0 0 6px; border-bottom: 2px solid #000; margin-bottom: 8px; }
     .header h1 { font-size: 16pt; }
@@ -578,7 +600,7 @@
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.12</p>
+      <p>Free Drone Preflight Checklist · v3.8.13</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1450,7 +1472,7 @@ function applyRegion(r, changeUnits) {
   document.querySelectorAll('.region-sel').forEach(sel => { sel.value = r; });
   const card = document.getElementById('region-card'); if (card) card.remove();
   if (changeUnits && (intl || prev === 'intl') && typeof toggleUnits === 'function') {
-    units = intl ? 'metric' : 'imperial'; store('wxUnits', units); updateUnitsButton(); if (typeof wlSync === 'function') wlSync(); if (lastDraw) lastDraw();
+    units = intl ? 'metric' : 'imperial'; store('wxUnits', units); updateUnitsButton(); if (typeof wlSync === 'function') { wlSync(); tpSync(); } if (lastDraw) lastDraw();
   }
   document.querySelectorAll('.panel').forEach(p => { if (typeof refreshCust === 'function') refreshCust(p); });
 }
@@ -1989,7 +2011,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -2009,7 +2031,7 @@ function xferWarm(el) {
   xferEncode(snap).then(code => { xferPre = { key, code }; }).catch(() => {});
 }
 // Back-up reminder: shown under the Settings / Back up & restore buttons after anything that a backup carries is changed
-const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'wxUnits'];
+const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'wxUnits', 'uasTheme'];
 let bkReady = false;
 setTimeout(() => { bkReady = true; }, 2000);
 function bkMark() { if (bkReady) document.body.classList.add('bk-dirty'); }
@@ -2247,7 +2269,10 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   wl.innerHTML = '<div class="wl-row"><span>🌬 Wind limit</span><span class="wl-ctl"><input type="number" inputmode="numeric" min="1" max="999" class="wl-w" aria-label="Maximum sustained wind"> / <input type="number" inputmode="numeric" min="1" max="999" class="wl-g" aria-label="Maximum gust"><span class="wl-unit">mph</span></span></div>' +
     '<div class="wl-hint">sustained / gusts · amber at about two-thirds, red at the limit.</div>' +
     '<div class="wl-row kp-row"><span>🧲 Kp warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-a" aria-label="Kp index where the warning turns amber"> / <input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-r" aria-label="Kp index where the warning turns red"></span></div>' +
-    '<div class="wl-hint">amber at / red at · from 1 to 9, standard 4 / 5. Higher Kp can disturb GPS and the compass.</div>';
+    '<div class="wl-hint">amber at / red at · from 1 to 9, standard 4 / 5. Higher Kp can disturb GPS and the compass.</div>' +
+    '<div class="wl-row tp-row"><span>🥶 Cold warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ca" aria-label="Temperature at or below which the warning turns amber"> / <input type="number" inputmode="decimal" class="tp-cr" aria-label="Temperature at or below which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
+    '<div class="wl-row tp-row"><span>🥵 Heat warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ha" aria-label="Temperature at or above which the warning turns amber"> / <input type="number" inputmode="decimal" class="tp-hr" aria-label="Temperature at or above which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
+    '<div class="wl-hint">amber at / red at · standard cold 40 / 14 °F (4 / −10 °C), heat 95 / 104 °F (35 / 40 °C). Check your aircraft\'s operating range.</div>';
   const fnb = document.createElement('div'); fnb.className = 'fn-block';
   fnb.innerHTML = '<div class="fn-row"><span>📋 Record file name starts with</span><input type="text" class="fn-in" maxlength="40" placeholder="flight-record" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Saved flight record file names start with" oninput="fnSave(this)"></div>' +
     '<div class="fn-hint"><div class="fn-ex"></div>Date, time and customer are added for you.</div>';
@@ -2265,7 +2290,11 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     pdfPrefSave(bt.dataset.k === 'layout' ? bt.dataset.v : pdfLayout(), bt.dataset.k === 'paper' ? bt.dataset.v : pdfPaper());
     pdfSetSync();
   });
-  bodySet.append(note, reg, cust, keep, wl, fnb, acb, pdb); bodyBak.append(makeXfer());
+  const thb = document.createElement('div'); thb.className = 'pdfset themeset';
+  thb.innerHTML = '<div class="pd-row"><span>🌗 Appearance</span><div class="pd-seg" role="radiogroup" aria-label="Appearance"><button type="button" role="radio" data-th="auto">Auto</button><button type="button" role="radio" data-th="light">Light</button><button type="button" role="radio" data-th="dark">Dark</button></div></div>' +
+    '<div class="pd-hint">Auto follows your device. Choose Light or Dark to override it, for example Light in bright sun.</div>';
+  thb.addEventListener('click', e => { const bt = e.target.closest('button[data-th]'); if (bt) themeSet(bt.dataset.th); });
+  bodySet.append(note, thb, reg, cust, keep, wl, fnb, acb, pdb); bodyBak.append(makeXfer());
   [bodySet, bodyBak].forEach((bd, bi) => {           // a small arrow at the bottom closes the section and goes back up to the buttons
     const up = document.createElement('button'); up.type = 'button'; up.className = 'set-up'; up.textContent = '\u25B4 ' + (bi ? 'Close back up & restore' : 'Close settings');
     
@@ -2308,7 +2337,18 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   panelEl.appendChild(coffee);
   panelEl.appendChild(help);
 });
-function pdfSetSync() {                                // show the saved PDF choices in every tab's Settings
+function themeGet() { try { const t = JSON.parse(localStorage.getItem('uasTheme') || '""'); return t === 'light' || t === 'dark' ? t : 'auto'; } catch (e) { return 'auto'; } }
+function themeApply() {
+  const t = themeGet();
+  if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
+  document.querySelectorAll('.themeset button[data-th]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.th === t)));
+}
+function themeSet(t) {
+  try { if (t === 'light' || t === 'dark') localStorage.setItem('uasTheme', JSON.stringify(t)); else localStorage.removeItem('uasTheme'); } catch (e) {}
+  themeApply();
+}
+function pdfSetSync() {
+  themeApply();                                // show the saved PDF choices in every tab's Settings
   if (typeof pdfLayout !== 'function') return;          // the PDF code loads after this block
   const L = pdfLayout(), P = pdfPaper();
   document.querySelectorAll('.pdfset button[data-k]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.k === 'layout' ? b.dataset.v === L : b.dataset.v === P)));
@@ -2855,6 +2895,23 @@ function goldenHours(dayISO, lat, lon, offSec) {
 const fmtTemp = (f) => isMetric() ? Math.round((f - 32) * 5 / 9) + '°C' : Math.round(f) + '°F';
 const fmtVis = (m) => m == null ? '—' : isMetric() ? (m / 1000).toFixed(1) + ' km' : (m / 1609.34).toFixed(1) + ' SM';
 const fmtPrecip = (mm) => isMetric() ? (mm < 10 ? mm.toFixed(1) : Math.round(mm)) + '\u00a0mm' : (mm / 25.4).toFixed(2) + '\u00a0in';
+const TEMP_DEF = { ca: 40, cr: 14, ha: 95, hr: 104 };   // standard limits in °F: cold amber/red (at or below), heat amber/red (at or above)
+function tempLimits() {
+  let o = null; try { o = JSON.parse(localStorage.getItem('uasTempLimits')); } catch (e) {}
+  const ok = (v) => typeof v === 'number' && isFinite(v) && v > -100 && v < 200 ? v : null;
+  const u = { ca: ok(o && o.ca), cr: ok(o && o.cr), ha: ok(o && o.ha), hr: ok(o && o.hr) };
+  const ca = u.ca != null ? u.ca : TEMP_DEF.ca, ha = u.ha != null ? u.ha : TEMP_DEF.ha;
+  let cr = u.cr != null ? u.cr : TEMP_DEF.cr, hr = u.hr != null ? u.hr : TEMP_DEF.hr;
+  if (cr > ca) cr = ca;                    // red can never sit on the milder side of amber
+  if (hr < ha) hr = ha;
+  return { ca: ca, cr: cr, ha: ha, hr: hr, u: u };
+}
+function tempColor(f) {
+  const l = tempLimits();
+  if (f <= l.cr || f >= l.hr) return 'wx-alert';
+  if (f <= l.ca || f >= l.ha) return 'wx-warn';
+  return 'wx-good';
+}
 const fmtDist = (mi) => isMetric() ? Math.round(mi * 1.609344) + ' km' : Math.round(mi) + ' mi';
 const fmtAlt = (ft) => isMetric() ? (Math.round(ft * 0.3048 / 10) * 10).toLocaleString() + ' m' : Number(ft).toLocaleString() + ' ft';
 function updateUnitsButton() {
@@ -2865,7 +2922,7 @@ function toggleUnits() {
   units = isMetric() ? 'imperial' : 'metric';
   store('wxUnits', units);
   updateUnitsButton();
-  wlSync();
+  wlSync(); if (typeof tpSync === 'function') tpSync();
   if (lastDraw) { lastDraw(); }
 }
 // Wind limit boxes: stored in mph, shown in the units in use; an empty box means the standard limit (shown greyed)
@@ -2900,7 +2957,26 @@ function kpSave() {
   if (lastDraw) { lastDraw(); }
 }
 document.querySelectorAll('.kp-a, .kp-r').forEach(i => i.addEventListener('input', kpSave));
-wlSync(); kpSync(); fnSync(); acSync();
+// Temperature warning boxes: stored in °F, shown in the units in use; an empty box means the standard point (shown greyed)
+const TP_K = ['ca', 'cr', 'ha', 'hr'];
+const tpShow = (f) => isMetric() ? Math.round((f - 32) * 5 / 9) : Math.round(f);
+function tpSync() {
+  const l = tempLimits(), act = document.activeElement;
+  TP_K.forEach(k => document.querySelectorAll('.tp-' + k).forEach(i => { i.placeholder = String(tpShow(TEMP_DEF[k])); if (i !== act) i.value = l.u[k] != null ? String(tpShow(l.u[k])) : ''; }));
+  document.querySelectorAll('.tp-unit').forEach(u => { u.textContent = isMetric() ? '°C' : '°F'; });
+}
+function tpSave() {
+  const a = document.activeElement, cur = tempLimits(), o = {};
+  TP_K.forEach(k => {
+    if (a && a.classList.contains('tp-' + k)) { const v = parseFloat(a.value); o[k] = isFinite(v) ? Math.round((isMetric() ? v * 9 / 5 + 32 : v) * 10) / 10 : null; }
+    else o[k] = cur.u[k];
+  });
+  try { if (TP_K.some(k => o[k] != null)) localStorage.setItem('uasTempLimits', JSON.stringify(o)); else localStorage.removeItem('uasTempLimits'); } catch (e) {}
+  tpSync();
+  if (lastDraw) { lastDraw(); }
+}
+document.querySelectorAll('.tp-ca, .tp-cr, .tp-ha, .tp-hr').forEach(i => i.addEventListener('input', tpSave));
+wlSync(); kpSync(); tpSync(); fnSync(); acSync();
 
 let site = recall('wxSite', null);       // {name, lat, lon}, or null = use my current location
 let recentSites = recall('wxRecent', []);
@@ -3336,7 +3412,7 @@ async function renderWeather(lat, lon, attempt = 1) {
           </div>
           <div class="wx-item">
             <div class="wx-label">Temperature</div>
-            <div class="wx-value">${tempOk ? fmtTemp(wx.main.temp) : '—'}</div>
+            <div class="wx-value ${tempOk ? tempColor(wx.main.temp) : ''}">${tempOk ? fmtTemp(wx.main.temp) : '—'}</div>
             ${obsT ? `<div class="wx-sub" data-rec-age="${Date.now() - obsT.ageMin * 60000}">${obsT.station} · ${fmtDist(obsT.dist)} away · ${ageText(obsT.ageMin * 60000)}</div>` : ''}
             <div class="wx-label wx-vislab">Visibility</div>
             <div class="wx-value wx-vis-val ${visBelowMin() ? 'wx-alert' : (typeof visM === 'number' && visM >= 4828 ? 'wx-good' : '')}">${visTxt()}<span class="wx-vis-src">${visSrc()}</span></div>
