@@ -14,7 +14,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 <table>
   <tr>
-    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions on a rainy morning: gusty model wind in red, a low cloud ceiling and humidity in orange, light rain in red, and a Best window suggestion for later in the day" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions on a breezy afternoon: wind in orange, clear skies, no precipitation, and an orange Possible window box that says Fly with caution" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
     <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/01-checklist-dark.png"><img src="screenshots/01-checklist-light.png" alt="Checklist with progress bar, Before leaving home items and checked boxes" width="170"></picture><br><sub><b>Checklist</b></sub></td>
   </tr>
   <tr>
