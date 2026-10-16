@@ -22,7 +22,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
     <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/04-reorder-dark.png"><img src="screenshots/04-reorder-light.png" alt="Customize mode with drag handles, Hide buttons and the Editing your list bar" width="170"></picture><br><sub><b>Customize: drag, hide, add</b></sub></td>
   </tr>
   <tr>
-    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/02-settings-dark.png"><img src="screenshots/02-settings-light.png" alt="Settings panel with Where you fly, Checklist items, Clear saved progress after, Wind limit, Kp warning and Record file name" width="170"></picture><br><sub><b>Settings</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/02-settings-dark.png"><img src="screenshots/02-settings-light.png" alt="Settings panel with Appearance, Where you fly, Clear saved progress after, limits, Record file name and Default pilot, drone and reg. #" width="170"></picture><br><sub><b>Settings</b></sub></td>
     <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/03-customize-dark.png"><img src="screenshots/03-customize-light.png" alt="Customize panel with tab name, Hide this tab and the Tab icon picker" width="170"></picture><br><sub><b>Rename tabs, pick an icon</b></sub></td>
   </tr>
   <tr>
@@ -91,7 +91,21 @@ UAS Flight Checklists v3.7.12 · checklist.johnstonaerial.com
 
 </details>
 
-Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out, and the **Pilot** and **Drone** lines come from **⚙ Settings**. Anything you leave blank is left out of the record.
+Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out, and the **Pilot**, **Drone** and **Reg. #** lines come from the tab's own Customize boxes, or from the defaults in **⚙ Settings** when those are blank. Anything you leave blank is left out of the record.
+
+---
+
+## What's new in v3.9
+
+- **One tab per drone** — each tab can now have its own **Pilot**, **Drone** and **Reg. #**. In **Customize**, type them in the boxes under **For records and PDFs saved from this tab**. They print on that tab's saved flight records and checklist PDF. A box you leave empty uses the default from **⚙ Settings**, so you only fill in what's different. The three Settings boxes are now labeled **Default pilot**, **Default drone** and **Default reg. #**.
+- **Clone another tab onto this one** — in **Customize**, **Clone another tab onto this one…** makes the tab you're on an exact, editable copy of another tab, including its Drone, Reg. # and Pilot. Handy if you fly several drones and want the same list on each tab. You pick the tab to copy from, and a confirmation names both tabs before anything is replaced. **Undo** works until you leave or reload the page, and **Restore original list** brings the tab's own list back.
+- **Copy to… for items you added** — each item you added now has a **Copy to…** button. It copies the item, and its link, to another tab. If that tab already has an item with the same name in the section, it says so instead of making a duplicate.
+- **Six more drone icons, in color** — pick from drawn icons for a Mavic-style drone, FPV, whoop, wing, hex and Inspire-style drone. A color row under the icons recolors the drawn ones. **Restore original list** clears the color.
+- **A tab icon picker that folds away** — Customize shows the current icon with a **Change ›** button. The icon grid and colors open only when you want them.
+- **A bottom bar that names the tab** — while you customize, the bar at the bottom of the screen says which tab you're editing and follows the name if you rename it. Tab chips on the bar jump to another tab, so you don't scroll up to switch.
+- **A shorter Customize screen** — while you customize, **Appearance**, **Where you fly**, the limits, the record file name and the PDF settings are hidden, so your checklist sits much closer to the top. They come back when you press **Done**.
+- **Hiding a tab no longer jumps to the top** — hide a tab and you land on the next tab's Customize, not at the top of the page.
+- **A clearer back-up reminder** — the line in Customize now reads **After you make changes, back them up.** Your customizing lives only on this device and browser, so a backup is how you keep it.
 
 ---
 
@@ -529,7 +543,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
 - **Works outside the USA** — the first time you open it, choose **USA** or **Outside USA**. Choosing outside the USA hides the items marked "(US)" (TFR and LAANC checks and the TFR recheck on site), rewords the NOTAM item so it isn't tied to a US website, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. Change it any time in **⚙ Settings**
 - **Customize the list** — open **⚙ Settings** and tap **Customize** (in the **Your checklist & tab** row) to hide items that don't apply where you fly, add your own items to any section, change or delete the ones you added with **Edit** and **Delete**, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
-- **Rename, re-icon or hide tabs** — in Customize mode, rename the tab you're on, give it a different icon (pick one, type your own emoji, or choose none) or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Renaming and changing the icon change only how the tab looks; use Hide and Add to change what's inside it
+- **Rename, re-icon or hide tabs** — in Customize mode, rename the tab you're on, give it a different icon (pick a drawn drone icon and color, type your own emoji, or choose none), set its own Pilot, Drone and Reg. #, clone another tab onto it, or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Items you added can be copied to another tab with **Copy to…**. Renaming and changing the icon change only how the tab looks; use Hide and Add to change what's inside it
 - **Back up & restore** — see below
 - **Collapsible sections** — tap a section header to fold it up or open it, or use the **Expand | Collapse** buttons on the progress card. Finished sections fold themselves and the next unfinished one opens, and on your first visit only the first section of each tab is open. Each header shows its count (like 9/12), a ✓ when it's finished and an orange ⚠ if something in it needs attention, even when folded. Your fold state is remembered
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it in Settings (1 hour, 4 hours, 12 hours, 24 hours or 3 days)

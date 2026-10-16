@@ -69,7 +69,7 @@ The app keeps one setup at a time on your device: your tab names and icons, whic
 **Example: a "Timelapse" setup**
 
 1. Tap **⚙ Settings**, then **Customize** in the **Your checklist & tab** row.
-2. Rename a tab (for example, **Timelapse**) in the **Tab name** box. You can also change its icon under **Tab icon**: pick one, type your own emoji, or choose **No icon**.
+2. Rename a tab (for example, **Timelapse**) in the **Tab name** box. You can also change its icon: tap **Change ›** next to **Tab icon**, then pick a drone icon (and a color), type your own emoji, or choose **No icon**.
 3. Tap **Hide** on items you don't need, and add your own at the bottom of any section. Use **Hide this tab** on tabs you don't want to see. Tap **✓ Done**.
 4. In **💾 Back up & restore**, untick **Include current progress**, then tap **Save file**.
 5. Rename the file so you can tell it apart, for example `uas-checklist-backup-TIMELAPSE.json`.
@@ -95,6 +95,12 @@ Spaces aren't allowed in a link: write `%20` for a space, `%0A` for a new line a
 3. In the checklist's **Link or app address** box, type `shortcuts://run-shortcut?name=Open%20Air%20Aware`. The name must match the shortcut's name exactly, with `%20` for each space.
 
 The item then shows **Open Air Aware ›**, the shortcut's own name. Tapping it runs the shortcut, which opens your app. The Shortcuts app may flash on screen first, and iOS may ask you to allow it the first time. This works on iPhone and iPad only.
+
+**Tip: one tab for each drone.** If you fly more than one aircraft, make a tab for each. Open **Customize** on the tab you want to set up and tap **Clone another tab onto this one…**. Choose the tab to copy from, read the confirmation (it names both tabs, and the one you're on is the one that gets replaced), and tap **Replace**. Then rename the tab, pick its icon, and type its own **Drone** and **Reg. #** under **For records and PDFs saved from this tab**. **Undo** appears right after, and works until you leave or reload the page. **Restore original list** brings the tab's own list back. Back up afterwards.
+
+**Copy one item to another tab.** Each item you added has a **Copy to…** button in **Customize**. Choose the tab, and the item and its link are copied into the same section. If that tab already has the item, it tells you instead of adding a second one.
+
+**Switch tabs while customizing.** The bar at the bottom of the screen shows the tab you're editing, and small tab buttons on it jump to another tab, so you don't have to scroll up.
 
 **Change or delete an item you added.** In **Customize**, each item you added has a blue **Edit** button and a red **Delete** button on a row under it. **Edit** opens the text and the link in place; **Save** keeps the item's place and checkmark. The **Link or app address** box also suggests links you've already saved, so you can tap one instead of typing it again. Back up afterwards.
 
@@ -167,7 +173,9 @@ The line above the buttons shows the PDF layout and paper size in use, for examp
 
 You get one file, named like `flight-record-2026-10-06-1415-smith-roofing.pdf` (or `.txt` for text), that opens on any device. The PDF has real check boxes and page numbers. Items you flagged are listed as NEEDS ATTENTION. Items you hid are left out and items you added are included. The record is made on your device and isn't sent anywhere. To put your own name at the front of the file, such as `johnston-aerial`, type it in **Record file name starts with** at the bottom of **⚙ Settings**. The date, time and customer are still added.
 
-Want your name and aircraft printed on every record? In **⚙ Settings**, type your name in **Pilot**, your drone in **Drone** and its registration number in **Reg. #**. They are printed near the top of each saved record, and filled in on the checklist **PDF** too. They stay on that device, and **Back up & restore** carries them, so you can keep one backup for each drone and restore the one you're flying. Leave a box empty and nothing is printed for it.
+Want your name and aircraft printed on every record? In **⚙ Settings**, type your name in **Default pilot**, your drone in **Default drone** and its registration number in **Default reg. #**. They are printed near the top of each saved record, and filled in on the checklist **PDF** too. They stay on that device, and **Back up & restore** carries them. Leave a box empty and nothing is printed for it.
+
+**Fly more than one drone?** Give each drone its own tab. Tap **⚙ Settings**, then **Customize**, and under **For records and PDFs saved from this tab** type that tab's **Pilot**, **Drone** and **Reg. #**. A box you leave empty uses the default from Settings. To start a new drone with the same list, use **Clone another tab onto this one…** (see "Make your own profiles"). Back up when you're done.
 
 If you close the Share sheet without choosing anything, the Save record box stays open with what you typed. If you close the box by tapping outside it, what you typed comes back for the next 12 hours. It is cleared once you save or copy the record, or tap **Cancel**.
 

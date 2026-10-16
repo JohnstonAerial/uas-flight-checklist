@@ -115,9 +115,23 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .tab-edit .cust-btn:disabled { opacity: 0.4; cursor: default; }
   .tab-note { margin-top: 4px; }
   .tab-icons { margin-top: 10px; text-align: center; }
+  .ti-head { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .ti-head .ti-label { display: inline; margin: 0; }
+  .ti-cur { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; font-size: 24px; line-height: 1; }
+  .ti-cur svg { display: block; width: 26px; height: 26px; }
+  .ti-head .cust-btn { font-size: 13px; padding: 5px 12px; }
+  .ti-body { margin-top: 8px; }
+  .ti-body[hidden] { display: none; }
   .ti-label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
   .ti-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
   .ti-btn { font-size: 22px; line-height: 1; width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); cursor: pointer; padding: 0; }
+  .ti-colors { margin-top: 10px; text-align: center; }
+  .ti-colors[hidden] { display: none; }
+  .tc-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; margin-top: 6px; }
+  .tc-dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--card); box-shadow: 0 0 0 1px var(--border); cursor: pointer; padding: 0; }
+  .tc-dot.sel { box-shadow: 0 0 0 2px var(--text); }
+  .tc-auto { font-family: inherit; font-size: 12px; color: var(--link); background: transparent; border: 1px solid var(--border); border-radius: 14px; padding: 4px 11px; cursor: pointer; }
+  .tc-auto.sel { border: 2px solid var(--text); padding: 3px 10px; }
   .ti-btn.sel { border: 2px solid var(--blue-mid); }
   .ti-more { margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
   .ti-more input { font-family: inherit; font-size: 16px; width: 11em; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px; text-align: center; }
@@ -221,6 +235,19 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .item.custom .cust-acts .item-x { margin-left: 0; color: var(--del); border-color: var(--del); border-color: color-mix(in srgb, var(--del) 45%, transparent); }
   .item-ed { font-family: inherit; font-size: 11px; color: var(--link); background: transparent; border: 1px solid var(--border); border-color: color-mix(in srgb, var(--link) 45%, transparent); border-radius: 12px; padding: 3px 11px; cursor: pointer; }
   .item.custom.ce-open > .item-text, .item.custom.ce-open > .item-link, .item.custom.ce-open > .cust-acts { display: none !important; }
+  .tab-ac-wrap { margin: 10px 0 4px; }
+  .tab-ac-lbl { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+  .tab-clone { margin: 8px 0 4px; }
+  .clone-box { margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .clone-box[hidden] { display: none; }
+  .clone-box .cb-text { flex: 0 0 100%; font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  .clone-box .cb-text.ok { color: var(--green); }
+  .clone-box .cb-text.warn { color: var(--del); }
+  .cust-copy { flex: 0 0 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 4px; }
+  .panel:not(.editing) .cust-copy { display: none; }
+  .cust-copy .cc-label { flex: 0 0 100%; font-size: 11px; color: var(--text-muted); }
+  .cust-copy .cc-msg { flex: 0 0 100%; font-size: 12px; color: var(--green); }
+  .cust-copy .cc-msg.bad { color: var(--del); }
   .cust-edit { flex: 1 1 0; min-width: 0; }
   .cust-edit label { display: block; font-size: 11px; color: var(--text-muted); margin: 0 2px 3px; }
   .cust-edit input { width: 100%; box-sizing: border-box; font-family: inherit; font-size: 16px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; -webkit-user-select: text; user-select: text; }
@@ -298,7 +325,14 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .pc-btns .reset-inline, .pc-btns .sec-all { width: 100%; text-align: center; border-radius: 20px; padding: 6px 12px; font-size: 12px; margin: 0; color: var(--text-muted); background: transparent; border: 1px solid var(--border); font-family: inherit; cursor: pointer; }
   .saved-note { font-size: 11px; color: var(--text-light); text-align: center; padding: 0 16px 8px; }
   .edit-bar { display: none; position: fixed; left: 0; right: 0; bottom: 0; max-width: 600px; margin: 0 auto; z-index: 50; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--border); border-bottom: none; border-radius: 14px 14px 0 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.18); padding: 10px 14px calc(10px + env(safe-area-inset-bottom)) 16px; font-size: 13px; font-weight: 600; color: var(--text); }
-  .panel.editing { padding-bottom: 76px; }
+  .panel.editing { padding-bottom: 124px; }
+  .edit-bar { flex-wrap: wrap; row-gap: 6px; }
+  .edit-bar .eb-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1 1 0; margin-right: 8px; }
+  .eb-chips { flex: 0 0 100%; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; }
+  .eb-chip { display: inline-flex; align-items: center; gap: 5px; flex: 0 0 auto; padding: 5px 10px; font-size: 12px; }
+  .eb-chip .eb-ico { display: inline-flex; width: 16px; height: 16px; align-items: center; justify-content: center; }
+  .eb-chip .eb-ico svg { width: 16px; height: 16px; }
+  .eb-chip.on { outline: 2px solid var(--link); outline-offset: -1px; }
   .panel.editing .edit-bar { display: flex; }
   .cust-tip { margin-top: 8px; padding: 8px 10px; background: var(--section-bg); border-radius: 10px; line-height: 1.4; }
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 200; max-width: 90%; background: #0F6E56; color: #fff; font-size: 13px; font-weight: 600; padding: 10px 16px; border-radius: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); text-align: center; transition: opacity 0.4s; }
@@ -402,6 +436,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .ac-block .fn-hint { grid-column: 1 / -1; margin-top: 0; }
   .fn-hint { font-size: 11px; line-height: 1.4; color: var(--text-light); margin-top: 6px; overflow-wrap: anywhere; }
   .region-hint { flex: 1 1 100%; font-size: 11px; line-height: 1.4; color: var(--text-light); margin-top: -2px; }
+  .panel.editing .body-set > .themeset, .panel.editing .body-set > .region-row, .panel.editing .body-set > .settings-note, .panel.editing .body-set > .keep-row:not(.region-row), .panel.editing .body-set > .wl-block, .panel.editing .body-set > .fn-block, .panel.editing .body-set > .pdfset:not(.themeset) { display: none; }
   .panel.editing .body-set .cust-row { flex-direction: column; align-items: stretch; gap: 6px; text-align: left; }
   .panel.editing .body-set .cust-row::before { font-weight: 600; font-size: 14px; color: var(--text); }
   .panel.editing .body-set .cust-row .tab-edit { justify-content: flex-start; }
@@ -596,7 +631,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     .tab-lbl { display: inline; }
     .tab.active { display: block; padding: 6px 0 0; font-size: 13pt; text-align: left; color: #000 !important; border: 0; }
     .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .edit-note, .progress-card, .complete-banner, .flag-hint, .saved-note, .coffee-note, .foot-links,
-    .edit-bar, .toast, .item-menu, .item-link, .rec-overlay, .rec-btn, .pc-btns, .pc-mini, .add-row, .item-x, .item-ed, .cust-acts, .cust-edit, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
+    .edit-bar, .toast, .item-menu, .item-link, .rec-overlay, .rec-btn, .pc-btns, .pc-mini, .add-row, .item-x, .item-ed, .cust-acts, .cust-copy, .cust-edit, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
     .content { max-width: none; padding: 0; margin: 0; }
     .panel { padding: 0; }
     .print-fields { display: block; margin: 0 0 4px; }
@@ -627,7 +662,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.14</p>
+      <p>Free Drone Preflight Checklist · v3.9</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1672,7 +1707,9 @@ function addItemButton(it) {
     const acts = document.createElement('div'); acts.className = 'cust-acts';
     const ed = document.createElement('button'); ed.type = 'button'; ed.className = 'item-ed'; ed.textContent = 'Edit';
     ed.setAttribute('onclick', 'itemEdit(event, this)');
-    acts.appendChild(ed); acts.appendChild(b); it.appendChild(acts);
+    const cp = document.createElement('button'); cp.type = 'button'; cp.className = 'item-ed item-cp'; cp.textContent = 'Copy to\u2026';
+    cp.setAttribute('onclick', 'itemCopy(event, this)');
+    acts.appendChild(cp); acts.appendChild(ed); acts.appendChild(b); it.appendChild(acts);
   } else it.appendChild(b);
   labelItemButton(it);
 }
@@ -1720,6 +1757,113 @@ function setItemLink(it, lk) {
   a.addEventListener('pointerdown', e => e.stopPropagation());
   const acts = it.querySelector(':scope > .cust-acts'); it.insertBefore(a, acts);
   it.classList.add('has-link');
+}
+function itemCopy(e, btn) {
+  e.stopPropagation();
+  const it = btn.closest('.item'); if (!it) return;
+  const old = it.querySelector(':scope > .cust-copy'); if (old) { old.remove(); return; }
+  const panelEl = it.closest('.panel'), pid = panelEl.id.replace('panel-', '');
+  const sec = sectionTitleOf(it.closest('.section')), text = itemTextOf(it);
+  const rec = custFor(panelEl.id).added.find(a => a.sec === sec && a.text === text); if (!rec) return;
+  const box = document.createElement('div'); box.className = 'cust-copy';
+  box.addEventListener('click', ev => ev.stopPropagation());
+  box.addEventListener('pointerdown', ev => ev.stopPropagation());
+  const lab = document.createElement('div'); lab.className = 'cc-label'; lab.textContent = 'Copy this item to which tab?'; box.appendChild(lab);
+  const msg = document.createElement('div'); msg.className = 'cc-msg'; msg.hidden = true;
+  tabEls.filter(t => t.dataset.pid && t.dataset.pid !== pid && !t.classList.contains('tab-hidden')).forEach(t => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'item-ed'; b.textContent = tabName(t);
+    b.onclick = () => {
+      const tp = document.getElementById('panel-' + t.dataset.pid); if (!tp) return;
+      const secs = [...tp.querySelectorAll('.section')]; if (!secs.length) return;
+      const tsec = secs.find(x => sectionTitleOf(x) === rec.sec) || secs[0], tname = sectionTitleOf(tsec);
+      const tc = custFor(tp.id);
+      msg.hidden = false;
+      if (tc.added.some(a => a.sec === tname && a.text === rec.text)) { msg.className = 'cc-msg bad'; msg.textContent = 'That tab already has this item in ' + tname + '.'; return; }
+      const nr = { sec: tname, text: rec.text }; if (rec.url) nr.url = rec.url;
+      tc.added.push(nr);
+      tsec.querySelector('.section-card').appendChild(makeItem(nr.text, nr.url));
+      custSave(); refreshCust(tp); saveProgress();
+      msg.className = 'cc-msg'; msg.textContent = '\u2713 Copied to ' + tabName(t) + ' (' + tname + ').';
+    };
+    box.appendChild(b);
+  });
+  if (box.children.length === 1) { msg.hidden = false; msg.className = 'cc-msg bad'; msg.textContent = 'You have no other visible tabs to copy to.'; }
+  const cl = document.createElement('button'); cl.type = 'button'; cl.className = 'item-ed'; cl.style.color = 'var(--text-muted)'; cl.textContent = 'Close';
+  cl.onclick = () => box.remove(); box.appendChild(cl); box.appendChild(msg);
+  it.appendChild(box);
+}
+function cloneOpen(btn) {
+  const panelEl = btn.closest('.panel'), pid = panelEl.id.replace('panel-', ''), box = panelEl.querySelector('.clone-box');
+  if (!box.hidden) { box.hidden = true; return; }
+  const me = tabEls.find(t => t.dataset.pid === pid), myName = me ? tabName(me) : 'this tab';
+  const msg = (cls, t) => { const d = document.createElement('div'); d.className = 'cb-text ' + cls; d.textContent = t; return d; };
+  const btnOf = (label, cls, fn) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'cust-btn' + (cls ? ' ' + cls : ''); b.textContent = label; b.onclick = fn; return b; };
+  const choose = () => {
+    box.innerHTML = ''; box.hidden = false;
+    const others = tabEls.filter(t => t.dataset.pid && t.dataset.pid !== pid && !t.classList.contains('tab-hidden'));
+    box.appendChild(msg('', others.length ? 'Copy which tab onto ' + myName + '? (' + myName + ' is the tab you are on and the one that gets replaced.)' : 'You have no other visible tabs to clone.'));
+    others.forEach(t => box.appendChild(btnOf(tabName(t), '', () => confirmIt(t))));
+    box.appendChild(btnOf('Close', '', () => { box.hidden = true; }));
+  };
+  const confirmIt = (t) => {
+    const n = cloneItems(t.dataset.pid).reduce((a, x) => a + x.length, 0);
+    box.innerHTML = '';
+    box.appendChild(msg('warn', 'Replace ' + myName + ' with a copy of ' + tabName(t) + '?'));
+    box.appendChild(msg('', 'Everything on ' + myName + ' is replaced with ' + tabName(t) + ' (' + n + ' items). Your other tabs are not changed. "Restore original list" brings ' + myName + '\'s own original items back.'));
+    box.appendChild(msg('', '\uD83D\uDCBE Back up first: Settings > Back up & restore. Undo only works until you leave or reload this page.'));
+    box.appendChild(btnOf('Replace ' + myName, 'primary', () => {
+      const snap = JSON.parse(JSON.stringify(custFor(panelEl.id))), sd = (tabsCfg.drone || {})[pid], sr = (tabsCfg.reg || {})[pid], spl = (tabsCfg.pilot || {})[pid];
+      cloneTab(panelEl, t.dataset.pid);
+      box.innerHTML = '';
+      box.appendChild(msg('ok', '\u2713 ' + myName + ' is now a copy of ' + tabName(t) + '. Rename it above, then tweak it.'));
+      box.appendChild(btnOf('Undo', '', () => {
+        cust[panelEl.id] = snap; custSave(); rebuildCust(panelEl); saveProgress();
+        if (sd) tabsCfg.drone[pid] = sd; else delete tabsCfg.drone[pid];
+        if (sr) tabsCfg.reg[pid] = sr; else delete tabsCfg.reg[pid];
+        if (!tabsCfg.pilot) tabsCfg.pilot = {};
+        if (spl) tabsCfg.pilot[pid] = spl; else delete tabsCfg.pilot[pid];
+        tabsSave(); refreshTabs();
+        box.innerHTML = ''; box.appendChild(msg('ok', '\u2713 Undone. ' + myName + ' is back the way it was.'));
+      }));
+    }));
+    box.appendChild(btnOf('Cancel', '', choose));
+  };
+  choose();
+}
+function rebuildCust(panelEl) {            // redraw a tab's customizations from saved data
+  const c = custFor(panelEl.id), secs = [...panelEl.querySelectorAll('.section')];
+  panelEl.querySelectorAll('.item.custom').forEach(it => it.remove());
+  panelEl.querySelectorAll('.item.is-hidden').forEach(it => it.classList.remove('is-hidden'));
+  (c.added || []).forEach(a => {
+    const sec = secs.find(x => sectionTitleOf(x) === a.sec) || secs[secs.length - 1];
+    if (sec) sec.querySelector('.section-card').appendChild(makeItem(a.text, a.url));
+  });
+  baseKeyMap(panelEl).forEach((k, it) => { if ((c.hidden || []).includes(k)) it.classList.add('is-hidden'); });
+  applyOrder(panelEl); refreshCust(panelEl);
+}
+function cloneItems(srcPid) {            // what the source tab shows now, per section, in order: [{text, url}]
+  const src = document.getElementById('panel-' + srcPid);
+  return [...src.querySelectorAll('.section')].map(sec => [...sec.querySelectorAll('.section-card > .item')]
+    .filter(it => !it.classList.contains('is-hidden'))
+    .map(it => { const a = it.querySelector(':scope > .item-link'); return { text: itemTextOf(it), url: a ? a.getAttribute('href') : '' }; }));
+}
+function cloneTab(panelEl, srcPid) {
+  const data = cloneItems(srcPid), secs = [...panelEl.querySelectorAll('.section')], c = custFor(panelEl.id);
+  panelEl.querySelectorAll('.item.custom').forEach(it => it.remove());
+  c.hidden = []; c.added = []; c.order = {};
+  baseKeyMap(panelEl).forEach((k, it) => { it.classList.remove('checked', 'flagged', 'na'); it.classList.add('is-hidden'); c.hidden.push(k); });
+  data.forEach((items, i) => {
+    const sec = secs[Math.min(i, secs.length - 1)], name = sectionTitleOf(sec), card = sec.querySelector('.section-card');
+    items.forEach(x => {
+      if (c.added.some(a => a.sec === name && a.text === x.text)) return;
+      const rec = { sec: name, text: x.text }; if (x.url) rec.url = x.url;
+      c.added.push(rec); card.appendChild(makeItem(x.text, x.url));
+    });
+  });
+  const sp = tabEls.find(x => x.dataset.pid === srcPid), tp = panelEl.id.replace('panel-', '');
+  ['drone', 'reg', 'pilot'].forEach(k => { if (!tabsCfg[k]) tabsCfg[k] = {}; const v = tabsCfg[k][srcPid]; if (v) tabsCfg[k][tp] = v; else delete tabsCfg[k][tp]; });
+  tabsSave(); refreshTabs();
+  custSave(); refreshCust(panelEl); saveProgress();
 }
 function itemEdit(e, btn) {
   e.stopPropagation();
@@ -1798,22 +1942,35 @@ function toggleEdit(btn) {
   }
   refreshCust(panelEl);
 }
-const TAB_SVGS = { 'svg:drone-top': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><circle cx="25" cy="7" r="4.5"/><circle cx="7" cy="25" r="4.5"/><circle cx="25" cy="25" r="4.5"/><path d="M10.2 10.2L13 13M21.8 10.2L19 13M10.2 21.8L13 19M21.8 21.8L19 19"/><rect x="12" y="12" width="8" height="8" rx="2" fill="currentColor"/></svg>', 'svg:drone-side': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M19 8h10M8 8v5M24 8v5M8 13l3 1M24 13l-3 1M10 18l-3 7M22 18l3 7M5 25h5M22 25h5"/><rect x="11" y="12" width="10" height="6" rx="2" fill="currentColor"/><circle cx="16" cy="21.5" r="2.5" fill="currentColor"/></svg>' };
-const TAB_ICONS = ['🏞','🗺','📋','🚁','svg:drone-top','svg:drone-side','📷','🎥','🔋','⚠️','🏗','🏠','🏢','🌉','⚡','🔧','📡','🧭','✅','⭐','📍','🌲','🌅','📝','🔍','🌤'];
+const TAB_SVGS = { 'svg:drone-top': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><circle cx="25" cy="7" r="4.5"/><circle cx="7" cy="25" r="4.5"/><circle cx="25" cy="25" r="4.5"/><path d="M10.2 10.2L13 13M21.8 10.2L19 13M10.2 21.8L13 19M21.8 21.8L19 19"/><rect x="12" y="12" width="8" height="8" rx="2" fill="currentColor"/></svg>', 'svg:drone-side': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M19 8h10M8 8v5M24 8v5M8 13l3 1M24 13l-3 1M10 18l-3 7M22 18l3 7M5 25h5M22 25h5"/><rect x="11" y="12" width="10" height="6" rx="2" fill="currentColor"/><circle cx="16" cy="21.5" r="2.5" fill="currentColor"/></svg>', 'svg:drone-mavic': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 14L4.5 9.5M21 14l6.5-4.5M1.5 8h6M24.5 8h6"/><rect x="9.5" y="12.5" width="13" height="7" rx="3" fill="currentColor"/><circle cx="16" cy="24" r="3" fill="currentColor"/><path d="M13 19.5v1M19 19.5v1"/></svg>', 'svg:drone-fpv': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 8.5L23.5 23.5M23.5 8.5L8.5 23.5"/><circle cx="7" cy="7" r="4.5"/><circle cx="25" cy="7" r="4.5"/><circle cx="7" cy="25" r="4.5"/><circle cx="25" cy="25" r="4.5"/><rect x="12.5" y="11" width="7" height="10" rx="2" fill="currentColor"/><path d="M14 8.5h4"/></svg>', 'svg:drone-whoop': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><circle cx="24" cy="8" r="6"/><circle cx="8" cy="24" r="6"/><circle cx="24" cy="24" r="6"/><path d="M12.5 12.5L14.5 14.5M19.5 12.5L17.5 14.5M12.5 19.5L14.5 17.5M19.5 19.5L17.5 17.5"/><rect x="13" y="13" width="6" height="6" rx="1.5" fill="currentColor"/></svg>', 'svg:drone-wing': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3.5c1.6 0 2.2 2 2.2 4.5v15.5l-2.2 2.5-2.2-2.5V8c0-2.5.6-4.5 2.2-4.5z" fill="currentColor"/><path d="M18 12.5l11.5 5.5v2.5L18 17M14 12.5L2.5 18v2.5L14 17M13.5 26.5H9.5v1.8l6.5-1.3 6.5 1.3v-1.8h-4"/></svg>', 'svg:drone-hex': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="3.6" fill="currentColor"/><path d="M16 16L27 16M16 16L21.5 25.5M16 16L10.5 25.5M16 16L5 16M16 16L10.5 6.5M16 16L21.5 6.5"/><circle cx="27" cy="16" r="3"/><circle cx="21.5" cy="25.5" r="3"/><circle cx="10.5" cy="25.5" r="3"/><circle cx="5" cy="16" r="3"/><circle cx="10.5" cy="6.5" r="3"/><circle cx="21.5" cy="6.5" r="3"/></svg>', 'svg:drone-inspire': '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h-6.5M29.5 4H23M6 4v9M26 4v9M6 13l5 2M26 13l-5 2"/><rect x="10" y="12" width="12" height="7" rx="2.5" fill="currentColor"/><circle cx="16" cy="23.5" r="3.3" fill="currentColor"/><path d="M9 28l-2 2M23 28l2 2M7 30h4M21 30h4"/></svg>' };
+const TAB_COLORS = [['#2563EB', 'Blue'], ['#0F9D75', 'Green'], ['#E8590C', 'Orange'], ['#DC2626', 'Red'], ['#9333EA', 'Purple'], ['#0891B2', 'Teal'], ['#DB2777', 'Pink'], ['#6B7280', 'Gray']];
+const TAB_ICONS = ['🏞','🗺','📋','🚁','svg:drone-top','svg:drone-side','svg:drone-mavic','svg:drone-fpv','svg:drone-whoop','svg:drone-wing','svg:drone-hex','svg:drone-inspire','📷','🎥','🔋','⚠️','🏗','🏠','🏢','🌉','⚡','🔧','📡','🧭','✅','⭐','📍','🌲','🌅','📝','🔍','🌤'];
 function firstIcon(v) {
   v = (v || '').trim(); if (!v) return '';
   try { if (window.Intl && Intl.Segmenter) { for (const g of new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(v)) return g.segment; } } catch (e) {}
   return Array.from(v)[0];
 }
+function toggleIcons(btn) {
+  const body = btn.closest('.tab-icons').querySelector('.ti-body');
+  body.hidden = !body.hidden;
+  btn.textContent = body.hidden ? 'Change \u203A' : 'Close \u25B4';
+  btn.setAttribute('aria-expanded', String(!body.hidden));
+}
+function setTabColor(el, val) {
+  const pid = el.closest('.panel').id.replace('panel-', '');
+  if (!tabsCfg.iconColor) tabsCfg.iconColor = {};
+  if (val) tabsCfg.iconColor[pid] = val; else delete tabsCfg.iconColor[pid];
+  tabsSave(); refreshTabs();
+}
 function setTabIcon(el, val) {
   if (val === undefined) return;
   const pid = el.closest('.panel').id.replace('panel-', '');
-  if (val === null) delete tabsCfg.icons[pid]; else if (val === '' && el.classList.contains('tab-icon-in')) return; else tabsCfg.icons[pid] = val;
+  if (val === null) { delete tabsCfg.icons[pid]; if (tabsCfg.iconColor) delete tabsCfg.iconColor[pid]; } else if (val === '' && el.classList.contains('tab-icon-in')) return; else tabsCfg.icons[pid] = val;
   tabsSave(); refreshTabs();
 }
 function restoreDefaults(btn) {
   const panelEl = btn.closest('.panel'), c = cust[panelEl.id], pid = panelEl.id.replace('panel-', '');
-  const hasItems = c && ((c.hidden || []).length || (c.added || []).length || (c.order && Object.keys(c.order).length)), hasName = !!tabsCfg.names[pid] || (pid in tabsCfg.icons);
+  const hasItems = c && ((c.hidden || []).length || (c.added || []).length || (c.order && Object.keys(c.order).length)), hasName = !!tabsCfg.names[pid] || (pid in tabsCfg.icons) || !!(tabsCfg.iconColor || {})[pid];
   if (!hasItems && !hasName) return;
   const nh = c ? (c.hidden || []).length : 0, na = c ? (c.added || []).length : 0, hasOrder = !!(c && c.order && Object.keys(c.order).length);
   const parts = [];
@@ -1827,7 +1984,7 @@ function restoreDefaults(btn) {
   panelEl.querySelectorAll('.section-card').forEach(card => [...card.querySelectorAll(':scope > .item')].sort((a, b) => a.dataset.i - b.dataset.i).forEach(it => card.appendChild(it)));
   panelEl.querySelectorAll('.item.is-hidden').forEach(i => i.classList.remove('is-hidden'));
   delete cust[panelEl.id];
-  if (hasName) { delete tabsCfg.names[pid]; delete tabsCfg.icons[pid]; tabsSave(); refreshTabs(); }
+  if (hasName) { delete tabsCfg.names[pid]; delete tabsCfg.icons[pid]; if (tabsCfg.iconColor) delete tabsCfg.iconColor[pid]; tabsSave(); refreshTabs(); }
   custSave(); refreshCust(panelEl); saveProgress();
 }
 
@@ -1874,10 +2031,17 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     '<div class="cust-help">' +
     '<div class="tab-edit"><label>Tab name <input class="tab-name" type="text" maxlength="24" autocomplete="off" oninput="saveTabName(this)" onblur="refreshTabs()"></label>' +
     '<button type="button" class="cust-btn tab-hide-btn" onclick="hideTab(this)">Hide this tab</button></div>' +
-    '<div class="tab-icons"><span class="ti-label">Tab icon</span><div class="ti-grid">' + TAB_ICONS.map(e => '<button type="button" class="ti-btn" data-i="' + e + '" aria-label="Use this icon" onclick="setTabIcon(this, this.dataset.i)">' + (TAB_SVGS[e] || e) + '</button>').join('') + '</div>' +
+    '<div class="tab-icons"><div class="ti-head"><span class="ti-label">Tab icon</span><span class="ti-cur"></span><button type="button" class="cust-btn ti-toggle" aria-expanded="false" onclick="toggleIcons(this)">Change \u203A</button></div><div class="ti-body" hidden><div class="ti-grid">' + TAB_ICONS.map(e => '<button type="button" class="ti-btn" data-i="' + e + '" aria-label="Use this icon" onclick="setTabIcon(this, this.dataset.i)">' + (TAB_SVGS[e] || e) + '</button>').join('') + '</div>' +
+    '<div class="ti-colors" hidden><span class="ti-label">Icon color</span><div class="tc-row">' + '<button type="button" class="tc-auto" onclick="setTabColor(this, \'\')">Auto</button>' + TAB_COLORS.map(c => '<button type="button" class="tc-dot" data-c="' + c[0] + '" style="background:' + c[0] + '" aria-label="' + c[1] + '" onclick="setTabColor(this, this.dataset.c)"></button>').join('') + '</div></div>' +
     '<div class="ti-more"><input class="tab-icon-in" type="text" maxlength="12" autocomplete="off" placeholder="or type your own" oninput="setTabIcon(this, firstIcon(this.value))">' +
-    '<button type="button" class="cust-btn" onclick="setTabIcon(this, \'\')">No icon</button><button type="button" class="cust-btn" onclick="setTabIcon(this, null)">Original icon</button></div></div>' +
+    '<button type="button" class="cust-btn" onclick="setTabIcon(this, \'\')">No icon</button><button type="button" class="cust-btn" onclick="setTabIcon(this, null)">Original icon</button></div></div></div>' +
+    '<div class="tab-ac-wrap"><div class="tab-ac-lbl">For records and PDFs saved from this tab</div><div class="ac-block tab-ac">' +
+    '<div class="fn-row"><span>\uD83D\uDC64 Pilot</span><input type="text" class="tab-pilot" maxlength="40" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" oninput="saveTabAc(this)"></div>' +
+    '<div class="fn-row"><span>\uD83D\uDE81 Drone</span><input type="text" class="tab-drone" maxlength="40" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" oninput="saveTabAc(this)"></div>' +
+    '<div class="fn-row"><span>\uD83E\uDEAA Reg. #</span><input type="text" class="tab-reg" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" oninput="saveTabAc(this)"></div></div>' +
+    '<div class="tab-note">Leave any box blank to use the default from Settings.</div></div>' +
     '<div class="tab-note">Renaming changes the tab\'s name and icon only.</div>' +
+    '<div class="tab-clone"><button type="button" class="cust-btn" onclick="cloneOpen(this)">Clone another tab onto this one\u2026</button><div class="clone-box" hidden></div></div>' +
     '<div class="tab-hidden-list"></div>' +
     '<div class="cust-actions"><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button><button type="button" class="cust-btn" onclick="restoreDefaults(this)">Restore original list</button></div></div>';
   panelEl.querySelector('.keep-row').after(row);
@@ -2043,8 +2207,8 @@ if (!region) {
 // ── Tabs: rename or hide (saved on this device) ──
 const TABS_KEY = 'uasTabs';
 let tabsCfg = (function () {
-  try { const v = JSON.parse(localStorage.getItem(TABS_KEY)); return { names: (v && v.names) || {}, hidden: (v && v.hidden) || [], icons: (v && v.icons) || {} }; }
-  catch (e) { return { names: {}, hidden: [], icons: {} }; }
+  try { const v = JSON.parse(localStorage.getItem(TABS_KEY)); return { names: (v && v.names) || {}, hidden: (v && v.hidden) || [], icons: (v && v.icons) || {}, drone: (v && v.drone) || {}, reg: (v && v.reg) || {}, pilot: (v && v.pilot) || {}, iconColor: (v && v.iconColor) || {} }; }
+  catch (e) { return { names: {}, hidden: [], icons: {}, drone: {}, reg: {}, pilot: {}, iconColor: {} }; }
 })();
 function tabsSave() { try { localStorage.setItem(TABS_KEY, JSON.stringify(tabsCfg)); } catch (e) {} }
 const tabEls = [...document.querySelectorAll('.tabs .tab')];
@@ -2053,6 +2217,7 @@ tabEls.forEach(t => {
   t.dataset.pid = id ? id[1] : '';
   if (m && !/[A-Za-z0-9]/.test(m[1])) { t.dataset.emoji = m[1]; t.dataset.name = m[2]; } else { t.dataset.emoji = ''; t.dataset.name = txt; }
 });
+const tabColor = (t) => { const c = ((tabsCfg.iconColor || {})[t.dataset.pid] || ''); return TAB_COLORS.some(x => x[0] === c) ? c : ''; };
 const tabName = (t) => tabsCfg.names[t.dataset.pid] || t.dataset.name;
 const tabIcon = (t) => {
   const v = (t.dataset.pid in tabsCfg.icons) ? tabsCfg.icons[t.dataset.pid] : t.dataset.emoji;
@@ -2062,7 +2227,7 @@ function refreshTabs() {
   tabEls.forEach(t => {
     const ic = tabIcon(t);
     t.textContent = '';
-    if (ic) { const i = document.createElement('span'); i.className = 'tab-ico'; if (TAB_SVGS[ic]) i.innerHTML = TAB_SVGS[ic]; else i.textContent = ic; t.appendChild(i); t.appendChild(document.createTextNode(' ')); }
+    if (ic) { const i = document.createElement('span'); i.className = 'tab-ico'; if (TAB_SVGS[ic]) { i.innerHTML = TAB_SVGS[ic]; const tc = tabColor(t); if (tc) i.style.color = tc; } else i.textContent = ic; t.appendChild(i); t.appendChild(document.createTextNode(' ')); }
     const l = document.createElement('span'); l.className = 'tab-lbl'; l.textContent = tabName(t); t.appendChild(l);
     t.classList.toggle('tab-hidden', tabsCfg.hidden.includes(t.dataset.pid));
   });
@@ -2072,10 +2237,18 @@ function refreshTabs() {
     const inp = p.querySelector('.tab-name');
     if (inp && t && document.activeElement !== inp) inp.value = tabName(t);
     if (t) {
-      const cur = tabIcon(t), more = p.querySelector('.tab-icon-in');
+      const cur = tabIcon(t), more = p.querySelector('.tab-icon-in'), curEl = p.querySelector('.ti-cur');
+      if (curEl) { if (TAB_SVGS[cur]) { curEl.innerHTML = TAB_SVGS[cur]; curEl.style.color = tabColor(t) || ''; } else { curEl.style.color = ''; curEl.textContent = cur || '\u2014'; } }
       p.querySelectorAll('.ti-btn').forEach(b => b.classList.toggle('sel', b.dataset.i === cur));
+      const tcc = tabColor(t), tcw = p.querySelector('.ti-colors');
+      p.querySelectorAll('.ti-btn').forEach(b => { b.style.color = (TAB_SVGS[b.dataset.i] && tcc) ? tcc : ''; });
+      if (tcw) { tcw.hidden = !TAB_SVGS[cur]; tcw.querySelectorAll('.tc-dot').forEach(d => d.classList.toggle('sel', d.dataset.c === tcc)); const au = tcw.querySelector('.tc-auto'); if (au) au.classList.toggle('sel', !tcc); }
       if (more && document.activeElement !== more) more.value = (cur && !TAB_ICONS.includes(cur)) ? cur : '';
     }
+    const pidv = p.id.replace('panel-', ''), di = p.querySelector('.tab-drone'), ri = p.querySelector('.tab-reg'), pli = p.querySelector('.tab-pilot');
+    if (pli && document.activeElement !== pli) { pli.value = (tabsCfg.pilot || {})[pidv] || ''; pli.placeholder = acGet('uasPilot') || 'Your name'; }
+    if (di && document.activeElement !== di) { di.value = (tabsCfg.drone || {})[pidv] || ''; di.placeholder = acGet('uasDrone') || 'e.g. Mavic 4 Pro'; }
+    if (ri && document.activeElement !== ri) { ri.value = (tabsCfg.reg || {})[pidv] || ''; ri.placeholder = acGet('uasRegNo') || 'e.g. FA3XXXXXXX'; }
     const hb = p.querySelector('.tab-hide-btn'); if (hb) hb.disabled = visible.length <= 1;
     const list = p.querySelector('.tab-hidden-list');
     if (list) {
@@ -2088,6 +2261,38 @@ function refreshTabs() {
       });
     }
   });
+  refreshEditBars();
+}
+function refreshEditBars() {            // the bottom bar while customizing: names the tab you are on and lets you jump to another
+  const vis = tabEls.filter(t => t.dataset.pid && !t.classList.contains('tab-hidden'));
+  document.querySelectorAll('.panel').forEach(p => {
+    const bar = p.querySelector(':scope > .edit-bar'); if (!bar) return;
+    const pid = p.id.replace('panel-', ''), me = tabEls.find(t => t.dataset.pid === pid), nm = bar.querySelector('.eb-name'), box = bar.querySelector('.eb-chips');
+    if (nm && me) nm.textContent = tabName(me);
+    if (!box) return;
+    const sig = pid + '|' + vis.map(t => t.dataset.pid + ':' + tabName(t) + ':' + tabIcon(t) + ':' + tabColor(t)).join('|');
+    if (box.dataset.sig === sig) return;
+    box.dataset.sig = sig; box.innerHTML = '';
+    if (vis.length < 2) return;
+    vis.forEach(t => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'cust-btn eb-chip' + (t.dataset.pid === pid ? ' on' : '');
+      const ic = tabIcon(t);
+      if (ic) { const i = document.createElement('span'); i.className = 'eb-ico'; if (TAB_SVGS[ic]) { i.innerHTML = TAB_SVGS[ic]; const tc = tabColor(t); if (tc) i.style.color = tc; } else i.textContent = ic; b.appendChild(i); }
+      b.appendChild(document.createTextNode(tabName(t)));
+      b.onclick = () => {
+        if (t.dataset.pid === pid) return;
+        showPanel(t.dataset.pid, t);
+        scrollToCustomize(t.dataset.pid);
+      };
+      box.appendChild(b);
+    });
+  });
+}
+function saveTabAc(inp) {
+  const pid = inp.closest('.panel').id.replace('panel-', ''), k = inp.classList.contains('tab-pilot') ? 'pilot' : inp.classList.contains('tab-drone') ? 'drone' : 'reg', v = inp.value.trim().slice(0, k === 'reg' ? 30 : 40);
+  if (!tabsCfg[k]) tabsCfg[k] = {};
+  if (v) tabsCfg[k][pid] = v; else delete tabsCfg[k][pid];
+  tabsSave();
 }
 function saveTabName(inp) {
   const pid = inp.closest('.panel').id.replace('panel-', ''), v = inp.value.trim().slice(0, 24);
@@ -2100,8 +2305,14 @@ function hideTab(btn) {
   if (!tabsCfg.hidden.includes(pid)) tabsCfg.hidden.push(pid);
   tabsSave();
   refreshTabs();
-  const next = tabEls.find(t => !t.classList.contains('tab-hidden'));
+  const wasEditing = panelEl.classList.contains('editing');
+  const idx = tabEls.findIndex(t => t.dataset.pid === pid), vis = tabEls.filter(t => !t.classList.contains('tab-hidden'));
+  const next = tabEls.slice(idx + 1).find(t => !t.classList.contains('tab-hidden')) || vis[vis.length - 1];   // the tab after it, else the one before
   showPanel(next.dataset.pid, next);
+  if (wasEditing) scrollToCustomize(next.dataset.pid);
+}
+function scrollToCustomize(pid) {          // while customizing, land on the tab editor of that tab instead of the top of the page
+  setTimeout(() => { const np = document.getElementById('panel-' + pid), r = np && np.querySelector('.cust-row'); if (r) window.scrollTo({ top: Math.max(0, r.getBoundingClientRect().top + window.scrollY - 76), behavior: 'smooth' }); }, 60);
 }
 function showTab(pid) {
   tabsCfg.hidden = tabsCfg.hidden.filter(x => x !== pid);
@@ -2343,8 +2554,11 @@ function fnSave(inp) {
 
 // ── Drone and registration number: printed on saved flight records and the checklist PDF (saved on this device; both optional) ──
 function acGet(k) { let v = ''; try { v = (localStorage.getItem(k) || '').trim(); } catch (e) {} return v; }
-function acPair() {                           // [label, value] for one line on a record, or null when nothing is saved
-  const d = acGet('uasDrone'), r = acGet('uasRegNo');
+function acPilot(pid) { return ((tabsCfg.pilot || {})[pid || current] || '').trim() || acGet('uasPilot'); }
+function acDrone(pid) { return ((tabsCfg.drone || {})[pid || current] || '').trim() || acGet('uasDrone'); }
+function acReg(pid) { return ((tabsCfg.reg || {})[pid || current] || '').trim() || acGet('uasRegNo'); }
+function acPair(pid) {                        // [label, value] for one line on a record, or null when nothing is saved (this tab's drone and reg. #, else the Settings ones)
+  const d = acDrone(pid), r = acReg(pid);
   if (d) return ['Drone', d + (r ? ' · Reg ' + r : '')];
   if (r) return ['Registration', r];
   return null;
@@ -2400,10 +2614,10 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   fnb.innerHTML = '<div class="fn-row"><span>📋 Record file name starts with</span><input type="text" class="fn-in" maxlength="40" placeholder="flight-record" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Saved flight record file names start with" oninput="fnSave(this)"></div>' +
     '<div class="fn-hint"><div class="fn-ex"></div>Date, time and customer are added for you.</div>';
   const acb = document.createElement('div'); acb.className = 'fn-block ac-block';
-  acb.innerHTML = '<div class="fn-row"><span>👤 Pilot</span><input type="text" class="fn-in ac-in" data-k="uasPilot" maxlength="40" placeholder="Your name" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Pilot name" oninput="acSave(this)"></div>' +
-    '<div class="fn-row"><span>🚁 Drone</span><input type="text" class="fn-in ac-in" data-k="uasDrone" maxlength="40" placeholder="e.g. Mavic 4 Pro" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Drone name or model" oninput="acSave(this)"></div>' +
-    '<div class="fn-row"><span>🪪 Reg. #</span><input type="text" class="fn-in ac-in" data-k="uasRegNo" maxlength="30" placeholder="e.g. FA3XXXXXXX" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-label="Drone registration number" oninput="acSave(this)"></div>' +
-    '<div class="fn-hint">Printed at the top of saved flight records and the checklist PDF. Saved on this device only.</div>';
+  acb.innerHTML = '<div class="fn-row"><span>👤 Default pilot</span><input type="text" class="fn-in ac-in" data-k="uasPilot" maxlength="40" placeholder="Your name" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Pilot name" oninput="acSave(this)"></div>' +
+    '<div class="fn-row"><span>🚁 Default drone</span><input type="text" class="fn-in ac-in" data-k="uasDrone" maxlength="40" placeholder="e.g. Mavic 4 Pro" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Drone name or model" oninput="acSave(this)"></div>' +
+    '<div class="fn-row"><span>🪪 Default reg. #</span><input type="text" class="fn-in ac-in" data-k="uasRegNo" maxlength="30" placeholder="e.g. FA3XXXXXXX" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-label="Drone registration number" oninput="acSave(this)"></div>' +
+    '<div class="fn-hint">Printed at the top of saved flight records and the checklist PDF. A tab uses these only when its own Pilot, Drone and Reg. # (under Customize) are blank. Saved on this device only.</div>';
   const pdb = document.createElement('div'); pdb.className = 'pdfset';
   pdb.innerHTML = '<div class="pd-row"><span>📄 PDF layout</span><div class="pd-seg" role="radiogroup" aria-label="PDF layout"><button type="button" role="radio" data-k="layout" data-v="compact">Compact</button><button type="button" role="radio" data-k="layout" data-v="large">Large print</button></div></div>' +
     '<div class="pd-row"><span>📏 PDF paper</span><div class="pd-seg" role="radiogroup" aria-label="PDF paper size"><button type="button" role="radio" data-k="paper" data-v="letter">Letter</button><button type="button" role="radio" data-k="paper" data-v="a4">A4</button></div></div>' +
@@ -2440,26 +2654,30 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   tip.after(sn);
   const en = document.createElement('div'); en.className = 'edit-note';
   en.innerHTML = '<button type="button" class="en-mini" onclick="editTipShow()">ⓘ How to customize ›</button><div class="en-full">' +
-    '<div class="en-line"><b>Tabs:</b> rename this tab, change its icon, or hide it using the boxes just below.</div>' +
+    '<div class="en-line"><b>Tabs:</b> rename this tab, change its icon (the drawn drone icons can be colored), or hide it using the boxes just below.</div>' +
+    '<div class="en-line"><b>Pilot, Drone, Reg. #:</b> set them for this tab and they print on its saved flight records and PDFs. Leave a box blank to use the default in Settings.</div>' +
+    '<div class="en-line"><b>Clone:</b> <b>Clone another tab onto this one</b> copies another tab\'s whole list over this tab. Back up first. Undo is offered right after.</div>' +
+    '<div class="en-line"><b>Copy:</b> on an item you added, <b>Copy to…</b> puts a copy on another tab.</div>' +
     '<div class="en-line"><b>Hide:</b> tap Hide on items you don\'t need.</div>' +
     '<div class="en-line"><b>Add:</b> type a checklist item in the box at the bottom of any section (add a link or app address if you like), then tap Add item.</div>' +
     '<div class="en-line"><b>Move:</b> drag <b>≡</b> to reorder within a section.</div>' +
-    '<div class="en-line"><b>Restore:</b> <b>Restore original list</b> undoes your changes on this tab only. Hidden items come back, items you added are removed, and the order, name and icon reset.</div>' +
+    '<div class="en-line"><b>Restore:</b> <b>Restore original list</b> undoes your changes on this tab only. Hidden items come back, items you added are removed, and the order, name and icon reset. Your Pilot, Drone and Reg. # boxes are not changed.</div>' +
     '<div class="en-line"><b>Back up:</b> your changes are saved only in this browser on this device. Open <b>Back up &amp; restore</b> and tap <b>Save file</b> to keep a copy.</div>' +
-    '<div class="en-foot">Tap another tab to customize it too. Press <b>Done</b> when finished.</div>' +
+    '<div class="en-foot">Tap another tab, or a tab in the bar at the bottom, to customize it too. Press <b>Done</b> when finished.</div>' +
     '<button type="button" class="en-got" onclick="editTipOff()">Got it</button></div>';
   if (editTipIsOff()) en.classList.add('collapsed');
   const bw = document.createElement('div'); bw.className = 'bk-warn';
-  bw.innerHTML = '\u26A0 <b class="k">After you change the list, back it up.</b> Open <b>Back up &amp; restore</b>, then tap <b>Save file</b>.';
+  bw.innerHTML = '\u26A0 <b class="k">After you make changes, back them up.</b> Open <b>Back up &amp; restore</b>, then tap <b>Save file</b>.';
   const ch = cust.querySelector('.cust-help'); if (ch) { ch.prepend(bw); ch.prepend(en); } else { sn.after(bw); sn.after(en); }
   const bar = document.createElement('div'); bar.className = 'edit-bar';
-  bar.innerHTML = '<span>✎ Editing this checklist and tab</span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button>';
+  bar.innerHTML = '<span class="eb-title">✎ Editing: <b class="eb-name"></b></span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button><div class="eb-chips"></div>';
   panelEl.prepend(bar);
   const coffee = document.createElement('div'); coffee.className = 'coffee-note';
   coffee.innerHTML = 'Built by a Part 107 pilot, for pilots. Free to use. If it helped you fly smarter, <a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee ☕</a>';
   panelEl.appendChild(coffee);
   panelEl.appendChild(help);
 });
+refreshEditBars();
 function themeGet() { try { const t = JSON.parse(localStorage.getItem('uasTheme') || '""'); return t === 'light' || t === 'dark' ? t : 'auto'; } catch (e) { return 'auto'; } }
 function themeApply() {
   const t = themeGet();
@@ -3776,7 +3994,7 @@ function buildRecord(o) {
   if (o.site) L.push(B('Site', o.site));
   const co = o.coords ? recCoords() : ''; if (co) L.push(B('Coordinates', co));
   const tab = recNoEmoji(recTabName()); if (tab) L.push(B('Checklist', tab));
-  const pl = acGet('uasPilot'); if (pl) L.push(B('Pilot', pl));
+  const pl = acPilot(); if (pl) L.push(B('Pilot', pl));
   const ac = acPair(); if (ac) L.push(B(ac[0], ac[1]));
   if (o.laanc) L.push(B('Airspace authorization', o.laanc));
   if (o.flightTime) L.push(B('Flight time', o.flightTime));
@@ -4006,7 +4224,7 @@ function buildRecordPdf(o) {
   d.para(new Date().toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }), 10.5, { gray: 0.3 });
   d.gap(6);
   const co = o.coords ? recCoords() : '', tab = recNoEmoji(recTabName());
-  [['Customer', o.customer], ['Site', o.site], ['Coordinates', co], ['Checklist', tab], ['Pilot', acGet('uasPilot')], acPair() || ['', ''], ['Airspace authorization', o.laanc], ['Flight time', o.flightTime], ['Visual observer', o.observer]]
+  [['Customer', o.customer], ['Site', o.site], ['Coordinates', co], ['Checklist', tab], ['Pilot', acPilot()], acPair() || ['', ''], ['Airspace authorization', o.laanc], ['Flight time', o.flightTime], ['Visual observer', o.observer]]
     .forEach(p => { if (p[1]) d.kv(p[0], p[1]); });
   if (o.weather) { d.h2('Conditions'); recWeatherLines().forEach(l => { d.para(l, 10.5); d.gap(1.5); }); }
   const c = recCollect(document.getElementById('panel-' + current), o.unchecked);
@@ -4039,8 +4257,9 @@ function buildChecklistPdf(panelEl, tabName, layout, paper) {
   if (tabName) { d.ensure(24); d.text(pdfEnc(tabName), d.mx, d.y + 13, 13, true); d.y += 20; d.rule(d.y, 1.8, 0); }
   d.fieldLine([['Date', 0.5], ['Time', 0.5]]);
   d.fieldLine([['Site', 1]]);
-  d.fieldLine([['Pilot', 0.5, acGet('uasPilot')], ['Visual observer', 0.5]]);
-  d.fieldLine([['Drone', 0.5, acGet('uasDrone')], ['Registration', 0.5, acGet('uasRegNo')]]);
+  const apid = panelEl.id.replace('panel-', '');
+  d.fieldLine([['Pilot', 0.5, acPilot(apid)], ['Visual observer', 0.5]]);
+  d.fieldLine([['Drone', 0.5, acDrone(apid)], ['Registration', 0.5, acReg(apid)]]);
   const c = recCollect(panelEl, true);
   d.startCols();
   c.secs.forEach(s => { d.sub(s.name, 30); s.rows.forEach(r => d.item(r.st, r.txt + (r.st === 3 ? ' (N/A)' : ''))); });
