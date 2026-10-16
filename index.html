@@ -24,6 +24,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     --amber: #D97706;
     --del: #e0301e;
     --amber-light: #FFF1DC;
+    --del-light: #FDECEA;
     --text: #1a1a1a;
     --text-muted: #666;
     --text-light: #6b6b6b;
@@ -52,6 +53,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       --amber: #F59E0B;
       --del: #ff3b30;
       --amber-light: #33240a;
+      --del-light: #3a1210;
       --shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
     :root:not([data-theme="light"]) .wx-alert { color: #ff3b30; }
@@ -71,6 +73,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       --amber: #F59E0B;
       --del: #ff3b30;
       --amber-light: #33240a;
+      --del-light: #3a1210;
       --shadow: 0 2px 12px rgba(0,0,0,0.4);
   }
   :root[data-theme="dark"] .wx-alert { color: #ff3b30; }
@@ -594,8 +597,12 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-window { margin: 10px 0 2px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; text-align: center; color: var(--text-muted); }
   .wx-window b { color: var(--text); }
   .wx-window-s { margin-top: 2px; }
-  .wx-window.none { border-color: var(--amber); background: var(--amber-light); }
-  .wx-window.none .wx-window-t { color: var(--amber); font-weight: 600; }
+  .wx-window.good { border-color: var(--green); background: var(--green-light); }
+  .wx-window.good .wx-window-t { color: var(--green); font-weight: 600; }
+  .wx-window.caution { border-color: var(--amber); background: var(--amber-light); }
+  .wx-window.caution .wx-window-t { color: var(--amber); font-weight: 600; }
+  .wx-window.none { border-color: var(--del); background: var(--del-light); }
+  .wx-window.none .wx-window-t { color: var(--del); font-weight: 600; }
   .wx-sun { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 8px; }
   .wx-tfr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .wx-tfr { display: block; width: 100%; padding: 9px; background: #e0301e; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
@@ -662,7 +669,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.1</p>
+      <p>Free Drone Preflight Checklist · v3.9.2</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2464,16 +2471,19 @@ async function xferSave(btn) {
       xferMsg(btn, '✓ Backup complete. Restore it any time with Restore from file…'); return;
     } catch (e) { if (e && e.name === 'AbortError') return; }
   }
+  let shareErr = null;
   try {
     // Phones and tablets (no Share… button): Save file opens the share sheet. Where Share… is shown (computers), Save file is a plain download.
     if (!XFER_HAS_SHARE && navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({ files: [file] });
       xferMsg(btn, '✓ Backup complete. Restore it any time with Restore from file…'); return;
     }
-  } catch (e) { if (e && e.name === 'AbortError') return; }
+  } catch (e) { if (e && e.name === 'AbortError') return; shareErr = e; }
   const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = name;
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-  xferMsg(btn, 'Backup started. If your browser asks, choose where to save it. Restore it any time with Restore from file…');
+  xferMsg(btn, shareErr
+    ? 'The share sheet didn\u2019t open (' + (shareErr.name || 'error') + (shareErr.message ? ': ' + String(shareErr.message).slice(0, 80) : '') + '), so the file was downloaded instead. Tap Save file again to choose where to save it. Restore it any time with Restore from file\u2026'
+    : 'Backup started. If your browser asks, choose where to save it. Restore it any time with Restore from file\u2026');
 }
 function xferApply(el, obj) {
   if (!obj || obj.app !== 'uas-checklist' || !obj.data || typeof obj.data !== 'object') { xferMsg(el, 'That isn\'t a checklist backup.', true); return; }
@@ -2763,7 +2773,7 @@ function windColor(mph, gust) {
 
 // Best window: the longest stretch of daylight hours in the next 12 where wind and gusts stay under the amber point of your limits,
 // with no rain, storms or low visibility. Returns null when the data is missing, {kind:'ok'} when every daylight hour is fine.
-function calmWindow(om, hIdx, nowBad) {
+function calmWindow(om, hIdx, nowBad, obsFine) {
   const H = om && om.hourly;
   if (hIdx < 0 || !H || !H.time || !H.wind_speed_10m || !H.wind_gusts_10m || !H.precipitation_probability) return null;
   const n = Math.min(12, H.time.length - hIdx);
@@ -2782,10 +2792,10 @@ function calmWindow(om, hIdx, nowBad) {
     const t = new Date(H.time[i]).getTime(), sv = sun(i);
     const dayHr = !sv || (t + 3600000 > sv[0] && t < sv[1]);   // the hour overlaps daylight
     const prob = H.precipitation_probability[i], pr = (H.precipitation || [])[i], wc = (H.weather_code || [])[i], cape = (H.cape || [])[i], vis = (H.visibility || [])[i];
-    const windBad = windColor(w, g) !== 'wx-good';
+    const wcol = windColor(w, g), windBad = wcol !== 'wx-good', windRed = wcol === 'wx-alert';
     const wet = prob >= 30 || pr >= 0.2 || wc >= 95 || (cape >= 1000 && prob >= 30);
-    const visBad = (typeof vis === 'number' && vis < 4828) || (k === 0 && !!nowBad);   // under 3 mi, or the airport reports below minimums right now
-    info.push({ dayHr, w, g, windBad, wet, visBad, good: dayHr && !windBad && !wet && !visBad });
+    const visBad = (!(k === 0 && obsFine) && typeof vis === 'number' && vis < 4828) || (k === 0 && !!nowBad);   // this hour: the airport's reading wins over the model when there is one   // under 3 mi, or the airport reports below minimums right now
+    info.push({ dayHr, w, g, windBad, windRed, wet, visBad, good: dayHr && !windBad && !wet && !visBad, ok: dayHr && !windRed && !wet && !visBad });
   }
   const day_ = info.filter(x => x.dayHr);
   if (day_.length < 2) return null;
@@ -2801,8 +2811,19 @@ function calmWindow(om, hIdx, nowBad) {
     const run = info.slice(best.a, best.b + 1);
     return { kind: 'window', lowNow: !!nowBad, a: best.a, b: best.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && best.a > 0 };
   }
+  let caut = null;
+  for (let k = 0; k < n; ) {
+    if (!info[k].ok) { k++; continue; }
+    let e = k; while (e + 1 < n && info[e + 1].ok) e++;
+    if (e - k + 1 >= 2 && (!caut || e - k > caut.b - caut.a)) caut = { a: k, b: e };
+    k = e + 1;
+  }
+  if (caut) {
+    const run = info.slice(caut.a, caut.b + 1);
+    return { kind: 'caution', lowNow: !!nowBad, a: caut.a, b: caut.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && caut.a > 0, aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3) };
+  }
   const cnt = (f) => day_.filter(f).length;
-  const cw = cnt(x => x.windBad), cr = cnt(x => x.wet), cv = cnt(x => x.visBad);
+  const cw = cnt(x => x.windRed), cr = cnt(x => x.wet), cv = cnt(x => x.visBad);
   return { kind: 'none', lowNow: !!nowBad, cause: cw >= cr && cw >= cv ? 'wind' : cr >= cv ? 'wet' : 'vis', aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3), W, G };
 }
 function calmHtml(c, H, hIdx, siteTag) {
@@ -2810,12 +2831,18 @@ function calmHtml(c, H, hIdx, siteTag) {
   const hr = (i) => new Date(H.time[i]).toLocaleTimeString([], { hour: 'numeric' });
   if (c.kind === 'window') {
     const from = c.a === 0 ? 'Now' : hr(hIdx + c.a), to = hr(Math.min(hIdx + c.b + 1, H.time.length - 1));
-    return '<div class="wx-window"><div class="wx-window-t">🕊 Best window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
+    return '<div class="wx-window good"><div class="wx-window-t">🕊 Best window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
       (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now \u2014 the forecast can\u2019t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
   }
-  const why = c.cause === 'wind' ? 'Wind or gusts stay above your orange point (' + fmtSpeedNum(c.aw) + ' / ' + fmtSpeedNum(c.ag) + ' ' + speedUnit() + ') · your limits are ' + fmtSpeedNum(c.W) + ' / ' + fmtSpeedNum(c.G) + ' ' + speedUnit()
+  if (c.kind === 'caution') {
+    const from = c.a === 0 ? 'Now' : hr(hIdx + c.a), to = hr(Math.min(hIdx + c.b + 1, H.time.length - 1));
+    return '<div class="wx-window caution"><div class="wx-window-t">🕊 Possible window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
+      'Fly with caution — wind is above your orange point (' + fmtSpeedNum(c.aw) + ' / ' + fmtSpeedNum(c.ag) + ' ' + speedUnit() + ') · ' +
+      (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now — the forecast can’t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
+  }
+  const why = c.cause === 'wind' ? 'Wind or gusts at or above your limits (' + fmtSpeedNum(c.W) + ' / ' + fmtSpeedNum(c.G) + ' ' + speedUnit() + ') for most of the daylight hours'
     : c.cause === 'wet' ? 'Rain or storms in the forecast for most of the daylight hours' : 'Low cloud or visibility reported now or forecast for most of the daylight hours';
-  return '<div class="wx-window none"><div class="wx-window-t">🕊 No calm window in the next 12 hrs</div><div class="wx-window-s">' + (c.lowNow && c.cause === 'wind' ? 'Low cloud or visibility is reported now \u00b7 ' : '') + why + '</div></div>';
+  return '<div class="wx-window none"><div class="wx-window-t">🕊 No flyable window in the next 12 hrs</div><div class="wx-window-s">' + (c.lowNow && c.cause === 'wind' ? 'Low cloud or visibility is reported now · ' : '') + why + '</div></div>';
 }
 
 function windArrow(deg) {
@@ -3621,7 +3648,8 @@ async function renderWeather(lat, lon, attempt = 1) {
         return lim > 0 && lim < 400 ? '✈️ Max legal altitude about ' + fmtAlt(lim) + ' AGL (500 ft below clouds)' : '';
       };
 
-      const calmNowBad = () => ceilClass === 'wx-alert' || (typeof visBelowMin === 'function' && !!visBelowMin());
+      const calmNowBad = () => ceilClass === 'wx-alert' || (typeof visM === 'number' && visM < 4828);   // the same reading as the Visibility tile (airport report, else model), in every region
+      const obsVisFine = () => !!(metarData2 && metarData2.vis) && metarData2.vis.mi * 1609.34 >= 4828;
       if (lc && lc.base < 1000 && ceilClass === 'wx-good') ceilClass = 'wx-warn';   // a low layer over the nearest station is worth a caution colour
 
       // Humidity and dew point: a small gap between temperature and dew point means fog, mist or lens fogging
@@ -3691,8 +3719,8 @@ async function renderWeather(lat, lon, attempt = 1) {
         lines.push(precipSub());
         // Live evidence (radar echoes nearby or an airport reporting precipitation) outranks the model's timing
         const liveWet = !!pm || !!(rd && rd.covered && rd.near);
-        const calmC = calmWindow(om, hIdx, calmNowBad());
-        if (wx.outlook && wx.outlook.rain && !liveWet && !(calmC && calmC.kind === 'window' && /^(Best window|No clear window)/.test(wx.outlook.rain))) lines.push(wx.outlook.rain + siteTag);
+        const calmC = calmWindow(om, hIdx, calmNowBad(), obsVisFine());
+        if (wx.outlook && wx.outlook.rain && !liveWet && !(calmC && (calmC.kind === 'window' || calmC.kind === 'caution') && /^(Best window|No clear window)/.test(wx.outlook.rain))) lines.push(wx.outlook.rain + siteTag);
         if (wx.outlook && wx.outlook.storm) lines.push(wx.outlook.storm + siteTag);
         return { val, cls, lines };
       };
@@ -3781,7 +3809,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         </div>
         <div class="wx-sun">🌅 Sunrise ${fmtT(wx.sunrise)} &nbsp;·&nbsp; 🌇 Sunset ${fmtT(wx.sunset)}${siteTag}</div>
         ${goldenLine}
-        ${calmHtml(calmWindow(om, hIdx, calmNowBad()), om.hourly, hIdx, siteTag)}
+        ${calmHtml(calmWindow(om, hIdx, calmNowBad(), obsVisFine()), om.hourly, hIdx, siteTag)}
         <div class="wx-night" id="wx-night" hidden></div>
         <div class="wx-updated" id="wx-updated">Updated ${now} · ${srcText}<span id="wx-age"></span></div>
         <div class="wx-disclaimer">Guide only. Conditions can differ at your site. Check your own weather sources and look at the sky before you fly. Radar: <a href="https://www.rainviewer.com" target="_blank" rel="noopener">RainViewer</a>.</div>

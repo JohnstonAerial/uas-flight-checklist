@@ -95,6 +95,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.2
+
+- **Best window is color-coded** — the box on the weather card now tells you at a glance. **Green** is a **Best window**: two or more hours in a row when wind, gusts, rain and visibility are all fine. **Orange** is a **Possible window**: there is no green stretch, but there are two or more dry hours with good visibility when the wind is above your orange point and still under your limits. It says **Fly with caution** and shows the wind and gusts to expect. **Red** is **No flyable window in the next 12 hrs**: wind at or over your limits, rain or storms, or low cloud or visibility, with the reason underneath.
+- **Best window follows the airport's visibility** — for the current hour, the Best window now uses the same visibility as the **Visibility** tile: the nearest airport report when there is one, otherwise the forecast. A low forecast no longer holds back **Now** when the airport reports 3 SM or more, and a foggy airport report holds it back in every country, not only the US.
+- **A clearer message when Save file can't open the share sheet** — in **Back up & restore**, if your browser won't open the share sheet, the message now says so, names the error, and tells you to tap **Save file** again to choose where to save it.
+
+---
+
 ## What's new in v3.9.1
 
 - **Best window no longer ignores fog** — the **Best window** line was built from the hourly forecast alone, so it could say **Now – 9 AM** while the airport reported a 100 ft cloud ceiling and 1.5 SM visibility. Now, when the airport reports a ceiling or visibility below minimums, **Now** doesn't count. A window that starts later says **Low cloud or visibility reported now**, and if no hour qualifies, **No calm window** says so too. The forecast still can't tell when fog will lift, so check the airport report before you go.
