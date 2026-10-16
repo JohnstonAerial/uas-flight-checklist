@@ -36,16 +36,16 @@ It does not include saved flight records. Those are separate files that you keep
 
 1. Tap **💾 Back up & restore** under the page header.
 2. Leave **Include current progress** ticked if you're moving to another device today and want your ticks to come with you. Untick it to save only your setup, which is best for a backup you'll keep.
-3. Tap **Save file**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files** or send it to yourself. In Chrome or Edge on a computer a Save dialog opens, so you choose the folder. In Safari or Firefox the file goes to your Downloads folder, unless your browser is set to ask where to save.
+3. Tap **Save file**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files** or send it to yourself. In Chrome or Edge on a computer a Save dialog opens, so you choose the folder. In Safari or Firefox the browser takes over, and the app says **Backup started. If your browser asks, choose where to save it.** The file goes to your Downloads folder unless your browser is set to ask where to save.
 
-On a computer you can also tap **Share…** to send the backup code with AirDrop, Mail or Messages. To restore it, paste the code into **Restore from code**.
+On a computer you can also tap **Share…** to send the backup code with AirDrop, Mail or Messages. To restore it, tap **Paste code…**, paste the code into the box and tap **Restore from code**.
 
 Or tap **Copy code**. The code is the same backup as text. Paste it into **Back up & restore** in another browser or app (for example, from Safari into your Home Screen app), or keep it somewhere safe, such as a note.
 
 **To restore**
 
 - **From a file:** tap **Restore from file…** and choose your backup. The page reloads with that setup.
-- **From a code:** paste it into the box (it says **Paste a backup code here**), then tap **Restore from code**.
+- **From a code:** tap **Paste code…**, paste the code into the box that opens (it says **Paste a backup code here**), then tap **Restore from code**.
 
 **Move your setup to another device**
 
@@ -79,22 +79,24 @@ The app keeps one setup at a time on your device: your tab names and icons, whic
 | Type this in the link box | The item shows | What it does |
 |---|---|---|
 | `airaware.aloft.ai` or `https://airaware.aloft.ai` | **Open airaware.aloft.ai ›** | Opens the website. On an iPhone, a site with its own app may open in that app. |
-| `mailto:someone@example.com` | **Email ›** | Starts an email to that address. |
-| `tel:+19105551212` | **Call ›** | Starts a phone call. |
-| `sms:+19105551212` | **Text ›** | Starts a text message. |
-| `facetime:someone@example.com` | **Open facetime app ›** | Starts a FaceTime call. |
+| `mailto:someone@example.com` | **someone@example.com ›** | Starts an email to that address. You can add a subject and message, for example `mailto:someone@example.com?subject=Job%20done&body=Job%20complete`. |
+| `tel:+19105551212` | **+19105551212 ›** | Starts a phone call. |
+| `sms:+19105551212` | **+19105551212 ›** | Starts a text message. On an iPhone, add `&body=On%20my%20way` to fill in the message. |
+| `facetime:someone@example.com` | **someone@example.com ›** | Starts a FaceTime call. |
 | `dji://…` or any `name://…` | **Open name app ›** | Opens that app, if it's installed and publishes an address like this. |
-| `shortcuts://run-shortcut?name=AirAware` | **Open shortcuts app ›** | Runs an iPhone or iPad Shortcut by name. See the tip below. |
+| `shortcuts://run-shortcut?name=Open%20Air%20Aware` | **Open Air Aware ›** | Runs an iPhone or iPad Shortcut by name, and shows that name. See the tip below. |
 
-Spaces aren't allowed. Unsafe types such as `javascript:` and `file:` are refused. If the box turns red, the address wasn't accepted. The link sits under the item's text, so ticking the item works as before.
+Spaces aren't allowed in a link: write `%20` for a space, `%0A` for a new line and `%26` for an `&` inside text. Unsafe types such as `javascript:` and `file:` are refused. If the box turns red, the address wasn't accepted. The link sits under the item's text, so ticking the item works as before.
 
 **iPhone tip: open an app that has no web address.** Some apps can't be opened with a link. Make a Shortcut that opens the app, then link to the Shortcut:
 
 1. In the **Shortcuts** app, tap **+** and add the **Open App** action. Choose the app, such as Air Aware.
-2. Name the shortcut with no spaces, for example `AirAware`.
-3. In the checklist's **Link or app address** box, type `shortcuts://run-shortcut?name=AirAware`. If the name has a space, write `%20` instead, for example `name=Air%20Aware`.
+2. Name the shortcut as an action, for example **Open Air Aware**.
+3. In the checklist's **Link or app address** box, type `shortcuts://run-shortcut?name=Open%20Air%20Aware`. The name must match the shortcut's name exactly, with `%20` for each space.
 
-The item then shows **Open shortcuts app ›**. Tapping it runs the shortcut, which opens your app. The Shortcuts app may flash on screen first, and iOS may ask you to allow it the first time. This works on iPhone and iPad only.
+The item then shows **Open Air Aware ›**, the shortcut's own name. Tapping it runs the shortcut, which opens your app. The Shortcuts app may flash on screen first, and iOS may ask you to allow it the first time. This works on iPhone and iPad only.
+
+**Change or delete an item you added.** In **Customize**, each item you added has a blue **Edit** button and a red **Delete** button on a row under it. **Edit** opens the text and the link in place; **Save** keeps the item's place and checkmark. The **Link or app address** box also suggests links you've already saved, so you can tap one instead of typing it again. Back up afterwards.
 
 ### What my Timelapse profile looks like
 

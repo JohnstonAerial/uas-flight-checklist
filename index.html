@@ -21,8 +21,9 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     --blue-mid: #378ADD;
     --green: #0F6E56;
     --green-light: #E1F5EE;
-    --amber: #CA8A04;
-    --amber-light: #FFF4E0;
+    --amber: #D97706;
+    --del: #e0301e;
+    --amber-light: #FFF1DC;
     --text: #1a1a1a;
     --text-muted: #666;
     --text-light: #6b6b6b;
@@ -49,6 +50,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       --green: #3fcf9b;
       --green-light: #0a2a22;
       --amber: #F59E0B;
+      --del: #ff3b30;
       --amber-light: #33240a;
       --shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
@@ -67,6 +69,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       --green: #3fcf9b;
       --green-light: #0a2a22;
       --amber: #F59E0B;
+      --del: #ff3b30;
       --amber-light: #33240a;
       --shadow: 0 2px 12px rgba(0,0,0,0.4);
   }
@@ -211,6 +214,21 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .reset-inline:active { background: var(--section-bg); }
   .item-x { display: none; flex-shrink: 0; margin-left: auto; align-self: center; font-family: inherit; font-size: 11px; color: var(--text-muted); background: transparent; border: 1px solid var(--border); border-radius: 12px; padding: 3px 9px; cursor: pointer; }
   .panel.editing .item-x { display: inline-block; }
+  /* items you added: Edit and Delete on their own row under the text */
+  .item.custom .cust-acts { display: none; }
+  .panel.editing .item.custom { flex-wrap: wrap; }
+  .panel.editing .item.custom .cust-acts { display: flex; flex: 0 0 100%; justify-content: flex-end; gap: 8px; margin-top: 2px; }
+  .item.custom .cust-acts .item-x { margin-left: 0; color: var(--del); border-color: var(--del); border-color: color-mix(in srgb, var(--del) 45%, transparent); }
+  .item-ed { font-family: inherit; font-size: 11px; color: var(--link); background: transparent; border: 1px solid var(--border); border-color: color-mix(in srgb, var(--link) 45%, transparent); border-radius: 12px; padding: 3px 11px; cursor: pointer; }
+  .item.custom.ce-open > .item-text, .item.custom.ce-open > .item-link, .item.custom.ce-open > .cust-acts { display: none !important; }
+  .cust-edit { flex: 1 1 0; min-width: 0; }
+  .cust-edit label { display: block; font-size: 11px; color: var(--text-muted); margin: 0 2px 3px; }
+  .cust-edit input { width: 100%; box-sizing: border-box; font-family: inherit; font-size: 16px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; -webkit-user-select: text; user-select: text; }
+  .cust-edit input.bad { border-color: var(--del); }
+  .cust-edit .ce-err { color: var(--del); font-size: 12px; margin: -2px 2px 8px; }
+  .cust-edit .ce-row { display: flex; gap: 8px; justify-content: flex-end; }
+  .cust-edit .ce-row button { font-family: inherit; font-size: 14px; padding: 8px 16px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; }
+  .cust-edit .ce-row .ce-save { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
   .panel.editing .item { cursor: default; }
   .panel.editing .item:active { background: transparent; }
   .item.is-hidden { display: none; }
@@ -258,6 +276,11 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .pc-mini { display: flex; justify-content: space-between; align-items: center; flex: 1 1 100%; border-top: 1px solid var(--border); padding-top: 6px; margin-top: 2px; }
   .pc-mini .reset-inline::before { content: '\21BA\00a0'; } .pc-mini .sec-all::before { content: '\21D5\00a0'; }
   .pc-mini .reset-inline, .pc-mini .sec-all { width: auto; margin: 0; padding: 4px 2px; font-size: 13px; min-height: 36px; white-space: nowrap; text-align: center; border-radius: 0; color: var(--text-muted); background: transparent; border: 0; font-family: inherit; cursor: pointer; }
+  .pc-mini .sec-split { display: inline-flex; padding: 0; min-height: 0; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .pc-mini .sec-split::before { content: none; }
+  .pc-mini .sec-split button { font-family: inherit; font-size: 13px; color: var(--text-muted); background: transparent; border: 0; padding: 4px 12px; min-height: 34px; white-space: nowrap; cursor: pointer; }
+  .pc-mini .sec-split button + button { border-left: 1px solid var(--border); }
+  .pc-mini .sec-split button:disabled { opacity: 0.4; cursor: default; }
   .progress-info .progress-track { flex: 0 0 100%; margin-top: 0; }
   .pc-btns { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 6px; flex: 1 1 100%; container-type: inline-size; }
   @container (max-width: 305px) { .pc-btns > .rec-btn.rec-record { flex-direction: row; gap: 8px; min-height: 40px; padding: 6px 8px; } .pc-btns .rec-btn.rec-record small { display: none; } }
@@ -344,7 +367,9 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .body-bak .xfer-incl { display: flex; flex-direction: row; justify-content: flex-start; align-items: center; gap: 10px; padding: 6px 16px 8px; margin: 0; }
   .body-bak .xfer-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; padding: 4px 16px 14px; }
   .body-bak .xfer-btns .cust-btn { font-size: 14px; padding: 8px 6px; min-height: 40px; }
-  .body-bak .xfer-btns.rs { grid-template-columns: 1fr; padding-top: 10px; padding-bottom: 6px; }
+  .body-bak .xfer-btns.rs { grid-template-columns: 1fr 1fr; padding-top: 10px; padding-bottom: 14px; }
+  .body-bak .xfer-btns.rs .cust-btn.on { border-color: var(--blue); }
+  .body-bak .xfer-code[hidden] { display: none; }
   .body-bak .xfer-btns.rc { grid-template-columns: 1fr; padding-top: 10px; }
   .body-bak .bk-or { font-size: 13px; color: var(--text-light); padding: 10px 16px 6px; }
   .body-bak .xfer-btns.has-share { grid-template-columns: 1fr 1fr 1fr; }
@@ -386,6 +411,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .body-set .wl-row > span:first-child { white-space: nowrap; }
   .wl-ctl { display: flex; align-items: center; gap: 6px; }
   .wl-hint { font-size: 11px; }
+  .body-set .wl-block .wl-row { margin-bottom: 8px; }
+  .body-set .wl-block .wl-hint { margin: 2px 0 16px; }
   .body-set .settings-note { max-width: none; margin: 0; padding: 12px 16px 10px; text-align: left; border-bottom: 1px solid var(--border); }
   .settings-help { max-width: 600px; margin: 6px auto 10px; padding: 0 16px; text-align: center; font-size: 14px; }
   .settings-help a { padding: 6px 0; }
@@ -569,7 +596,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     .tab-lbl { display: inline; }
     .tab.active { display: block; padding: 6px 0 0; font-size: 13pt; text-align: left; color: #000 !important; border: 0; }
     .progress-bar-wrap, #wx-panel, #region-card, .settings, .cust-row, .edit-note, .progress-card, .complete-banner, .flag-hint, .saved-note, .coffee-note, .foot-links,
-    .edit-bar, .toast, .item-menu, .item-link, .rec-overlay, .rec-btn, .pc-btns, .pc-mini, .add-row, .item-x, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
+    .edit-bar, .toast, .item-menu, .item-link, .rec-overlay, .rec-btn, .pc-btns, .pc-mini, .add-row, .item-x, .item-ed, .cust-acts, .cust-edit, .item-grip, .sec-meta, .sec-arrow, .xfer { display: none !important; }
     .content { max-width: none; padding: 0; margin: 0; }
     .panel { padding: 0; }
     .print-fields { display: block; margin: 0 0 4px; }
@@ -600,7 +627,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.8.13</p>
+      <p>Free Drone Preflight Checklist · v3.8.14</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1599,9 +1626,18 @@ function linkLabel(u) {
   if (m) return 'Open ' + m[2].replace(/^www\./i, '') + ' \u203A';
   m = u.match(/^([a-z][a-z0-9+.\-]*):/i);
   const sc = m ? m[1].toLowerCase() : '';
-  if (sc === 'tel') return 'Call \u203A';
-  if (sc === 'mailto') return 'Email \u203A';
-  if (sc === 'sms') return 'Text \u203A';
+  if (sc === 'shortcuts') {                      // shortcuts://run-shortcut?name=Open%20Air%20Control  ->  the shortcut's own name
+    const q = u.match(/run-shortcut\?(.*)$/i);
+    try { const nm = q ? new URLSearchParams(q[1]).get('name') : ''; if (nm && nm.trim()) return nm.trim() + ' \u203A'; } catch (e) {}
+  }
+  // email, phone, text and FaceTime links show just the address or number; anything after ? (subject, body...) still works but isn't shown
+  const rest = u.slice(u.indexOf(':') + 1).replace(/^\/\//, '');
+  const dec = x => { try { return decodeURIComponent(x); } catch (e) { return x; } };
+  if (sc === 'mailto') { const a = dec(rest.split('?')[0].split(',')[0].trim()); return (a || 'Email') + ' \u203A'; }
+  if (sc === 'tel' || sc === 'sms' || sc === 'facetime' || sc === 'facetime-audio') {
+    const n = dec(rest.split(/[?&;]/)[0].split(',')[0].trim());
+    return (n || (sc === 'tel' ? 'Call' : sc === 'sms' ? 'Text' : 'FaceTime')) + ' \u203A';
+  }
   return 'Open ' + sc + ' app \u203A';
 }
 function makeItem(text, url) {
@@ -1632,7 +1668,12 @@ function addItemButton(it) {
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'item-x';
   b.setAttribute('onclick', 'itemX(event, this)');
-  it.appendChild(b);
+  if (it.classList.contains('custom')) {
+    const acts = document.createElement('div'); acts.className = 'cust-acts';
+    const ed = document.createElement('button'); ed.type = 'button'; ed.className = 'item-ed'; ed.textContent = 'Edit';
+    ed.setAttribute('onclick', 'itemEdit(event, this)');
+    acts.appendChild(ed); acts.appendChild(b); it.appendChild(acts);
+  } else it.appendChild(b);
   labelItemButton(it);
 }
 function labelItemButton(it) {
@@ -1667,6 +1708,55 @@ function itemX(e, btn) {
     }
   }
   custSave(); refreshCust(panelEl); saveProgress();
+}
+function setItemLink(it, lk) {
+  const old = it.querySelector(':scope > .item-link'); if (old) old.remove();
+  it.classList.remove('has-link');
+  if (!lk) return;
+  const a = document.createElement('a');
+  a.className = 'item-link'; a.href = lk; a.textContent = linkLabel(lk);
+  if (/^https?:/i.test(lk)) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+  a.addEventListener('click', e => e.stopPropagation());
+  a.addEventListener('pointerdown', e => e.stopPropagation());
+  const acts = it.querySelector(':scope > .cust-acts'); it.insertBefore(a, acts);
+  it.classList.add('has-link');
+}
+function itemEdit(e, btn) {
+  e.stopPropagation();
+  const it = btn.closest('.item'); if (!it || it.querySelector(':scope > .cust-edit')) return;
+  const panelEl = it.closest('.panel'), sec = sectionTitleOf(it.closest('.section')), oldText = itemTextOf(it);
+  const rec = custFor(panelEl.id).added.find(a => a.sec === sec && a.text === oldText);
+  const f = document.createElement('form'); f.className = 'cust-edit';
+  f.innerHTML = '<label>Item</label><input type="text" class="ce-t" maxlength="140" autocomplete="off" enterkeyhint="done">' +
+    '<label>Link or app address (optional)</label><input type="text" class="ce-u" maxlength="300" inputmode="url" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">' +
+    '<div class="ce-err" hidden></div><div class="ce-row"><button type="button" class="ce-cancel">Cancel</button><button type="submit" class="ce-save">Save</button></div>';
+  const ti = f.querySelector('.ce-t'), ui = f.querySelector('.ce-u'), err = f.querySelector('.ce-err');
+  ti.value = oldText; ui.value = (rec && rec.url) || (it.querySelector(':scope > .item-link') ? it.querySelector(':scope > .item-link').getAttribute('href') : '');
+  ui.setAttribute('list', 'link-lib'); ui.addEventListener('focus', fillLinkLib);
+  [ti, ui].forEach(i => i.addEventListener('input', () => { i.classList.remove('bad'); err.hidden = true; }));
+  f.addEventListener('click', ev => ev.stopPropagation());
+  f.addEventListener('pointerdown', ev => ev.stopPropagation());
+  const close = () => { f.remove(); it.classList.remove('ce-open'); };
+  f.querySelector('.ce-cancel').onclick = close;
+  f.addEventListener('keydown', ev => { if (ev.key === 'Escape') close(); });
+  f.addEventListener('submit', ev => {
+    ev.preventDefault();
+    const text = ti.value.trim(), raw = ui.value.trim(), lk = raw ? cleanLink(raw) : '';
+    const fail = (el, msg) => { el.classList.add('bad'); err.textContent = msg; err.hidden = false; el.focus(); };
+    if (!text) return fail(ti, 'Enter the checklist item first.');
+    if (raw && !lk) return fail(ui, 'Not a valid link. Try https://... or app://...');
+    const c = custFor(panelEl.id);
+    if (c.added.some(a => a !== rec && a.sec === sec && a.text === text)) return fail(ti, 'You already have this item in this section.');
+    it.querySelector('.item-text').textContent = text;
+    setItemLink(it, lk);
+    if (rec) { rec.text = text; if (lk) rec.url = lk; else delete rec.url; }
+    else c.added.push(lk ? { sec: sec, text: text, url: lk } : { sec: sec, text: text });
+    if (c.order && c.order[sec]) c.order[sec] = orderKeys(it.closest('.section-card')).map(p => p[0]);   // keep its place if you had reordered this section
+    close();
+    custSave(); refreshCust(panelEl); saveProgress();
+  });
+  it.classList.add('ce-open'); it.appendChild(f);
+  ti.focus(); ti.setSelectionRange(ti.value.length, ti.value.length);
 }
 function addCustomItem(e, form, quiet) {
   if (e) e.preventDefault();
@@ -1703,7 +1793,7 @@ function toggleEdit(btn) {
   if (!on) {
     flushAddRows(panelEl);
     const st = panelEl.querySelector('.settings');
-    if (st) { st.classList.remove('open'); st.classList.remove('open-bak'); st.querySelectorAll('.settings-toggle').forEach(t => t.setAttribute('aria-expanded', 'false')); }
+    if (st) { st.classList.remove('open'); st.classList.remove('open-bak'); xferClearMsg(st); st.querySelectorAll('.settings-toggle').forEach(t => t.setAttribute('aria-expanded', 'false')); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   refreshCust(panelEl);
@@ -1741,6 +1831,18 @@ function restoreDefaults(btn) {
   custSave(); refreshCust(panelEl); saveProgress();
 }
 
+// Tap-to-fill: the link box offers every link already used on your own items, on any tab
+function fillLinkLib() {
+  let dl = document.getElementById('link-lib');
+  if (!dl) { dl = document.createElement('datalist'); dl.id = 'link-lib'; document.body.appendChild(dl); }
+  const seen = new Set(); dl.innerHTML = '';
+  document.querySelectorAll('.item.custom a.item-link').forEach(a => {
+    const h = a.getAttribute('href'); if (!h || seen.has(h)) return; seen.add(h);
+    const o = document.createElement('option'); o.value = h;
+    const t = a.closest('.item'); o.label = t && t.querySelector('.item-text') ? t.querySelector('.item-text').textContent : '';
+    dl.appendChild(o);
+  });
+}
 document.querySelectorAll('.panel').forEach(panelEl => {
   const c = cust[panelEl.id];
   panelEl.querySelectorAll('.section-card').forEach(card => card.querySelectorAll(':scope > .item').forEach((it, i) => { it.dataset.i = i; }));
@@ -1751,6 +1853,8 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     form.setAttribute('onsubmit', 'addCustomItem(event, this)');
     form.innerHTML = '<input type="text" maxlength="140" placeholder="* Checklist item, e.g. Check airspace" enterkeyhint="done" autocomplete="off"><button type="submit">Add item</button><input type="text" class="add-url" maxlength="300" inputmode="url" placeholder="Link or app address (optional)" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">';
     form.querySelector('.add-url').addEventListener('input', e => e.target.classList.remove('bad'));
+    form.querySelector('.add-url').setAttribute('list', 'link-lib');
+    form.querySelector('.add-url').addEventListener('focus', fillLinkLib);
     form.querySelector('input').addEventListener('input', e => e.target.classList.remove('bad'));
     sec.appendChild(form);
   });
@@ -1766,7 +1870,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   }
   const row = document.createElement('div');
   row.className = 'cust-row';
-  row.innerHTML = '<button type="button" class="cust-btn cust-toggle" onclick="toggleEdit(this)">Customize</button>' +
+  row.innerHTML = '<button type="button" class="cust-btn primary cust-toggle" onclick="toggleEdit(this)">Customize \u203A</button>' +
     '<div class="cust-help">' +
     '<div class="tab-edit"><label>Tab name <input class="tab-name" type="text" maxlength="24" autocomplete="off" oninput="saveTabName(this)" onblur="refreshTabs()"></label>' +
     '<button type="button" class="cust-btn tab-hide-btn" onclick="hideTab(this)">Hide this tab</button></div>' +
@@ -1805,8 +1909,10 @@ function updateSectionMeta(panelEl) {
 function syncAllButton(panelEl) {
   const b = panelEl.querySelector('.sec-all');
   if (!b) return;
-  const anyCollapsed = [...panelEl.querySelectorAll('.section:not(.all-hidden)')].some(s => s.classList.contains('collapsed'));
-  b.textContent = anyCollapsed ? 'Expand all' : 'Collapse all';
+  const vis = [...panelEl.querySelectorAll('.section:not(.all-hidden)')];
+  const ex = b.querySelector('.sa-ex'), co = b.querySelector('.sa-co');
+  if (ex) ex.disabled = !vis.some(s => s.classList.contains('collapsed'));     // nothing closed: Expand has nothing to do
+  if (co) co.disabled = !vis.some(s => !s.classList.contains('collapsed'));    // everything closed: Collapse has nothing to do
 }
 function setCollapsed(sec, on, save) {
   sec.classList.toggle('collapsed', on);
@@ -1884,10 +1990,9 @@ function foldFinishedOnLoad() {
   });
 }
 
-function toggleAllSections(btn) {
-  const panelEl = btn.closest('.panel'), secs = [...panelEl.querySelectorAll('.section')];
-  const anyCollapsed = secs.filter(s => !s.classList.contains('all-hidden')).some(s => s.classList.contains('collapsed'));
-  secs.forEach(s => setCollapsed(s, !anyCollapsed, false));
+function setAllSections(btn, fold) {          // Expand (fold = false) or Collapse (fold = true) every section on this tab
+  const panelEl = btn.closest('.panel');
+  panelEl.querySelectorAll('.section').forEach(s => setCollapsed(s, fold, false));
   collapseSave(); syncAllButton(panelEl);
 }
 
@@ -1910,7 +2015,9 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   let row = panelEl.querySelector('.cust-row');
   if (!row) { row = document.createElement('div'); row.className = 'cust-row'; panelEl.querySelector('.keep-row').after(row); }
   const all = document.createElement('button');
-  all.type = 'button'; all.className = 'cust-btn sec-all'; all.setAttribute('onclick', 'toggleAllSections(this)');
+  all.className = 'sec-all sec-split'; all.setAttribute('role', 'group'); all.setAttribute('aria-label', 'Sections');
+  all.innerHTML = '<button type="button" class="sa-ex" aria-label="Expand all sections" onclick="setAllSections(this, false)">\u25BE Expand</button>' +
+                  '<button type="button" class="sa-co" aria-label="Collapse all sections" onclick="setAllSections(this, true)">\u25B4 Collapse</button>';
   const first = row.querySelector('.cust-btn');
   if (first) first.after(all); else row.appendChild(all);
   updateSectionMeta(panelEl); syncAllButton(panelEl);
@@ -2053,13 +2160,14 @@ function makeXfer() {
   d.className = 'xfer';
   d.innerHTML = '<div class="xfer-sub">Save your settings and progress, or move them to another device or browser.</div>' +
     '<div class="bk-h">Back up</div><label class="xfer-incl"><input type="checkbox" class="xfer-prog" checked> Include current progress</label>' +
-    '<div class="xfer-btns' + (XFER_HAS_SHARE ? ' has-share' : '') + '"><button type="button" class="cust-btn" onclick="xferCopy(this)">Copy code</button>' + (XFER_HAS_SHARE ? '<button type="button" class="cust-btn share-btn" onclick="xferShare(this)" onpointerdown="xferWarm(this)" aria-label="Share a backup">Share…</button>' : '') + '<button type="button" class="cust-btn" onclick="xferSave(this)">Save file</button>' + '</div>' +
+    '<div class="xfer-btns' + (XFER_HAS_SHARE ? ' has-share' : '') + '"><button type="button" class="cust-btn" onclick="xferCopy(this)">Copy code</button>' + (XFER_HAS_SHARE ? '<button type="button" class="cust-btn share-btn" onclick="xferShare(this)" onpointerdown="xferWarm(this)" aria-label="Share a backup">Share…</button>' : '') + '<button type="button" class="cust-btn primary" onclick="xferSave(this)">Save file</button>' + '</div>' +
     '<div class="bk-div"></div><div class="bk-h">Restore</div>' +
-    '<div class="xfer-btns rs"><button type="button" class="cust-btn primary" onclick="xferFile(this)">Restore from file…</button>' +
+    '<div class="xfer-btns rs"><button type="button" class="cust-btn primary" onclick="xferFile(this)">Restore from file\u2026</button>' +
+    '<button type="button" class="cust-btn xfer-paste" aria-expanded="false" onclick="xferPaste(this)">Paste code\u2026</button>' +
     '<input type="file" class="xfer-file" accept=".json,application/json,text/plain" hidden onchange="xferFileChosen(this)"></div>' +
-    '<div class="bk-or">Or paste a backup code</div>' +
+    '<div class="xfer-code" hidden>' +
     '<textarea class="xfer-box" rows="2" placeholder="Paste a backup code here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>' +
-    '<div class="xfer-btns rc"><button type="button" class="cust-btn" onclick="xferRestore(this)">Restore from code</button></div>' +
+    '<div class="xfer-btns rc"><button type="button" class="cust-btn" onclick="xferRestore(this)">Restore from code</button></div></div>' +
     '<div class="xfer-msg" role="status"></div>';
   return d;
 }
@@ -2112,6 +2220,7 @@ async function xferCopy(btn) {
   } catch (e) {}
   const code = await codeP;
   try { await navigator.clipboard.writeText(code); xferMsg(btn, ok); return; } catch (e) {}
+  xferShowCode(box, true);
   const ta = box.querySelector('.xfer-box'); ta.value = code; ta.focus(); ta.select();
   xferMsg(btn, 'Couldn\'t copy automatically. Touch and hold the code in the box, then choose Copy.', true);
 }
@@ -2133,7 +2242,8 @@ async function xferShare(btn) {
 }
 async function xferSave(btn) {
   const json = JSON.stringify(xferSnapshot(btn.closest('.xfer').querySelector('.xfer-prog').checked));
-  const name = 'uas-checklist-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+  const nd = new Date(), p2 = (n) => String(n).padStart(2, '0');   // the device's own date, not UTC (UTC turns to tomorrow in the evening in the US)
+  const name = 'uas-checklist-backup-' + nd.getFullYear() + '-' + p2(nd.getMonth() + 1) + '-' + p2(nd.getDate()) + '.json';
   const file = new File([json], name, { type: 'application/json' });
   // Desktop Chrome and Edge: a real Save dialog, so you choose the folder and the name
   if (window.showSaveFilePicker) {
@@ -2152,7 +2262,7 @@ async function xferSave(btn) {
   } catch (e) { if (e && e.name === 'AbortError') return; }
   const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = name;
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-  xferMsg(btn, '✓ File saved to your downloads.');
+  xferMsg(btn, 'Backup started. If your browser asks, choose where to save it. Restore it any time with Restore from file…');
 }
 function xferApply(el, obj) {
   if (!obj || obj.app !== 'uas-checklist' || !obj.data || typeof obj.data !== 'object') { xferMsg(el, 'That isn\'t a checklist backup.', true); return; }
@@ -2184,6 +2294,19 @@ async function xferRestore(btn) {
   try { obj = await xferDecode(box.value); }
   catch (e) { xferMsg(btn, e && e.friendly ? e.message : 'That code didn\'t work. Check that you copied all of it.', true); return; }
   xferApply(btn, obj);
+}
+function xferClearMsg(root) {                       // the green/red result line goes away when its section or box is closed
+  root.querySelectorAll('.xfer-msg').forEach(m => { m.textContent = ''; m.className = 'xfer-msg'; });
+}
+function xferShowCode(x, on) {
+  if (!on) xferClearMsg(x);
+  const c = x.querySelector('.xfer-code'), b = x.querySelector('.xfer-paste');
+  c.hidden = !on; b.classList.toggle('on', on); b.setAttribute('aria-expanded', on ? 'true' : 'false');
+}
+function xferPaste(btn) {
+  const x = btn.closest('.xfer'), open = x.querySelector('.xfer-code').hidden;
+  xferShowCode(x, open);
+  if (open) { const t = x.querySelector('.xfer-box'); try { t.focus(); } catch (e) {} }
 }
 function xferFile(btn) { btn.closest('.xfer').querySelector('.xfer-file').click(); }
 async function xferFileChosen(inp) {
@@ -2248,7 +2371,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const mkTg = (cls, label, key, other) => {
     const t = document.createElement('button'); t.type = 'button'; t.className = 'settings-toggle ' + cls; t.setAttribute('aria-expanded', 'false');
     t.innerHTML = '<span>' + label + '</span><span class="chev" aria-hidden="true">▾</span>';
-    t.onclick = () => { const o = !wrap.classList.contains(key); wrap.classList.remove('open', 'open-bak'); if (o) wrap.classList.add(key);
+    t.onclick = () => { const o = !wrap.classList.contains(key); wrap.classList.remove('open', 'open-bak'); if (o) wrap.classList.add(key); if (!wrap.classList.contains('open-bak')) xferClearMsg(wrap);
       tgSet.setAttribute('aria-expanded', String(wrap.classList.contains('open'))); tgBak.setAttribute('aria-expanded', String(wrap.classList.contains('open-bak'))); };
     return t;
   };
@@ -2267,12 +2390,12 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     '&body=' + encodeURIComponent('What works, what is missing, or what is confusing:\n\n\n\n---\nApp version: ' + fbVer + '\nDevice and browser: ' + navigator.userAgent);
   const wl = document.createElement('div'); wl.className = 'wl-block';
   wl.innerHTML = '<div class="wl-row"><span>🌬 Wind limit</span><span class="wl-ctl"><input type="number" inputmode="numeric" min="1" max="999" class="wl-w" aria-label="Maximum sustained wind"> / <input type="number" inputmode="numeric" min="1" max="999" class="wl-g" aria-label="Maximum gust"><span class="wl-unit">mph</span></span></div>' +
-    '<div class="wl-hint">sustained / gusts · amber at about two-thirds, red at the limit.</div>' +
-    '<div class="wl-row kp-row"><span>🧲 Kp warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-a" aria-label="Kp index where the warning turns amber"> / <input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-r" aria-label="Kp index where the warning turns red"></span></div>' +
-    '<div class="wl-hint">amber at / red at · from 1 to 9, standard 4 / 5. Higher Kp can disturb GPS and the compass.</div>' +
-    '<div class="wl-row tp-row"><span>🥶 Cold warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ca" aria-label="Temperature at or below which the warning turns amber"> / <input type="number" inputmode="decimal" class="tp-cr" aria-label="Temperature at or below which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
-    '<div class="wl-row tp-row"><span>🥵 Heat warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ha" aria-label="Temperature at or above which the warning turns amber"> / <input type="number" inputmode="decimal" class="tp-hr" aria-label="Temperature at or above which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
-    '<div class="wl-hint">amber at / red at · standard cold 40 / 14 °F (4 / −10 °C), heat 95 / 104 °F (35 / 40 °C). Check your aircraft\'s operating range.</div>';
+    '<div class="wl-hint">sustained / gusts · orange at about two-thirds, red at the limit.</div>' +
+    '<div class="wl-row kp-row"><span>🧲 Kp warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-a" aria-label="Kp index where the warning turns orange"> / <input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-r" aria-label="Kp index where the warning turns red"></span></div>' +
+    '<div class="wl-hint">orange at / red at · from 1 to 9, standard 4 / 5. Higher Kp can disturb GPS and the compass.</div>' +
+    '<div class="wl-row tp-row"><span>🥶 Cold warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ca" aria-label="Temperature at or below which the warning turns orange"> / <input type="number" inputmode="decimal" class="tp-cr" aria-label="Temperature at or below which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
+    '<div class="wl-row tp-row"><span>🥵 Heat warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ha" aria-label="Temperature at or above which the warning turns orange"> / <input type="number" inputmode="decimal" class="tp-hr" aria-label="Temperature at or above which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
+    '<div class="wl-hint">orange at / red at · standard cold 40 / 14 °F (4 / −10 °C), heat 95 / 104 °F (35 / 40 °C). Check your aircraft\'s operating range.</div>';
   const fnb = document.createElement('div'); fnb.className = 'fn-block';
   fnb.innerHTML = '<div class="fn-row"><span>📋 Record file name starts with</span><input type="text" class="fn-in" maxlength="40" placeholder="flight-record" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Saved flight record file names start with" oninput="fnSave(this)"></div>' +
     '<div class="fn-hint"><div class="fn-ex"></div>Date, time and customer are added for you.</div>';
@@ -2299,7 +2422,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     const up = document.createElement('button'); up.type = 'button'; up.className = 'set-up'; up.textContent = '\u25B4 ' + (bi ? 'Close back up & restore' : 'Close settings');
     
     up.onclick = () => {
-      wrap.classList.remove('open', 'open-bak'); tgSet.setAttribute('aria-expanded', 'false'); tgBak.setAttribute('aria-expanded', 'false');
+      wrap.classList.remove('open', 'open-bak'); tgSet.setAttribute('aria-expanded', 'false'); tgBak.setAttribute('aria-expanded', 'false'); xferClearMsg(wrap);
       try { const r = heads.getBoundingClientRect(); if (r.top < 110 || r.bottom > window.innerHeight) heads.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
     };
     bd.appendChild(up);
@@ -2472,7 +2595,7 @@ function calmHtml(c, H, hIdx, siteTag) {
     return '<div class="wx-window"><div class="wx-window-t">🕊 Best window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
       (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
   }
-  const why = c.cause === 'wind' ? 'Wind or gusts stay above your amber point (' + fmtSpeedNum(c.aw) + ' / ' + fmtSpeedNum(c.ag) + ' ' + speedUnit() + ') · your limits are ' + fmtSpeedNum(c.W) + ' / ' + fmtSpeedNum(c.G) + ' ' + speedUnit()
+  const why = c.cause === 'wind' ? 'Wind or gusts stay above your orange point (' + fmtSpeedNum(c.aw) + ' / ' + fmtSpeedNum(c.ag) + ' ' + speedUnit() + ') · your limits are ' + fmtSpeedNum(c.W) + ' / ' + fmtSpeedNum(c.G) + ' ' + speedUnit()
     : c.cause === 'wet' ? 'Rain or storms in the forecast for most of the daylight hours' : 'Low visibility in the forecast for most of the daylight hours';
   return '<div class="wx-window none"><div class="wx-window-t">🕊 No calm window in the next 12 hrs</div><div class="wx-window-s">' + why + '</div></div>';
 }
@@ -3137,7 +3260,7 @@ async function loadWeather() {
       body.innerHTML = '<div class="wx-status wx-warn">' + msg + '</div>';
       srSay(msg);
     },
-    { timeout: 15000, maximumAge: 60000 }
+    { timeout: 30000, maximumAge: 60000 }
   );
 }
 

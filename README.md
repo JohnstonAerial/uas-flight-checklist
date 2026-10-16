@@ -95,6 +95,21 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.8.14
+
+- **Links show the useful part** — an item whose link opens an email, a call, a text or FaceTime now shows the address or number, for example **info@JohnstonAerial.com ›** or **+19195550100 ›**, instead of just **Email ›** or **Call ›**. A Shortcuts link shows the shortcut's own name, for example **Open Air Aware ›**. Anything after a `?` in the link (a subject, a message) still works when you tap, it just isn't shown. Items you already made update on their own.
+- **Edit your own items** — in **Customize**, each item you added has a blue **Edit** button and a red **Delete** button on a row under it. **Edit** changes the text and the link in place, and keeps the item's place and checkmark.
+- **Links you've used before** — the **Link or app address** box suggests the links you've already saved, so you can tap one instead of typing it again.
+- **A clearer Customize button** — in **⚙ Settings**, **Customize ›** is now a solid blue button that's easy to find.
+- **Expand and Collapse** — the progress card has an **Expand | Collapse** pair instead of one button that changed its name. **Collapse** folds every section in one tap for a clean screen; **Expand** opens them all. The one that has nothing to do is dimmed.
+- **A tidier Restore row** — in **Back up & restore**, **Restore from file…** and **Paste code…** sit side by side. **Paste code…** opens the box for a backup code, and the box and any message close again when you close it. **Save file** is a solid blue button, like **Restore from file…**.
+- **Honest Save file message** — in browsers that start a plain download, such as Safari, the message now says **Backup started. If your browser asks, choose where to save it.** It no longer claims the file went to Downloads. The backup file name uses your own date.
+- **Orange for caution** — the caution color is now an orange-leaning amber in light mode (it was a gold that was hard to tell from yellow), and the notes in **⚙ Settings** say **orange at / red at**. Dark mode is unchanged.
+- **More room in the Limits settings** — extra space between the Wind, Kp, Cold and Heat rows and their notes.
+- **A longer wait for your location** — the app now waits up to 30 seconds to find you, since a computer can be slower at it than a phone.
+
+---
+
 ## What's new in v3.8.13
 
 - **Light or dark, your choice** — **⚙ Settings** has a new **Appearance** row: **Auto** follows your device (as before), or choose **Light** or **Dark**. Handy for Light in bright sun while your phone is in dark mode. Your choice is included in Back up & restore.
@@ -152,22 +167,22 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 | Type this in the link box | The item shows | What it does |
 |---|---|---|
 | `airaware.aloft.ai` or `https://airaware.aloft.ai` | **Open airaware.aloft.ai ›** | Opens the website. On an iPhone, a site with its own app may open in that app. |
-| `mailto:someone@example.com` | **Email ›** | Starts an email to that address. |
-| `tel:+19105551212` | **Call ›** | Starts a phone call. |
-| `sms:+19105551212` | **Text ›** | Starts a text message. |
-| `facetime:someone@example.com` | **Open facetime app ›** | Starts a FaceTime call. |
+| `mailto:someone@example.com` | **someone@example.com ›** | Starts an email to that address. You can add a subject and message, for example `mailto:someone@example.com?subject=Job%20done&body=Job%20complete`. |
+| `tel:+19105551212` | **+19105551212 ›** | Starts a phone call. |
+| `sms:+19105551212` | **+19105551212 ›** | Starts a text message. On an iPhone, add `&body=On%20my%20way` to fill in the message. |
+| `facetime:someone@example.com` | **someone@example.com ›** | Starts a FaceTime call. |
 | `dji://…` or any `name://…` | **Open name app ›** | Opens that app, if it's installed and publishes an address like this. |
-| `shortcuts://run-shortcut?name=AirAware` | **Open shortcuts app ›** | Runs an iPhone or iPad Shortcut by name. See the tip below. |
+| `shortcuts://run-shortcut?name=Open%20Air%20Aware` | **Open Air Aware ›** | Runs an iPhone or iPad Shortcut by name, and shows that name. See the tip below. |
 
-Spaces aren't allowed. Unsafe types such as `javascript:` and `file:` are refused. If the box turns red, the address wasn't accepted. The link sits under the item's text, so ticking the item works as before.
+Spaces aren't allowed in a link: write `%20` for a space, `%0A` for a new line and `%26` for an `&` inside text. Unsafe types such as `javascript:` and `file:` are refused. If the box turns red, the address wasn't accepted. The link sits under the item's text, so ticking the item works as before.
 
 **iPhone tip: open an app that has no web address.** Some apps can't be opened with a link. Make a Shortcut that opens the app, then link to the Shortcut:
 
 1. In the **Shortcuts** app, tap **+** and add the **Open App** action. Choose the app, such as Air Aware.
-2. Name the shortcut with no spaces, for example `AirAware`.
-3. In the checklist's **Link or app address** box, type `shortcuts://run-shortcut?name=AirAware`. If the name has a space, write `%20` instead, for example `name=Air%20Aware`.
+2. Name the shortcut as an action, for example **Open Air Aware**.
+3. In the checklist's **Link or app address** box, type `shortcuts://run-shortcut?name=Open%20Air%20Aware`. The name must match the shortcut's name exactly, with `%20` for each space.
 
-The item then shows **Open shortcuts app ›**. Tapping it runs the shortcut, which opens your app. The Shortcuts app may flash on screen first, and iOS may ask you to allow it the first time. This works on iPhone and iPad only.
+The item then shows **Open Air Aware ›**, the shortcut's own name. Tapping it runs the shortcut, which opens your app. The Shortcuts app may flash on screen first, and iOS may ask you to allow it the first time. This works on iPhone and iPad only.
 
 - **Fix: the Customize button fits on small or zoomed phone screens** — it is no longer cut off at the right edge.
 
@@ -507,20 +522,20 @@ Version 3 is a major update built around making the checklist *yours*:
   - KP Index (space weather / GPS interference risk)
   - Sunrise and sunset times, and the golden hour windows, with a link to the AfterGlow sky forecast for the same place
   - The best window of the next 12 daylight hours, worked out from your own Wind limit
-- **Color-coded cards** — green means fine, amber means caution, red means serious. The wind card turns amber at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns amber below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility is green at 3 statute miles (SM) or more and red below 3 SM. KP index turns amber at 4 and red at 5 unless you set your own in Settings. Temperature is amber at 40 °F or below and 95 °F or above, and red at 14 °F or below and 104 °F or above, unless you set your own in Settings. Fog risk is amber and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and amber on radar echoes or a forecast alone
+- **Color-coded cards** — green means fine, orange means caution, red means serious. The wind card turns orange at about two-thirds of your wind limit and red at the limit (by default 23 mph sustained or 25 mph gusts; you can set your own in Settings). The cloud ceiling turns orange below 1,000 ft and red at 500 ft or lower (Cannot fly). Visibility is green at 3 statute miles (SM) or more and red below 3 SM. KP index turns orange at 4 and red at 5 unless you set your own in Settings. Temperature is orange at 40 °F or below and 95 °F or above, and red at 14 °F or below and 104 °F or above, unless you set your own in Settings. Fog risk is orange and turns red only when visibility is also under 3 miles. Precipitation is red when radar, an airport report or the forecast confirm it, and orange on radar echoes or a forecast alone
 - **Night notice** — after sunset or before sunrise, the weather card reminds you what night flying needs (in the USA, an anti-collision light visible for 3 miles; elsewhere, check your local rules), and the reminder is printed on the saved flight record
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)
 - **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
 - **Works outside the USA** — the first time you open it, choose **USA** or **Outside USA**. Choosing outside the USA hides the items marked "(US)" (TFR and LAANC checks and the TFR recheck on site), rewords the NOTAM item so it isn't tied to a US website, removes the FAA/NWS buttons under the weather panel, and switches the weather to metric. Change it any time in **⚙ Settings**
-- **Customize the list** — open **⚙ Settings** and tap **Customize** (in the **Your checklist & tab** row) to hide items that don't apply where you fly, add your own items to any section, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
+- **Customize the list** — open **⚙ Settings** and tap **Customize** (in the **Your checklist & tab** row) to hide items that don't apply where you fly, add your own items to any section, change or delete the ones you added with **Edit** and **Delete**, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
 - **Rename, re-icon or hide tabs** — in Customize mode, rename the tab you're on, give it a different icon (pick one, type your own emoji, or choose none) or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Renaming and changing the icon change only how the tab looks; use Hide and Add to change what's inside it
 - **Back up & restore** — see below
-- **Collapsible sections** — tap a section header to fold it up or open it, or use **Collapse all / Expand all**. Finished sections fold themselves and the next unfinished one opens, and on your first visit only the first section of each tab is open. Each header shows its count (like 9/12), a ✓ when it's finished and an amber ⚠ if something in it needs attention, even when folded. Your fold state is remembered
+- **Collapsible sections** — tap a section header to fold it up or open it, or use the **Expand | Collapse** buttons on the progress card. Finished sections fold themselves and the next unfinished one opens, and on your first visit only the first section of each tab is open. Each header shows its count (like 9/12), a ✓ when it's finished and an orange ⚠ if something in it needs attention, even when folded. Your fold state is remembered
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it in Settings (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
 - **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/SM/ft and km/h/°C/km/m; your choice is remembered
-- **Weather shows its age** — the "Updated" line turns amber after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
-- **Flag items that need attention, or mark them N/A** — press and hold any item for a small menu. **Needs attention** marks it amber; flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag. **N/A for this flight** greys it out and takes it out of your progress; tap it to put it back
+- **Weather shows its age** — the "Updated" line turns orange after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
+- **Flag items that need attention, or mark them N/A** — press and hold any item for a small menu. **Needs attention** marks it orange; flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag. **N/A for this flight** greys it out and takes it out of your progress; tap it to put it back
 - **Save a flight record** — tap **Save flight record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, your pilot name, drone and registration number from Settings, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-flight-record)
 - **Print it, or save it as a PDF** — **Print** prints the open tab as a clean paper checklist, with your checked and flagged items marked and blank date, time, site and pilot lines, for use with a pencil. **PDF** makes the same sheet as a PDF file, with your pilot name, drone and registration filled in if you saved them in Settings, and works in the Home Screen app too. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil) The PDF is **Compact** (two columns, fewer pages) or **Large print**, on **Letter** or **A4**, as you choose in **⚙ Settings**.
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
@@ -539,7 +554,7 @@ Your settings and progress are stored in the browser on the device you're using.
 
 **To restore**
 1. Tap **💾 Back up & restore** where you want your setup: on a new device, in the Home Screen app, or on the same device
-2. Paste the code and tap **Restore from code**, or tap **Restore from file…** and choose your backup
+2. Tap **Restore from file…** and choose your backup, or tap **Paste code…**, paste the code and tap **Restore from code**
 3. Confirm — the checklist reloads, closes the cards and scrolls to the top, and a short message confirms it worked
 
 Restoring **replaces** that device's settings with the backup. A backup includes your region, units, tab names, tab icons and hidden tabs, hidden/added/reordered items, fold state, recent flight sites, progress retention, record file name, and your pilot name, drone and registration number — and, if you chose it, your checks and flags. Progress that has already expired is not restored.
