@@ -95,6 +95,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.1
+
+- **Best window no longer ignores fog** — the **Best window** line was built from the hourly forecast alone, so it could say **Now – 9 AM** while the airport reported a 100 ft cloud ceiling and 1.5 SM visibility. Now, when the airport reports a ceiling or visibility below minimums, **Now** doesn't count. A window that starts later says **Low cloud or visibility reported now**, and if no hour qualifies, **No calm window** says so too. The forecast still can't tell when fog will lift, so check the airport report before you go.
+
+---
+
 ## What's new in v3.9
 
 - **One tab per drone** — each tab can now have its own **Pilot**, **Drone** and **Reg. #**. In **Customize**, type them in the boxes under **For records and PDFs saved from this tab**. They print on that tab's saved flight records and checklist PDF. A box you leave empty uses the default from **⚙ Settings**, so you only fill in what's different. The three Settings boxes are now labeled **Default pilot**, **Default drone** and **Default reg. #**.

@@ -2763,7 +2763,7 @@ function windColor(mph, gust) {
 
 // Best window: the longest stretch of daylight hours in the next 12 where wind and gusts stay under the amber point of your limits,
 // with no rain, storms or low visibility. Returns null when the data is missing, {kind:'ok'} when every daylight hour is fine.
-function calmWindow(om, hIdx) {
+function calmWindow(om, hIdx, nowBad) {
   const H = om && om.hourly;
   if (hIdx < 0 || !H || !H.time || !H.wind_speed_10m || !H.wind_gusts_10m || !H.precipitation_probability) return null;
   const n = Math.min(12, H.time.length - hIdx);
@@ -2784,7 +2784,7 @@ function calmWindow(om, hIdx) {
     const prob = H.precipitation_probability[i], pr = (H.precipitation || [])[i], wc = (H.weather_code || [])[i], cape = (H.cape || [])[i], vis = (H.visibility || [])[i];
     const windBad = windColor(w, g) !== 'wx-good';
     const wet = prob >= 30 || pr >= 0.2 || wc >= 95 || (cape >= 1000 && prob >= 30);
-    const visBad = typeof vis === 'number' && vis < 4828;   // under 3 mi
+    const visBad = (typeof vis === 'number' && vis < 4828) || (k === 0 && !!nowBad);   // under 3 mi, or the airport reports below minimums right now
     info.push({ dayHr, w, g, windBad, wet, visBad, good: dayHr && !windBad && !wet && !visBad });
   }
   const day_ = info.filter(x => x.dayHr);
@@ -2799,11 +2799,11 @@ function calmWindow(om, hIdx) {
   }
   if (best) {
     const run = info.slice(best.a, best.b + 1);
-    return { kind: 'window', a: best.a, b: best.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && best.a > 0 };
+    return { kind: 'window', lowNow: !!nowBad, a: best.a, b: best.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && best.a > 0 };
   }
   const cnt = (f) => day_.filter(f).length;
   const cw = cnt(x => x.windBad), cr = cnt(x => x.wet), cv = cnt(x => x.visBad);
-  return { kind: 'none', cause: cw >= cr && cw >= cv ? 'wind' : cr >= cv ? 'wet' : 'vis', aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3), W, G };
+  return { kind: 'none', lowNow: !!nowBad, cause: cw >= cr && cw >= cv ? 'wind' : cr >= cv ? 'wet' : 'vis', aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3), W, G };
 }
 function calmHtml(c, H, hIdx, siteTag) {
   if (!c || c.kind === 'ok') return '';
@@ -2811,11 +2811,11 @@ function calmHtml(c, H, hIdx, siteTag) {
   if (c.kind === 'window') {
     const from = c.a === 0 ? 'Now' : hr(hIdx + c.a), to = hr(Math.min(hIdx + c.b + 1, H.time.length - 1));
     return '<div class="wx-window"><div class="wx-window-t">🕊 Best window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
-      (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
+      (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now \u2014 the forecast can\u2019t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
   }
   const why = c.cause === 'wind' ? 'Wind or gusts stay above your orange point (' + fmtSpeedNum(c.aw) + ' / ' + fmtSpeedNum(c.ag) + ' ' + speedUnit() + ') · your limits are ' + fmtSpeedNum(c.W) + ' / ' + fmtSpeedNum(c.G) + ' ' + speedUnit()
-    : c.cause === 'wet' ? 'Rain or storms in the forecast for most of the daylight hours' : 'Low visibility in the forecast for most of the daylight hours';
-  return '<div class="wx-window none"><div class="wx-window-t">🕊 No calm window in the next 12 hrs</div><div class="wx-window-s">' + why + '</div></div>';
+    : c.cause === 'wet' ? 'Rain or storms in the forecast for most of the daylight hours' : 'Low cloud or visibility reported now or forecast for most of the daylight hours';
+  return '<div class="wx-window none"><div class="wx-window-t">🕊 No calm window in the next 12 hrs</div><div class="wx-window-s">' + (c.lowNow && c.cause === 'wind' ? 'Low cloud or visibility is reported now \u00b7 ' : '') + why + '</div></div>';
 }
 
 function windArrow(deg) {
@@ -3621,6 +3621,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         return lim > 0 && lim < 400 ? '✈️ Max legal altitude about ' + fmtAlt(lim) + ' AGL (500 ft below clouds)' : '';
       };
 
+      const calmNowBad = () => ceilClass === 'wx-alert' || (typeof visBelowMin === 'function' && !!visBelowMin());
       if (lc && lc.base < 1000 && ceilClass === 'wx-good') ceilClass = 'wx-warn';   // a low layer over the nearest station is worth a caution colour
 
       // Humidity and dew point: a small gap between temperature and dew point means fog, mist or lens fogging
@@ -3690,7 +3691,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         lines.push(precipSub());
         // Live evidence (radar echoes nearby or an airport reporting precipitation) outranks the model's timing
         const liveWet = !!pm || !!(rd && rd.covered && rd.near);
-        const calmC = calmWindow(om, hIdx);
+        const calmC = calmWindow(om, hIdx, calmNowBad());
         if (wx.outlook && wx.outlook.rain && !liveWet && !(calmC && calmC.kind === 'window' && /^(Best window|No clear window)/.test(wx.outlook.rain))) lines.push(wx.outlook.rain + siteTag);
         if (wx.outlook && wx.outlook.storm) lines.push(wx.outlook.storm + siteTag);
         return { val, cls, lines };
@@ -3780,7 +3781,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         </div>
         <div class="wx-sun">🌅 Sunrise ${fmtT(wx.sunrise)} &nbsp;·&nbsp; 🌇 Sunset ${fmtT(wx.sunset)}${siteTag}</div>
         ${goldenLine}
-        ${calmHtml(calmWindow(om, hIdx), om.hourly, hIdx, siteTag)}
+        ${calmHtml(calmWindow(om, hIdx, calmNowBad()), om.hourly, hIdx, siteTag)}
         <div class="wx-night" id="wx-night" hidden></div>
         <div class="wx-updated" id="wx-updated">Updated ${now} · ${srcText}<span id="wx-age"></span></div>
         <div class="wx-disclaimer">Guide only. Conditions can differ at your site. Check your own weather sources and look at the sky before you fly. Radar: <a href="https://www.rainviewer.com" target="_blank" rel="noopener">RainViewer</a>.</div>
