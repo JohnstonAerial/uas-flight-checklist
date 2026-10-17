@@ -95,6 +95,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.3
+
+- **Fly at night, with lights** — a new **🌙 I fly at night** setting under **⚙ Settings** (next to **Where you fly**). It is **No** by default. Set it to **Yes, with lights** and the **Best window** also counts night hours, with a reminder that anti-collision lights are required. Night flying needs anti-collision lights and current night training or a waiver, so it is your call to turn it on. The setting is saved with **Back up & restore**.
+- **A clearer message at night** — with the setting off, the red box now says **No flyable daylight window in the next 12 hrs**, so after dark it no longer reads as if every hour is unflyable.
+
+---
+
 ## What's new in v3.9.2
 
 - **Best window is color-coded** — the box on the weather card now tells you at a glance. **Green** is a **Best window**: two or more hours in a row when wind, gusts, rain and visibility are all fine. **Orange** is a **Possible window**: there is no green stretch, but there are two or more dry hours with good visibility when the wind is above your orange point and still under your limits. It says **Fly with caution** and shows the wind and gusts to expect. **Red** is **No flyable window in the next 12 hrs**: wind at or over your limits, rain or storms, or low cloud or visibility, with the reason underneath.

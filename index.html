@@ -669,7 +669,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.2</p>
+      <p>Free Drone Preflight Checklist · v3.9.3</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1515,6 +1515,12 @@ setKeepHours(keepHours());
 
 
 // ── Region: tailor the checklist for the USA or for flying elsewhere ──
+function nightOn() { try { return localStorage.getItem('uasNight') === '1'; } catch (e) { return false; } }
+function nightSet(v) {
+  try { if (v) localStorage.setItem('uasNight', '1'); else localStorage.removeItem('uasNight'); } catch (e) {}
+  document.querySelectorAll('.night-sel').forEach(x => { x.value = v ? '1' : '0'; });
+  if (lastDraw) lastDraw();
+}
 const REGION_KEY = 'uasRegion';
 let region = (function () { try { const v = localStorage.getItem(REGION_KEY); return v === 'us' || v === 'intl' ? v : null; } catch (e) { return null; } })();
 const US_ONLY_ITEMS = [/^Check TFRs \(US\) at tfr\.faa\.gov$/, /^LAANC \(US\) —/, /^Recheck TFRs \(US\)/];   // hidden outside the USA
@@ -2198,8 +2204,10 @@ document.querySelectorAll('.panel').forEach(panelEl => {
 document.querySelectorAll('.panel').forEach(panelEl => {
   const row = document.createElement('div');
   row.className = 'keep-row region-row';
-  row.innerHTML = '<span>🌍 Where you fly</span><select class="region-sel" aria-label="Where you fly" onchange="applyRegion(this.value, true)"><option value="us">USA</option><option value="intl">Outside USA</option></select><div class="region-hint">Sets checklist items, weather units and US-only airspace links.</div>';
+  row.innerHTML = '<span>🌍 Where you fly</span><select class="region-sel" aria-label="Where you fly" onchange="applyRegion(this.value, true)"><option value="us">USA</option><option value="intl">Outside USA</option></select><div class="region-hint">Sets checklist items, weather units and US-only airspace links.</div>' +
+    '<span>🌙 I fly at night</span><select class="night-sel" aria-label="I fly at night" onchange="nightSet(this.value === \'1\')"><option value="0">No</option><option value="1">Yes, with lights</option></select><div class="region-hint">Best window also counts night hours. Night flying needs anti-collision lights and current night training or waiver. Off by default.</div>';
   row.querySelector('select').value = region || 'us';
+  row.querySelector('.night-sel').value = nightOn() ? '1' : '0';
   panelEl.querySelector('.keep-row').after(row);
 });
 if (!region) {
@@ -2336,7 +2344,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasRegion', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasRegion', 'uasNight', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -2356,7 +2364,7 @@ function xferWarm(el) {
   xferEncode(snap).then(code => { xferPre = { key, code }; }).catch(() => {});
 }
 // Back-up reminder: shown under the Settings / Back up & restore buttons after anything that a backup carries is changed
-const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'wxUnits', 'uasTheme'];
+const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'uasNight', 'wxUnits', 'uasTheme'];
 let bkReady = false;
 setTimeout(() => { bkReady = true; }, 2000);
 function bkMark() { if (bkReady) document.body.classList.add('bk-dirty'); }
@@ -2785,17 +2793,18 @@ function calmWindow(om, hIdx, nowBad, obsFine) {
     const r = D.sunrise && D.sunrise[day(i)], s = D.sunset && D.sunset[day(i)];
     return r && s ? [new Date(r).getTime(), new Date(s).getTime()] : null;
   };
-  const info = [];
+  const info = [], nt = nightOn();
   for (let k = 0; k < n; k++) {
     const i = hIdx + k, w = H.wind_speed_10m[i], g = H.wind_gusts_10m[i];
     if (typeof w !== 'number' || typeof g !== 'number' || !isFinite(w) || !isFinite(g)) return null;
     const t = new Date(H.time[i]).getTime(), sv = sun(i);
-    const dayHr = !sv || (t + 3600000 > sv[0] && t < sv[1]);   // the hour overlaps daylight
+    const dayHr0 = !sv || (t + 3600000 > sv[0] && t < sv[1]);   // the hour overlaps daylight
+    const dayHr = dayHr0 || nt;   // with "I fly at night" on, night hours count too (lights required)
     const prob = H.precipitation_probability[i], pr = (H.precipitation || [])[i], wc = (H.weather_code || [])[i], cape = (H.cape || [])[i], vis = (H.visibility || [])[i];
     const wcol = windColor(w, g), windBad = wcol !== 'wx-good', windRed = wcol === 'wx-alert';
     const wet = prob >= 30 || pr >= 0.2 || wc >= 95 || (cape >= 1000 && prob >= 30);
     const visBad = (!(k === 0 && obsFine) && typeof vis === 'number' && vis < 4828) || (k === 0 && !!nowBad);   // this hour: the airport's reading wins over the model when there is one   // under 3 mi, or the airport reports below minimums right now
-    info.push({ dayHr, w, g, windBad, windRed, wet, visBad, good: dayHr && !windBad && !wet && !visBad, ok: dayHr && !windRed && !wet && !visBad });
+    info.push({ dayHr, night: !dayHr0, w, g, windBad, windRed, wet, visBad, good: dayHr && !windBad && !wet && !visBad, ok: dayHr && !windRed && !wet && !visBad });
   }
   const day_ = info.filter(x => x.dayHr);
   if (day_.length < 2) return null;
@@ -2809,7 +2818,7 @@ function calmWindow(om, hIdx, nowBad, obsFine) {
   }
   if (best) {
     const run = info.slice(best.a, best.b + 1);
-    return { kind: 'window', lowNow: !!nowBad, a: best.a, b: best.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && best.a > 0 };
+    return { kind: 'window', night: run.some(x => x.night), lowNow: !!nowBad, a: best.a, b: best.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && best.a > 0 };
   }
   let caut = null;
   for (let k = 0; k < n; ) {
@@ -2820,7 +2829,7 @@ function calmWindow(om, hIdx, nowBad, obsFine) {
   }
   if (caut) {
     const run = info.slice(caut.a, caut.b + 1);
-    return { kind: 'caution', lowNow: !!nowBad, a: caut.a, b: caut.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && caut.a > 0, aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3) };
+    return { kind: 'caution', night: run.some(x => x.night), lowNow: !!nowBad, a: caut.a, b: caut.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && caut.a > 0, aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3) };
   }
   const cnt = (f) => day_.filter(f).length;
   const cw = cnt(x => x.windRed), cr = cnt(x => x.wet), cv = cnt(x => x.visBad);
@@ -2832,17 +2841,18 @@ function calmHtml(c, H, hIdx, siteTag) {
   if (c.kind === 'window') {
     const from = c.a === 0 ? 'Now' : hr(hIdx + c.a), to = hr(Math.min(hIdx + c.b + 1, H.time.length - 1));
     return '<div class="wx-window good"><div class="wx-window-t">🕊 Best window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
-      (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now \u2014 the forecast can\u2019t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
+      (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.night ? 'Night hours included \u2014 anti-collision lights required · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now \u2014 the forecast can\u2019t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
   }
   if (c.kind === 'caution') {
     const from = c.a === 0 ? 'Now' : hr(hIdx + c.a), to = hr(Math.min(hIdx + c.b + 1, H.time.length - 1));
     return '<div class="wx-window caution"><div class="wx-window-t">🕊 Possible window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
       'Fly with caution — wind is above your orange point (' + fmtSpeedNum(c.aw) + ' / ' + fmtSpeedNum(c.ag) + ' ' + speedUnit() + ') · ' +
-      (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now — the forecast can’t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
+      (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.night ? 'Night hours included — anti-collision lights required · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now — the forecast can’t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
   }
-  const why = c.cause === 'wind' ? 'Wind or gusts at or above your limits (' + fmtSpeedNum(c.W) + ' / ' + fmtSpeedNum(c.G) + ' ' + speedUnit() + ') for most of the daylight hours'
-    : c.cause === 'wet' ? 'Rain or storms in the forecast for most of the daylight hours' : 'Low cloud or visibility reported now or forecast for most of the daylight hours';
-  return '<div class="wx-window none"><div class="wx-window-t">🕊 No flyable window in the next 12 hrs</div><div class="wx-window-s">' + (c.lowNow && c.cause === 'wind' ? 'Low cloud or visibility is reported now · ' : '') + why + '</div></div>';
+  const nt = nightOn(), dl = nt ? 'hours' : 'daylight hours';
+  const why = c.cause === 'wind' ? 'Wind or gusts at or above your limits (' + fmtSpeedNum(c.W) + ' / ' + fmtSpeedNum(c.G) + ' ' + speedUnit() + ') for most of the ' + dl
+    : c.cause === 'wet' ? 'Rain or storms in the forecast for most of the ' + dl : 'Low cloud or visibility reported now or forecast for most of the ' + dl;
+  return '<div class="wx-window none"><div class="wx-window-t">🕊 No flyable ' + (nt ? '' : 'daylight ') + 'window in the next 12 hrs</div><div class="wx-window-s">' + (c.lowNow && c.cause === 'wind' ? 'Low cloud or visibility is reported now · ' : '') + why + '</div></div>';
 }
 
 function windArrow(deg) {
