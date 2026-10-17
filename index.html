@@ -575,6 +575,10 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-panel { background: var(--card); border-radius: 14px; padding: 12px 14px; margin: 12px 12px 0; box-shadow: var(--shadow); max-width: 600px; margin-left: auto; margin-right: auto; }
   .wx-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .wx-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
+  .wx-units small { display: block; font-size: 9.5px; opacity: 0.85; margin-top: 1px; }
+  .wx-units { flex-direction: column; line-height: 1.15; }
+  .wx-hint { margin-top: 6px; font-size: 10.5px; font-style: italic; color: var(--text-muted); }
+  .wx-hint a { color: var(--link); }
   .wx-units { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 12px; font-family: inherit; padding: 2px 9px; margin-left: auto; margin-right: 6px; }
   .wx-refresh { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: none; font-family: inherit; padding: 2px 6px; }
   .wx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -584,6 +588,22 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-vislab { margin-top: 8px; }
   .wx-vis-src { font-size: 11px; font-weight: 400; color: var(--text-muted); }
   .wx-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .wx-more { background: none; border: 0; padding: 0 0 0 4px; font: inherit; font-size: 11px; color: var(--link, #0a84ff); cursor: pointer; }
+  .wx-cl { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); }
+  .wx-lay { display: flex; justify-content: space-between; gap: 8px; line-height: 1.5; }
+  .wx-lay b { font-weight: 600; color: var(--text); }
+  .wx-cts[hidden] { display: none; }
+  .wx-ctl { margin-top: 3px; }
+  .wx-ck { display: flex; gap: 3px; margin-top: 5px; }
+  .wx-ck div { flex: 1; text-align: center; font-size: 9px; line-height: 1.2; }
+  .wx-ck i { display: block; height: 14px; border-radius: 4px; margin-bottom: 2px; }
+  .wx-cnote { margin-top: 3px; font-size: 10.5px; font-style: italic; }
+  .wx-hts { margin-top: 3px; font-size: 11px; color: var(--text-muted); }
+  .wx-hts[hidden] { display: none; }
+  .wx-hrow { display: flex; justify-content: space-between; gap: 8px; line-height: 1.5; }
+  .wx-hrow b { font-weight: 700; }
+  .wx-hnote { margin-top: 3px; font-size: 10.5px; font-style: italic; color: var(--text-muted); line-height: 1.3; }
+  .wx-hshear { margin-top: 4px; padding: 3px 6px; border: 1px solid var(--amber); border-radius: 7px; line-height: 1.3; }
   .wx-model { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
   .wx-model strong { font-weight: 700; }
   .wx-loc { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: -4px 0 10px; font-size: 13px; color: var(--text); }
@@ -613,6 +633,17 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   @media (max-width: 560px) { .gh-t, .gh-w { display: block; } .gh-sep { display: none; } }
   .wx-window { margin: 10px 0 2px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; text-align: center; color: var(--text-muted); }
   .wx-window b { color: var(--text); }
+  .wx-strip { margin: 8px 0 2px; padding: 8px 8px 6px; border-radius: 10px; background: var(--section-bg); }
+  .hs-title { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+  .hs-row { display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+  .hs-h { flex: 0 0 40px; text-align: center; font-size: 10px; color: var(--text-muted); }
+  .hs-t { margin-bottom: 3px; }
+  .hs-c { border-radius: 7px; padding: 5px 0 4px; font-size: 13px; font-weight: 700; color: #000; line-height: 1.15; }
+  .hs-c small { display: block; font-size: 9px; font-weight: 600; opacity: 0.8; }
+  .hc-good { background: var(--green); } .hc-warn { background: var(--amber); } .hc-alert { background: #e0301e; color: #fff; }
+  .hs-dark .hs-c, .hs-dark .hs-t { opacity: 0.5; }
+  .hs-r { margin-top: 3px; font-size: 10px; color: #3d8bfd; min-height: 12px; }
+  .hs-key { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
   .wx-window-s { margin-top: 2px; }
   .wx-window.good { border-color: var(--green); background: var(--green-light); }
   .wx-window.good .wx-window-t { color: var(--green); font-weight: 600; }
@@ -686,7 +717,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.5</p>
+      <p>Free Drone Preflight Checklist · v3.9.6</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1570,6 +1601,7 @@ function applyRegion(r, changeUnits) {
   const q = document.getElementById('wx-q'); if (q) q.placeholder = intl ? 'Town, postal code, or lat, lon' : 'Town, ZIP, or lat, lon';
   document.querySelectorAll('.region-sel').forEach(sel => { sel.value = r; });
   const card = document.getElementById('region-card'); if (card) card.remove();
+  if (changeUnits && r !== prev) { try { localStorage.setItem('uasWindUnit', intl ? 'kmh' : 'mph'); } catch (e) {} if (typeof wlSync === 'function') wlSync(); }   // wind starts in the usual unit for the country chosen
   if (changeUnits && (intl || prev === 'intl') && typeof toggleUnits === 'function') {
     units = intl ? 'metric' : 'imperial'; store('wxUnits', units); updateUnitsButton(); if (typeof wlSync === 'function') { wlSync(); tpSync(); } if (lastDraw) lastDraw();
   }
@@ -2369,7 +2401,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasNoTrack', 'uasRegion', 'uasNight', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -2396,7 +2428,7 @@ function xferWarm(el) {
   xferEncode(snap).then(code => { xferPre = { key, code }; }).catch(() => {});
 }
 // Back-up reminder: shown under the Settings / Back up & restore buttons after anything that a backup carries is changed
-const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'uasNight', 'uasHideHints', 'wxUnits', 'uasTheme'];
+const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'uasNight', 'uasHideHints', 'wxUnits', 'uasWindUnit', 'uasTheme'];
 let bkReady = false;
 setTimeout(() => { bkReady = true; }, 2000);
 // ?notrack on the address turns off the back-up reminder (and, on the public site, Cloudflare counting); ?track turns both back on
@@ -2663,7 +2695,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   fbl.href = 'mailto:info@JohnstonAerial.com?subject=' + encodeURIComponent('Checklist feedback ' + fbVer) +
     '&body=' + encodeURIComponent('What works, what is missing, or what is confusing:\n\n\n\n---\nApp version: ' + fbVer + '\nDevice and browser: ' + navigator.userAgent);
   const wl = document.createElement('div'); wl.className = 'wl-block';
-  wl.innerHTML = '<div class="wl-row"><span>🌬 Wind limit</span><span class="wl-ctl"><input type="number" inputmode="numeric" min="1" max="999" class="wl-w" aria-label="Maximum sustained wind"> / <input type="number" inputmode="numeric" min="1" max="999" class="wl-g" aria-label="Maximum gust"><span class="wl-unit">mph</span></span></div>' +
+  wl.innerHTML = '<div class="wl-row"><span>🌬 Wind limit</span><span class="wl-ctl"><input type="number" inputmode="decimal" min="1" max="999" step="any" class="wl-w" aria-label="Maximum sustained wind"> / <input type="number" inputmode="decimal" min="1" max="999" step="any" class="wl-g" aria-label="Maximum gust"><span class="wl-unit">mph</span></span></div>' +
     '<div class="wl-hint">sustained / gusts · orange at about two-thirds, red at the limit.</div>' +
     '<div class="wl-row kp-row"><span>🧲 Kp warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-a" aria-label="Kp index where the warning turns orange"> / <input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-r" aria-label="Kp index where the warning turns red"></span></div>' +
     '<div class="wl-hint">orange at / red at · from 1 to 9, standard 4 / 5. Higher Kp can disturb GPS and the compass.</div>' +
@@ -2697,7 +2729,9 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   if (hintsHidden()) { bodySet.classList.add('hide-hints'); hb.textContent = 'ⓘ Show explanations'; hb.setAttribute('aria-expanded', 'false'); }
   const hb2 = hb.cloneNode(true); hb2.onclick = hb.onclick;
   if (hintsHidden()) bodyBak.classList.add('hide-hints');
-  bodySet.append(note, hb, grp('Display', true), thb, reg, cust, keep, grp('Limits'), wl, grp('Your info'), fnb, acb, grp('PDF'), pdb); bodyBak.append(makeXfer()); bodyBak.querySelector('.xfer-sub').after(hb2);
+  const wsr = document.createElement('div'); wsr.className = 'keep-row region-row';
+  wsr.innerHTML = '<span>🌬 Wind speed</span><select class="ws-sel" aria-label="Wind speed units" onchange="windUnitSet(this.value)"><option value="mph">mph</option><option value="kmh">km/h</option><option value="ms">m/s</option><option value="kt">knots</option></select><div class="region-hint">Wind has its own unit. It starts as mph for USA and km/h for Outside USA, and stays what you choose.</div>';
+  bodySet.append(note, hb, grp('Display', true), thb, wsr, reg, cust, keep, grp('Limits'), wl, grp('Your info'), fnb, acb, grp('PDF'), pdb); bodyBak.append(makeXfer()); bodyBak.querySelector('.xfer-sub').after(hb2);
   [bodySet, bodyBak].forEach((bd, bi) => {           // a small arrow at the bottom closes the section and goes back up to the buttons
     const up = document.createElement('button'); up.type = 'button'; up.className = 'set-up'; up.textContent = '\u25B4 ' + (bi ? 'Close back up & restore' : 'Close settings');
     
@@ -2819,6 +2853,27 @@ function windLimits() {
   const ok = (v) => typeof v === 'number' && isFinite(v) && v > 0 ? v : null;
   return { w: ok(o && o.w), g: ok(o && o.g) };
 }
+// Wind by height (Wind tile, tap "more"): surface, 260 ft and 400 ft (10, 80 and 120 m)
+let windHtsOpen = false;
+function windHtsToggle(btn) {
+  windHtsOpen = !windHtsOpen;
+  document.querySelectorAll('.wx-hts').forEach(d => { d.hidden = !windHtsOpen; });
+  document.querySelectorAll('.wx-more').forEach(b => { b.textContent = windHtsOpen ? '\u25B4 fewer' : '\u25BE more'; b.setAttribute('aria-expanded', windHtsOpen ? 'true' : 'false'); });
+}
+function windHtsHTML(wx, surf) {
+  if (wx.wind120 == null) return '';
+  const m = isMetric();
+  const rows = [];
+  if (surf != null) rows.push(['Ground', surf, 0]);
+  if (wx.wind80 != null) rows.push([m ? '80 m' : '260 ft', wx.wind80, 1]);
+  rows.push([m ? '120 m' : '400 ft', wx.wind120, 1]);
+  const top = rows.filter(r => r[2]).reduce((a, r) => r[1] > a[1] ? r : a, ['', -1]);
+  const l = windLimits(), W = l.w || WIND_DEF.w;
+  const shear = surf != null && top[1] >= surf * 1.5 && Math.round(top[1]) >= Math.round(W * 2 / 3);
+  const lines = rows.map(r => '<div class="wx-hrow"><span>' + r[0] + '</span><b class="' + windColor(Math.round(r[1]), null) + '">' + fmtSpeed(r[1]) + '</b></div>').join('');
+  return '<div class="wx-sub">' + (m ? '120 m' : '400 ft') + ': ' + fmtSpeed(wx.wind120) + ' <button type="button" class="wx-more" aria-expanded="' + windHtsOpen + '" onclick="windHtsToggle(this)">' + (windHtsOpen ? '\u25B4 fewer' : '\u25BE more') + '</button></div>' +
+    '<div class="wx-hts"' + (windHtsOpen ? '' : ' hidden') + '>' + lines + '<div class="wx-hnote">Sustained wind. Gusts aloft aren\u2019t forecast and are usually higher.</div>' + (shear ? '<div class="wx-hshear">Wind builds with height: ' + fmtSpeed(surf) + ' at the surface, ' + fmtSpeed(top[1]) + ' at ' + top[0] + '.</div>' : '') + '</div>';
+}
 function windColor(mph, gust) {
   const l = windLimits(), W = l.w || WIND_DEF.w, G = l.g || WIND_DEF.g;
   const g = typeof gust === 'number' && isFinite(gust) ? gust : null;
@@ -2882,6 +2937,58 @@ function calmWindow(om, hIdx, nowBad, obsFine) {
   const cnt = (f) => day_.filter(f).length;
   const cw = cnt(x => x.windRed), cr = cnt(x => x.wet), cv = cnt(x => x.visBad);
   return { kind: 'none', lowNow: !!nowBad, cause: cw >= cr && cw >= cv ? 'wind' : cr >= cv ? 'wet' : 'vis', aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3), W, G };
+}
+// Next 12 hours strip (under Best window): wind with gust beneath, coloured by your limits; rain chance where it is 30% or more; hours after sunset dimmed
+// Cloud ceiling tile: layers from the airport report, and (behind "more") how forecast cloud cover changes over the next hours
+let cloudOpen = false;
+function cloudToggle() {
+  cloudOpen = !cloudOpen;
+  document.querySelectorAll('.wx-cts').forEach(d => { d.hidden = !cloudOpen; });
+  document.querySelectorAll('.wx-cmore').forEach(b => { b.textContent = cloudOpen ? '\u25B4 fewer' : '\u25BE more'; b.setAttribute('aria-expanded', cloudOpen ? 'true' : 'false'); });
+}
+function cloudHtml(metar, ceilFt, om, hIdx) {
+  const COV = { FEW: 'Few', SCT: 'Scattered', BKN: 'Broken', OVC: 'Overcast', OVX: 'Sky obscured', VV: 'Sky obscured' };
+  const layers = ((metar && metar.clouds) || []).map(c => ({ cov: COV[c.code || c.cover], base: c.base_feet_agl })).filter(x => x.cov && x.base != null && isFinite(x.base)).sort((a, b) => a.base - b.base).slice(0, 4);
+  let top = '';
+  if (ceilFt !== null && layers.length) top = layers.map(x => '<div class="wx-lay"><span>' + x.cov + '</span><b>' + fmtAlt(x.base) + '</b></div>').join('');   // with no ceiling the note above already lists the layers
+  let trend = '';
+  const H = om && om.hourly;
+  if (hIdx >= 0 && H && H.cloud_cover && H.time) {
+    const pts = [];
+    for (let k = 0; k <= 8 && hIdx + k < H.time.length; k += 2) { const v = H.cloud_cover[hIdx + k]; if (v != null && isFinite(v)) pts.push({ k, v: Math.round(v), t: H.time[hIdx + k] }); }
+    if (pts.length >= 3) {
+      const lab = (p) => p.k === 0 ? 'Now' : new Date(p.t).toLocaleTimeString([], { hour: 'numeric' }).replace(/\s*([AP])M$/i, (mm, a) => a.toLowerCase());
+      const a = pts[0], z = pts[pts.length - 1], d = z.v - a.v;
+      const word = d <= -20 ? 'Clouds easing: ' + a.v + '% now \u2192 ' + z.v + '% by ' + lab(z) : d >= 20 ? 'Clouds building: ' + a.v + '% now \u2192 ' + z.v + '% by ' + lab(z) : 'Clouds steady, about ' + a.v + '%';
+      trend = '<div class="wx-cts"' + (cloudOpen ? '' : ' hidden') + '><div class="wx-ctl">' + word + '</div><div class="wx-ck">' +
+        pts.map(p => '<div><i style="background:rgba(142,142,147,' + (0.12 + 0.88 * p.v / 100).toFixed(2) + ')"></i>' + lab(p) + '<br>' + p.v + '%</div>').join('') +
+        '</div><div class="wx-cnote">Forecast cloud cover, a guide only.</div></div>';
+    }
+  }
+  if (!top && !trend) return '';
+  return '<div class="wx-cl">' + top + (trend ? '<button type="button" class="wx-more wx-cmore" aria-expanded="' + cloudOpen + '" onclick="cloudToggle()">' + (cloudOpen ? '\u25B4 fewer' : '\u25BE more') + '</button>' + trend : '') + '</div>';
+}
+function hourStripHtml(om, hIdx) {
+  const H = om && om.hourly;
+  if (hIdx < 0 || !H || !H.time || !H.wind_speed_10m || !H.wind_gusts_10m) return '';
+  const n = Math.min(12, H.time.length - hIdx);
+  if (n < 3) return '';
+  const D = om.daily || {}, d0 = String(H.time[0]).slice(0, 10);
+  const cls = { 'wx-good': 'hc-good', 'wx-warn': 'hc-warn', 'wx-alert': 'hc-alert' };
+  let cells = '';
+  for (let k = 0; k < n; k++) {
+    const i = hIdx + k, t = H.time[i], dd = String(t).slice(0, 10) === d0 ? 0 : 1;
+    const w = H.wind_speed_10m[i], g = H.wind_gusts_10m[i];
+    if (w == null) continue;
+    const gOk = g != null && isFinite(g), wr = Math.round(w), gr = gOk ? Math.round(g) : null;
+    const r = D.sunrise && D.sunrise[dd], su = D.sunset && D.sunset[dd], ms = new Date(t).getTime() + 1800000;
+    const dark = r && su ? (ms < new Date(r).getTime() || ms > new Date(su).getTime()) : false;
+    const pp = H.precipitation_probability ? H.precipitation_probability[i] : null;
+    const lab = k === 0 ? 'Now' : new Date(t).toLocaleTimeString([], { hour: 'numeric' }).replace(/\s*([AP])M$/i, (m, a) => a.toLowerCase());
+    cells += '<div class="hs-h' + (dark ? ' hs-dark' : '') + '"><div class="hs-t">' + lab + '</div><div class="hs-c ' + cls[windColor(wr, gr)] + '">' + fmtSpeedNum(w) + (gOk && gr > wr ? '<small>' + fmtSpeedNum(g) + '</small>' : '<small>&nbsp;</small>') + '</div><div class="hs-r">' + (pp != null && pp >= 30 ? Math.round(pp) + '%' : '') + '</div></div>';
+  }
+  if (!cells) return '';
+  return '<div class="wx-strip"><div class="hs-title">Next 12 hours · ground wind / gust (' + speedUnit() + ')</div><div class="hs-row" role="group" aria-label="Hour by hour wind forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">Colours follow your wind limits · blue = chance of rain · dimmed = after sunset</div></div>';
 }
 function calmHtml(c, H, hIdx, siteTag) {
   if (!c || c.kind === 'ok') return '';
@@ -3294,9 +3401,25 @@ function store(key, value) {
 let units = recall('wxUnits', 'imperial') === 'metric' ? 'metric' : 'imperial';
 let lastDraw = null;
 const isMetric = () => units === 'metric';
-const fmtSpeed = (mph) => isMetric() ? Math.round(mph * 1.609344) + ' km/h' : Math.round(mph) + ' mph';
-const fmtSpeedNum = (mph) => isMetric() ? Math.round(mph * 1.609344) : Math.round(mph);
-const speedUnit = () => isMetric() ? 'km/h' : 'mph';
+// Wind speed unit: its own setting (uasWindUnit); empty means follow the units button. Wind is held in mph and converted only for display
+const WIND_UNITS = { mph: { f: 1, l: 'mph' }, kmh: { f: 1.609344, l: 'km/h' }, ms: { f: 0.44704, l: 'm/s' }, kt: { f: 0.868976, l: 'kn' } };
+const windPref = () => { try { const v = localStorage.getItem('uasWindUnit'); return WIND_UNITS[v] ? v : ''; } catch (e) { return ''; } };
+const windUnitKey = () => windPref() || (isMetric() ? 'kmh' : 'mph');   // fallback only until the first saved choice
+const fmtSpeedNum = (mph) => { const u = WIND_UNITS[windUnitKey()]; return u === WIND_UNITS.ms ? +(mph * u.f).toFixed(1) : Math.round(mph * u.f); };
+const speedUnit = () => WIND_UNITS[windUnitKey()].l;
+const fmtSpeed = (mph) => fmtSpeedNum(mph) + ' ' + speedUnit();
+// Wind has its own setting. The first time there is none saved it takes the usual unit for the units in use (mph, or km/h if metric) and stays what the person chooses
+(function () { if (!windPref()) { try { localStorage.setItem('uasWindUnit', isMetric() ? 'kmh' : 'mph'); } catch (e) {} } })();
+// A small hint on the Wind tile points to Settings; it shows for the first 5 opens, and stops once the wind unit is changed on purpose
+let windHintOn = false;
+(function () { try { if (localStorage.getItem('uasWindHintDone') === '1') return; const n = (parseInt(localStorage.getItem('uasWindHintOpens'), 10) || 0) + 1; localStorage.setItem('uasWindHintOpens', String(n)); windHintOn = n <= 5; } catch (e) {} })();
+function windHintHtml() { return windHintOn ? '<div class="wx-hint">Change wind units in <a href="#" onclick="openWindSetting(); return false;">Settings</a></div>' : ''; }
+function openWindSetting() {
+  const t = [...document.querySelectorAll('.tg-set')].find(b => b.offsetParent !== null) || document.querySelector('.tg-set');
+  if (!t) return;
+  if (t.getAttribute('aria-expanded') !== 'true') t.click();
+  setTimeout(() => { const root = t.closest('.set-heads'), box = root && root.parentElement, sel = (box && box.querySelector('.ws-sel')) || document.querySelector('.ws-sel'); if (sel) { try { sel.scrollIntoView({ block: 'center', behavior: 'smooth' }); sel.focus({ preventScroll: true }); } catch (e) {} } }, 90);
+}
 // Golden hour: sun between 4 degrees below and 6 degrees above the horizon (computed from date + place, no network)
 function sunElev(tMs, lat, lon) {
   const d = tMs / 86400000 + 2440587.5 - 2451545.0, r = Math.PI / 180;
@@ -3342,7 +3465,10 @@ const fmtDist = (mi) => isMetric() ? Math.round(mi * 1.609344) + ' km' : Math.ro
 const fmtAlt = (ft) => isMetric() ? (Math.round(ft * 0.3048 / 10) * 10).toLocaleString() + ' m' : Number(ft).toLocaleString() + ' ft';
 function updateUnitsButton() {
   const b = document.getElementById('wx-units');
-  if (b) b.textContent = isMetric() ? 'km/h · °C' : 'mph · °F';
+  if (!b) return;
+  const m = isMetric();   // the button switches temperature, distance and altitude only; wind has its own setting
+  b.innerHTML = (m ? 'Metric' : 'Imperial') + '<small>' + (m ? '\u00B0C \u00B7 km \u00B7 m' : '\u00B0F \u00B7 mi \u00B7 ft') + '</small>';
+  b.setAttribute('aria-label', 'Units: ' + (m ? 'Metric' : 'Imperial') + '. Switch to ' + (m ? 'Imperial' : 'Metric') + '.');
 }
 function toggleUnits() {
   units = isMetric() ? 'imperial' : 'metric';
@@ -3357,10 +3483,19 @@ function wlSync() {
   document.querySelectorAll('.wl-w').forEach(i => { i.placeholder = fmtSpeedNum(WIND_DEF.w); if (i !== act) i.value = l.w ? fmtSpeedNum(l.w) : ''; });
   document.querySelectorAll('.wl-g').forEach(i => { i.placeholder = fmtSpeedNum(WIND_DEF.g); if (i !== act) i.value = l.g ? fmtSpeedNum(l.g) : ''; });
   document.querySelectorAll('.wl-unit').forEach(u => { u.textContent = speedUnit(); });
+  document.querySelectorAll('.ws-sel').forEach(x => { x.value = windUnitKey(); });
+  document.querySelectorAll('.wl-w, .wl-g').forEach(i => { i.step = windUnitKey() === 'ms' ? '0.1' : '1'; });
+}
+function windUnitSet(v) {
+  try { if (WIND_UNITS[v]) localStorage.setItem('uasWindUnit', v); else localStorage.removeItem('uasWindUnit'); localStorage.setItem('uasWindHintDone', '1'); } catch (e) {}
+  windHintOn = false; document.querySelectorAll('.wx-hint').forEach(h => h.remove());
+  updateUnitsButton(); wlSync();
+  if (typeof bkMark === 'function') bkMark();
+  if (lastDraw) lastDraw();
 }
 function wlSave() {
   const a = document.activeElement, w = a && a.classList.contains('wl-w') ? a : null, g = a && a.classList.contains('wl-g') ? a : null;
-  const cur = windLimits(), toMph = (i) => { const v = parseFloat(i.value); return isFinite(v) && v > 0 ? Math.round((isMetric() ? v / 1.609344 : v) * 10) / 10 : null; };
+  const cur = windLimits(), toMph = (i) => { const v = parseFloat(i.value); return isFinite(v) && v > 0 ? Math.round(v / WIND_UNITS[windUnitKey()].f * 10) / 10 : null; };
   const o = { w: w ? toMph(w) : cur.w, g: g ? toMph(g) : cur.g };
   try { if (o.w || o.g) localStorage.setItem('uasWindLimits', JSON.stringify(o)); else localStorage.removeItem('uasWindLimits'); } catch (e) {}
   wlSync();
@@ -3574,7 +3709,7 @@ async function renderWeather(lat, lon, attempt = 1) {
   lastDraw = null;
   try {
       const [wxRes, kpData, metarData, radarRes] = await Promise.allSettled([
-        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_10m,wind_gusts_10m,wind_speed_120m,precipitation_probability,precipitation,weather_code,cape&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`),
+        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_10m,wind_gusts_10m,wind_speed_80m,wind_speed_120m,cloud_cover,precipitation_probability,precipitation,weather_code,cape&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`),
         fetchKP(),
         fetchMetar(lat, lon),
         fetchRadar(lat, lon)
@@ -3597,6 +3732,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         main: { temp: cur.temperature_2m },
         visibility: hIdx >= 0 ? om.hourly.visibility[hIdx] : null,
         wind120: hIdx >= 0 ? om.hourly.wind_speed_120m[hIdx] : null,
+        wind80: hIdx >= 0 && om.hourly.wind_speed_80m ? om.hourly.wind_speed_80m[hIdx] : null,
         sunrise: om.daily && om.daily.sunrise ? om.daily.sunrise[0] : null,
         sunset: om.daily && om.daily.sunset ? om.daily.sunset[0] : null,
         weatherCode: cur.weather_code,
@@ -3820,10 +3956,11 @@ async function renderWeather(lat, lon, attempt = 1) {
             <div class="wx-sub">${owGust ? 'Sustained / Gusts' : 'No gusts reported'}${owDirTxt ? ' · ' + owDirTxt : ''}</div>
             <div class="wx-sub" data-rec-age="${Date.now() - ow.ageMin * 60000}">${ow.station} · ${fmtDist(ow.dist)} away · ${ageText(ow.ageMin * 60000)}</div>
             ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${modelTxt}</strong></div>` : ''}
-            ${wx.wind120 != null ? `<div class="wx-sub">${isMetric() ? '120 m' : '400 ft'}: ${fmtSpeed(wx.wind120)}</div>` : ''}` : `
+            ${windHtsHTML(wx, windOk ? windMph : null)}${windHintHtml()}` : `
             <div class="wx-label">Wind</div>
             <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() + (dirOk ? ' ' + windArrow(wx.wind.deg) : '') : '—'}</div>
-            <div class="wx-sub">${windOk ? (gustMph ? 'Sustained / Gusts' : 'No gusts reported') + (dirOk ? ' · ' + windCardinal(wx.wind.deg) : '') + wind120Txt : 'No wind data'}</div>`;
+            <div class="wx-sub">${windOk ? (gustMph ? 'Sustained / Gusts' : 'No gusts reported') + (dirOk ? ' · ' + windCardinal(wx.wind.deg) : '') : 'No wind data'}</div>
+            ${windHtsHTML(wx, windOk ? windMph : null)}${windHintHtml()}`;
         body.innerHTML = `
         <div class="wx-grid">
           <div class="wx-item">
@@ -3837,6 +3974,7 @@ async function renderWeather(lat, lon, attempt = 1) {
             ${lowerTxt() ? `<div class="wx-sub">${lowerTxt()}</div>` : ''}
             ${lowCloudTxt() ? `<div class="wx-sub">${lowCloudTxt()}</div>` : ''}
             ${maxAltTxt() ? `<div class="wx-sub"><strong>${maxAltTxt()}</strong></div>` : ''}
+            ${metarData2 ? cloudHtml(m, ceilFt, om, hIdx) : ''}
           </div>
           <div class="wx-item">
             <div class="wx-label">Temperature</div>
@@ -3865,9 +4003,10 @@ async function renderWeather(lat, lon, attempt = 1) {
             ${obscTxt() ? `<div class="wx-sub">${obscTxt()}</div>` : ''}
           </div>
         </div>
+        ${calmHtml(calmWindow(om, hIdx, calmNowBad(), obsVisFine()), om.hourly, hIdx, siteTag)}
+        ${hourStripHtml(om, hIdx)}
         <div class="wx-sun">🌅 Sunrise ${fmtT(wx.sunrise)} &nbsp;·&nbsp; 🌇 Sunset ${fmtT(wx.sunset)}${siteTag}</div>
         ${goldenLine}
-        ${calmHtml(calmWindow(om, hIdx, calmNowBad(), obsVisFine()), om.hourly, hIdx, siteTag)}
         <div class="wx-night" id="wx-night" hidden></div>
         <div class="wx-updated" id="wx-updated">Updated ${now} · ${srcText}<span id="wx-age"></span></div>
         <div class="wx-disclaimer">Guide only. Conditions can differ at your site. Check your own weather sources and look at the sky before you fly. Radar: <a href="https://www.rainviewer.com" target="_blank" rel="noopener">RainViewer</a>.</div>
@@ -4034,7 +4173,7 @@ function recWeatherLines() {
     const q = (sel) => { const e = it.querySelector(sel); return e ? recNoEmoji(e.textContent) : ''; };
     const label = q('.wx-label'), val = q('.wx-value').replace(/\s*[\u2190-\u2199]\s*/g, ' ').trim();   // no wind arrow in the record; the "From NE" text says it
     const subs = [...it.querySelectorAll('.wx-sub, .wx-vis-val')].map(e => {
-      let t = recNoEmoji(e.textContent);
+      let t = recNoEmoji(e.textContent.replace(/\s*[\u25BE\u25B4]\s*(more|fewer)/, ''));
       if (e.classList.contains('wx-vis-val')) t = 'Visibility ' + t;
       const ts = e.getAttribute('data-rec-age');              // record shows a clock time, not "21 min ago"
       if (ts) t = t.replace(/ · (just now|\d+ min ago|\d+ hrs? ago)/, ' · observed ' + new Date(+ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
@@ -4540,6 +4679,13 @@ function openRecord(btn) {
   document.addEventListener('keydown', recKey);
   setTimeout(() => { const f = $('#rec-cust'); if (f) f.focus(); }, 50);
 }
+// Printing shrinks the page, and some browsers leave you partway down the checklist afterwards: remember the place and go back to it
+(function () {
+  let y = null;
+  const back = () => { if (y === null) return; const t = y; y = null; [0, 60, 250].forEach(ms => setTimeout(() => window.scrollTo(0, t), ms)); };
+  window.addEventListener('beforeprint', () => { y = window.scrollY; });
+  window.addEventListener('afterprint', back);
+})();
 document.querySelectorAll('.panel .pc-btns').forEach(col => {
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'rec-btn'; b.className = 'rec-btn rec-record'; b.innerHTML = '<span class="ic" aria-hidden="true">📋</span>Save flight record';

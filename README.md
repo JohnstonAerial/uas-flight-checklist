@@ -106,6 +106,17 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.6
+
+- **Wind speed setting** — **Settings > Display** lets you read wind in mph, km/h, m/s or knots. It starts as mph for USA and km/h for Outside USA, and stays what you choose. A small hint on the Wind tile points to it for the first few opens.
+- **Imperial / Metric button** — the button at the top of the weather panel now reads **Imperial** or **Metric** and switches temperature, distance and altitude. It leaves your wind unit alone.
+- **Wind by height** — a **more** link on the Wind tile shows wind at ground level, 260 ft and 400 ft, with a note when it gets stronger higher up.
+- **Next 12 hours** — a sideways-swiping strip under the tiles shows wind and gusts hour by hour, coloured by your wind limits, with rain chance.
+- **Cloud ceiling details** — the tile lists the airport's cloud layers, and a **more** link shows whether the sky is easing or building.
+- **Print** — closing the print dialog returns you to where you were on the checklist.
+
+---
+
 ## What's new in v3.9.5
 
 - **Clearer wording in Settings** — **Appearance** now reads "Auto follows device settings. Choose Light or Dark to override it." **Where you fly** says it changes the checklist items, weather units and airspace links to match your country. The **I fly at night** note says Best window will include night hours, and to check your lights and training requirements first.
@@ -587,7 +598,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Back up & restore** — see below
 - **Collapsible sections** — tap a section header to fold it up or open it, or use the **Expand | Collapse** buttons on the progress card. Finished sections fold themselves and the next unfinished one opens, and on your first visit only the first section of each tab is open. Each header shows its count (like 9/12), a ✓ when it's finished and an orange ⚠ if something in it needs attention, even when folded. Your fold state is remembered
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it in Settings (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
-- **Imperial / metric toggle** — tap the units button in the weather panel to switch wind, temperature, visibility and ceiling between mph/°F/SM/ft and km/h/°C/km/m; your choice is remembered
+- **Imperial / Metric toggle** — tap the units button in the weather panel to switch temperature, visibility and ceiling between °F/SM/ft and °C/km/m; your choice is remembered. Wind has its own setting (mph, km/h, m/s or knots) in **Settings > Display**.
 - **Weather shows its age** — the "Updated" line turns orange after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention, or mark them N/A** — press and hold any item for a small menu. **Needs attention** marks it orange; flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag. **N/A for this flight** greys it out and takes it out of your progress; tap it to put it back
 - **Save a flight record** — tap **Save flight record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, your pilot name, drone and registration number from Settings, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-flight-record)

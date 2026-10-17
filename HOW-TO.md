@@ -205,7 +205,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 
 **What changes**
 
-- **Units:** wind and distances show in km/h and km, temperatures in °C. The **mph · °F / km/h · °C** button next to the weather title switches units without changing your region.
+- **Units:** distances show in km, temperatures in °C. The **Imperial / Metric** button next to the weather title switches them without changing your region. Wind starts as km/h and has its own **Wind speed** setting under **⚙ Settings**.
 - **Checklist wording:** the items marked "(US)" are hidden: the TFR check, the LAANC item and the TFR recheck on site. The NOTAM item is reworded to point you to your country's aviation authority or NOTAM service.
 - **Ceiling warnings:** low-cloud notes say "check your local cloud and visibility rules" instead of quoting US rules.
 - **Night notice:** after sunset or before sunrise it says to check your local rules for night flying. The same line is printed on a saved flight record.
