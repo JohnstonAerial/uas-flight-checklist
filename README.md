@@ -106,6 +106,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.5
+
+- **Clearer wording in Settings** — **Appearance** now reads "Auto follows device settings. Choose Light or Dark to override it." **Where you fly** says it changes the checklist items, weather units and airspace links to match your country. The **I fly at night** note says Best window will include night hours, and to check your lights and training requirements first.
+- **"This browser" instead of "this device"** — your settings, tabs and lists are kept by each browser (and each Home Screen app) separately, so the saved notes, the back-up reminder and the **Restore** warning now say **this browser**.
+- **Back up & restore wording by device** — AirDrop and **Save to Files** are only mentioned on iPhone, iPad and Mac. On Android, Windows and other devices it says to save the backup where you like or send it by email or a messaging app.
+
+---
+
 ## What's new in v3.9.3
 
 - **Fly at night, with lights** — a new **🌙 I fly at night** setting under **⚙ Settings** (next to **Where you fly**). It is **No** by default. Set it to **Yes, with lights** and the **Best window** also counts night hours, with a reminder that anti-collision lights are required. Night flying needs anti-collision lights and current night training or a waiver, so it is your call to turn it on. The setting is saved with **Back up & restore**.
