@@ -575,8 +575,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-panel { background: var(--card); border-radius: 14px; padding: 12px 14px; margin: 12px 12px 0; box-shadow: var(--shadow); max-width: 600px; margin-left: auto; margin-right: auto; }
   .wx-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .wx-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
-  .wx-units small { display: block; font-size: 9.5px; opacity: 0.85; margin-top: 1px; }
-  .wx-units { flex-direction: column; line-height: 1.15; }
+  .wx-units small { display: block; font-size: 9.5px; opacity: 0.85; margin-top: 1px; white-space: nowrap; }
+  .wx-units { flex-direction: column; line-height: 1.15; white-space: nowrap; flex-shrink: 0; }
   .wx-hint { margin-top: 6px; font-size: 10.5px; font-style: italic; color: var(--text-muted); }
   .wx-hint a { color: var(--link); }
   .wx-units { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 12px; font-family: inherit; padding: 2px 9px; margin-left: auto; margin-right: 6px; }
@@ -717,7 +717,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.6</p>
+      <p>Free Drone Preflight Checklist · v3.9.7</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>

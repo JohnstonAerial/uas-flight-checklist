@@ -106,6 +106,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.7
+
+- **Imperial / Metric button fits on narrow phones** — the second line (for example **°F · mi · ft**) stays on one row instead of wrapping into three lines when the text is large or the screen is narrow.
+
+---
+
 ## What's new in v3.9.6
 
 - **Wind speed setting** — **Settings > Display** lets you read wind in mph, km/h, m/s or knots. It starts as mph for USA and km/h for Outside USA, and stays what you choose. A small hint on the Wind tile points to it for the first few opens.
