@@ -79,7 +79,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   :root[data-theme="dark"] .wx-alert { color: #ff3b30; }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; width: 100%; overflow-x: hidden; margin: 0; padding: 0; }
-  html { overflow-x: hidden; width: 100%; }
+  html { overflow-x: hidden; width: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }   /* iPhone landscape: keep text the same size when the phone is rotated */
 
   .header {
     background: var(--blue);
@@ -400,6 +400,9 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .body-bak { padding: 0; }
   .body-bak .xfer { max-width: none; margin: 0; padding: 0; border-top: 0; text-align: left; font-size: 14px; color: var(--text); }
   .body-bak .xfer-sub { font-size: 11px; color: var(--text-light); padding: 12px 16px 10px; border-bottom: 1px solid var(--border); margin: 0; }
+  .body-bak .xfer-hint, .body-bak .xfer-warn { font-size: 11px; line-height: 1.4; color: var(--text-light); padding: 0 16px 8px; margin: 0; }
+  .body-bak .xfer-warn { color: var(--text-muted); }
+  .body-bak.hide-hints .xfer-hint, .body-bak.hide-hints .xfer-warn { display: none; }
   .bk-h { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; padding: 12px 16px 6px; }
   .body-bak .xfer-incl { display: flex; flex-direction: row; justify-content: flex-start; align-items: center; gap: 10px; padding: 6px 16px 8px; margin: 0; }
   .body-bak .xfer-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; padding: 4px 16px 14px; }
@@ -452,6 +455,20 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .body-set .wl-block .wl-row { margin-bottom: 8px; }
   .body-set .wl-block .wl-hint { margin: 2px 0 16px; }
   .body-set .settings-note { max-width: none; margin: 0; padding: 12px 16px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+  .body-set .keep-row select, .body-set .region-row select { flex: 0 1 auto; width: auto; min-width: 0; max-width: 45%; }
+  .body-set .keep-row > span, .body-set .region-row > span { flex: 1 1 0; min-width: 0; }
+  .pdfset .pd-row { flex-wrap: wrap; row-gap: 6px; }
+  .pdfset .pd-row > span { flex: 1 1 auto; min-width: 0; white-space: nowrap; }
+  .pdfset .pd-row .pd-seg { margin-left: auto; }
+  @media (max-width: 430px) { .pdfset .pd-seg button { padding: 6px 8px; font-size: 12.5px; } }
+  .body-set .region-row { row-gap: 4px; }
+  .region-row .rbreak { flex: 1 1 100%; height: 0; }
+  .set-grp { padding: 12px 16px 2px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-light); border-top: 1px solid var(--border); text-align: left; }
+  .set-grp.first { border-top: 0; padding-top: 8px; }
+  .set-hints { display: block; width: 100%; text-align: right; padding: 6px 16px 0; background: none; border: 0; font-family: inherit; font-size: 13px; color: var(--link); cursor: pointer; min-height: 32px; }
+  .body-set.hide-hints .pd-hint, .body-set.hide-hints .wl-hint, .body-set.hide-hints .region-hint, .body-set.hide-hints .fn-hint { display: none; }
+  .body-set.hide-hints .region-row.night-on .region-hint.nh { display: block; }   /* the lights reminder stays visible once night flying is on */
+  .panel.editing .body-set > .set-grp, .panel.editing .body-set > .set-hints { display: none; }
   .settings-help { max-width: 600px; margin: 6px auto 10px; padding: 0 16px; text-align: center; font-size: 14px; }
   .settings-help a { padding: 6px 0; }
   @media (max-width: 340px) { .wl-row { gap: 5px; } .wl-row input { width: 48px; } }
@@ -669,7 +686,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.3</p>
+      <p>Free Drone Preflight Checklist · v3.9.4</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1515,10 +1532,17 @@ setKeepHours(keepHours());
 
 
 // ── Region: tailor the checklist for the USA or for flying elsewhere ──
+function hintsHidden() { try { return localStorage.getItem('uasHideHints') === '1'; } catch (e) { return false; } }
+function hintsSet(hide) {   // Settings explanations: shown by default; a choice to hide them is saved and included in backups
+  try { if (hide) localStorage.setItem('uasHideHints', '1'); else localStorage.removeItem('uasHideHints'); } catch (e) {}
+  document.querySelectorAll('.body-set, .body-bak').forEach(b => b.classList.toggle('hide-hints', hide));
+  document.querySelectorAll('.set-hints').forEach(h => { h.textContent = hide ? 'ⓘ Show explanations' : 'Hide explanations'; h.setAttribute('aria-expanded', String(!hide)); });
+}
 function nightOn() { try { return localStorage.getItem('uasNight') === '1'; } catch (e) { return false; } }
 function nightSet(v) {
   try { if (v) localStorage.setItem('uasNight', '1'); else localStorage.removeItem('uasNight'); } catch (e) {}
   document.querySelectorAll('.night-sel').forEach(x => { x.value = v ? '1' : '0'; });
+  document.querySelectorAll('.region-row').forEach(r => r.classList.toggle('night-on', !!v));
   if (lastDraw) lastDraw();
 }
 const REGION_KEY = 'uasRegion';
@@ -2205,9 +2229,10 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const row = document.createElement('div');
   row.className = 'keep-row region-row';
   row.innerHTML = '<span>🌍 Where you fly</span><select class="region-sel" aria-label="Where you fly" onchange="applyRegion(this.value, true)"><option value="us">USA</option><option value="intl">Outside USA</option></select><div class="region-hint">Sets checklist items, weather units and US-only airspace links.</div>' +
-    '<span>🌙 I fly at night</span><select class="night-sel" aria-label="I fly at night" onchange="nightSet(this.value === \'1\')"><option value="0">No</option><option value="1">Yes, with lights</option></select><div class="region-hint">Best window also counts night hours. Night flying needs anti-collision lights and current night training or waiver. Off by default.</div>';
+    '<div class="rbreak"></div><span>🌙 I fly at night</span><select class="night-sel" aria-label="I fly at night" onchange="nightSet(this.value === \'1\')"><option value="0">No</option><option value="1">Yes</option></select><div class="region-hint nh">Best window counts night hours. Needs anti-collision lights and night training or a waiver.</div>';
   row.querySelector('select').value = region || 'us';
   row.querySelector('.night-sel').value = nightOn() ? '1' : '0';
+  row.classList.toggle('night-on', nightOn());
   panelEl.querySelector('.keep-row').after(row);
 });
 if (!region) {
@@ -2344,7 +2369,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasRegion', 'uasNight', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasRegion', 'uasNight', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -2356,6 +2381,12 @@ const XFER_HAS_SHARE = (() => {
     return !!window.showSaveFilePicker || !fileShare || !touch;
   } catch (e) { return false; }
 })();
+const XFER_SAVE_HINT = (() => {   // describe only the buttons this device actually shows
+  const sheet = (() => { try { return typeof navigator.share === 'function' && !!(window.matchMedia && matchMedia('(pointer: coarse)').matches); } catch (e) { return false; } })();
+  if (XFER_HAS_SHARE) return '<b>Save file</b> keeps a .json file on this device. <b>Share…</b> sends it to yourself or someone else, for example by AirDrop, Messages or email. ';
+  if (sheet) return '<b>Save file</b> opens your share sheet: choose <b>Save to Files</b>, or send the backup to yourself by AirDrop, Messages or email. ';
+  return '<b>Save file</b> keeps a .json file on this device. ';
+})();
 let xferPre = null;                                                  // backup code made ahead of the tap, so Share runs inside the tap
 function xferWarm(el) {
   const box = el.closest('.xfer'); if (!box) return;
@@ -2364,7 +2395,7 @@ function xferWarm(el) {
   xferEncode(snap).then(code => { xferPre = { key, code }; }).catch(() => {});
 }
 // Back-up reminder: shown under the Settings / Back up & restore buttons after anything that a backup carries is changed
-const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'uasNight', 'wxUnits', 'uasTheme'];
+const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'uasNight', 'uasHideHints', 'wxUnits', 'uasTheme'];
 let bkReady = false;
 setTimeout(() => { bkReady = true; }, 2000);
 function bkMark() { if (bkReady) document.body.classList.add('bk-dirty'); }
@@ -2386,8 +2417,11 @@ function makeXfer() {
   d.className = 'xfer';
   d.innerHTML = '<div class="xfer-sub">Save your settings and progress, or move them to another device or browser.</div>' +
     '<div class="bk-h">Back up</div><label class="xfer-incl"><input type="checkbox" class="xfer-prog" checked> Include current progress</label>' +
+    '<div class="xfer-hint">Include current progress also saves your checked, N/A and Needs attention marks. They clear after the time you set under Clear saved progress after.<br>' + XFER_SAVE_HINT + '<b>Copy code</b> copies the backup as text to paste into Notes, messages or email.</div>' +
     '<div class="xfer-btns' + (XFER_HAS_SHARE ? ' has-share' : '') + '"><button type="button" class="cust-btn" onclick="xferCopy(this)">Copy code</button>' + (XFER_HAS_SHARE ? '<button type="button" class="cust-btn share-btn" onclick="xferShare(this)" onpointerdown="xferWarm(this)" aria-label="Share a backup">Share…</button>' : '') + '<button type="button" class="cust-btn primary" onclick="xferSave(this)">Save file</button>' + '</div>' +
     '<div class="bk-div"></div><div class="bk-h">Restore</div>' +
+    '<div class="xfer-warn">Restore replaces this device\'s settings, tabs and lists with the backup. You will be asked to confirm first.</div>' +
+    '<div class="xfer-hint"><b>Restore from file…</b> loads a backup file you saved. <b>Paste code…</b> restores from a backup code you copied.</div>' +
     '<div class="xfer-btns rs"><button type="button" class="cust-btn primary" onclick="xferFile(this)">Restore from file\u2026</button>' +
     '<button type="button" class="cust-btn xfer-paste" aria-expanded="false" onclick="xferPaste(this)">Paste code\u2026</button>' +
     '<input type="file" class="xfer-file" accept=".json,application/json,text/plain" hidden onchange="xferFileChosen(this)"></div>' +
@@ -2634,7 +2668,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const acb = document.createElement('div'); acb.className = 'fn-block ac-block';
   acb.innerHTML = '<div class="fn-row"><span>👤 Default pilot</span><input type="text" class="fn-in ac-in" data-k="uasPilot" maxlength="40" placeholder="Your name" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Pilot name" oninput="acSave(this)"></div>' +
     '<div class="fn-row"><span>🚁 Default drone</span><input type="text" class="fn-in ac-in" data-k="uasDrone" maxlength="40" placeholder="e.g. Mavic 4 Pro" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Drone name or model" oninput="acSave(this)"></div>' +
-    '<div class="fn-row"><span>🪪 Default reg. #</span><input type="text" class="fn-in ac-in" data-k="uasRegNo" maxlength="30" placeholder="e.g. FA3XXXXXXX" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-label="Drone registration number" oninput="acSave(this)"></div>' +
+    '<div class="fn-row"><span>🪪 Default reg. #</span><input type="text" class="fn-in ac-in" data-k="uasRegNo" maxlength="30" placeholder="FA3…" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-label="Drone registration number" oninput="acSave(this)"></div>' +
     '<div class="fn-hint">Printed at the top of saved flight records and the checklist PDF. A tab uses these only when its own Pilot, Drone and Reg. # (under Customize) are blank. Saved on this device only.</div>';
   const pdb = document.createElement('div'); pdb.className = 'pdfset';
   pdb.innerHTML = '<div class="pd-row"><span>📄 PDF layout</span><div class="pd-seg" role="radiogroup" aria-label="PDF layout"><button type="button" role="radio" data-k="layout" data-v="compact">Compact</button><button type="button" role="radio" data-k="layout" data-v="large">Large print</button></div></div>' +
@@ -2649,7 +2683,13 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   thb.innerHTML = '<div class="pd-row"><span>🌗 Appearance</span><div class="pd-seg" role="radiogroup" aria-label="Appearance"><button type="button" role="radio" data-th="auto">Auto</button><button type="button" role="radio" data-th="light">Light</button><button type="button" role="radio" data-th="dark">Dark</button></div></div>' +
     '<div class="pd-hint">Auto follows your device. Choose Light or Dark to override it, for example Light in bright sun.</div>';
   thb.addEventListener('click', e => { const bt = e.target.closest('button[data-th]'); if (bt) themeSet(bt.dataset.th); });
-  bodySet.append(note, thb, reg, cust, keep, wl, fnb, acb, pdb); bodyBak.append(makeXfer());
+  const grp = (t, f) => { const d = document.createElement('div'); d.className = 'set-grp' + (f ? ' first' : ''); d.textContent = t; return d; };
+  const hb = document.createElement('button'); hb.type = 'button'; hb.className = 'set-hints'; hb.textContent = 'Hide explanations'; hb.setAttribute('aria-expanded', 'true');
+  hb.onclick = () => hintsSet(!bodySet.classList.contains('hide-hints'));
+  if (hintsHidden()) { bodySet.classList.add('hide-hints'); hb.textContent = 'ⓘ Show explanations'; hb.setAttribute('aria-expanded', 'false'); }
+  const hb2 = hb.cloneNode(true); hb2.onclick = hb.onclick;
+  if (hintsHidden()) bodyBak.classList.add('hide-hints');
+  bodySet.append(note, hb, grp('Display', true), thb, reg, cust, keep, grp('Limits'), wl, grp('Your info'), fnb, acb, grp('PDF'), pdb); bodyBak.append(makeXfer()); bodyBak.querySelector('.xfer-sub').after(hb2);
   [bodySet, bodyBak].forEach((bd, bi) => {           // a small arrow at the bottom closes the section and goes back up to the buttons
     const up = document.createElement('button'); up.type = 'button'; up.className = 'set-up'; up.textContent = '\u25B4 ' + (bi ? 'Close back up & restore' : 'Close settings');
     

@@ -95,6 +95,17 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.4
+
+- **A shorter Settings panel** — **⚙ Settings** is grouped into **Display**, **Limits**, **Your info** and **PDF**. Drop-down boxes are only as wide as their text and sit on the right, and the settings take roughly a third less room on a phone.
+- **Show or hide the explanations** — the grey explanation text under the settings has a **Hide explanations** link at the top. They are showing the first time you open the app. If you hide them, the app remembers on that device, and the choice is saved with **Back up & restore**. The line that says your settings are saved on this device only always stays.
+- **Explanations for Back up & restore** — the same **Hide explanations** link now covers **Back up & restore**, which explains what **Include current progress** saves (your checked, N/A and Needs attention marks), what **Save file**, **Copy code**, **Restore from file…** and **Paste code…** do, and that a restore asks you to confirm first. It only mentions **Share…** on devices that show it.
+- **Night note only when it matters** — the lights and training reminder under **I fly at night** always shows when night flying is on, and is an ordinary explanation (hidden with the others) when it is off. The setting now reads **No / Yes** so it fits on a phone.
+- **Steady text size on iPhone** — turning the phone sideways no longer enlarges small text.
+- **Small fixes on iPhone** — **Appearance** and **PDF layout** no longer overlap or get cut off, and the **Default reg. #** box no longer cuts off its hint.
+
+---
+
 ## What's new in v3.9.3
 
 - **Fly at night, with lights** — a new **🌙 I fly at night** setting under **⚙ Settings** (next to **Where you fly**). It is **No** by default. Set it to **Yes, with lights** and the **Best window** also counts night hours, with a reminder that anti-collision lights are required. Night flying needs anti-collision lights and current night training or a waiver, so it is your call to turn it on. The setting is saved with **Back up & restore**.
