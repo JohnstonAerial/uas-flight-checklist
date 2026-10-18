@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.10
+
+- **View button for your PDF on computers** — after you tap **PDF** (or **Save PDF** in a flight record) on a computer, the "Your PDF is ready" box now has **View** next to **Share…** and **Download**. **View** opens the PDF in a new browser tab so you can read it and print it from there. If your browser blocks the new tab, use **Download**. Phones and tablets work as before.
+- **Same buttons for everyone** — the small print tip now sits below the **Print**, **PDF** and **Save flight record** buttons, so the buttons look the same whether or not the tip is showing.
+
+---
+
 ## What's new in v3.9.9
 
 - **A tidier Wind and Cloud ceiling tile** — the wind arrow now says what it means (**↓ from N** shows the wind coming from the north), and the opened **more** view under Wind drops the repeated figures: one short note, the Ground / 260 ft / 400 ft table, and the **Wind builds with height** box when it applies. The Cloud ceiling tile lists the airport's cloud layers on one line.
