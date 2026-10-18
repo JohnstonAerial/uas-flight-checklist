@@ -106,6 +106,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.8
+
+- **Six views for the Next 12 hours strip** — tap the small chip on the strip title (**Wind ▾**) to switch between **Wind** (sustained wind with the gust underneath), **Aloft** (wind at 400 ft, or 120 m), **Temp**, **Visibility** (with a **fog** flag when the temperature is close to the dew point), **Clouds** and **Rain** (chance and amount). Colours follow your wind and temperature limits, and the line under the title says what each view shows. The strip always opens on Wind.
+
+---
+
 ## What's new in v3.9.7.1
 
 - **Change the wind unit right on the Wind tile** — the unit next to the wind number is now a small dropdown chip (**mph ▾**). Tap it to see wind in mph, km/h, m/s or knots, for a quick look or for good. The tile, the height rows, the **Next 12 hours** strip and the Best window all follow, and your choice is saved and backed up. The separate **Wind speed** row in Settings and the small hint are gone.

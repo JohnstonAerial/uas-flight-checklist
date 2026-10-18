@@ -645,6 +645,11 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .hs-dark .hs-c, .hs-dark .hs-t { opacity: 0.5; }
   .hs-r { margin-top: 3px; font-size: 10px; color: #3d8bfd; min-height: 12px; }
   .hs-key { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+  .hs-title .hs-chip { margin: 0 3px; border: 1px solid var(--border); border-radius: 9px; padding: 2px 16px 2px 7px; font-size: 10.5px; font-weight: 600; line-height: 1.3; color: var(--link); text-transform: none; letter-spacing: 0; cursor: pointer; }
+  .hs-chip .hs-sel { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; border: 0; padding: 0; margin: 0; font-size: 16px; cursor: pointer; -webkit-appearance: none; appearance: none; }
+  .hs-cap { font-size: 10.5px; color: var(--text-muted); margin: -2px 0 6px; line-height: 1.3; }
+  .hc-none { background: transparent; color: var(--text-muted); border: 1px solid var(--border); font-weight: 400; }
+  .hc-cloud { color: var(--text); box-shadow: inset 0 0 0 1px var(--border); }
   .wx-window-s { margin-top: 2px; }
   .wx-window.good { border-color: var(--green); background: var(--green-light); }
   .wx-window.good .wx-window-t { color: var(--green); font-weight: 600; }
@@ -718,7 +723,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.7.1</p>
+      <p>Free Drone Preflight Checklist · v3.9.8</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2967,27 +2972,87 @@ function cloudHtml(metar, ceilFt, om, hIdx) {
   if (!top && !trend) return '';
   return '<div class="wx-cl">' + top + (trend ? '<button type="button" class="wx-more wx-cmore" aria-expanded="' + cloudOpen + '" onclick="cloudToggle()">' + (cloudOpen ? '\u25B4 fewer' : '\u25BE more') + '</button>' + trend : '') + '</div>';
 }
+// Hourly strip: one row of the next 12 hours; a chip on its title switches the view (Wind, wind aloft, Temp, Visibility, Clouds, Rain). Wind is the default; the choice lasts while the page is open
+let stripView = 'wind';
+function stripViewSet(v) { stripView = v; if (lastDraw) lastDraw(); }
 function hourStripHtml(om, hIdx) {
   const H = om && om.hourly;
   if (hIdx < 0 || !H || !H.time || !H.wind_speed_10m || !H.wind_gusts_10m) return '';
   const n = Math.min(12, H.time.length - hIdx);
   if (n < 3) return '';
-  const D = om.daily || {}, d0 = String(H.time[0]).slice(0, 10);
+  const D = om.daily || {}, d0 = String(H.time[0]).slice(0, 10), metric = isMetric(), intl = region === 'intl';
   const cls = { 'wx-good': 'hc-good', 'wx-warn': 'hc-warn', 'wx-alert': 'hc-alert' };
+  const altLab = metric ? '120 m' : '400 ft';
+  const views = [['wind', 'Wind']];
+  if (H.wind_speed_120m) views.push(['alt', 'Aloft']);
+  if (H.temperature_2m) views.push(['temp', 'Temp']);
+  if (H.visibility) views.push(['vis', 'Visibility']);
+  if (H.cloud_cover) views.push(['cloud', 'Clouds']);
+  if (H.precipitation_probability) views.push(['rain', 'Rain']);
+  const view = views.some(v => v[0] === stripView) ? stripView : 'wind';
+  const nb = '<small>&nbsp;</small>';
   let cells = '';
   for (let k = 0; k < n; k++) {
     const i = hIdx + k, t = H.time[i], dd = String(t).slice(0, 10) === d0 ? 0 : 1;
-    const w = H.wind_speed_10m[i], g = H.wind_gusts_10m[i];
-    if (w == null) continue;
-    const gOk = g != null && isFinite(g), wr = Math.round(w), gr = gOk ? Math.round(g) : null;
     const r = D.sunrise && D.sunrise[dd], su = D.sunset && D.sunset[dd], ms = new Date(t).getTime() + 1800000;
     const dark = r && su ? (ms < new Date(r).getTime() || ms > new Date(su).getTime()) : false;
     const pp = H.precipitation_probability ? H.precipitation_probability[i] : null;
     const lab = k === 0 ? 'Now' : new Date(t).toLocaleTimeString([], { hour: 'numeric' }).replace(/\s*([AP])M$/i, (m, a) => a.toLowerCase());
-    cells += '<div class="hs-h' + (dark ? ' hs-dark' : '') + '"><div class="hs-t">' + lab + '</div><div class="hs-c ' + cls[windColor(wr, gr)] + '">' + fmtSpeedNum(w) + (gOk && gr > wr ? '<small>' + fmtSpeedNum(g) + '</small>' : '<small>&nbsp;</small>') + '</div><div class="hs-r">' + (pp != null && pp >= 30 ? Math.round(pp) + '%' : '') + '</div></div>';
+    const ok = (v) => v != null && isFinite(v);
+    let cell = '<div class="hs-c hc-none">—' + nb + '</div>', under = '';
+    if (view === 'wind') {
+      const w = H.wind_speed_10m[i], g = H.wind_gusts_10m[i];
+      if (ok(w)) {
+        const gOk = ok(g), wr = Math.round(w), gr = gOk ? Math.round(g) : null;
+        cell = '<div class="hs-c ' + cls[windColor(wr, gr)] + '">' + fmtSpeedNum(w) + (gOk && gr > wr ? '<small>' + fmtSpeedNum(g) + '</small>' : nb) + '</div>';
+      }
+      under = ok(pp) && pp >= 30 ? Math.round(pp) + '%' : '';
+    } else if (view === 'alt') {
+      const w = H.wind_speed_120m[i];
+      if (ok(w)) cell = '<div class="hs-c ' + cls[windColor(Math.round(w), null)] + '">' + fmtSpeedNum(w) + nb + '</div>';
+    } else if (view === 'temp') {
+      const f = H.temperature_2m[i];
+      if (ok(f)) cell = '<div class="hs-c ' + cls[tempColor(f)] + '">' + (metric ? Math.round((f - 32) * 5 / 9) : Math.round(f)) + '°' + nb + '</div>';
+    } else if (view === 'vis') {
+      const m = H.visibility[i];
+      if (ok(m)) {
+        const dv = metric ? m / 1000 : m / 1609.34, low = m < 4828;
+        const tf = H.temperature_2m ? H.temperature_2m[i] : null, df = H.dew_point_2m ? H.dew_point_2m[i] : null;
+        const fog = ok(tf) && ok(df) && (tf - df) <= 2;
+        const c = low ? (intl ? 'wx-warn' : 'wx-alert') : (fog ? 'wx-warn' : 'wx-good');
+        cell = '<div class="hs-c ' + cls[c] + '">' + (dv >= 10 ? '10+' : dv.toFixed(1)) + (fog ? '<small>fog</small>' : nb) + '</div>';
+      }
+    } else if (view === 'cloud') {
+      const v = H.cloud_cover[i];
+      if (ok(v)) cell = '<div class="hs-c hc-cloud" style="background:rgba(142,142,147,' + (0.12 + 0.88 * v / 100).toFixed(2) + ')">' + Math.round(v) + '%' + nb + '</div>';
+    } else if (view === 'rain') {
+      if (ok(pp)) {
+        const mm = H.precipitation ? H.precipitation[i] : null, c = pp >= 60 ? 'wx-alert' : pp >= 30 ? 'wx-warn' : 'wx-good';
+        cell = '<div class="hs-c ' + cls[c] + '">' + Math.round(pp) + '%' + (ok(mm) && mm >= (metric ? 0.1 : 0.13) ? '<small>' + (metric ? mm.toFixed(1) : (mm / 25.4).toFixed(2)) + '</small>' : nb) + '</div>';
+      }
+    }
+    cells += '<div class="hs-h' + (dark ? ' hs-dark' : '') + '"><div class="hs-t">' + lab + '</div>' + cell + '<div class="hs-r">' + under + '</div></div>';
   }
-  if (!cells) return '';
-  return '<div class="wx-strip"><div class="hs-title">Next 12 hours · ground wind / gust (' + speedUnit() + ')</div><div class="hs-row" role="group" aria-label="Hour by hour wind forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">Colours follow your wind limits · blue = chance of rain · dimmed = after sunset</div></div>';
+  const U = speedUnit();
+  const cap = {
+    wind: 'Sustained / gust · ' + U + ' · blue = rain chance',
+    alt: 'Wind at ' + altLab + ' · ' + U + ' · no gust figure at height',
+    temp: (metric ? '°C' : '°F') + ' · each hour’s forecast temperature',
+    vis: (metric ? 'km' : 'SM') + ' · “fog” = temperature close to the dew point',
+    cloud: '% cloud cover · more grey = cloudier',
+    rain: 'Chance of rain · amount below (' + (metric ? 'mm' : 'in') + ')'
+  }[view];
+  const key = {
+    wind: 'Colours follow your wind limits · dimmed = after sunset',
+    alt: 'Colours follow your wind limits · dimmed = after sunset',
+    temp: 'Colours follow your temperature limits · dimmed = after sunset',
+    vis: (intl ? 'Amber = under ' + (metric ? '4.8 km' : '3 SM') : 'Red = under the ' + (metric ? '4.8 km (3 SM)' : '3 SM') + ' minimum') + ' · fog = within 2°F (1°C) of the dew point · dimmed = after sunset',
+    cloud: 'Forecast cloud cover, a guide only · dimmed = after sunset',
+    rain: 'Amber = 30% or more · red = 60% or more · dimmed = after sunset'
+  }[view];
+  const name = views.find(v => v[0] === view)[1];
+  const opts = views.map(v => '<option value="' + v[0] + '"' + (v[0] === view ? ' selected' : '') + '>' + v[1] + '</option>').join('');
+  return '<div class="wx-strip"><div class="hs-title">Next 12 hours <span class="ws-chip hs-chip"><span class="hs-lab">' + name + '</span><select class="hs-sel" aria-label="Hourly forecast view" onchange="stripViewSet(this.value)">' + opts + '</select></span></div><div class="hs-cap">' + cap + '</div><div class="hs-row" role="group" aria-label="Hour by hour ' + name + ' forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">' + key + '</div></div>';
 }
 function calmHtml(c, H, hIdx, siteTag) {
   if (!c || c.kind === 'ok') return '';
@@ -3703,7 +3768,7 @@ async function renderWeather(lat, lon, attempt = 1) {
   lastDraw = null;
   try {
       const [wxRes, kpData, metarData, radarRes] = await Promise.allSettled([
-        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_10m,wind_gusts_10m,wind_speed_80m,wind_speed_120m,cloud_cover,precipitation_probability,precipitation,weather_code,cape&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`),
+        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_10m,wind_gusts_10m,wind_speed_80m,wind_speed_120m,cloud_cover,precipitation_probability,precipitation,weather_code,cape,temperature_2m,dew_point_2m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`),
         fetchKP(),
         fetchMetar(lat, lon),
         fetchRadar(lat, lon)
