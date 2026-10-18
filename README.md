@@ -106,6 +106,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.7.1
+
+- **Change the wind unit right on the Wind tile** — the unit next to the wind number is now a small dropdown chip (**mph ▾**). Tap it to see wind in mph, km/h, m/s or knots, for a quick look or for good. The tile, the height rows, the **Next 12 hours** strip and the Best window all follow, and your choice is saved and backed up. The separate **Wind speed** row in Settings and the small hint are gone.
+
+---
+
 ## What's new in v3.9.7
 
 - **Imperial / Metric button fits on narrow phones** — the second line (for example **°F · mi · ft**) stays on one row instead of wrapping into three lines when the text is large or the screen is narrow.
@@ -114,7 +120,7 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ## What's new in v3.9.6
 
-- **Wind speed setting** — **Settings > Display** lets you read wind in mph, km/h, m/s or knots. It starts as mph for USA and km/h for Outside USA, and stays what you choose. A small hint on the Wind tile points to it for the first few opens.
+- **Wind speed unit on the Wind tile** — tap the small unit chip (for example **mph ▾**) on the Wind tile to read wind in mph, km/h, m/s or knots. It starts as mph for USA and km/h for Outside USA, and stays what you choose.
 - **Imperial / Metric button** — the button at the top of the weather panel now reads **Imperial** or **Metric** and switches temperature, distance and altitude. It leaves your wind unit alone.
 - **Wind by height** — a **more** link on the Wind tile shows wind at ground level, 260 ft and 400 ft, with a note when it gets stronger higher up.
 - **Next 12 hours** — a sideways-swiping strip under the tiles shows wind and gusts hour by hour, coloured by your wind limits, with rain chance.
@@ -604,7 +610,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Back up & restore** — see below
 - **Collapsible sections** — tap a section header to fold it up or open it, or use the **Expand | Collapse** buttons on the progress card. Finished sections fold themselves and the next unfinished one opens, and on your first visit only the first section of each tab is open. Each header shows its count (like 9/12), a ✓ when it's finished and an orange ⚠ if something in it needs attention, even when folded. Your fold state is remembered
 - **Progress is saved on your device** — checks and flags survive a reload or an accidental app close, and expire so the next flight starts clean. The default is 12 hours; change it in Settings (1 hour, 4 hours, 12 hours, 24 hours or 3 days)
-- **Imperial / Metric toggle** — tap the units button in the weather panel to switch temperature, visibility and ceiling between °F/SM/ft and °C/km/m; your choice is remembered. Wind has its own setting (mph, km/h, m/s or knots) in **Settings > Display**.
+- **Imperial / Metric toggle** — tap the units button in the weather panel to switch temperature, visibility and ceiling between °F/SM/ft and °C/km/m; your choice is remembered. Wind has its own unit: tap the unit on the Wind tile (mph, km/h, m/s or knots).
 - **Weather shows its age** — the "Updated" line turns orange after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention, or mark them N/A** — press and hold any item for a small menu. **Needs attention** marks it orange; flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag. **N/A for this flight** greys it out and takes it out of your progress; tap it to put it back
 - **Save a flight record** — tap **Save flight record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, your pilot name, drone and registration number from Settings, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-flight-record)

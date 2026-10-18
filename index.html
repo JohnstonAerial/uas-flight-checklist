@@ -577,8 +577,9 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
   .wx-units small { display: block; font-size: 9.5px; opacity: 0.85; margin-top: 1px; white-space: nowrap; }
   .wx-units { flex-direction: column; line-height: 1.15; white-space: nowrap; flex-shrink: 0; }
-  .wx-hint { margin-top: 6px; font-size: 10.5px; font-style: italic; color: var(--text-muted); }
-  .wx-hint a { color: var(--link); }
+  .ws-chip { position: relative; display: inline-block; vertical-align: 1px; margin: 0 1px; }
+  .ws-chip::after { content: '\25BE'; position: absolute; right: 5px; top: 50%; transform: translateY(-50%); font-size: 9px; color: var(--link); pointer-events: none; }
+  .ws-chip .ws-sel { -webkit-appearance: none; appearance: none; font-family: inherit; font-size: 10.5px; font-weight: 600; line-height: 1.3; color: var(--link); background: transparent; border: 1px solid var(--border); border-radius: 9px; padding: 2px 15px 2px 6px; margin: 0; cursor: pointer; }
   .wx-units { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 12px; font-family: inherit; padding: 2px 9px; margin-left: auto; margin-right: 6px; }
   .wx-refresh { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: none; font-family: inherit; padding: 2px 6px; }
   .wx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -717,7 +718,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.7</p>
+      <p>Free Drone Preflight Checklist · v3.9.7.1</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2729,9 +2730,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   if (hintsHidden()) { bodySet.classList.add('hide-hints'); hb.textContent = 'ⓘ Show explanations'; hb.setAttribute('aria-expanded', 'false'); }
   const hb2 = hb.cloneNode(true); hb2.onclick = hb.onclick;
   if (hintsHidden()) bodyBak.classList.add('hide-hints');
-  const wsr = document.createElement('div'); wsr.className = 'keep-row region-row';
-  wsr.innerHTML = '<span>🌬 Wind speed</span><select class="ws-sel" aria-label="Wind speed units" onchange="windUnitSet(this.value)"><option value="mph">mph</option><option value="kmh">km/h</option><option value="ms">m/s</option><option value="kt">knots</option></select><div class="region-hint">Wind has its own unit. It starts as mph for USA and km/h for Outside USA, and stays what you choose.</div>';
-  bodySet.append(note, hb, grp('Display', true), thb, wsr, reg, cust, keep, grp('Limits'), wl, grp('Your info'), fnb, acb, grp('PDF'), pdb); bodyBak.append(makeXfer()); bodyBak.querySelector('.xfer-sub').after(hb2);
+  bodySet.append(note, hb, grp('Display', true), thb, reg, cust, keep, grp('Limits'), wl, grp('Your info'), fnb, acb, grp('PDF'), pdb); bodyBak.append(makeXfer()); bodyBak.querySelector('.xfer-sub').after(hb2);
   [bodySet, bodyBak].forEach((bd, bi) => {           // a small arrow at the bottom closes the section and goes back up to the buttons
     const up = document.createElement('button'); up.type = 'button'; up.className = 'set-up'; up.textContent = '\u25B4 ' + (bi ? 'Close back up & restore' : 'Close settings');
     
@@ -3410,15 +3409,11 @@ const speedUnit = () => WIND_UNITS[windUnitKey()].l;
 const fmtSpeed = (mph) => fmtSpeedNum(mph) + ' ' + speedUnit();
 // Wind has its own setting. The first time there is none saved it takes the usual unit for the units in use (mph, or km/h if metric) and stays what the person chooses
 (function () { if (!windPref()) { try { localStorage.setItem('uasWindUnit', isMetric() ? 'kmh' : 'mph'); } catch (e) {} } })();
-// A small hint on the Wind tile points to Settings; it shows for the first 5 opens, and stops once the wind unit is changed on purpose
-let windHintOn = false;
-(function () { try { if (localStorage.getItem('uasWindHintDone') === '1') return; const n = (parseInt(localStorage.getItem('uasWindHintOpens'), 10) || 0) + 1; localStorage.setItem('uasWindHintOpens', String(n)); windHintOn = n <= 5; } catch (e) {} })();
-function windHintHtml() { return windHintOn ? '<div class="wx-hint">Change wind units in <a href="#" onclick="openWindSetting(); return false;">Settings</a></div>' : ''; }
-function openWindSetting() {
-  const t = [...document.querySelectorAll('.tg-set')].find(b => b.offsetParent !== null) || document.querySelector('.tg-set');
-  if (!t) return;
-  if (t.getAttribute('aria-expanded') !== 'true') t.click();
-  setTimeout(() => { const root = t.closest('.set-heads'), box = root && root.parentElement, sel = (box && box.querySelector('.ws-sel')) || document.querySelector('.ws-sel'); if (sel) { try { sel.scrollIntoView({ block: 'center', behavior: 'smooth' }); sel.focus({ preventScroll: true }); } catch (e) {} } }, 90);
+// The wind unit is changed right on the Wind tile: a small chip with a dropdown (mph, km/h, m/s, kn). Old hint counters from 3.9.6 are cleaned up
+(function () { try { localStorage.removeItem('uasWindHintOpens'); localStorage.removeItem('uasWindHintDone'); } catch (e) {} })();
+function windChipHtml() {
+  const k = windUnitKey();
+  return '<span class="ws-chip"><select class="ws-sel" aria-label="Wind speed unit" onchange="windUnitSet(this.value)">' + Object.keys(WIND_UNITS).map(x => '<option value="' + x + '"' + (x === k ? ' selected' : '') + '>' + WIND_UNITS[x].l + '</option>').join('') + '</select></span>';
 }
 // Golden hour: sun between 4 degrees below and 6 degrees above the horizon (computed from date + place, no network)
 function sunElev(tMs, lat, lon) {
@@ -3487,8 +3482,7 @@ function wlSync() {
   document.querySelectorAll('.wl-w, .wl-g').forEach(i => { i.step = windUnitKey() === 'ms' ? '0.1' : '1'; });
 }
 function windUnitSet(v) {
-  try { if (WIND_UNITS[v]) localStorage.setItem('uasWindUnit', v); else localStorage.removeItem('uasWindUnit'); localStorage.setItem('uasWindHintDone', '1'); } catch (e) {}
-  windHintOn = false; document.querySelectorAll('.wx-hint').forEach(h => h.remove());
+  try { if (WIND_UNITS[v]) localStorage.setItem('uasWindUnit', v); else localStorage.removeItem('uasWindUnit'); } catch (e) {}
   updateUnitsButton(); wlSync();
   if (typeof bkMark === 'function') bkMark();
   if (lastDraw) lastDraw();
@@ -3952,15 +3946,15 @@ async function renderWeather(lat, lon, attempt = 1) {
         const modelTxt = windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() : '';
         const windHTML = ow ? `
             <div class="wx-label">Wind</div>
-            <div class="wx-value ${windColor(owMph, owGust)}">${fmtSpeedNum(owMph) + (owGust ? ' / ' + fmtSpeedNum(owGust) : '') + ' ' + speedUnit() + owArrow}</div>
+            <div class="wx-value ${windColor(owMph, owGust)}">${fmtSpeedNum(owMph) + (owGust ? ' / ' + fmtSpeedNum(owGust) : '') + ' ' + windChipHtml() + owArrow}</div>
             <div class="wx-sub">${owGust ? 'Sustained / Gusts' : 'No gusts reported'}${owDirTxt ? ' · ' + owDirTxt : ''}</div>
             <div class="wx-sub" data-rec-age="${Date.now() - ow.ageMin * 60000}">${ow.station} · ${fmtDist(ow.dist)} away · ${ageText(ow.ageMin * 60000)}</div>
             ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${modelTxt}</strong></div>` : ''}
-            ${windHtsHTML(wx, windOk ? windMph : null)}${windHintHtml()}` : `
+            ${windHtsHTML(wx, windOk ? windMph : null)}` : `
             <div class="wx-label">Wind</div>
-            <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() + (dirOk ? ' ' + windArrow(wx.wind.deg) : '') : '—'}</div>
+            <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + windChipHtml() + (dirOk ? ' ' + windArrow(wx.wind.deg) : '') : '—'}</div>
             <div class="wx-sub">${windOk ? (gustMph ? 'Sustained / Gusts' : 'No gusts reported') + (dirOk ? ' · ' + windCardinal(wx.wind.deg) : '') : 'No wind data'}</div>
-            ${windHtsHTML(wx, windOk ? windMph : null)}${windHintHtml()}`;
+            ${windHtsHTML(wx, windOk ? windMph : null)}`;
         body.innerHTML = `
         <div class="wx-grid">
           <div class="wx-item">
@@ -4171,7 +4165,7 @@ function recWeatherLines() {
   if (!body) return out;
   body.querySelectorAll('.wx-item').forEach(it => {
     const q = (sel) => { const e = it.querySelector(sel); return e ? recNoEmoji(e.textContent) : ''; };
-    const label = q('.wx-label'), val = q('.wx-value').replace(/\s*[\u2190-\u2199]\s*/g, ' ').trim();   // no wind arrow in the record; the "From NE" text says it
+    const label = q('.wx-label'), val = (() => { const e = it.querySelector('.wx-value'); if (!e) return ''; const c = e.cloneNode(true); c.querySelectorAll('.ws-chip').forEach(x => x.replaceWith(document.createTextNode(speedUnit()))); return recNoEmoji(c.textContent); })().replace(/\s*[\u2190-\u2199]\s*/g, ' ').trim();   // no wind arrow in the record; the "From NE" text says it
     const subs = [...it.querySelectorAll('.wx-sub, .wx-vis-val')].map(e => {
       let t = recNoEmoji(e.textContent.replace(/\s*[\u25BE\u25B4]\s*(more|fewer)/, ''));
       if (e.classList.contains('wx-vis-val')) t = 'Visibility ' + t;
