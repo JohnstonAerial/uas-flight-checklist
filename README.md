@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.11
+
+- **The night notice follows "I fly at night"** — when the sun is down, the notice at the bottom of the weather card used to look the same whether or not you fly at night. With **I fly at night** on in Settings it now reads a calm **Night flying on — anti-collision light visible 3 SM**; with it off, it stays the amber **Sun is down** warning. Outside the USA it says to check your local rules.
+- **No double reminder** — when the **Possible window** or **Best window** box already says **Night hours included — anti-collision lights required**, the notice at the bottom steps aside so you only see it once.
+
+---
+
 ## What's new in v3.9.10
 
 - **View button for your PDF on computers** — after you tap **PDF** (or **Save PDF** in a flight record) on a computer, the "Your PDF is ready" box now has **View** next to **Share…** and **Download**. **View** opens the PDF in a new browser tab so you can read it and print it from there. If your browser blocks the new tab, use **Download**. Phones and tablets work as before.

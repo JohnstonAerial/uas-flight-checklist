@@ -670,6 +670,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .reset-inline, .sec-all, .cust-btn { min-height: 32px; }
   .keep-row select, .region-sel, .xfer-box { font-size: 16px; }
   .wx-night { font-size: 12px; font-weight: 600; color: var(--amber); text-align: center; margin-top: 6px; }
+  .wx-night.wx-night-on { color: var(--text-muted); }
 
   .print-fields { display: none; }
   /* ── Print: plain checklist you can tick with a pencil ── */
@@ -720,7 +721,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.10</p>
+      <p>Free Drone Preflight Checklist · v3.9.11</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -3854,7 +3855,9 @@ async function renderWeather(lat, lon, attempt = 1) {
         const sr = wx.sunrise && String(wx.sunrise).slice(11, 16), ss = wx.sunset && String(wx.sunset).slice(11, 16), n = siteHHMM();
         return !!(sr && ss && n && (n < sr || n > ss));
       };
-      const nightTxt = () => region === 'intl'
+      const nightTxt = () => nightOn()   // "I fly at night" on: a calm reminder instead of a warning
+        ? (region === 'intl' ? '🌙 Night flying on — check your local rules for night flying' : '🌙 Night flying on — <span style="white-space:nowrap">anti-collision</span> light visible 3 SM')
+        : region === 'intl'
         ? '🌙 Sun is down — check your local rules for night flying'
         : '🌙 Sun is down — night flight needs an <span style="white-space:nowrap">anti-collision</span> light visible 3 SM';
       const fmtT = (iso) => iso ? new Date(iso).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '—';
@@ -3988,7 +3991,9 @@ async function renderWeather(lat, lon, attempt = 1) {
         const pb = precipBlock();
         nightUpdate = () => {
           const el = document.getElementById('wx-night'); if (!el) return;
-          const d = isSunDown(); el.hidden = !d; el.innerHTML = d ? nightTxt() : '';
+          const d = isSunDown();
+          const wb = document.querySelector('.wx-window'), covered = nightOn() && !!wb && /Night hours included/.test(wb.textContent);   // the window box already carries the night reminder
+          el.hidden = !d || covered; el.classList.toggle('wx-night-on', nightOn()); el.innerHTML = d && !covered ? nightTxt() : '';
         };
         const wind120Txt = wx.wind120 != null ? ` · ${isMetric() ? '120 m' : '400 ft'}: ${fmtSpeed(wx.wind120)}` : '';
         // Wind card: the nearest airport's observed wind leads; the model figure for this spot sits under it. Each number is coloured by its own reading against your limits.
