@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.9
+
+- **A tidier Wind and Cloud ceiling tile** — the wind arrow now says what it means (**↓ from N** shows the wind coming from the north), and the opened **more** view under Wind drops the repeated figures: one short note, the Ground / 260 ft / 400 ft table, and the **Wind builds with height** box when it applies. The Cloud ceiling tile lists the airport's cloud layers on one line.
+- **Cloud trend moved** — whether the sky is easing, building or steady now leads the caption of the **Clouds** view on the Next 12 hours strip (for example **Easing: 100% now → 8% by 5a**).
+
+---
+
 ## What's new in v3.9.8
 
 - **Six views for the Next 12 hours strip** — tap the small chip on the strip title (**Wind ▾**) to switch between **Wind** (sustained wind with the gust underneath), **Aloft** (wind at 400 ft, or 120 m), **Temp**, **Visibility** (with a **fog** flag when the temperature is close to the dew point), **Clouds** and **Rain** (chance and amount). Colours follow your wind and temperature limits, and the line under the title says what each view shows. The strip always opens on Wind.
@@ -130,7 +137,7 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 - **Imperial / Metric button** — the button at the top of the weather panel now reads **Imperial** or **Metric** and switches temperature, distance and altitude. It leaves your wind unit alone.
 - **Wind by height** — a **more** link on the Wind tile shows wind at ground level, 260 ft and 400 ft, with a note when it gets stronger higher up.
 - **Next 12 hours** — a sideways-swiping strip under the tiles shows wind and gusts hour by hour, coloured by your wind limits, with rain chance.
-- **Cloud ceiling details** — the tile lists the airport's cloud layers, and a **more** link shows whether the sky is easing or building.
+- **Cloud ceiling details** — the tile lists the airport's cloud layers (the easing or building trend moved to the Clouds view of the hourly strip in v3.9.9).
 - **Print** — closing the print dialog returns you to where you were on the checklist.
 
 ---

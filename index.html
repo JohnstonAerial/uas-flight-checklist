@@ -591,14 +591,11 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
   .wx-more { background: none; border: 0; padding: 0 0 0 4px; font: inherit; font-size: 11px; color: var(--link, #0a84ff); cursor: pointer; }
   .wx-cl { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); }
-  .wx-lay { display: flex; justify-content: space-between; gap: 8px; line-height: 1.5; }
+  .wx-dir { white-space: nowrap; }
+  .wx-dir small { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+  .wx-lay { line-height: 1.5; }
+  .wx-lay span { white-space: nowrap; }
   .wx-lay b { font-weight: 600; color: var(--text); }
-  .wx-cts[hidden] { display: none; }
-  .wx-ctl { margin-top: 3px; }
-  .wx-ck { display: flex; gap: 3px; margin-top: 5px; }
-  .wx-ck div { flex: 1; text-align: center; font-size: 9px; line-height: 1.2; }
-  .wx-ck i { display: block; height: 14px; border-radius: 4px; margin-bottom: 2px; }
-  .wx-cnote { margin-top: 3px; font-size: 10.5px; font-style: italic; }
   .wx-hts { margin-top: 3px; font-size: 11px; color: var(--text-muted); }
   .wx-hts[hidden] { display: none; }
   .wx-hrow { display: flex; justify-content: space-between; gap: 8px; line-height: 1.5; }
@@ -723,7 +720,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.8</p>
+      <p>Free Drone Preflight Checklist · v3.9.9</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2862,6 +2859,7 @@ let windHtsOpen = false;
 function windHtsToggle(btn) {
   windHtsOpen = !windHtsOpen;
   document.querySelectorAll('.wx-hts').forEach(d => { d.hidden = !windHtsOpen; });
+  document.querySelectorAll('.wx-h4').forEach(d => { d.hidden = windHtsOpen; });
   document.querySelectorAll('.wx-more').forEach(b => { b.textContent = windHtsOpen ? '\u25B4 fewer' : '\u25BE more'; b.setAttribute('aria-expanded', windHtsOpen ? 'true' : 'false'); });
 }
 function windHtsHTML(wx, surf) {
@@ -2875,8 +2873,8 @@ function windHtsHTML(wx, surf) {
   const l = windLimits(), W = l.w || WIND_DEF.w;
   const shear = surf != null && top[1] >= surf * 1.5 && Math.round(top[1]) >= Math.round(W * 2 / 3);
   const lines = rows.map(r => '<div class="wx-hrow"><span>' + r[0] + '</span><b class="' + windColor(Math.round(r[1]), null) + '">' + fmtSpeed(r[1]) + '</b></div>').join('');
-  return '<div class="wx-sub">' + (m ? '120 m' : '400 ft') + ': ' + fmtSpeed(wx.wind120) + ' <button type="button" class="wx-more" aria-expanded="' + windHtsOpen + '" onclick="windHtsToggle(this)">' + (windHtsOpen ? '\u25B4 fewer' : '\u25BE more') + '</button></div>' +
-    '<div class="wx-hts"' + (windHtsOpen ? '' : ' hidden') + '>' + lines + '<div class="wx-hnote">Sustained wind. Gusts aloft aren\u2019t forecast and are usually higher.</div>' + (shear ? '<div class="wx-hshear">Wind builds with height: ' + fmtSpeed(surf) + ' at the surface, ' + fmtSpeed(top[1]) + ' at ' + top[0] + '.</div>' : '') + '</div>';
+  return '<div class="wx-sub"><span class="wx-h4"' + (windHtsOpen ? ' hidden' : '') + '>' + (m ? '120 m' : '400 ft') + ': ' + fmtSpeed(wx.wind120) + '</span> <button type="button" class="wx-more" aria-expanded="' + windHtsOpen + '" onclick="windHtsToggle(this)">' + (windHtsOpen ? '\u25B4 fewer' : '\u25BE more') + '</button></div>' +
+    '<div class="wx-hts"' + (windHtsOpen ? '' : ' hidden') + '><div class="wx-hnote">Sustained \u00B7 no gusts aloft</div>' + lines + (shear ? '<div class="wx-hshear">Wind builds with height: ' + fmtSpeed(surf) + ' \u2192 ' + fmtSpeed(top[1]) + ' at ' + top[0] + '</div>' : '') + '</div>';
 }
 function windColor(mph, gust) {
   const l = windLimits(), W = l.w || WIND_DEF.w, G = l.g || WIND_DEF.g;
@@ -2944,33 +2942,22 @@ function calmWindow(om, hIdx, nowBad, obsFine) {
 }
 // Next 12 hours strip (under Best window): wind with gust beneath, coloured by your limits; rain chance where it is 30% or more; hours after sunset dimmed
 // Cloud ceiling tile: layers from the airport report, and (behind "more") how forecast cloud cover changes over the next hours
-let cloudOpen = false;
-function cloudToggle() {
-  cloudOpen = !cloudOpen;
-  document.querySelectorAll('.wx-cts').forEach(d => { d.hidden = !cloudOpen; });
-  document.querySelectorAll('.wx-cmore').forEach(b => { b.textContent = cloudOpen ? '\u25B4 fewer' : '\u25BE more'; b.setAttribute('aria-expanded', cloudOpen ? 'true' : 'false'); });
-}
 function cloudHtml(metar, ceilFt, om, hIdx) {
   const COV = { FEW: 'Few', SCT: 'Scattered', BKN: 'Broken', OVC: 'Overcast', OVX: 'Sky obscured', VV: 'Sky obscured' };
   const layers = ((metar && metar.clouds) || []).map(c => ({ cov: COV[c.code || c.cover], base: c.base_feet_agl })).filter(x => x.cov && x.base != null && isFinite(x.base)).sort((a, b) => a.base - b.base).slice(0, 4);
   let top = '';
-  if (ceilFt !== null && layers.length) top = layers.map(x => '<div class="wx-lay"><span>' + x.cov + '</span><b>' + fmtAlt(x.base) + '</b></div>').join('');   // with no ceiling the note above already lists the layers
-  let trend = '';
-  const H = om && om.hourly;
-  if (hIdx >= 0 && H && H.cloud_cover && H.time) {
-    const pts = [];
-    for (let k = 0; k <= 8 && hIdx + k < H.time.length; k += 2) { const v = H.cloud_cover[hIdx + k]; if (v != null && isFinite(v)) pts.push({ k, v: Math.round(v), t: H.time[hIdx + k] }); }
-    if (pts.length >= 3) {
-      const lab = (p) => p.k === 0 ? 'Now' : new Date(p.t).toLocaleTimeString([], { hour: 'numeric' }).replace(/\s*([AP])M$/i, (mm, a) => a.toLowerCase());
-      const a = pts[0], z = pts[pts.length - 1], d = z.v - a.v;
-      const word = d <= -20 ? 'Clouds easing: ' + a.v + '% now \u2192 ' + z.v + '% by ' + lab(z) : d >= 20 ? 'Clouds building: ' + a.v + '% now \u2192 ' + z.v + '% by ' + lab(z) : 'Clouds steady, about ' + a.v + '%';
-      trend = '<div class="wx-cts"' + (cloudOpen ? '' : ' hidden') + '><div class="wx-ctl">' + word + '</div><div class="wx-ck">' +
-        pts.map(p => '<div><i style="background:rgba(142,142,147,' + (0.12 + 0.88 * p.v / 100).toFixed(2) + ')"></i>' + lab(p) + '<br>' + p.v + '%</div>').join('') +
-        '</div><div class="wx-cnote">Forecast cloud cover, a guide only.</div></div>';
-    }
-  }
-  if (!top && !trend) return '';
-  return '<div class="wx-cl">' + top + (trend ? '<button type="button" class="wx-more wx-cmore" aria-expanded="' + cloudOpen + '" onclick="cloudToggle()">' + (cloudOpen ? '\u25B4 fewer' : '\u25BE more') + '</button>' + trend : '') + '</div>';
+  if (ceilFt !== null && layers.length) top = '<div class="wx-lay">' + layers.map((x, i) => '<span>' + ({ Few: 'Few', Scattered: 'Sct', Broken: 'Bkn', Overcast: 'Ovc', 'Sky obscured': 'Obscd' }[x.cov] || x.cov) + ' <b>' + (i < layers.length - 1 ? fmtAlt(x.base).replace(/\s*[A-Za-z]+$/, '') : fmtAlt(x.base)) + '</b></span>').join(' \u00B7 ') + '</div>';   // with no ceiling the note above already lists the layers
+  if (!top) return '';
+  return '<div class="wx-cl">' + top + '</div>';
+}
+function cloudTrend(H, hIdx, n) {
+  if (!H || !H.cloud_cover) return '';
+  const pts = [];
+  for (let k = 0; k < n && k <= 8; k += 2) { const v = H.cloud_cover[hIdx + k]; if (v != null && isFinite(v)) pts.push({ k, v: Math.round(v), t: H.time[hIdx + k] }); }
+  if (pts.length < 3) return '';
+  const a = pts[0], z = pts[pts.length - 1], d = z.v - a.v;
+  const lab = new Date(z.t).toLocaleTimeString([], { hour: 'numeric' }).replace(/\s*([AP])M$/i, (mm, x) => x.toLowerCase());
+  return (d <= -20 ? 'Easing: ' + a.v + '% now \u2192 ' + z.v + '% by ' + lab : d >= 20 ? 'Building: ' + a.v + '% now \u2192 ' + z.v + '% by ' + lab : 'Steady, about ' + a.v + '%') + ' · ';
 }
 // Hourly strip: one row of the next 12 hours; a chip on its title switches the view (Wind, wind aloft, Temp, Visibility, Clouds, Rain). Wind is the default; the choice lasts while the page is open
 let stripView = 'wind';
@@ -3039,7 +3026,7 @@ function hourStripHtml(om, hIdx) {
     alt: 'Wind at ' + altLab + ' · ' + U + ' · no gust figure at height',
     temp: (metric ? '°C' : '°F') + ' · each hour’s forecast temperature',
     vis: (metric ? 'km' : 'SM') + ' · “fog” = temperature close to the dew point',
-    cloud: '% cloud cover · more grey = cloudier',
+    cloud: (cloudTrend(H, hIdx, n) || '% cloud cover · ') + 'more grey = cloudier',
     rain: 'Chance of rain · amount below (' + (metric ? 'mm' : 'in') + ')'
   }[view];
   const key = {
@@ -3083,6 +3070,9 @@ function windArrow(deg) {
   return dirs[idx];
 }
 
+function windDirHtml(deg) {   // arrow plus words, so the arrow explains itself
+  return '<span class="wx-dir">' + windArrow(deg) + ' <small>' + windCardinal(deg).toLowerCase().replace(/^from (\w+)$/, (m, c) => 'from ' + c.toUpperCase()) + '</small></span>';
+}
 function windCardinal(deg) {
   // Cardinal direction wind is coming FROM
   const cards = ['N','NE','E','SE','S','SW','W','NW','N'];
@@ -3446,7 +3436,6 @@ function ceilingNote(ft, metar) {
   else if (ft < 3000) note = intl ? 'Low ceiling — keep clear of cloud' : 'Low ceiling — stay 500 ft below clouds';
   else note = 'Good for ops';
   const low = metar ? lowestLayer(metar) : null;
-  if (low && low.base < ft) note += ' · Lowest layer: ' + low.cover + ' ' + fmtAlt(low.base);
   return note;
 }
 
@@ -4006,8 +3995,8 @@ async function renderWeather(lat, lon, attempt = 1) {
         const ow = metarData2 && metarData2.wind ? metarData2.wind : null;
         const owMph = ow ? Math.round(ow.mph) : null;
         const owGust = ow && ow.gust != null && Math.round(ow.gust) > owMph ? Math.round(ow.gust) : null;
-        const owDirTxt = ow && owMph > 0 ? (ow.variable ? 'Variable' : (ow.deg != null ? windCardinal(ow.deg) : '')) : '';
-        const owArrow = ow && owMph > 0 && !ow.variable && ow.deg != null ? ' ' + windArrow(ow.deg) : '';
+        const owDirTxt = ow && owMph > 0 && ow.variable ? 'Variable' : '';
+        const owArrow = ow && owMph > 0 && !ow.variable && ow.deg != null ? ' ' + windDirHtml(ow.deg) : '';
         const modelTxt = windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() : '';
         const windHTML = ow ? `
             <div class="wx-label">Wind</div>
@@ -4017,8 +4006,8 @@ async function renderWeather(lat, lon, attempt = 1) {
             ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${modelTxt}</strong></div>` : ''}
             ${windHtsHTML(wx, windOk ? windMph : null)}` : `
             <div class="wx-label">Wind</div>
-            <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + windChipHtml() + (dirOk ? ' ' + windArrow(wx.wind.deg) : '') : '—'}</div>
-            <div class="wx-sub">${windOk ? (gustMph ? 'Sustained / Gusts' : 'No gusts reported') + (dirOk ? ' · ' + windCardinal(wx.wind.deg) : '') : 'No wind data'}</div>
+            <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + windChipHtml() + (dirOk ? ' ' + windDirHtml(wx.wind.deg) : '') : '—'}</div>
+            <div class="wx-sub">${windOk ? (gustMph ? 'Sustained / Gusts' : 'No gusts reported') : 'No wind data'}</div>
             ${windHtsHTML(wx, windOk ? windMph : null)}`;
         body.innerHTML = `
         <div class="wx-grid">
