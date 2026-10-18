@@ -721,7 +721,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.11</p>
+      <p>Free Drone Preflight Checklist · v3.9.12</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1373,9 +1373,9 @@ function nwsRadarUrl(lat, lon) {
 function ageText(ms) {
   const m = Math.floor(ms / 60000);
   if (m < 1) return 'just now';
-  if (m < 60) return m + ' min ago';
+  if (m < 60) return m + '\u00A0min\u00A0ago';
   const h = Math.floor(m / 60);
-  return h + ' hr' + (h > 1 ? 's' : '') + ' ago';
+  return h + '\u00A0hr' + (h > 1 ? 's' : '') + '\u00A0ago';
 }
 
 let lpFired = false;
@@ -2700,12 +2700,12 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     '&body=' + encodeURIComponent('What works, what is missing, or what is confusing:\n\n\n\n---\nApp version: ' + fbVer + '\nDevice and browser: ' + navigator.userAgent);
   const wl = document.createElement('div'); wl.className = 'wl-block';
   wl.innerHTML = '<div class="wl-row"><span>🌬 Wind limit</span><span class="wl-ctl"><input type="number" inputmode="decimal" min="1" max="999" step="any" class="wl-w" aria-label="Maximum sustained wind"> / <input type="number" inputmode="decimal" min="1" max="999" step="any" class="wl-g" aria-label="Maximum gust"><span class="wl-unit">mph</span></span></div>' +
-    '<div class="wl-hint">sustained / gusts · orange at about two-thirds, red at the limit.</div>' +
+    '<div class="wl-hint">Sustained\u00A0/\u00A0gusts. Orange at about two‑thirds of the limit, red at the limit.</div>' +
     '<div class="wl-row kp-row"><span>🧲 Kp warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-a" aria-label="Kp index where the warning turns orange"> / <input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-r" aria-label="Kp index where the warning turns red"></span></div>' +
-    '<div class="wl-hint">orange at / red at · from 1 to 9, standard 4 / 5. Higher Kp can disturb GPS and the compass.</div>' +
+    '<div class="wl-hint">Orange at\u00A0/\u00A0red at, from 1 to 9. Standard is 4\u00A0/\u00A05. Higher Kp can disturb GPS and the compass.</div>' +
     '<div class="wl-row tp-row"><span>🥶 Cold warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ca" aria-label="Temperature at or below which the warning turns orange"> / <input type="number" inputmode="decimal" class="tp-cr" aria-label="Temperature at or below which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
     '<div class="wl-row tp-row"><span>🥵 Heat warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ha" aria-label="Temperature at or above which the warning turns orange"> / <input type="number" inputmode="decimal" class="tp-hr" aria-label="Temperature at or above which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
-    '<div class="wl-hint">orange at / red at · standard cold 40 / 14 °F (4 / −10 °C), heat 95 / 104 °F (35 / 40 °C). Check your aircraft\'s operating range.</div>';
+    '<div class="wl-hint">Orange at\u00A0/\u00A0red at. Standard: cold 40\u00A0/\u00A014\u00A0°F (4\u00A0/\u00A0−10\u00A0°C), heat 95\u00A0/\u00A0104\u00A0°F (35\u00A0/\u00A040\u00A0°C). Check your aircraft\'s operating range.</div>';
   const fnb = document.createElement('div'); fnb.className = 'fn-block';
   fnb.innerHTML = '<div class="fn-row"><span>📋 Record file name starts with</span><input type="text" class="fn-in" maxlength="40" placeholder="flight-record" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Saved flight record file names start with" oninput="fnSave(this)"></div>' +
     '<div class="fn-hint"><div class="fn-ex"></div>Date, time and customer are added for you.</div>';
@@ -2713,11 +2713,11 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   acb.innerHTML = '<div class="fn-row"><span>👤 Default pilot</span><input type="text" class="fn-in ac-in" data-k="uasPilot" maxlength="40" placeholder="Your name" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Pilot name" oninput="acSave(this)"></div>' +
     '<div class="fn-row"><span>🚁 Default drone</span><input type="text" class="fn-in ac-in" data-k="uasDrone" maxlength="40" placeholder="e.g. Mavic 4 Pro" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Drone name or model" oninput="acSave(this)"></div>' +
     '<div class="fn-row"><span>🪪 Default reg. #</span><input type="text" class="fn-in ac-in" data-k="uasRegNo" maxlength="30" placeholder="FA3…" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-label="Drone registration number" oninput="acSave(this)"></div>' +
-    '<div class="fn-hint">Printed at the top of saved flight records and the checklist PDF. A tab uses these only when its own Pilot, Drone and Reg. # (under Customize) are blank. Saved in this browser only.</div>';
+    '<div class="fn-hint">Printed at the top of saved records and the PDF. A tab uses these only if its own Pilot, Drone and Reg. # (under Customize) are blank.</div>';
   const pdb = document.createElement('div'); pdb.className = 'pdfset';
   pdb.innerHTML = '<div class="pd-row"><span>📄 PDF layout</span><div class="pd-seg" role="radiogroup" aria-label="PDF layout"><button type="button" role="radio" data-k="layout" data-v="compact">Compact</button><button type="button" role="radio" data-k="layout" data-v="large">Large print</button></div></div>' +
     '<div class="pd-row"><span>📏 PDF paper</span><div class="pd-seg" role="radiogroup" aria-label="PDF paper size"><button type="button" role="radio" data-k="paper" data-v="letter">Letter</button><button type="button" role="radio" data-k="paper" data-v="a4">A4</button></div></div>' +
-    '<div class="pd-hint">Compact: 2 columns, fewer pages. Used for the checklist PDF and saved flight records.</div>';
+    '<div class="pd-hint"><b>Compact:</b> two columns, fewer pages. <b>Large print:</b> one column, bigger type. Applies to the checklist PDF and saved flight records. <b>Print</b> is always one column in large type.</div>';
   pdb.addEventListener('click', e => {
     const bt = e.target.closest('button[data-k]'); if (!bt) return;
     pdfPrefSave(bt.dataset.k === 'layout' ? bt.dataset.v : pdfLayout(), bt.dataset.k === 'paper' ? bt.dataset.v : pdfPaper());
@@ -2875,7 +2875,7 @@ function windHtsHTML(wx, surf) {
   const shear = surf != null && top[1] >= surf * 1.5 && Math.round(top[1]) >= Math.round(W * 2 / 3);
   const lines = rows.map(r => '<div class="wx-hrow"><span>' + r[0] + '</span><b class="' + windColor(Math.round(r[1]), null) + '">' + fmtSpeed(r[1]) + '</b></div>').join('');
   return '<div class="wx-sub"><span class="wx-h4"' + (windHtsOpen ? ' hidden' : '') + '>' + (m ? '120 m' : '400 ft') + ': ' + fmtSpeed(wx.wind120) + '</span> <button type="button" class="wx-more" aria-expanded="' + windHtsOpen + '" onclick="windHtsToggle(this)">' + (windHtsOpen ? '\u25B4 fewer' : '\u25BE more') + '</button></div>' +
-    '<div class="wx-hts"' + (windHtsOpen ? '' : ' hidden') + '><div class="wx-hnote">Sustained \u00B7 no gusts aloft</div>' + lines + (shear ? '<div class="wx-hshear">Wind builds with height: ' + fmtSpeed(surf) + ' \u2192 ' + fmtSpeed(top[1]) + ' at ' + top[0] + '</div>' : '') + '</div>';
+    '<div class="wx-hts"' + (windHtsOpen ? '' : ' hidden') + '><div class="wx-hnote">Sustained speeds \u00B7 gusts not forecast aloft</div>' + lines + (shear ? '<div class="wx-hshear">Wind builds with height: ' + fmtSpeed(surf) + ' \u2192 ' + fmtSpeed(top[1]) + ' at ' + top[0] + '</div>' : '') + '</div>';
 }
 function windColor(mph, gust) {
   const l = windLimits(), W = l.w || WIND_DEF.w, G = l.g || WIND_DEF.g;
@@ -2915,27 +2915,18 @@ function calmWindow(om, hIdx, nowBad, obsFine) {
   const day_ = info.filter(x => x.dayHr);
   if (day_.length < 2) return null;
   if (day_.every(x => x.good)) return { kind: 'ok' };
-  let best = null;
-  for (let k = 0; k < n; ) {
-    if (!info[k].good) { k++; continue; }
-    let e = k; while (e + 1 < n && info[e + 1].good) e++;
-    if (e - k + 1 >= 2 && (!best || e - k > best.b - best.a)) best = { a: k, b: e };
-    k = e + 1;
-  }
+  // the earliest run of 2+ hours leads; if a later run is longer it is mentioned as "Longer: ..."
+  const runsOf = (flag) => { const r = []; for (let k = 0; k < n; ) { if (!info[k][flag]) { k++; continue; } let e = k; while (e + 1 < n && info[e + 1][flag]) e++; if (e - k + 1 >= 2) r.push({ a: k, b: e }); k = e + 1; } return r; };
+  const altOf = (r) => { const lg = r.reduce((m, x) => (x.b - x.a > m.b - m.a ? x : m), r[0]); return lg.b - lg.a > r[0].b - r[0].a ? { a: lg.a, b: lg.b } : null; };
+  const gruns = runsOf('good'), best = gruns[0] || null;
   if (best) {
     const run = info.slice(best.a, best.b + 1);
-    return { kind: 'window', night: run.some(x => x.night), lowNow: !!nowBad, a: best.a, b: best.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && best.a > 0 };
+    return { kind: 'window', alt: altOf(gruns), night: run.some(x => x.night), lowNow: !!nowBad, a: best.a, b: best.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && best.a > 0 };
   }
-  let caut = null;
-  for (let k = 0; k < n; ) {
-    if (!info[k].ok) { k++; continue; }
-    let e = k; while (e + 1 < n && info[e + 1].ok) e++;
-    if (e - k + 1 >= 2 && (!caut || e - k > caut.b - caut.a)) caut = { a: k, b: e };
-    k = e + 1;
-  }
+  const cruns = runsOf('ok'), caut = cruns[0] || null;
   if (caut) {
     const run = info.slice(caut.a, caut.b + 1);
-    return { kind: 'caution', night: run.some(x => x.night), lowNow: !!nowBad, a: caut.a, b: caut.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && caut.a > 0, aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3) };
+    return { kind: 'caution', alt: altOf(cruns), night: run.some(x => x.night), lowNow: !!nowBad, a: caut.a, b: caut.b, maxW: Math.max(...run.map(x => x.w)), maxG: Math.max(...run.map(x => x.g)), wasWet: info[0].wet && caut.a > 0, aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3) };
   }
   const cnt = (f) => day_.filter(f).length;
   const cw = cnt(x => x.windRed), cr = cnt(x => x.wet), cv = cnt(x => x.visBad);
@@ -3023,20 +3014,20 @@ function hourStripHtml(om, hIdx) {
   }
   const U = speedUnit();
   const cap = {
-    wind: 'Sustained / gust · ' + U + ' · blue = rain chance',
-    alt: 'Wind at ' + altLab + ' · ' + U + ' · no gust figure at height',
+    wind: 'Ground wind\u00A0· sustained\u00A0/\u00A0gust\u00A0· ' + U,
+    alt: 'Wind at ' + altLab + ' · sustained only · ' + U,
     temp: (metric ? '°C' : '°F') + ' · each hour’s forecast temperature',
     vis: (metric ? 'km' : 'SM') + ' · “fog” = temperature close to the dew point',
     cloud: (cloudTrend(H, hIdx, n) || '% cloud cover · ') + 'more grey = cloudier',
     rain: 'Chance of rain · amount below (' + (metric ? 'mm' : 'in') + ')'
   }[view];
   const key = {
-    wind: 'Colours follow your wind limits · dimmed = after sunset',
-    alt: 'Colours follow your wind limits · dimmed = after sunset',
-    temp: 'Colours follow your temperature limits · dimmed = after sunset',
-    vis: (intl ? 'Amber = under ' + (metric ? '4.8 km' : '3 SM') : 'Red = under the ' + (metric ? '4.8 km (3 SM)' : '3 SM') + ' minimum') + ' · fog = within 2°F (1°C) of the dew point · dimmed = after sunset',
-    cloud: 'Forecast cloud cover, a guide only · dimmed = after sunset',
-    rain: 'Amber = 30% or more · red = 60% or more · dimmed = after sunset'
+    wind: 'Blue = rain chance\u00A0· colours follow your wind limits\u00A0· dimmed = after sunset',
+    alt: 'Colours follow your wind limits\u00A0· dimmed = after sunset',
+    temp: 'Colours follow your temperature limits\u00A0· dimmed = after sunset',
+    vis: (intl ? 'Amber = under ' + (metric ? '4.8 km' : '3 SM') : 'Red = under the ' + (metric ? '4.8 km (3 SM)' : '3 SM') + ' minimum') + '\u00A0· fog = within 2°F (1°C) of the dew point\u00A0· dimmed = after sunset',
+    cloud: 'Forecast cloud cover, a guide only\u00A0· dimmed = after sunset',
+    rain: 'Amber = 30% or more\u00A0· red = 60% or more\u00A0· dimmed = after sunset'
   }[view];
   const name = views.find(v => v[0] === view)[1];
   const opts = views.map(v => '<option value="' + v[0] + '"' + (v[0] === view ? ' selected' : '') + '>' + v[1] + '</option>').join('');
@@ -3045,15 +3036,16 @@ function hourStripHtml(om, hIdx) {
 function calmHtml(c, H, hIdx, siteTag) {
   if (!c || c.kind === 'ok') return '';
   const hr = (i) => new Date(H.time[i]).toLocaleTimeString([], { hour: 'numeric' });
+  const altTxt = (cc) => cc.alt ? 'Longer: ' + hr(hIdx + cc.alt.a) + ' – ' + hr(Math.min(hIdx + cc.alt.b + 1, H.time.length - 1)) + ' · ' : '';
   if (c.kind === 'window') {
     const from = c.a === 0 ? 'Now' : hr(hIdx + c.a), to = hr(Math.min(hIdx + c.b + 1, H.time.length - 1));
     return '<div class="wx-window good"><div class="wx-window-t">🕊 Best window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
-      (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.night ? 'Night hours included \u2014 anti-collision lights required · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now \u2014 the forecast can\u2019t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
+      altTxt(c) + (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.night ? 'Night hours included \u2014 anti-collision lights required · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now \u2014 the forecast can\u2019t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
   }
   if (c.kind === 'caution') {
     const from = c.a === 0 ? 'Now' : hr(hIdx + c.a), to = hr(Math.min(hIdx + c.b + 1, H.time.length - 1));
     return '<div class="wx-window caution"><div class="wx-window-t">🕊 Possible window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
-      'Fly with caution — wind is above your orange point (' + fmtSpeedNum(c.aw) + ' / ' + fmtSpeedNum(c.ag) + ' ' + speedUnit() + ') · ' +
+      'Fly with caution — wind is above your orange point (' + fmtSpeedNum(c.aw) + ' / ' + fmtSpeedNum(c.ag) + ' ' + speedUnit() + ') · ' + altTxt(c) +
       (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.night ? 'Night hours included — anti-collision lights required · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now — the forecast can’t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
   }
   const nt = nightOn(), dl = nt ? 'hours' : 'daylight hours';
@@ -3710,7 +3702,7 @@ function showOffline() {
   if (goodDraw && goodKey === key && lastWeatherAt) {
     lastDraw = goodDraw;
     goodDraw();
-    const t = new Date(lastWeatherAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const t = tnb(new Date(lastWeatherAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
     const msg = '📴 No signal — weather isn\'t updating. Showing data from ' + t + '.';
     body.insertAdjacentHTML('afterbegin', '<div class="wx-status wx-warn">' + msg + '</div>');
     srSay('No signal. Weather isn\'t updating. Showing data from ' + t + '.');
@@ -3860,7 +3852,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         : region === 'intl'
         ? '🌙 Sun is down — check your local rules for night flying'
         : '🌙 Sun is down — night flight needs an <span style="white-space:nowrap">anti-collision</span> light visible 3 SM';
-      const fmtT = (iso) => iso ? new Date(iso).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '—';
+      const fmtT = (iso) => iso ? tnb(new Date(iso).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})) : '—';
       // AfterGlow opens at this same spot (it reads lat, lon and name from the link)
       const agName = (typeof site !== 'undefined' && site && site.name) ? String(site.name).slice(0, 60) : 'Current location';
       const agUrl = 'https://afterglow.johnstonaerial.com/?lat=' + Number(lat).toFixed(4) + '&lon=' + Number(lon).toFixed(4) + '&name=' + encodeURIComponent(agName);
@@ -3936,7 +3928,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         return 'Precipitation';
       })();
       const precipSub = () => precipNext
-        ? 'Next 6 hrs: ' + precipNext.prob + '% chance' + (precipNext.mm >= 0.05 ? ' · ' + fmtPrecip(precipNext.mm) + ' (forecast)' : ' (forecast)')
+        ? 'Next 6 hrs: ' + precipNext.prob + '% chance' + (precipNext.mm >= 0.05 ? '\u00A0· ' + fmtPrecip(precipNext.mm) + ' (forecast)' : ' (forecast)')
         : 'No forecast data';
       // Best evidence first: the model's current conditions; radar + airport agreeing; radar nearby; an airport report alone
       const precipBlock = () => {
@@ -3956,7 +3948,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         const lines = [];
         if (!rd) lines.push('Radar unavailable');
         else if (!rd.covered) lines.push('No radar coverage here');
-        else lines.push('Radar: ' + (rd.near ? 'echoes within ' + fmtDist(rd.nearMi) : 'nothing within ' + fmtDist(rd.nearMi)) + ' · ' + new Date(rd.frameTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' (' + ageText(rd.ageMin * 60000) + ')');
+        else lines.push('Radar: ' + (rd.near ? 'echoes within ' + fmtDist(rd.nearMi) : 'nothing within ' + fmtDist(rd.nearMi)) + '\u00A0· ' + tnb(new Date(rd.frameTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })) + ' (' + ageText(rd.ageMin * 60000) + ')');
         if (radarNear && !pm && !precipLabel) lines.push('No rain reported');
         if (pm) lines.push(pm.station + ' reports ' + pm.text + ' · ' + fmtDist(pm.dist));
         if (hz) lines.push(hz.station + ' reports ' + hz.text + ' · ' + fmtDist(hz.dist));
@@ -4006,13 +3998,13 @@ async function renderWeather(lat, lon, attempt = 1) {
         const windHTML = ow ? `
             <div class="wx-label">Wind</div>
             <div class="wx-value ${windColor(owMph, owGust)}">${fmtSpeedNum(owMph) + (owGust ? ' / ' + fmtSpeedNum(owGust) : '') + ' ' + windChipHtml() + owArrow}</div>
-            <div class="wx-sub">${owGust ? 'Sustained / Gusts' : 'No gusts reported'}${owDirTxt ? ' · ' + owDirTxt : ''}</div>
+            <div class="wx-sub">${owGust ? 'Sustained\u00A0/\u00A0Gusts' : 'No gusts reported'}${owDirTxt ? '\u00A0· ' + owDirTxt : ''}</div>
             <div class="wx-sub" data-rec-age="${Date.now() - ow.ageMin * 60000}">${ow.station} · ${fmtDist(ow.dist)} away · ${ageText(ow.ageMin * 60000)}</div>
             ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${modelTxt}</strong></div>` : ''}
             ${windHtsHTML(wx, windOk ? windMph : null)}` : `
             <div class="wx-label">Wind</div>
             <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + windChipHtml() + (dirOk ? ' ' + windDirHtml(wx.wind.deg) : '') : '—'}</div>
-            <div class="wx-sub">${windOk ? (gustMph ? 'Sustained / Gusts' : 'No gusts reported') : 'No wind data'}</div>
+            <div class="wx-sub">${windOk ? (gustMph ? 'Sustained\u00A0/\u00A0Gusts' : 'No gusts reported') : 'No wind data'}</div>
             ${windHtsHTML(wx, windOk ? windMph : null)}`;
         body.innerHTML = `
         <div class="wx-grid">
@@ -4086,7 +4078,7 @@ async function renderWeather(lat, lon, attempt = 1) {
       // Keep the last good reading on screen, with a note
       lastDraw = goodDraw;
       goodDraw();
-      const t = new Date(lastWeatherAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const t = tnb(new Date(lastWeatherAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
       body.insertAdjacentHTML('afterbegin', `<div class="wx-status wx-warn">Couldn't refresh — showing ${t} data. ${friendlyWxError(e)}</div>`);
       srSay('Couldn\'t refresh. Showing ' + t + ' data. ' + friendlyWxError(e));
     } else {
@@ -4106,7 +4098,7 @@ function refreshAge() {
   const span = document.getElementById('wx-age');
   if (!el || !span || !lastWeatherAt) return;
   const ms = Date.now() - lastWeatherAt;
-  span.textContent = ' · ' + ageText(ms) + (ms >= STALE_MS ? ' — tap Refresh' : '');
+  span.textContent = '\u00A0· ' + ageText(ms) + (ms >= STALE_MS ? ' — tap Refresh' : '');
   el.classList.toggle('wx-stale', ms >= STALE_MS);
 }
 
@@ -4207,6 +4199,7 @@ function recPrefs() {
   const p = recall(REC_KEY, {}) || {};
   return { weather: p.weather !== false, unchecked: p.unchecked !== false, coords: p.coords === true, more: p.more === true, fmt: p.fmt === 'text' ? 'text' : 'pdf' };
 }
+function tnb(s) { return String(s).replace(/\s+([AP]M)\b/i, '\u00A0$1'); }   // keep "11:10 AM" on one line
 function recClean(s) { return String(s == null ? '' : s).replace(/\s+/g, ' ').trim(); }
 function recNoEmoji(s) { return recClean(String(s).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '')); }
 function recSiteDefault() {
@@ -4573,9 +4566,13 @@ let recForceDownload = false, recForceShare = false, recLastErr = '';
 function recDesktop() {
   try { return navigator.maxTouchPoints === 0 && window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(any-pointer: coarse)').matches; } catch (e) { return false; }
 }
+// An iPad (iPadOS reports itself as a Mac, so look for a Mac with a touchscreen): big enough to offer View first, like a computer
+function recIpad() {
+  try { return /iPad/.test(navigator.userAgent || '') || (/Mac/i.test(navigator.platform || '') && navigator.maxTouchPoints > 1); } catch (e) { return false; }
+}
 async function recDeliver(text, name) {
   const isPdf = /\.pdf$/i.test(name), mime = isPdf ? 'application/pdf' : 'text/plain';
-  if (isPdf && recDesktop() && !recForceDownload && !recForceShare) { recLastErr = 'desktop'; return 'refused'; }   // desktop: let the person choose Download or Share
+  if (isPdf && (recDesktop() || recIpad()) && !recForceDownload && !recForceShare) { recLastErr = 'desktop'; return 'refused'; }   // desktop: let the person choose Download or Share
   try {
     if (!recForceDownload && typeof File === 'function' && navigator.canShare && navigator.share) {   // the Download button never opens the share sheet
       const f = new File([text], name, { type: mime });
@@ -4587,8 +4584,9 @@ async function recDeliver(text, name) {
   }
   const blob = new Blob([text], { type: isPdf ? 'application/pdf' : 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  const ios = recIpad() || /iPhone|iPod/.test(navigator.userAgent || '');   // iOS Safari ignores "download" on a blob and would replace this page with the file
+  const a = document.createElement('a'); a.href = url; a.download = name; if (ios) a.target = '_blank'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), ios ? 120000 : 4000);
   return 'downloaded';
 }
 function recToast(msg, ms) {
@@ -4606,13 +4604,13 @@ function recKey(e) { if (e.key === 'Escape') closeRecord(); }
 function recOffer(text, name) {
   const ov = document.createElement('div'); ov.className = 'rec-overlay';
   const pdfDesk = /\.pdf$/i.test(name) && recLastErr === 'desktop';
-  const isMac = /Mac/i.test(navigator.platform || '');
+  const ipad = recIpad(), isMac = /Mac/i.test(navigator.platform || '') && !ipad;
   ov.innerHTML = pdfDesk
     ? '<div class="rec-box" role="dialog" aria-modal="true" aria-labelledby="rec-ot">' +
       '<h2 id="rec-ot">Your PDF is ready</h2>' +
-      '<p style="margin:0 0 8px;font-size:14px;color:var(--text-muted)"><strong>View</strong> opens it in a new tab, where you can read and print it. <strong>Download</strong> saves it to your Downloads folder.</p>' +
-      '<p style="margin:0 0 4px;font-size:14px;color:var(--text-muted)"><strong>Share\u2026</strong> opens ' + (isMac ? 'the Mac share sheet (Mail, Messages, AirDrop, Notes)' : 'your browser\'s share menu') + '.</p>' +
-      '<div class="rec-actions"><button type="button" class="rec-cancel">Close</button><button type="button" class="rec-save">Share\u2026</button><button type="button" class="rec-view">View</button><button type="button" class="rec-dl rec-primary">Download</button></div></div>'
+      '<p style="margin:0 0 8px;font-size:14px;color:var(--text-muted)"><strong>View</strong> opens it in a new tab, where you can read and print it.' + (ipad ? '' : ' <strong>Download</strong> saves it to your Downloads folder.') + '</p>' +
+      '<p style="margin:0 0 4px;font-size:14px;color:var(--text-muted)"><strong>Share\u2026</strong> opens ' + (ipad ? 'the iPad share sheet (Save to Files, Print, Mail, Messages, AirDrop)' : isMac ? 'the Mac share sheet (Mail, Messages, AirDrop, Notes)' : 'your browser\'s share menu') + '.</p>' +
+      '<div class="rec-actions"><button type="button" class="rec-cancel">Close</button><button type="button" class="rec-save">Share\u2026</button><button type="button" class="rec-view' + (ipad ? ' rec-primary' : '') + '">View</button>' + (ipad ? '' : '<button type="button" class="rec-dl rec-primary">Download</button>') + '</div></div>'
     : '<div class="rec-box" role="dialog" aria-modal="true" aria-labelledby="rec-ot">' +
       '<h2 id="rec-ot">Your record is ready</h2>' +
       '<p style="margin:0 0 4px;font-size:14px;color:var(--text-muted)">Your browser didn\'t open the Share sheet this time. Tap Share to try again, or Download to save the file.</p>' +
@@ -4629,7 +4627,8 @@ function recOffer(text, name) {
     setTimeout(() => URL.revokeObjectURL(url), 120000);
     done();
   };
-  ov.querySelector('.rec-dl').onclick = async () => { recForceDownload = true; const h = await recDeliver(text, name); recForceDownload = false; done(); recDraftClear(); recToast('✓ ' + (/\.pdf$/i.test(name) ? 'PDF' : 'Record') + ' saved to your downloads'); };
+  const dlb = ov.querySelector('.rec-dl');
+  if (dlb) dlb.onclick = async () => { recForceDownload = true; const h = await recDeliver(text, name); recForceDownload = false; done(); recDraftClear(); recToast('✓ ' + (/\.pdf$/i.test(name) ? 'PDF' : 'Record') + ' saved to your downloads'); };
   ov.querySelector('.rec-save').onclick = async () => {
     recForceShare = true; const h = await recDeliver(text, name); recForceShare = false;
     if (h === 'refused') { recToast('Sharing is not available right now — use Download'); return; }

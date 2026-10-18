@@ -181,7 +181,7 @@ If you close the Share sheet without choosing anything, the Save record box stay
 
 Prefer to paste it into a note or email? Tap **Copy as text instead**. The record is copied to your clipboard and no file is made. That doesn't change which button is filled.
 
-If the Share sheet doesn't open, the app shows a box with **Share…** and **Download** buttons instead. On a Mac or other computer, a PDF always offers that box first, because the Mac share sheet has no Print or Save to Files. **Download** saves the PDF to your Downloads folder, and you can open it there to print.
+If the Share sheet doesn't open, the app shows a box with **Share…** and **Download** buttons instead. On a Mac or other computer, a PDF always offers that box first, because the Mac share sheet has no Print or Save to Files. **Download** saves the PDF to your Downloads folder, and you can open it there to print. On an iPad the box has **View** and **Share…** instead, and **Share…** includes **Save to Files**.
 
 ---
 
@@ -189,7 +189,7 @@ If the Share sheet doesn't open, the app shows a box with **Share…** and **Dow
 
 You can print the checklist and take it to the site. Open the tab you want, then tap **Print** in Safari. In the Home Screen app, open the page in Safari first, since the Home Screen app can't print. Check items off with a pencil during preflight and again after the flight. Print each tab you need, since only the open tab prints.
 
-**Print** uses your browser's page settings, so paper size and margins come from its print dialog. For the compact two-column layout or a different paper, tap **PDF** instead. Using the Home Screen app, or no printer? Tap **PDF** as well. It makes the same sheet as a PDF file, with your checked and flagged items marked and lines for date, time, site, pilot and visual observer, that you can save to Files, email or print later. It works in the Home Screen app too, and like printing it covers only the open tab.
+**Print** uses your browser's page settings, so paper size and margins come from its print dialog. **Print** is always one column in large type, with every section open. It has no layout choice. If you want it compact, tap **PDF**, choose **Compact** in **⚙ Settings**, and print the PDF. For a different paper, tap **PDF** instead. Using the Home Screen app, or no printer? Tap **PDF** as well. It makes the same sheet as a PDF file, with your checked and flagged items marked and lines for date, time, site, pilot and visual observer, that you can save to Files, email or print later. It works in the Home Screen app too, and like printing it covers only the open tab.
 
 **Too much small print in Settings?** Tap **Hide explanations** at the top of **⚙ Settings** (or of **Back up & restore**) to fold away the grey explanation text. Tap **ⓘ Show explanations** to bring it back. The app remembers your choice on that device, and it is saved with your backup. The note that your settings are saved on this device only always stays.
 

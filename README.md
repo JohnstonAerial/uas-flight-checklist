@@ -106,6 +106,16 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v3.9.12
+
+- **The window box leads with the earliest window** — when there is more than one flyable stretch, the **Possible window** / **Best window** box now shows the earliest run of 2 hours or more. If a later run is longer, a short **Longer:** line mentions it.
+- **Clearer wind wording** — the Wind tile says **Sustained speeds · gusts not forecast aloft**. In **Next 12 hours**, the Wind view says it is the ground wind, with a short caption and a key that reads **Sustained / gusts**, and the Aloft view reads **Wind at 400 ft · sustained only · mph**.
+- **iPad PDF box** — after you tap **PDF** (or **Save PDF** in a flight record) on an iPad, the "Your PDF is ready" box now appears with **View** and **Share…**. **Share…** has **Save to Files**. On an iPhone or iPad, if the Share sheet can't open, the PDF opens in a new tab instead.
+- **Tidier text on small screens** — clock times like 11:10 AM, "7 min ago" and the dots and slashes between items no longer split across two lines. Saved records and PDFs are not affected.
+- **Clearer explanations in Settings** — the hints for **Wind**, **Kp**, **Cold** and **Heat**, and the **PDF layout** note, are reworded. The **PDF layout** note now says **Compact** is two columns with fewer pages, **Large print** is one column in bigger type, and **Print** is always one column in large type.
+
+---
+
 ## What's new in v3.9.11
 
 - **The night notice follows "I fly at night"** — when the sun is down, the notice at the bottom of the weather card used to look the same whether or not you fly at night. With **I fly at night** on in Settings it now reads a calm **Night flying on — anti-collision light visible 3 SM**; with it off, it stays the amber **Sun is down** warning. Outside the USA it says to check your local rules.
@@ -641,7 +651,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Weather shows its age** — the "Updated" line turns orange after 30 minutes, and weather auto-refreshes when you return to the app after 10+ minutes
 - **Flag items that need attention, or mark them N/A** — press and hold any item for a small menu. **Needs attention** marks it orange; flagged items don't count as complete until you resolve them: tap one to mark it done, or press and hold it again to clear the flag. **N/A for this flight** greys it out and takes it out of your progress; tap it to put it back
 - **Save a flight record** — tap **Save flight record** to keep a PDF or plain text copy of the checklist (what was checked, flagged items, optional weather, your pilot name, drone and registration number from Settings, site, customer, notes, optional GPS coordinates and a few optional details) as a file you can save, share or email. See [How-to guides](HOW-TO.md#save-a-flight-record)
-- **Print it, or save it as a PDF** — **Print** prints the open tab as a clean paper checklist, with your checked and flagged items marked and blank date, time, site and pilot lines, for use with a pencil. **PDF** makes the same sheet as a PDF file, with your pilot name, drone and registration filled in if you saved them in Settings, and works in the Home Screen app too. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil) The PDF is **Compact** (two columns, fewer pages) or **Large print**, on **Letter** or **A4**, as you choose in **⚙ Settings**.
+- **Print it, or save it as a PDF** — **Print** prints the open tab as a clean paper checklist, with your checked and flagged items marked and blank date, time, site and pilot lines, for use with a pencil. **PDF** makes the same sheet as a PDF file, with your pilot name, drone and registration filled in if you saved them in Settings, and works in the Home Screen app too. **Print** is one column in large type. For two columns or A4, use **PDF**. See [How-to guides](HOW-TO.md#print-it-and-use-a-pencil) The PDF is **Compact** (two columns, fewer pages) or **Large print**, on **Letter** or **A4**, as you choose in **⚙ Settings**.
 - **Works on any device** — phone, tablet, desktop, or dedicated controller screen
 - **Completely free** to host and run
 
