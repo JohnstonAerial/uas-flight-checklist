@@ -730,7 +730,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.1</p>
+      <p>Free Drone Preflight Checklist · v4.0.2</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -3509,11 +3509,26 @@ async function fetchMetar(lat, lon) {
         variable: w.wdir === 'VRB'
       };
     }
+    // Windier nearby: other recent stations within range whose wind or gust is at least 5 mph above the main reading, or in a worse colour band against your limits (at most two, strongest first)
+    const windier = [];
+    if (wind) {
+      const KT2 = 1.15078, score = (m, g) => Math.max(m, g === null ? 0 : g), rank = { 'wx-good': 0, 'wx-warn': 1, 'wx-alert': 2 };
+      const mainScore = score(wind.mph, wind.gust), mainCol = windColor(Math.round(wind.mph), wind.gust !== null ? Math.round(wind.gust) : null);
+      for (const x of all) {
+        if (x === wsrc || x.d > METAR_RADIUS_MI || x.age === null || x.age > WIND_OBS_MAX_AGE_MIN) continue;
+        const w2 = x.st;
+        if (typeof w2.wspd !== 'number' || !isFinite(w2.wspd)) continue;
+        const mph = w2.wspd * KT2, gust = typeof w2.wgst === 'number' && isFinite(w2.wgst) ? w2.wgst * KT2 : null;
+        const col = windColor(Math.round(mph), gust !== null ? Math.round(gust) : null);
+        if (Math.round(score(mph, gust)) - Math.round(mainScore) >= 5 || rank[col] > rank[mainCol]) windier.push({ station: w2.icaoId || '?', dist: x.d, mph, gust, col, sc: score(mph, gust) });
+      }
+      windier.sort((a, b) => b.sc - a.sc); windier.length = Math.min(windier.length, 2);
+    }
     // Observed temperature and dew point (deg C): the nearest recent report that carries both
     let obs = null;
     const tsrc = all.find(x => x.d <= METAR_RADIUS_MI && x.age !== null && x.age <= WIND_OBS_MAX_AGE_MIN && typeof x.st.temp === 'number' && isFinite(x.st.temp) && typeof x.st.dewp === 'number' && isFinite(x.st.dewp));
     if (tsrc) obs = { station: tsrc.st.icaoId || '?', dist: tsrc.d, ageMin: tsrc.age, tempC: tsrc.st.temp, dewC: Math.min(tsrc.st.dewp, tsrc.st.temp) };
-    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, lower, vis, lowVis, precipReport, wind, obs, obsc, hazard };
+    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, lower, vis, lowVis, precipReport, wind, windier, obs, obsc, hazard };
   } catch (e) {
     console.warn('METAR fetch failed:', e.message);
     throw e;   // the caller tells "service failed" apart from "no station nearby"
@@ -4138,17 +4153,22 @@ async function renderWeather(lat, lon, attempt = 1) {
         const owDirTxt = ow && owMph > 0 && ow.variable ? 'Variable' : '';
         const owArrow = ow && owMph > 0 && !ow.variable && ow.deg != null ? ' ' + windDirHtml(ow.deg) : '';
         const modelTxt = windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() : '';
+        const wiList = ow && metarData2.windier ? metarData2.windier : [];
+        const windierHtml = wiList.length ? '<div class="wx-sub wx-windier">Windier nearby: ' + wiList.map(s => s.station + ' <strong class="' + s.col + '">' + fmtSpeedNum(s.mph) + (s.gust !== null && Math.round(s.gust) > Math.round(s.mph) ? ' / ' + fmtSpeedNum(s.gust) : '') + ' ' + speedUnit() + '</strong> (' + fmtDist(s.dist) + ')').join(' \u00B7 ') + '</div>' : '';
         const windHTML = ow ? `
             <div class="wx-label">Wind</div>
             <div class="wx-value ${windColor(owMph, owGust)}">${fmtSpeedNum(owMph) + (owGust ? ' / ' + fmtSpeedNum(owGust) : '') + ' ' + windChipHtml() + owArrow}</div>
             <div class="wx-sub">${owGust ? 'Sustained\u00A0/\u00A0Gusts' : 'No gusts reported'}${owDirTxt ? '\u00A0· ' + owDirTxt : ''}</div>
             <div class="wx-sub" data-rec-age="${Date.now() - ow.ageMin * 60000}">${ow.station} · ${fmtDist(ow.dist)} away · ${ageText(ow.ageMin * 60000)}</div>
             ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${modelTxt}</strong></div>` : ''}
-            ${windHtsHTML(wx, windOk ? windMph : null)}` : `
+            ${windierHtml}
+            ${windHtsHTML(wx, windOk ? windMph : null)}
+            <div class="wx-note wx-windnote">Obstructions/terrain can make it windier where you fly.</div>` : `
             <div class="wx-label">Wind</div>
             <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + windChipHtml() + (dirOk ? ' ' + windDirHtml(wx.wind.deg) : '') : '—'}</div>
             <div class="wx-sub">${windOk ? (gustMph ? 'Sustained\u00A0/\u00A0Gusts' : 'No gusts reported') : 'No wind data'}</div>
-            ${windHtsHTML(wx, windOk ? windMph : null)}`;
+            ${windHtsHTML(wx, windOk ? windMph : null)}
+            <div class="wx-note wx-windnote">Obstructions/terrain can make it windier where you fly.</div>`;
         body.innerHTML = `
         <div class="wx-grid">
           <div class="wx-item">

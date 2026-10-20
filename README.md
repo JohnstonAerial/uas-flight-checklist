@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.2
+
+- **Windier nearby** — the Wind tile shows the nearest airport's observed wind first. If another airport within 30 miles has a recent report that is at least 5 mph windier, or in a worse colour band against your limits, the tile now adds a **Windier nearby** line with that airport, its wind and its distance (up to two). It only appears when it is useful; on calm or even days nothing changes.
+- **A reminder under the wind** — a short note at the bottom of the Wind tile: obstructions and terrain can make it windier where you fly. The numbers are a baseline, and the call is still yours.
+
+---
+
 ## What's new in v4.0.1
 
 - **Airspace chart button** — a new full-width button under the weather links, **🛩 Airspace chart — SkyVector**, opens a free aviation chart centered on your spot with TFRs drawn on it. It works on phones and tablets. It is a pilot's chart, not drone-specific, and it can miss some TFRs, so the FAA **TFRs** button is still the official list.
