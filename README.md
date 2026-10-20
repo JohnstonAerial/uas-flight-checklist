@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.1
+
+- **Airspace chart button** — a new full-width button under the weather links, **🛩 Airspace chart — SkyVector**, opens a free aviation chart centered on your spot with TFRs drawn on it. It works on phones and tablets. It is a pilot's chart, not drone-specific, and it can miss some TFRs, so the FAA **TFRs** button is still the official list.
+- **Clearer key under the hourly strip** — the dimmed hours are now labelled **dimmed = night** (the hours before sunrise and after sunset), instead of "dimmed = after sunset".
+
+---
+
 ## What's new in v4.0
 
 - **10-day outlook** — the **Next 12 hours** strip now has a **12 hours | 10 days** switch beside the view chip. In the 10-day view each chip is one day, showing the daytime peak wind (with gusts beneath) coloured by your wind limits. The other views work the same way: **Aloft** shows the peak wind at 400 ft, **Temp** the high with the low beneath, **Visibility** the lowest, **Clouds** the daytime average, and **Rain** the highest chance with the amount. Swipe sideways to see all ten days.
