@@ -106,6 +106,16 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0
+
+- **10-day outlook** — the **Next 12 hours** strip now has a **12 hours | 10 days** switch beside the view chip. In the 10-day view each chip is one day, showing the daytime peak wind (with gusts beneath) coloured by your wind limits. The other views work the same way: **Aloft** shows the peak wind at 400 ft, **Temp** the high with the low beneath, **Visibility** the lowest, **Clouds** the daytime average, and **Rain** the highest chance with the amount. Swipe sideways to see all ten days.
+- **Tap a day for a summary** — tapping a day changes only the grey line above the strip, for example **Wed 21 · Best 3p–6p · 8–11 mph · rain 0%**. Tap it again, or switch back to 12 hours, to clear it. The window box and tiles still describe the next 12 hours.
+- **Days 6 to 10 are a rough guide** — those days are drawn lighter and their summary starts with **Rough guide**. Check again closer to the day.
+- **Your view is remembered** — the 12 hours / 10 days choice and the Wind / Aloft / Temp / Visibility / Clouds / Rain view now stay as you left them, and they are included in **Back up** and **Restore**.
+- **Two new checklist lines** — **SD card inserted and its cover closed — before powering on**, and **Arms unfolded and locked — and landing gear in place, if your drone has it**, on all three tabs.
+
+---
+
 ## What's new in v3.9.12
 
 - **The window box leads with the earliest window** — when there is more than one flyable stretch, the **Possible window** / **Best window** box now shows the earliest run of 2 hours or more. If a later run is longer, a short **Longer:** line mentions it.
@@ -160,7 +170,7 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 - **Wind speed unit on the Wind tile** — tap the small unit chip (for example **mph ▾**) on the Wind tile to read wind in mph, km/h, m/s or knots. It starts as mph for USA and km/h for Outside USA, and stays what you choose.
 - **Imperial / Metric button** — the button at the top of the weather panel now reads **Imperial** or **Metric** and switches temperature, distance and altitude. It leaves your wind unit alone.
 - **Wind by height** — a **more** link on the Wind tile shows wind at ground level, 260 ft and 400 ft, with a note when it gets stronger higher up.
-- **Next 12 hours** — a sideways-swiping strip under the tiles shows wind and gusts hour by hour, coloured by your wind limits, with rain chance.
+- **Next 12 hours** — a sideways-swiping strip under the tiles shows wind and gusts hour by hour, coloured by your wind limits, with rain chance. Since v4.0 it can also show the next 10 days.
 - **Cloud ceiling details** — the tile lists the airport's cloud layers (the easing or building trend moved to the Clouds view of the hourly strip in v3.9.9).
 - **Print** — closing the print dialog returns you to where you were on the checklist.
 

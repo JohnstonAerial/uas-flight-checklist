@@ -642,6 +642,14 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .hs-dark .hs-c, .hs-dark .hs-t { opacity: 0.5; }
   .hs-r { margin-top: 3px; font-size: 10px; color: #3d8bfd; min-height: 12px; }
   .hs-key { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+  .hs-seg { display: inline-flex; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; vertical-align: middle; text-transform: none; letter-spacing: 0; }
+  .hs-seg button { font: inherit; font-size: 10.5px; font-weight: 600; line-height: 1.3; padding: 2px 8px; margin: 0; border: 0; border-radius: 0; background: transparent; color: var(--link); cursor: pointer; min-height: 0; min-width: 0; }
+  .hs-seg button.on { background: var(--link); color: #fff; }
+  .hs-dy { flex: 0 0 44px; cursor: pointer; }
+  .hs-dy .hs-t { white-space: nowrap; }
+  .hs-dy.sel .hs-t { color: var(--text); font-weight: 700; }
+  .hs-dy.sel .hs-c { box-shadow: 0 0 0 2px var(--link); }
+  .hs-f1 .hs-c { opacity: 0.86; } .hs-f2 .hs-c { opacity: 0.76; } .hs-f3 .hs-c { opacity: 0.67; } .hs-f4 .hs-c { opacity: 0.58; } .hs-f5 .hs-c { opacity: 0.5; }
   .hs-title .hs-chip { margin: 0 3px; border: 1px solid var(--border); border-radius: 9px; padding: 2px 16px 2px 7px; font-size: 10.5px; font-weight: 600; line-height: 1.3; color: var(--link); text-transform: none; letter-spacing: 0; cursor: pointer; }
   .hs-chip .hs-sel { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; border: 0; padding: 0; margin: 0; font-size: 16px; cursor: pointer; -webkit-appearance: none; appearance: none; }
   .hs-cap { font-size: 10.5px; color: var(--text-muted); margin: -2px 0 6px; line-height: 1.3; }
@@ -721,7 +729,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v3.9.12</p>
+      <p>Free Drone Preflight Checklist · v4.0</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -841,8 +849,10 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Gimbal check — movement free, no obstruction</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Lens and sensors clear — no fog, dew or smudges; let the drone adjust if it came from a hot car or a house</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Filters — select and attach appropriate filter based on conditions: ND (bright sun), CPL (glare/reflections), UV (haze), or specialty filters as needed</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Arms unfolded and locked — and landing gear in place, if your drone has it</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Props attached and locked — inspect for chips or cracks</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Battery installed and latched — confirm it's seated and won't come loose</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">SD card inserted and its cover closed — before powering on</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Temperature — within your drone's operating range (check its manual). Cold: keep batteries warm until launch and expect a shorter flight. Heat: keep the drone and batteries out of the sun and a hot car</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Strobe lights attached — if you're using them</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Remote ID module attached — if your drone uses one, confirm it's on and broadcasting</div></div>
@@ -973,8 +983,10 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Gimbal check — nadir position, no obstruction</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Lens and sensors clear — no fog, dew or smudges; let the drone adjust if it came from a hot car or a house</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Filters — typically not needed for mapping; remove all filters for accurate exposure</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Arms unfolded and locked — and landing gear in place, if your drone has it</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Props attached and locked — inspect for chips or cracks</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Battery installed and latched — confirm it's seated and won't come loose</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">SD card inserted and its cover closed — before powering on</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Temperature — within your drone's operating range (check its manual). Cold: keep batteries warm until launch and expect a shorter flight. Heat: keep the drone and batteries out of the sun and a hot car</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Strobe lights attached — if you're using them</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Remote ID module attached — if your drone uses one, confirm it's on and broadcasting</div></div>
@@ -1099,8 +1111,10 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Gimbal check — movement free, no obstruction</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Lens and sensors clear — no fog, dew or smudges; let the drone adjust if it came from a hot car or a house</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Filters — select and attach appropriate filter based on conditions: ND (bright sun), CPL (glare/reflections), UV (haze), or specialty filters as needed</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Arms unfolded and locked — and landing gear in place, if your drone has it</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Props attached and locked — inspect for chips or cracks</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Battery installed and latched — confirm it's seated and won't come loose</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">SD card inserted and its cover closed — before powering on</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Temperature — within your drone's operating range (check its manual). Cold: keep batteries warm until launch and expect a shorter flight. Heat: keep the drone and batteries out of the sun and a hot car</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Strobe lights attached — if you're using them</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Remote ID module attached — if your drone uses one, confirm it's on and broadcasting</div></div>
@@ -2405,7 +2419,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -2951,9 +2965,109 @@ function cloudTrend(H, hIdx, n) {
   const lab = new Date(z.t).toLocaleTimeString([], { hour: 'numeric' }).replace(/\s*([AP])M$/i, (mm, x) => x.toLowerCase());
   return (d <= -20 ? 'Easing: ' + a.v + '% now \u2192 ' + z.v + '% by ' + lab : d >= 20 ? 'Building: ' + a.v + '% now \u2192 ' + z.v + '% by ' + lab : 'Steady, about ' + a.v + '%') + ' · ';
 }
-// Hourly strip: one row of the next 12 hours; a chip on its title switches the view (Wind, wind aloft, Temp, Visibility, Clouds, Rain). Wind is the default; the choice lasts while the page is open
-let stripView = 'wind';
-function stripViewSet(v) { stripView = v; if (lastDraw) lastDraw(); }
+// Hourly strip: one row of the next 12 hours (or 10 days); a chip on its title switches the view (Wind, wind aloft, Temp, Visibility, Clouds, Rain)
+// The view (Wind, Aloft, Temp...) and the range (12 hours or 10 days) are remembered on this device and included in Back up and restore
+let stripView = (function () { const v = recall('wxStripView', 'wind'); return ['wind', 'alt', 'temp', 'vis', 'cloud', 'rain'].indexOf(v) >= 0 ? v : 'wind'; })();
+let stripSpan = recall('wxStripSpan', '12h') === '10d' ? '10d' : '12h';
+let stripDay = null;   // the day tapped in the 10-day view (not remembered)
+function stripViewSet(v) { stripView = v; store('wxStripView', v); if (lastDraw) lastDraw(); }
+function stripSpanSet(s) { stripSpan = s === '10d' ? '10d' : '12h'; stripDay = null; store('wxStripSpan', stripSpan); if (lastDraw) lastDraw(); }
+function stripDayPick(k) {
+  const row = document.querySelector('.hs-row'), left = row ? row.scrollLeft : 0;
+  stripDay = stripDay === k ? null : k;
+  if (lastDraw) lastDraw();
+  const r2 = document.querySelector('.hs-row'); if (r2) r2.scrollLeft = left;
+  const c = document.querySelector('.hs-dy[data-k="' + k + '"]'); if (c && c.focus) c.focus({ preventScroll: true });
+}
+// 10-day outlook: one chip per day (daylight hours only; today = what is left of it). Keep the window rules in step with calmWindow above.
+function dayHours(om, hIdx) {
+  const H = om && om.hourly, D = om && om.daily;
+  if (!H || !H.time || !D || !D.time) return [];
+  const nt = nightOn(), out = [];
+  for (let dd = 0; dd < D.time.length && dd < 10; dd++) {
+    const key = String(D.time[dd]).slice(0, 10), all = [], sv = D.sunrise && D.sunset && D.sunrise[dd] && D.sunset[dd] ? [new Date(D.sunrise[dd]).getTime(), new Date(D.sunset[dd]).getTime()] : null;
+    for (let i = 0; i < H.time.length; i++) {
+      if (String(H.time[i]).slice(0, 10) !== key) continue;
+      if (dd === 0 && i < hIdx) continue;
+      const t = new Date(H.time[i]).getTime();
+      if (nt || !sv || (t + 3600000 > sv[0] && t < sv[1])) all.push(i);
+    }
+    const d = new Date(key + 'T12:00:00');
+    out.push({ dd, idx: all, label: dd === 0 ? 'Today' : d.toLocaleDateString([], { weekday: 'short' }) + ' ' + d.getDate() });
+  }
+  return out;
+}
+function dayWindow(H, idx) {
+  if (!idx.length || !H.wind_speed_10m || !H.wind_gusts_10m) return null;
+  const info = idx.map(i => {
+    const w = H.wind_speed_10m[i], g = H.wind_gusts_10m[i];
+    if (typeof w !== 'number' || typeof g !== 'number' || !isFinite(w) || !isFinite(g)) return null;
+    const prob = (H.precipitation_probability || [])[i], pr = (H.precipitation || [])[i], wc = (H.weather_code || [])[i], cape = (H.cape || [])[i], vis = (H.visibility || [])[i];
+    const wcol = windColor(w, g), wet = prob >= 30 || pr >= 0.2 || wc >= 95 || (cape >= 1000 && prob >= 30);
+    const visBad = typeof vis === 'number' && vis < 4828;
+    return { i, w, g, good: wcol === 'wx-good' && !wet && !visBad, ok: wcol !== 'wx-alert' && !wet && !visBad };
+  });
+  if (info.some(x => !x)) return null;
+  const run = (flag) => { let best = null; for (let k = 0; k < info.length; ) { if (!info[k][flag]) { k++; continue; } let e = k; while (e + 1 < info.length && info[e + 1][flag]) e++; if (e - k + 1 >= 2 && (!best || e - k > best.b - best.a)) best = { a: k, b: e }; k = e + 1; } return best; };
+  const g = run('good'), o = g ? null : run('ok'), r = g || o;
+  if (!r) return { kind: 'none' };
+  const seg = info.slice(r.a, r.b + 1);
+  return { kind: g ? 'best' : 'possible', from: H.time[info[r.a].i], to: H.time[info[r.b].i], maxW: Math.max(...seg.map(x => x.w)), minW: Math.min(...seg.map(x => x.w)) };
+}
+function dayChip(H, idx, view, ctx) {
+  const { metric, intl, cls } = ctx, nb = '<small>&nbsp;</small>', none = '<div class="hs-c hc-none">—' + nb + '</div>';
+  const ok = (v) => v != null && isFinite(v);
+  const vals = (arr) => arr ? idx.map(i => arr[i]).filter(ok) : [];
+  if (!idx.length) return { html: none, rain: '' };
+  const pps = vals(H.precipitation_probability), ppMax = pps.length ? Math.max(...pps) : null;
+  let html = none;
+  if (view === 'wind') {
+    const w = vals(H.wind_speed_10m), g = vals(H.wind_gusts_10m);
+    if (w.length) {
+      const wm = Math.max(...w), gm = g.length ? Math.max(...g) : null;
+      const col = idx.reduce((c, i) => { const a = windColor(Math.round(H.wind_speed_10m[i]), ok(H.wind_gusts_10m[i]) ? Math.round(H.wind_gusts_10m[i]) : null); return a === 'wx-alert' || (a === 'wx-warn' && c === 'wx-good') ? a : c; }, 'wx-good');
+      html = '<div class="hs-c ' + cls[col] + '">' + fmtSpeedNum(wm) + (gm !== null && Math.round(gm) > Math.round(wm) ? '<small>' + fmtSpeedNum(gm) + '</small>' : nb) + '</div>';
+    }
+  } else if (view === 'alt') {
+    const w = vals(H.wind_speed_120m);
+    if (w.length) { const wm = Math.max(...w); html = '<div class="hs-c ' + cls[windColor(Math.round(wm), null)] + '">' + fmtSpeedNum(wm) + nb + '</div>'; }
+  } else if (view === 'temp') {
+    const f = vals(H.temperature_2m);
+    if (f.length) {
+      const hi = Math.max(...f), lo = Math.min(...f), a = tempColor(hi), b = tempColor(lo), col = a === 'wx-alert' || b === 'wx-alert' ? 'wx-alert' : a === 'wx-warn' || b === 'wx-warn' ? 'wx-warn' : 'wx-good';
+      const cv = (x) => metric ? Math.round((x - 32) * 5 / 9) : Math.round(x);
+      html = '<div class="hs-c ' + cls[col] + '">' + cv(hi) + '°<small>' + cv(lo) + '°</small></div>';
+    }
+  } else if (view === 'vis') {
+    const v = vals(H.visibility);
+    if (v.length) {
+      const m = Math.min(...v), dv = metric ? m / 1000 : m / 1609.34, low = m < 4828;
+      const fog = idx.some(i => ok(H.temperature_2m && H.temperature_2m[i]) && ok(H.dew_point_2m && H.dew_point_2m[i]) && (H.temperature_2m[i] - H.dew_point_2m[i]) <= 2);
+      const c = low ? (intl ? 'wx-warn' : 'wx-alert') : (fog ? 'wx-warn' : 'wx-good');
+      html = '<div class="hs-c ' + cls[c] + '">' + (dv >= 10 ? '10+' : dv.toFixed(1)) + (fog ? '<small>fog</small>' : nb) + '</div>';
+    }
+  } else if (view === 'cloud') {
+    const v = vals(H.cloud_cover);
+    if (v.length) { const a = v.reduce((s, x) => s + x, 0) / v.length; html = '<div class="hs-c hc-cloud" style="background:rgba(142,142,147,' + (0.12 + 0.88 * a / 100).toFixed(2) + ')">' + Math.round(a) + '%' + nb + '</div>'; }
+  } else if (view === 'rain') {
+    if (ppMax !== null) {
+      const mm = vals(H.precipitation).reduce((s, x) => s + x, 0), c = ppMax >= 60 ? 'wx-alert' : ppMax >= 30 ? 'wx-warn' : 'wx-good';
+      html = '<div class="hs-c ' + cls[c] + '">' + Math.round(ppMax) + '%' + (mm >= (metric ? 0.1 : 0.13) ? '<small>' + (metric ? mm.toFixed(1) : (mm / 25.4).toFixed(2)) + '</small>' : nb) + '</div>';
+    }
+  }
+  return { html, rain: view === 'wind' && ppMax !== null && ppMax >= 30 ? Math.round(ppMax) + '%' : '' };
+}
+function dayCaption(H, d, ctx) {
+  const hrf = (s) => new Date(s).toLocaleTimeString([], { hour: 'numeric' }).replace(/\s*([AP])M$/i, (m, a) => a.toLowerCase());
+  const w = dayWindow(H, d.idx), pps = d.idx.map(i => (H.precipitation_probability || [])[i]).filter(v => v != null && isFinite(v));
+  let s = d.label === 'Today' ? 'Today' : d.label;
+  if (!d.idx.length) return s + ' · no daylight hours left';
+  if (!w) s += ' · no window figure';
+  else if (w.kind === 'none') s += ' · No window';
+  else s += ' · ' + (w.kind === 'best' ? 'Best ' : 'Possible ') + hrf(w.from) + '–' + hrf(w.to) + ' · ' + (Math.round(w.minW) === Math.round(w.maxW) ? fmtSpeedNum(w.maxW) : fmtSpeedNum(w.minW) + '–' + fmtSpeedNum(w.maxW)) + ' ' + speedUnit();
+  if (pps.length) s += ' · rain ' + Math.round(Math.max(...pps)) + '%';
+  return (d.dd >= 5 ? 'Rough guide · ' : '') + s;
+}
 function hourStripHtml(om, hIdx) {
   const H = om && om.hourly;
   if (hIdx < 0 || !H || !H.time || !H.wind_speed_10m || !H.wind_gusts_10m) return '';
@@ -2970,8 +3084,17 @@ function hourStripHtml(om, hIdx) {
   if (H.precipitation_probability) views.push(['rain', 'Rain']);
   const view = views.some(v => v[0] === stripView) ? stripView : 'wind';
   const nb = '<small>&nbsp;</small>';
+  const days = stripSpan === '10d' ? dayHours(om, hIdx) : [];
+  const dayMode = days.length >= 3;
   let cells = '';
-  for (let k = 0; k < n; k++) {
+  if (dayMode) {
+    const ctx = { metric, intl, cls };
+    cells = days.map(d => {
+      const c = dayChip(H, d.idx, view, ctx), sel = stripDay === d.dd;
+      return '<div class="hs-h hs-dy' + (sel ? ' sel' : '') + (d.dd >= 5 ? ' hs-f' + (d.dd - 4) : '') + '" data-k="' + d.dd + '" role="button" tabindex="0" aria-pressed="' + sel + '" aria-label="' + d.label + '" onclick="stripDayPick(' + d.dd + ')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();stripDayPick(' + d.dd + ')}"><div class="hs-t">' + d.label + '</div>' + c.html + '<div class="hs-r">' + c.rain + '</div></div>';
+    }).join('');
+  }
+  for (let k = 0; k < n && !dayMode; k++) {
     const i = hIdx + k, t = H.time[i], dd = String(t).slice(0, 10) === d0 ? 0 : 1;
     const r = D.sunrise && D.sunrise[dd], su = D.sunset && D.sunset[dd], ms = new Date(t).getTime() + 1800000;
     const dark = r && su ? (ms < new Date(r).getTime() || ms > new Date(su).getTime()) : false;
@@ -3030,8 +3153,23 @@ function hourStripHtml(om, hIdx) {
     rain: 'Amber = 30% or more\u00A0· red = 60% or more\u00A0· dimmed = after sunset'
   }[view];
   const name = views.find(v => v[0] === view)[1];
+  let capTxt = cap, keyTxt = key;
+  if (dayMode) {
+    const dcap = {
+      wind: 'Daytime peak wind\u00A0· sustained\u00A0/\u00A0gust\u00A0· ' + U,
+      alt: 'Daytime peak wind at ' + altLab + ' · sustained only · ' + U,
+      temp: (metric ? '°C' : '°F') + ' · daytime high, low beneath',
+      vis: (metric ? 'km' : 'SM') + ' · lowest daytime visibility',
+      cloud: '% cloud cover · daytime average · more grey = cloudier',
+      rain: 'Highest chance of rain in the day · amount below (' + (metric ? 'mm' : 'in') + ')'
+    }[view];
+    const sd = days.find(d => d.dd === stripDay);
+    capTxt = sd ? dayCaption(H, sd, null) : dcap;
+    keyTxt = 'Tap a day for a summary\u00A0· lighter days are a rough guide, so check again closer to the day';
+  }
+  const seg = '<span class="hs-seg" role="group" aria-label="Forecast range"><button type="button" class="' + (dayMode ? '' : 'on') + '" aria-pressed="' + (!dayMode) + '" onclick="stripSpanSet(\'12h\')">12 hours</button><button type="button" class="' + (dayMode ? 'on' : '') + '" aria-pressed="' + dayMode + '" onclick="stripSpanSet(\'10d\')">10 days</button></span>';
   const opts = views.map(v => '<option value="' + v[0] + '"' + (v[0] === view ? ' selected' : '') + '>' + v[1] + '</option>').join('');
-  return '<div class="wx-strip"><div class="hs-title">Next 12 hours <span class="ws-chip hs-chip"><span class="hs-lab">' + name + '</span><select class="hs-sel" aria-label="Hourly forecast view" onchange="stripViewSet(this.value)">' + opts + '</select></span></div><div class="hs-cap">' + cap + '</div><div class="hs-row" role="group" aria-label="Hour by hour ' + name + ' forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">' + key + '</div></div>';
+  return '<div class="wx-strip"><div class="hs-title">Next ' + (dayMode ? '10 days' : '12 hours') + ' <span class="ws-chip hs-chip"><span class="hs-lab">' + name + '</span><select class="hs-sel" aria-label="Hourly forecast view" onchange="stripViewSet(this.value)">' + opts + '</select></span> ' + seg + '</div><div class="hs-cap">' + capTxt + '</div><div class="hs-row" role="group" aria-label="Hour by hour ' + name + ' forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">' + keyTxt + '</div></div>';
 }
 function calmHtml(c, H, hIdx, siteTag) {
   if (!c || c.kind === 'ok') return '';
@@ -3750,7 +3888,7 @@ async function renderWeather(lat, lon, attempt = 1) {
   lastDraw = null;
   try {
       const [wxRes, kpData, metarData, radarRes] = await Promise.allSettled([
-        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_10m,wind_gusts_10m,wind_speed_80m,wind_speed_120m,cloud_cover,precipitation_probability,precipitation,weather_code,cape,temperature_2m,dew_point_2m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=2`),
+        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_10m,wind_gusts_10m,wind_speed_80m,wind_speed_120m,cloud_cover,precipitation_probability,precipitation,weather_code,cape,temperature_2m,dew_point_2m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=10`),
         fetchKP(),
         fetchMetar(lat, lon),
         fetchRadar(lat, lon)
