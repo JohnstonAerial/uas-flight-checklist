@@ -730,7 +730,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.2</p>
+      <p>Free Drone Preflight Checklist · v4.0.3</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2883,7 +2883,6 @@ function windHtsHTML(wx, surf) {
   if (wx.wind120 == null) return '';
   const m = isMetric();
   const rows = [];
-  if (surf != null) rows.push(['Ground', surf, 0]);
   if (wx.wind80 != null) rows.push([m ? '80 m' : '260 ft', wx.wind80, 1]);
   rows.push([m ? '120 m' : '400 ft', wx.wind120, 1]);
   const top = rows.filter(r => r[2]).reduce((a, r) => r[1] > a[1] ? r : a, ['', -1]);
@@ -3463,6 +3462,9 @@ async function fetchMetar(lat, lon) {
     const best = pool[0];
     const lower = pool.slice(1).filter(x => x.ceil != null && (best.ceil == null || x.ceil < best.ceil)).sort((a, b) => a.ceil - b.ceil).slice(0, 2)
       .map(x => ({ station: x.st.icaoId || '?', dist: x.d, ft: x.ceil }));
+    // When no other station is lower, list up to two nearest other stations (nearest first) so the pilot can see whether nearby airports agree
+    const skyKind = (st) => { const cl = st.clouds || []; return cl.some(c => { const cv = c.code || c.cover; return cv !== 'CLR' && cv !== 'SKC' && cv !== 'NSC' && cv !== 'CAVOK'; }) ? 'none' : 'clear'; };
+    const also = lower.length ? [] : pool.slice(1, 3).map(x => ({ station: x.st.icaoId || '?', dist: x.d, ft: x.ceil, kind: x.ceil == null ? skyKind(x.st) : null }));
     // Lowest cloud layer of any cover at the main station (for the 500 ft below clouds rule)
     const lowCloud = best.low ? { ...best.low, station: best.st.icaoId || '?' } : null;
     // Observed visibility: the nearest recent report that carries one; farther stations under 3 mi become a note
@@ -3528,7 +3530,7 @@ async function fetchMetar(lat, lon) {
     let obs = null;
     const tsrc = all.find(x => x.d <= METAR_RADIUS_MI && x.age !== null && x.age <= WIND_OBS_MAX_AGE_MIN && typeof x.st.temp === 'number' && isFinite(x.st.temp) && typeof x.st.dewp === 'number' && isFinite(x.st.dewp));
     if (tsrc) obs = { station: tsrc.st.icaoId || '?', dist: tsrc.d, ageMin: tsrc.age, tempC: tsrc.st.temp, dewC: Math.min(tsrc.st.dewp, tsrc.st.temp) };
-    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, lower, vis, lowVis, precipReport, wind, windier, obs, obsc, hazard };
+    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, lower, also, vis, lowVis, precipReport, wind, windier, obs, obsc, hazard };
   } catch (e) {
     console.warn('METAR fetch failed:', e.message);
     throw e;   // the caller tells "service failed" apart from "no station nearby"
@@ -4064,6 +4066,7 @@ async function renderWeather(lat, lon, attempt = 1) {
       const visTxt = () => ov ? fmtVisObs(ov) : fmtVis(wx.visibility);
       const visSrc = () => ov ? ' · ' + ov.station : (wx.visibility != null ? ' · forecast model' : '');
       const visNote = () => metarData2 && metarData2.lowVis && metarData2.lowVis.length ? '☁️ Lower nearby: ' + metarData2.lowVis.map(v => v.station + ' ' + fmtVisObs({ mi: v.mi, plus: false }) + ' (' + fmtDist(v.dist) + ')').join(' · ') : '';
+      const alsoTxt = () => metarData2 && metarData2.also && metarData2.also.length ? 'Also reporting: ' + metarData2.also.map(a => a.station + ' ' + (a.ft != null ? fmtAlt(a.ft) : a.kind === 'none' ? 'No ceiling' : 'Clear') + ' (' + fmtDist(a.dist) + ')').join(' \u00B7 ') : '';
       const lowerTxt = () => metarData2 && metarData2.lower && metarData2.lower.length ? '☁️ Lower nearby: ' + metarData2.lower.map(l => l.station + ' ' + fmtAlt(l.ft) + ' (' + fmtDist(l.dist) + ')').join(' · ') : '';
       // US only: visibility under 3 statute miles (14 CFR 107.51) is shown in red with a short note
       const visBelowMin = () => region !== 'intl' && typeof visM === 'number' && visM < 4828;
@@ -4180,6 +4183,7 @@ async function renderWeather(lat, lon, attempt = 1) {
             <div class="wx-sub">${ceilNote}</div>
             ${metarData2 ? `<div class="wx-sub"${metarData2.ageMin != null ? ' data-rec-age="' + (Date.now() - metarData2.ageMin * 60000) + '"' : ''}>${stationId} · ${fmtDist(metarData2.dist)} away${metarData2.ageMin != null ? ' · ' + ageText(metarData2.ageMin * 60000) : ''}</div>` : ''}
             ${lowerTxt() ? `<div class="wx-sub">${lowerTxt()}</div>` : ''}
+            ${alsoTxt() ? `<div class="wx-sub wx-also">${alsoTxt()}</div>` : ''}
             ${lowCloudTxt() ? `<div class="wx-sub">${lowCloudTxt()}</div>` : ''}
             ${maxAltTxt() ? `<div class="wx-sub"><strong>${maxAltTxt()}</strong></div>` : ''}
             ${metarData2 ? cloudHtml(m, ceilFt, om, hIdx) : ''}

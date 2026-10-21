@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.3
+
+- **Also reporting, on the Cloud Ceiling tile** — when none of the other airports within 30 miles has a lower ceiling than the nearest one, the tile now lists up to two of them (nearest first) with their ceilings, so you can see whether the airports around you agree. If one is lower, the existing **Lower nearby** line shows instead.
+- **Simpler wind details** — the list under **more** on the Wind tile no longer repeats the ground wind (it is already shown as **Model for your spot**). It now shows the wind at about 260 ft and 400 ft.
+
+---
+
 ## What's new in v4.0.2
 
 - **Windier nearby** — the Wind tile shows the nearest airport's observed wind first. If another airport within 30 miles has a recent report that is at least 5 mph windier, or in a worse colour band against your limits, the tile now adds a **Windier nearby** line with that airport, its wind and its distance (up to two). It only appears when it is useful; on calm or even days nothing changes.
