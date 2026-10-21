@@ -14,7 +14,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 <table>
   <tr>
-    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions on a breezy afternoon: wind in orange, clear skies, no precipitation, and an orange Possible window box that says Fly with caution" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="Live preflight conditions on a windy morning: the Wind tile with Windier nearby and wind by height, the Cloud Ceiling tile with Lower nearby, a red no-flyable-window box, and the Next 24 hours wind strip" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
     <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/01-checklist-dark.png"><img src="screenshots/01-checklist-light.png" alt="Checklist with progress bar, Before leaving home items and checked boxes" width="170"></picture><br><sub><b>Checklist</b></sub></td>
   </tr>
   <tr>
@@ -111,6 +111,7 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 - **Next 24 hours** — the hourly strip under the weather tiles now shows the next 24 hours instead of 12, in every view (Wind, Aloft, Temp, Visibility, Clouds and Rain). The switch beside the view chip now reads **24 hours | 10 days**, and your saved choice still carries over. The Best window box and its look-ahead lines still look 12 hours ahead.
 - **One airport per line** — the **Also reporting**, **Lower nearby** and **Windier nearby** lists now put each airport on its own line (code, value and distance), so a name never splits across lines on a narrow phone.
 - **Cleaner Wind and Cloud Ceiling tiles** — the thin divider lines inside both tiles are gone, which saves a little height and reads more calmly.
+- **Updated Live conditions screenshot** — the README picture now shows the current Wind and Cloud Ceiling tiles and the 24-hour strip.
 
 ---
 
