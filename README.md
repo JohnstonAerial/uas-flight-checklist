@@ -106,6 +106,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.5
+
+- **Next 24 hours** — the hourly strip under the weather tiles now shows the next 24 hours instead of 12, in every view (Wind, Aloft, Temp, Visibility, Clouds and Rain). The switch beside the view chip now reads **24 hours | 10 days**, and your saved choice still carries over. The Best window box and its look-ahead lines still look 12 hours ahead.
+- **One airport per line** — the **Also reporting**, **Lower nearby** and **Windier nearby** lists now put each airport on its own line (code, value and distance), so a name never splits across lines on a narrow phone.
+- **Cleaner Wind and Cloud Ceiling tiles** — the thin divider lines inside both tiles are gone, which saves a little height and reads more calmly.
+
+---
+
 ## What's new in v4.0.4
 
 - **Fixed: weather tiles cut off on narrow phones** — on some phones (or with large text), a long list in the Wind tile could push the Cloud Ceiling tile off the right edge of the screen. Both tiles now always fit, and the lists wrap cleanly between airports instead of inside a number or a distance.
@@ -198,7 +206,7 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 - **Wind speed unit on the Wind tile** — tap the small unit chip (for example **mph ▾**) on the Wind tile to read wind in mph, km/h, m/s or knots. It starts as mph for USA and km/h for Outside USA, and stays what you choose.
 - **Imperial / Metric button** — the button at the top of the weather panel now reads **Imperial** or **Metric** and switches temperature, distance and altitude. It leaves your wind unit alone.
 - **Wind by height** — a **more** link on the Wind tile shows wind at ground level, 260 ft and 400 ft, with a note when it gets stronger higher up.
-- **Next 12 hours** — a sideways-swiping strip under the tiles shows wind and gusts hour by hour, coloured by your wind limits, with rain chance. Since v4.0 it can also show the next 10 days.
+- **Next 12 hours** — a sideways-swiping strip under the tiles shows wind and gusts hour by hour, coloured by your wind limits, with rain chance. Since v4.0 it can also show the next 10 days, and since v4.0.5 the hourly view covers 24 hours.
 - **Cloud ceiling details** — the tile lists the airport's cloud layers (the easing or building trend moved to the Clouds view of the hourly strip in v3.9.9).
 - **Print** — closing the print dialog returns you to where you were on the checklist.
 

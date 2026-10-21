@@ -590,7 +590,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-vis-src { font-size: 11px; font-weight: 400; color: var(--text-muted); }
   .wx-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; overflow-wrap: anywhere; }
   .wx-more { background: none; border: 0; padding: 0 0 0 4px; font: inherit; font-size: 11px; color: var(--link, #0a84ff); cursor: pointer; }
-  .wx-cl { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); }
+  .wx-cl { margin-top: 8px; font-size: 11px; color: var(--text-muted); }
   .wx-dir { white-space: nowrap; }
   .wx-dir small { font-size: 12px; font-weight: 400; color: var(--text-muted); }
   .wx-lay { line-height: 1.5; }
@@ -602,7 +602,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-hrow b { font-weight: 700; }
   .wx-hnote { margin-top: 3px; font-size: 10.5px; font-style: italic; color: var(--text-muted); line-height: 1.3; }
   .wx-hshear { margin-top: 4px; padding: 3px 6px; border: 1px solid var(--amber); border-radius: 7px; line-height: 1.3; }
-  .wx-model { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+  .wx-li { margin-top: 1px; }
+  .wx-model { margin-top: 8px; }
   .wx-model strong { font-weight: 700; }
   .wx-loc { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: -4px 0 10px; font-size: 13px; color: var(--text); }
   .wx-loc-label { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -730,7 +731,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.4</p>
+      <p>Free Drone Preflight Checklist · v4.0.5</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2949,7 +2950,7 @@ function calmWindow(om, hIdx, nowBad, obsFine) {
   const cw = cnt(x => x.windRed), cr = cnt(x => x.wet), cv = cnt(x => x.visBad);
   return { kind: 'none', lowNow: !!nowBad, cause: cw >= cr && cw >= cv ? 'wind' : cr >= cv ? 'wet' : 'vis', aw: Math.round(W * 2 / 3), ag: Math.round(G * 2 / 3), W, G };
 }
-// Next 12 hours strip (under Best window): wind with gust beneath, coloured by your limits; rain chance where it is 30% or more; hours after sunset dimmed
+// Next 24 hours strip (under Best window): wind with gust beneath, coloured by your limits; rain chance where it is 30% or more; hours after sunset dimmed
 // Cloud ceiling tile: layers from the airport report, and (behind "more") how forecast cloud cover changes over the next hours
 function cloudHtml(metar, ceilFt, om, hIdx) {
   const COV = { FEW: 'Few', SCT: 'Scattered', BKN: 'Broken', OVC: 'Overcast', OVX: 'Sky obscured', VV: 'Sky obscured' };
@@ -2968,8 +2969,8 @@ function cloudTrend(H, hIdx, n) {
   const lab = new Date(z.t).toLocaleTimeString([], { hour: 'numeric' }).replace(/\s*([AP])M$/i, (mm, x) => x.toLowerCase());
   return (d <= -20 ? 'Easing: ' + a.v + '% now \u2192 ' + z.v + '% by ' + lab : d >= 20 ? 'Building: ' + a.v + '% now \u2192 ' + z.v + '% by ' + lab : 'Steady, about ' + a.v + '%') + ' · ';
 }
-// Hourly strip: one row of the next 12 hours (or 10 days); a chip on its title switches the view (Wind, wind aloft, Temp, Visibility, Clouds, Rain)
-// The view (Wind, Aloft, Temp...) and the range (12 hours or 10 days) are remembered on this device and included in Back up and restore
+// Hourly strip: one row of the next 24 hours (or 10 days); a chip on its title switches the view (Wind, wind aloft, Temp, Visibility, Clouds, Rain)
+// The view (Wind, Aloft, Temp...) and the range (24 hours or 10 days) are remembered on this device and included in Back up and restore
 let stripView = (function () { const v = recall('wxStripView', 'wind'); return ['wind', 'alt', 'temp', 'vis', 'cloud', 'rain'].indexOf(v) >= 0 ? v : 'wind'; })();
 let stripSpan = recall('wxStripSpan', '12h') === '10d' ? '10d' : '12h';
 let stripDay = null;   // the day tapped in the 10-day view (not remembered)
@@ -3074,7 +3075,7 @@ function dayCaption(H, d, ctx) {
 function hourStripHtml(om, hIdx) {
   const H = om && om.hourly;
   if (hIdx < 0 || !H || !H.time || !H.wind_speed_10m || !H.wind_gusts_10m) return '';
-  const n = Math.min(12, H.time.length - hIdx);
+  const n = Math.min(24, H.time.length - hIdx);
   if (n < 3) return '';
   const D = om.daily || {}, d0 = String(H.time[0]).slice(0, 10), metric = isMetric(), intl = region === 'intl';
   const cls = { 'wx-good': 'hc-good', 'wx-warn': 'hc-warn', 'wx-alert': 'hc-alert' };
@@ -3170,9 +3171,9 @@ function hourStripHtml(om, hIdx) {
     capTxt = sd ? dayCaption(H, sd, null) : dcap;
     keyTxt = 'Tap a day for a summary\u00A0· lighter days are a rough guide, so check again closer to the day';
   }
-  const seg = '<span class="hs-seg" role="group" aria-label="Forecast range"><button type="button" class="' + (dayMode ? '' : 'on') + '" aria-pressed="' + (!dayMode) + '" onclick="stripSpanSet(\'12h\')">12 hours</button><button type="button" class="' + (dayMode ? 'on' : '') + '" aria-pressed="' + dayMode + '" onclick="stripSpanSet(\'10d\')">10 days</button></span>';
+  const seg = '<span class="hs-seg" role="group" aria-label="Forecast range"><button type="button" class="' + (dayMode ? '' : 'on') + '" aria-pressed="' + (!dayMode) + '" onclick="stripSpanSet(\'12h\')">24 hours</button><button type="button" class="' + (dayMode ? 'on' : '') + '" aria-pressed="' + dayMode + '" onclick="stripSpanSet(\'10d\')">10 days</button></span>';
   const opts = views.map(v => '<option value="' + v[0] + '"' + (v[0] === view ? ' selected' : '') + '>' + v[1] + '</option>').join('');
-  return '<div class="wx-strip"><div class="hs-title">Next ' + (dayMode ? '10 days' : '12 hours') + ' <span class="ws-chip hs-chip"><span class="hs-lab">' + name + '</span><select class="hs-sel" aria-label="Hourly forecast view" onchange="stripViewSet(this.value)">' + opts + '</select></span> ' + seg + '</div><div class="hs-cap">' + capTxt + '</div><div class="hs-row" role="group" aria-label="Hour by hour ' + name + ' forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">' + keyTxt + '</div></div>';
+  return '<div class="wx-strip"><div class="hs-title">Next ' + (dayMode ? '10 days' : '24 hours') + ' <span class="ws-chip hs-chip"><span class="hs-lab">' + name + '</span><select class="hs-sel" aria-label="Hourly forecast view" onchange="stripViewSet(this.value)">' + opts + '</select></span> ' + seg + '</div><div class="hs-cap">' + capTxt + '</div><div class="hs-row" role="group" aria-label="Hour by hour ' + name + ' forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">' + keyTxt + '</div></div>';
 }
 function calmHtml(c, H, hIdx, siteTag) {
   if (!c || c.kind === 'ok') return '';
@@ -4068,8 +4069,8 @@ async function renderWeather(lat, lon, attempt = 1) {
       const visTxt = () => ov ? fmtVisObs(ov) : fmtVis(wx.visibility);
       const visSrc = () => ov ? ' · ' + ov.station : (wx.visibility != null ? ' · forecast model' : '');
       const visNote = () => metarData2 && metarData2.lowVis && metarData2.lowVis.length ? '☁️ Lower nearby: ' + metarData2.lowVis.map(v => v.station + ' ' + fmtVisObs({ mi: v.mi, plus: false }) + ' (' + fmtDist(v.dist) + ')').join(' · ') : '';
-      const alsoTxt = () => metarData2 && metarData2.also && metarData2.also.length ? 'Also reporting: ' + metarData2.also.map(a => a.station + ' ' + NB(a.ft != null ? fmtAlt(a.ft) : a.kind === 'none' ? 'No ceiling' : 'Clear') + ' ' + NB('(' + fmtDist(a.dist) + ')')).join('\u00A0\u00B7 ') : '';
-      const lowerTxt = () => metarData2 && metarData2.lower && metarData2.lower.length ? '☁️ Lower nearby: ' + metarData2.lower.map(l => l.station + ' ' + NB(fmtAlt(l.ft)) + ' ' + NB('(' + fmtDist(l.dist) + ')')).join('\u00A0\u00B7 ') : '';
+      const alsoTxt = () => metarData2 && metarData2.also && metarData2.also.length ? 'Also reporting:' + metarData2.also.map(a => '<div class="wx-li">' + a.station + ' ' + NB(a.ft != null ? fmtAlt(a.ft) : a.kind === 'none' ? 'No ceiling' : 'Clear') + ' ' + NB('(' + fmtDist(a.dist) + ')') + '</div>').join('') : '';
+      const lowerTxt = () => metarData2 && metarData2.lower && metarData2.lower.length ? '☁️ Lower nearby:' + metarData2.lower.map(l => '<div class="wx-li">' + l.station + ' ' + NB(fmtAlt(l.ft)) + ' ' + NB('(' + fmtDist(l.dist) + ')') + '</div>').join('') : '';
       // US only: visibility under 3 statute miles (14 CFR 107.51) is shown in red with a short note
       const visBelowMin = () => region !== 'intl' && typeof visM === 'number' && visM < 4828;
 
@@ -4159,7 +4160,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         const owArrow = ow && owMph > 0 && !ow.variable && ow.deg != null ? ' ' + windDirHtml(ow.deg) : '';
         const modelTxt = windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() : '';
         const wiList = ow && metarData2.windier ? metarData2.windier : [];
-        const windierHtml = wiList.length ? '<div class="wx-sub wx-windier">Windier nearby: ' + wiList.map(s => s.station + ' <strong class="' + s.col + '">' + NB(fmtSpeedNum(s.mph) + (s.gust !== null && Math.round(s.gust) > Math.round(s.mph) ? ' / ' + fmtSpeedNum(s.gust) : '') + ' ' + speedUnit()) + '</strong> ' + NB('(' + fmtDist(s.dist) + ')')).join('\u00A0\u00B7 ') + '</div>' : '';
+        const windierHtml = wiList.length ? '<div class="wx-sub wx-windier">Windier nearby:' + wiList.map(s => '<div class="wx-li">' + s.station + ' <strong class="' + s.col + '">' + NB(fmtSpeedNum(s.mph) + (s.gust !== null && Math.round(s.gust) > Math.round(s.mph) ? ' / ' + fmtSpeedNum(s.gust) : '') + ' ' + speedUnit()) + '</strong> ' + NB('(' + fmtDist(s.dist) + ')') + '</div>').join('') + '</div>' : '';
         const windHTML = ow ? `
             <div class="wx-label">Wind</div>
             <div class="wx-value ${windColor(owMph, owGust)}">${fmtSpeedNum(owMph) + (owGust ? ' / ' + fmtSpeedNum(owGust) : '') + ' ' + windChipHtml() + owArrow}</div>
