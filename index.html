@@ -582,13 +582,13 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .ws-chip .ws-sel { -webkit-appearance: none; appearance: none; font-family: inherit; font-size: 10.5px; font-weight: 600; line-height: 1.3; color: var(--link); background: transparent; border: 1px solid var(--border); border-radius: 9px; padding: 2px 15px 2px 6px; margin: 0; cursor: pointer; }
   .wx-units { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 12px; font-family: inherit; padding: 2px 9px; margin-left: auto; margin-right: 6px; }
   .wx-refresh { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: none; font-family: inherit; padding: 2px 6px; }
-  .wx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .wx-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
   .wx-item { background: var(--section-bg); border-radius: 10px; padding: 9px 11px; }
   .wx-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
   .wx-value { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.1; }
   .wx-vislab { margin-top: 8px; }
   .wx-vis-src { font-size: 11px; font-weight: 400; color: var(--text-muted); }
-  .wx-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .wx-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; overflow-wrap: anywhere; }
   .wx-more { background: none; border: 0; padding: 0 0 0 4px; font: inherit; font-size: 11px; color: var(--link, #0a84ff); cursor: pointer; }
   .wx-cl { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); }
   .wx-dir { white-space: nowrap; }
@@ -730,7 +730,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.3</p>
+      <p>Free Drone Preflight Checklist · v4.0.4</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2872,6 +2872,8 @@ function windLimits() {
   return { w: ok(o && o.w), g: ok(o && o.g) };
 }
 // Wind by height (Wind tile, tap "more"): surface, 260 ft and 400 ft (10, 80 and 120 m)
+// Keep a list entry together on one line (a plain space becomes a no-break space) so lists wrap between entries, not inside them
+const NB = (t) => String(t).replace(/ /g, '\u00A0');
 let windHtsOpen = false;
 function windHtsToggle(btn) {
   windHtsOpen = !windHtsOpen;
@@ -3522,7 +3524,7 @@ async function fetchMetar(lat, lon) {
         if (typeof w2.wspd !== 'number' || !isFinite(w2.wspd)) continue;
         const mph = w2.wspd * KT2, gust = typeof w2.wgst === 'number' && isFinite(w2.wgst) ? w2.wgst * KT2 : null;
         const col = windColor(Math.round(mph), gust !== null ? Math.round(gust) : null);
-        if (Math.round(score(mph, gust)) - Math.round(mainScore) >= 5 || rank[col] > rank[mainCol]) windier.push({ station: w2.icaoId || '?', dist: x.d, mph, gust, col, sc: score(mph, gust) });
+        if (col !== 'wx-good' && (Math.round(score(mph, gust)) - Math.round(mainScore) >= 5 || rank[col] > rank[mainCol])) windier.push({ station: w2.icaoId || '?', dist: x.d, mph, gust, col, sc: score(mph, gust) });
       }
       windier.sort((a, b) => b.sc - a.sc); windier.length = Math.min(windier.length, 2);
     }
@@ -4066,8 +4068,8 @@ async function renderWeather(lat, lon, attempt = 1) {
       const visTxt = () => ov ? fmtVisObs(ov) : fmtVis(wx.visibility);
       const visSrc = () => ov ? ' · ' + ov.station : (wx.visibility != null ? ' · forecast model' : '');
       const visNote = () => metarData2 && metarData2.lowVis && metarData2.lowVis.length ? '☁️ Lower nearby: ' + metarData2.lowVis.map(v => v.station + ' ' + fmtVisObs({ mi: v.mi, plus: false }) + ' (' + fmtDist(v.dist) + ')').join(' · ') : '';
-      const alsoTxt = () => metarData2 && metarData2.also && metarData2.also.length ? 'Also reporting: ' + metarData2.also.map(a => a.station + ' ' + (a.ft != null ? fmtAlt(a.ft) : a.kind === 'none' ? 'No ceiling' : 'Clear') + ' (' + fmtDist(a.dist) + ')').join(' \u00B7 ') : '';
-      const lowerTxt = () => metarData2 && metarData2.lower && metarData2.lower.length ? '☁️ Lower nearby: ' + metarData2.lower.map(l => l.station + ' ' + fmtAlt(l.ft) + ' (' + fmtDist(l.dist) + ')').join(' · ') : '';
+      const alsoTxt = () => metarData2 && metarData2.also && metarData2.also.length ? 'Also reporting: ' + metarData2.also.map(a => a.station + ' ' + NB(a.ft != null ? fmtAlt(a.ft) : a.kind === 'none' ? 'No ceiling' : 'Clear') + ' ' + NB('(' + fmtDist(a.dist) + ')')).join('\u00A0\u00B7 ') : '';
+      const lowerTxt = () => metarData2 && metarData2.lower && metarData2.lower.length ? '☁️ Lower nearby: ' + metarData2.lower.map(l => l.station + ' ' + NB(fmtAlt(l.ft)) + ' ' + NB('(' + fmtDist(l.dist) + ')')).join('\u00A0\u00B7 ') : '';
       // US only: visibility under 3 statute miles (14 CFR 107.51) is shown in red with a short note
       const visBelowMin = () => region !== 'intl' && typeof visM === 'number' && visM < 4828;
 
@@ -4157,13 +4159,13 @@ async function renderWeather(lat, lon, attempt = 1) {
         const owArrow = ow && owMph > 0 && !ow.variable && ow.deg != null ? ' ' + windDirHtml(ow.deg) : '';
         const modelTxt = windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + speedUnit() : '';
         const wiList = ow && metarData2.windier ? metarData2.windier : [];
-        const windierHtml = wiList.length ? '<div class="wx-sub wx-windier">Windier nearby: ' + wiList.map(s => s.station + ' <strong class="' + s.col + '">' + fmtSpeedNum(s.mph) + (s.gust !== null && Math.round(s.gust) > Math.round(s.mph) ? ' / ' + fmtSpeedNum(s.gust) : '') + ' ' + speedUnit() + '</strong> (' + fmtDist(s.dist) + ')').join(' \u00B7 ') + '</div>' : '';
+        const windierHtml = wiList.length ? '<div class="wx-sub wx-windier">Windier nearby: ' + wiList.map(s => s.station + ' <strong class="' + s.col + '">' + NB(fmtSpeedNum(s.mph) + (s.gust !== null && Math.round(s.gust) > Math.round(s.mph) ? ' / ' + fmtSpeedNum(s.gust) : '') + ' ' + speedUnit()) + '</strong> ' + NB('(' + fmtDist(s.dist) + ')')).join('\u00A0\u00B7 ') + '</div>' : '';
         const windHTML = ow ? `
             <div class="wx-label">Wind</div>
             <div class="wx-value ${windColor(owMph, owGust)}">${fmtSpeedNum(owMph) + (owGust ? ' / ' + fmtSpeedNum(owGust) : '') + ' ' + windChipHtml() + owArrow}</div>
             <div class="wx-sub">${owGust ? 'Sustained\u00A0/\u00A0Gusts' : 'No gusts reported'}${owDirTxt ? '\u00A0· ' + owDirTxt : ''}</div>
             <div class="wx-sub" data-rec-age="${Date.now() - ow.ageMin * 60000}">${ow.station} · ${fmtDist(ow.dist)} away · ${ageText(ow.ageMin * 60000)}</div>
-            ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${modelTxt}</strong></div>` : ''}
+            ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${NB(modelTxt)}</strong></div>` : ''}
             ${windierHtml}
             ${windHtsHTML(wx, windOk ? windMph : null)}
             <div class="wx-note wx-windnote">Obstructions/terrain can make it windier where you fly.</div>` : `

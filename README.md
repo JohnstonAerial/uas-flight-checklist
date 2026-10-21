@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.4
+
+- **Fixed: weather tiles cut off on narrow phones** — on some phones (or with large text), a long list in the Wind tile could push the Cloud Ceiling tile off the right edge of the screen. Both tiles now always fit, and the lists wrap cleanly between airports instead of inside a number or a distance.
+- **Windier nearby is quieter** — the line now appears only when the other airport's wind is outside the green band of your wind limits (orange or red) and is notably windier, so a calm morning no longer shows a "windier" airport at 5 mph.
+
+---
+
 ## What's new in v4.0.3
 
 - **Also reporting, on the Cloud Ceiling tile** — when none of the other airports within 30 miles has a lower ceiling than the nearest one, the tile now lists up to two of them (nearest first) with their ceilings, so you can see whether the airports around you agree. If one is lower, the existing **Lower nearby** line shows instead.
