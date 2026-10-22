@@ -106,9 +106,15 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.7
+
+- **Quieter location label** — the place name on the forecast strip no longer has a pin and now uses the same grey as the strip's title, so it reads as a reminder of where the forecast is for and not something you can tap.
+
+---
+
 ## What's new in v4.0.6
 
-- **Your location on the forecast strip** — the title of the Next 24 hours / Next 10 days strip now shows where the forecast is for (📍 and your place name, or **My location**), to the right of the **24 hours | 10 days** switch. On a phone you no longer have to scroll to the top to check which place you are looking at. A long name wraps to a second line.
+- **Your location on the forecast strip** — the title of the Next 24 hours / Next 10 days strip now shows where the forecast is for (your place name, or **My location**), to the right of the **24 hours | 10 days** switch. On a phone you no longer have to scroll to the top to check which place you are looking at. A long name wraps to a second line.
 
 ---
 
