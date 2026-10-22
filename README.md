@@ -106,6 +106,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.6
+
+- **Your location on the forecast strip** — the title of the Next 24 hours / Next 10 days strip now shows where the forecast is for (📍 and your place name, or **My location**), to the right of the **24 hours | 10 days** switch. On a phone you no longer have to scroll to the top to check which place you are looking at. A long name wraps to a second line.
+
+---
+
 ## What's new in v4.0.5
 
 - **Next 24 hours** — the hourly strip under the weather tiles now shows the next 24 hours instead of 12, in every view (Wind, Aloft, Temp, Visibility, Clouds and Rain). The switch beside the view chip now reads **24 hours | 10 days**, and your saved choice still carries over. The Best window box and its look-ahead lines still look 12 hours ahead.

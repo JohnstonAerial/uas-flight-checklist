@@ -214,7 +214,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 **What works worldwide**
 
 - Forecast weather, wind, visibility, dew point, sunrise/sunset times, golden hour windows and the best window of the next 12 daylight hours (or the next 12 hours, if you turn on **I fly at night** under **⚙ Settings**).
-- The **Next 24 hours** strip under the tiles: swipe sideways to see each hour, and tap the small chip on its title to switch between Wind, Aloft, Temp, Visibility, Clouds and Rain. Tap **10 days** beside it for a day-by-day outlook (lighter days are a rough guide). Your choices are remembered on this device.
+- The **Next 24 hours** strip under the tiles: swipe sideways to see each hour, and tap the small chip on its title to switch between Wind, Aloft, Temp, Visibility, Clouds and Rain. Tap **10 days** beside it for a day-by-day outlook (lighter days are a rough guide). The place name the forecast is for is shown beside the switch, so you can check it without scrolling to the top. Your choices are remembered on this device.
 - On the Wind and Cloud Ceiling tiles, other airports within 30 miles can appear one per line: **Windier nearby** (only when their wind is outside your green band), **Lower nearby** and **Also reporting**. Obstructions and terrain can make it windier where you fly than any report shows.
 - Radar, wherever RainViewer has coverage (the card tells you where it doesn't).
 - Airport reports (METAR) from airports near you.

@@ -633,7 +633,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-window { margin: 10px 0 2px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; text-align: center; color: var(--text-muted); }
   .wx-window b { color: var(--text); }
   .wx-strip { margin: 8px 0 2px; padding: 8px 8px 6px; border-radius: 10px; background: var(--section-bg); }
-  .hs-title { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+  .hs-title { display: flex; flex-wrap: wrap; align-items: center; row-gap: 3px; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
   .hs-row { display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
   .hs-h { flex: 0 0 40px; text-align: center; font-size: 10px; color: var(--text-muted); }
   .hs-t { margin-bottom: 3px; }
@@ -653,6 +653,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .hs-f1 .hs-c { opacity: 0.86; } .hs-f2 .hs-c { opacity: 0.76; } .hs-f3 .hs-c { opacity: 0.67; } .hs-f4 .hs-c { opacity: 0.58; } .hs-f5 .hs-c { opacity: 0.5; }
   .hs-title .hs-chip { margin: 0 3px; border: 1px solid var(--border); border-radius: 9px; padding: 2px 16px 2px 7px; font-size: 10.5px; font-weight: 600; line-height: 1.3; color: var(--link); text-transform: none; letter-spacing: 0; cursor: pointer; }
   .hs-chip .hs-sel { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; border: 0; padding: 0; margin: 0; font-size: 16px; cursor: pointer; -webkit-appearance: none; appearance: none; }
+  .hs-loc { flex: 1 1 84px; min-width: 0; margin-left: 8px; text-align: right; text-transform: none; letter-spacing: 0; font-size: 10.5px; font-weight: 600; line-height: 1.25; color: var(--text); overflow-wrap: anywhere; }
   .hs-cap { font-size: 10.5px; color: var(--text-muted); margin: -2px 0 6px; line-height: 1.3; }
   .hc-none { background: transparent; color: var(--text-muted); border: 1px solid var(--border); font-weight: 400; }
   .hc-cloud { color: var(--text); box-shadow: inset 0 0 0 1px var(--border); }
@@ -731,7 +732,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.5</p>
+      <p>Free Drone Preflight Checklist · v4.0.6</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -3173,7 +3174,7 @@ function hourStripHtml(om, hIdx) {
   }
   const seg = '<span class="hs-seg" role="group" aria-label="Forecast range"><button type="button" class="' + (dayMode ? '' : 'on') + '" aria-pressed="' + (!dayMode) + '" onclick="stripSpanSet(\'12h\')">24 hours</button><button type="button" class="' + (dayMode ? 'on' : '') + '" aria-pressed="' + dayMode + '" onclick="stripSpanSet(\'10d\')">10 days</button></span>';
   const opts = views.map(v => '<option value="' + v[0] + '"' + (v[0] === view ? ' selected' : '') + '>' + v[1] + '</option>').join('');
-  return '<div class="wx-strip"><div class="hs-title">Next ' + (dayMode ? '10 days' : '24 hours') + ' <span class="ws-chip hs-chip"><span class="hs-lab">' + name + '</span><select class="hs-sel" aria-label="Hourly forecast view" onchange="stripViewSet(this.value)">' + opts + '</select></span> ' + seg + '</div><div class="hs-cap">' + capTxt + '</div><div class="hs-row" role="group" aria-label="Hour by hour ' + name + ' forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">' + keyTxt + '</div></div>';
+  return '<div class="wx-strip"><div class="hs-title">Next ' + (dayMode ? '10 days' : '24 hours') + ' <span class="ws-chip hs-chip"><span class="hs-lab">' + name + '</span><select class="hs-sel" aria-label="Hourly forecast view" onchange="stripViewSet(this.value)">' + opts + '</select></span> ' + seg + '<span class="hs-loc">\uD83D\uDCCD ' + String(site ? site.name : 'My location').replace(/[<>&"]/g, '') + '</span></div><div class="hs-cap">' + capTxt + '</div><div class="hs-row" role="group" aria-label="Hour by hour ' + name + ' forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">' + keyTxt + '</div></div>';
 }
 function calmHtml(c, H, hIdx, siteTag) {
   if (!c || c.kind === 'ok') return '';
