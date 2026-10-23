@@ -223,7 +223,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 - Airport reports (METAR) from airports near you.
 - The KP index.
 
-**US-only buttons:** the four buttons under the weather (**Facility map**, **Airspace chart**, **TFRs** and **NOTAMs**) are hidden outside the USA. The **Radar map ›** link in the Precipitation tile opens the National Weather Service radar in the USA, and RainViewer's radar elsewhere.
+**US-only buttons:** the **Facility map**, **TFRs** and **NOTAMs** buttons under the weather are hidden outside the USA. The **Airspace chart — SkyVector** button stays, because SkyVector has charts for many countries (its TFR overlay is US only, and it knows nothing about your country's drone rules). The **Radar map ›** link in the Precipitation tile opens the National Weather Service radar in the USA, and RainViewer's radar elsewhere.
 
 **An honest limit:** this is a guide, not legal advice. The app doesn't know your country's drone rules. Check with your own aviation authority, such as Transport Canada, EASA or your national CAA, before you fly. Please also tell us which items don't fit where you fly. That feedback shapes the next version.
 
@@ -231,7 +231,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 
 ## Check TFRs and NOTAMs before you fly (USA)
 
-**This section is for flying in the USA only.** TFRs and NOTAMs here are the FAA's. Outside the USA the **Facility map**, **Airspace chart**, **TFRs** and **NOTAMs** buttons are hidden, so use your own country's aviation authority and drone airspace app instead (see [Use it outside the USA](#use-it-outside-the-usa)).
+**This section is for flying in the USA only.** TFRs and NOTAMs here are the FAA's. Outside the USA the **Facility map**, **TFRs** and **NOTAMs** buttons are hidden, so use your own country's aviation authority and drone airspace app instead (see [Use it outside the USA](#use-it-outside-the-usa)).
 
 ### TFRs
 
