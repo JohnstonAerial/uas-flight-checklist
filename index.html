@@ -526,7 +526,34 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .cust-row .sec-all { margin: 0 4px; }
   .item.region-hidden, .panel.editing .item.region-hidden { display: none !important; }
   body.intl .wx-tfr-row .wx-facmap, body.intl .wx-tfr-row .wx-tfr, body.intl .wx-tfr-row .wx-notam { display: none; }
-  body.intl .wx-tfr-row .wx-airmap { grid-column: 1 / -1; }
+  body.intl .wx-tfr-row:not(.au):not(.ar):not(.fr):not(.be):not(.uk):not(.ca):not(.none) .wx-airmap { grid-column: 1 / -1; }
+  .wx-aubtn { display: none; width: 100%; padding: 9px; background: #00843d; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-arbtn { display: none; width: 100%; padding: 9px; background: #2f7fb8; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-frbtn { display: none; width: 100%; padding: 9px; background: #a14b1f; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-bebtn { display: none; width: 100%; padding: 9px; background: #8a6d00; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-ukbtn { display: none; width: 100%; padding: 9px; background: #a02c4b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-cabtn { display: none; width: 100%; padding: 9px; background: #c4281f; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-tfr-row.ca .wx-cabtn { display: block; }
+  body:not(.intl) .wx-tfr-row.ca .wx-cabtn { grid-column: 1 / -1; order: 9; }
+  .wx-tfr-row.uk .wx-ukbtn { display: block; }
+  body:not(.intl) .wx-tfr-row.uk .wx-ukbtn { grid-column: 1 / -1; order: 9; }
+  .wx-tfr-row.be .wx-bebtn { display: block; }
+  body:not(.intl) .wx-tfr-row.be .wx-bebtn { grid-column: 1 / -1; order: 9; }
+  .wx-tfr-row.fr .wx-frbtn { display: block; }
+  body:not(.intl) .wx-tfr-row.fr .wx-frbtn { grid-column: 1 / -1; order: 9; }
+  .wx-tfr-row.ar .wx-arbtn { display: block; }
+  body:not(.intl) .wx-tfr-row.ar .wx-arbtn { grid-column: 1 / -1; order: 9; }
+  .wx-tfr-row.au .wx-aubtn { display: block; }
+  body:not(.intl) .wx-tfr-row.au .wx-aubtn { grid-column: 1 / -1; order: 9; }
+  /* A place in a country that has its own button: the FAA buttons mean nothing there, so they go, and SkyVector and the country button sit side by side */
+  .wx-tfr-row.cc .wx-facmap, .wx-tfr-row.cc .wx-tfr, .wx-tfr-row.cc .wx-notam, .wx-tfr-row.none .wx-facmap, .wx-tfr-row.none .wx-tfr, .wx-tfr-row.none .wx-notam { display: none; }
+  body:not(.intl) .wx-tfr-row.cc .wx-aubtn, body:not(.intl) .wx-tfr-row.cc .wx-arbtn, body:not(.intl) .wx-tfr-row.cc .wx-frbtn, body:not(.intl) .wx-tfr-row.cc .wx-bebtn, body:not(.intl) .wx-tfr-row.cc .wx-ukbtn, body:not(.intl) .wx-tfr-row.cc .wx-cabtn { grid-column: auto; order: 0; }
+  body:not(.intl) .wx-tfr-row.cc .wx-airmap { order: 0; }
+  .wx-wwbtn { display: none; width: 100%; padding: 9px; background: #4d5560; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-ccnote { display: none; grid-column: 1 / -1; font-size: 11px; color: var(--text-muted); text-align: center; line-height: 1.35; }
+  .wx-ccnote a { color: var(--link); }
+  .wx-tfr-row.none .wx-wwbtn { display: block; }
+  .wx-tfr-row.none .wx-ccnote { display: block; }
   .region-card { text-align: center; }
   .region-card .rc-title { font-size: 15px; font-weight: 700; color: var(--text); }
   .region-card .rc-sub { font-size: 12px; color: var(--text-muted); margin: 4px 0 10px; }
@@ -735,7 +762,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.10</p>
+      <p>Free Drone Preflight Checklist · v4.0.11</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -783,8 +810,16 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <div class="wx-status">Locating...</div>
   </div>
   <div class="wx-tfr-row" style="margin-top:10px;">
-    <a class="wx-facmap" href="https://experience.arcgis.com/experience/e6e8b84c6f1144f69a30f9632ebe4352" target="_blank" rel="noopener">🗺 Facility map — FAA</a>
     <a class="wx-airmap" id="wx-airmap" href="https://skyvector.com/" target="_blank" rel="noopener">🛩 Airspace chart — SkyVector</a>
+    <a class="wx-facmap" href="https://experience.arcgis.com/experience/e6e8b84c6f1144f69a30f9632ebe4352" target="_blank" rel="noopener">🗺 Facility map — FAA</a>
+    <a class="wx-aubtn" id="wx-aubtn" href="https://www.casa.gov.au/drones/safety-apps" target="_blank" rel="noopener">🇦🇺 Drone safety apps — CASA</a>
+    <a class="wx-arbtn" id="wx-arbtn" href="https://www.argentina.gob.ar/anac/rpa-rpas" target="_blank" rel="noopener">🇦🇷 Drones — ANAC</a>
+    <a class="wx-frbtn" id="wx-frbtn" href="https://www.ecologie.gouv.fr/exploitation-drones-en-categorie-ouverte" target="_blank" rel="noopener">🇫🇷 Drones — DGAC</a>
+    <a class="wx-bebtn" id="wx-bebtn" href="https://map.droneguide.be/" target="_blank" rel="noopener">🇧🇪 Drone map — Droneguide</a>
+    <a class="wx-ukbtn" id="wx-ukbtn" href="https://nats-uk.ead-it.com/cms-nats/opencms/en/uas-restriction-zones/" target="_blank" rel="noopener">🇬🇧 Drone map — NATS</a>
+    <a class="wx-cabtn" id="wx-cabtn" href="https://nrc.canada.ca/en/drone-tool/" target="_blank" rel="noopener">🇨🇦 Drone map — NRC</a>
+    <a class="wx-wwbtn" id="wx-wwbtn" href="https://en.wikipedia.org/wiki/Civil_aviation_authority" target="_blank" rel="noopener">🌍 Find your aviation authority</a>
+    <div class="wx-ccnote" id="wx-ccnote">No button for your country yet. <a id="wx-ccmail" href="#">Tell us which country</a> and we will look at adding it.</div>
     <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener">⚠️ TFRs — FAA.gov</a>
     <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener">📋 NOTAMs — AIM</a>
   </div>
@@ -3887,7 +3922,7 @@ async function searchSite(e) {
       b.type = 'button'; b.className = 'wx-result';
       b.appendChild(document.createTextNode(label));
       if (r.admin2) { const sm = document.createElement('small'); sm.textContent = r.admin2; b.appendChild(sm); }
-      b.onclick = () => chooseSite({ name: label, lat: r.latitude, lon: r.longitude });
+      b.onclick = () => chooseSite({ name: label, lat: r.latitude, lon: r.longitude, cc: r.country_code || '' });
       out.appendChild(b);
     });
   } catch (err) {
@@ -4060,6 +4095,21 @@ async function renderWeather(lat, lon, attempt = 1) {
       // AfterGlow opens at this same spot (it reads lat, lon and name from the link)
       const agName = (typeof site !== 'undefined' && site && site.name) ? String(site.name).slice(0, 60) : 'Current location';
       // The airspace map button opens at this same spot (the link carries only the coordinates)
+      // Australia, Argentina, France, Belgium, the UK and Canada (from the forecast's time zone name): CASA's list of verified drone safety apps; ANAC's drone rules and registration page; the French government's open-category drone page; Belgium's Droneguide map; the UK's NATS restriction zones map; Canada's NRC drone site selection tool
+      const auRow = document.querySelector('.wx-tfr-row');
+      if (auRow) {
+        // Which country: the country code saved when you searched for the place, else the forecast's time zone name (GPS and typed coordinates have no code)
+        const cc = site && site.cc ? String(site.cc).toUpperCase() : '', tzn = String(om.timezone || '');
+        const known = { AU: 'au', AR: 'ar', FR: 'fr', BE: 'be', GB: 'uk', CA: 'ca' };
+        const byTz = /^Australia\//.test(tzn) ? 'au' : /^America\/Argentina\//.test(tzn) ? 'ar' : tzn === 'Europe/Paris' ? 'fr' : tzn === 'Europe/Brussels' ? 'be' : tzn === 'Europe/London' ? 'uk' : /^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|St_Johns|Regina|Moncton|Glace_Bay|Goose_Bay|Whitehorse|Yellowknife|Iqaluit|Rankin_Inlet|Resolute|Cambridge_Bay|Inuvik|Dawson|Dawson_Creek|Fort_Nelson|Swift_Current|Atikokan|Blanc-Sablon|Creston|Nipigon|Thunder_Bay|Rainy_River|Pangnirtung|Coral_Harbour)$/.test(tzn) ? 'ca' : '';
+        const which = cc ? (known[cc] || '') : byTz;
+        ['au', 'ar', 'fr', 'be', 'uk', 'ca'].forEach(c => auRow.classList.toggle(c, c === which));
+        auRow.classList.toggle('cc', !!which);
+        // A place with no button of its own: outside the USA by its search country code, or the Outside USA setting for GPS and typed places
+        auRow.classList.toggle('none', !which && (cc ? cc !== 'US' : region === 'intl'));
+        const cm = document.getElementById('wx-ccmail');
+        if (cm) { const v = appVer(); cm.href = 'mailto:info@JohnstonAerial.com?subject=' + encodeURIComponent('Checklist: please add my country ' + v) + '&body=' + encodeURIComponent('My country is:\n\nThe official drone map or aviation authority website, if you know it:\n\n\n---\nApp version: ' + v); }
+      }
       const amEl = document.getElementById('wx-airmap');
       if (amEl && isFinite(Number(lat)) && isFinite(Number(lon))) amEl.href = 'https://skyvector.com/?ll=' + Number(lat).toFixed(4) + ',' + Number(lon).toFixed(4) + '&chart=301&zoom=1';
       const agUrl = 'https://afterglow.johnstonaerial.com/?lat=' + Number(lat).toFixed(4) + '&lon=' + Number(lon).toFixed(4) + '&name=' + encodeURIComponent(agName);

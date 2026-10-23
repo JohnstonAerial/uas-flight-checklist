@@ -106,6 +106,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.11
+
+- **Buttons for your country** — the buttons under the weather now follow the place you look up. Countries with their own official drone resource get a button: **Australia** (CASA's verified drone safety apps), **Argentina** (ANAC rules and registration), **France** (the DGAC open-category page), **Belgium** (the Droneguide map), **the UK** (the NATS restriction zones map) and **Canada** (the NRC drone site selection tool). In those countries the FAA buttons are hidden, since they don't apply.
+- **Another country?** With **Outside USA** chosen, or a place from search in a country we don't have yet, you get **🌍 Find your aviation authority** (a list of national authorities) and a line asking you to tell us which country to add.
+- **SkyVector always top left** — the airspace chart button stays in the top-left corner whatever the country, with the other buttons beside and below it.
+
+---
+
 ## What's new in v4.0.10
 
 - **Airspace chart outside the USA** — the **🛩 Airspace chart — SkyVector** button now stays when you choose **Outside USA** under **Where you fly**, because SkyVector has aviation charts for many countries. The USA-only buttons (**Facility map**, **TFRs**, **NOTAMs**) are still hidden. SkyVector is a chart for crewed aircraft: its TFR overlay is US only and it doesn't know your country's drone rules, so keep using your own aviation authority's rules and drone airspace app.
@@ -722,7 +730,7 @@ Version 3 is a major update built around making the checklist *yours*:
 - **Choose your flight site** — check weather for where you're going, not just where you are; recent sites are remembered on your device
 - **One-tap buttons** for TFRs, NOTAMs, and NWS Radar (see [How-to guides](HOW-TO.md#check-tfrs-and-notams-before-you-fly-usa) for how to read them)
 - **Progress tracker** — percentage complete per tab, with a **ready to fly** banner when your pre-flight sections are done and a **flight complete** banner when everything is
-- **Works outside the USA** — the first time you open it, choose **USA** or **Outside USA**. Choosing outside the USA hides the items marked "(US)" (TFR and LAANC checks and the TFR recheck on site), rewords the NOTAM item so it isn't tied to a US website, removes the FAA buttons under the weather panel (the SkyVector airspace chart stays), and switches the weather to metric. Change it any time in **⚙ Settings**
+- **Works outside the USA** — the first time you open it, choose **USA** or **Outside USA**. Choosing outside the USA hides the items marked "(US)" (TFR and LAANC checks and the TFR recheck on site), rewords the NOTAM item so it isn't tied to a US website, hides the FAA buttons under the weather panel (SkyVector stays, and countries with their own drone resource get a button, such as Australia, Argentina, France, Belgium, the UK and Canada), and switches the weather to metric. Change it any time in **⚙ Settings**
 - **Customize the list** — open **⚙ Settings** and tap **Customize** (in the **Your checklist & tab** row) to hide items that don't apply where you fly, add your own items to any section, change or delete the ones you added with **Edit** and **Delete**, and drag items into the order you prefer. Hidden items don't count toward progress, and checks follow an item when you move it. **Restore original list** puts the tab back to the defaults
 - **Rename, re-icon or hide tabs** — in Customize mode, rename the tab you're on, give it a different icon (pick a drawn drone icon and color, type your own emoji, or choose none), set its own Pilot, Drone and Reg. #, clone another tab onto it, or hide it (at least one tab always stays), and bring hidden tabs back from any tab. Items you added can be copied to another tab with **Copy to…**. Renaming and changing the icon change only how the tab looks; use Hide and Add to change what's inside it
 - **Back up & restore** — see below

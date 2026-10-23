@@ -223,7 +223,14 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 - Airport reports (METAR) from airports near you.
 - The KP index.
 
-**US-only buttons:** the **Facility map**, **TFRs** and **NOTAMs** buttons under the weather are hidden outside the USA. The **Airspace chart — SkyVector** button stays, because SkyVector has charts for many countries (its TFR overlay is US only, and it knows nothing about your country's drone rules). The **Radar map ›** link in the Precipitation tile opens the National Weather Service radar in the USA, and RainViewer's radar elsewhere.
+**Buttons under the weather, by country:**
+
+- **The buttons follow the place you look up**, not just your **Where you fly** setting. When you search for a place and pick it, the app remembers its country. A US pilot who looks up a site in Australia gets Australia's button, and a pilot outside the USA who looks up a US site gets the US ones.
+- **🛩 Airspace chart — SkyVector** is always the top-left button. It has charts for many countries (its TFR overlay is US only, and it knows nothing about your country's drone rules).
+- **In the USA:** **Facility map — FAA**, **TFRs — FAA.gov** and **NOTAMs — AIM** sit beside and below it.
+- **Countries with their own button:** **🇦🇺 Drone safety apps — CASA** (Australia, the regulator's list of verified drone safety apps), **🇦🇷 Drones — ANAC** (Argentina, rules and registration), **🇫🇷 Drones — DGAC** (France, the government's open-category drone page, with the restrictions map, registration and rules), **🇧🇪 Drone map — Droneguide** (Belgium, the official national map), **🇬🇧 Drone map — NATS** (the UK, the map the CAA points to) and **🇨🇦 Drone map — NRC** (Canada, the National Research Council's drone site selection tool). In these countries the FAA buttons are hidden, because they don't apply there.
+- **Any other country:** with **Outside USA** chosen, or a place picked from search in another country, you get **🌍 Find your aviation authority**, a list of national aviation authorities with their websites, and a line asking you to tell us which country to add. GPS and typed coordinates carry no country, so for them the app goes by the time zone and your setting.
+- These buttons are links to official pages. Pages can move, and none of them replaces the rules in your own country, so check before you fly.
 
 **An honest limit:** this is a guide, not legal advice. The app doesn't know your country's drone rules. Check with your own aviation authority, such as Transport Canada, EASA or your national CAA, before you fly. Please also tell us which items don't fit where you fly. That feedback shapes the next version.
 
@@ -231,7 +238,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 
 ## Check TFRs and NOTAMs before you fly (USA)
 
-**This section is for flying in the USA only.** TFRs and NOTAMs here are the FAA's. Outside the USA the **Facility map**, **TFRs** and **NOTAMs** buttons are hidden, so use your own country's aviation authority and drone airspace app instead (see [Use it outside the USA](#use-it-outside-the-usa)).
+**This section is for flying in the USA only.** TFRs and NOTAMs here are the FAA's. In countries outside the USA the **Facility map**, **TFRs** and **NOTAMs** buttons are hidden, so use your own country's aviation authority and drone airspace app instead (see [Use it outside the USA](#use-it-outside-the-usa)).
 
 ### TFRs
 
@@ -244,7 +251,7 @@ The **⚠️ TFRs** button opens the FAA's list for the whole country, so most o
 
 **Use a bigger view.** Both FAA sites (TFRs and NOTAMs) are built for a computer screen. If a link opens inside the app, open it in your browser instead. On iPhone, tap the compass icon. On Android, look for **Open in browser** (or **Open in Chrome**) in the menu. Then turn your phone sideways, since landscape gives the list and the map much more room.
 
-**Easier on a phone: the Airspace chart button.** The **🛩 Airspace chart — SkyVector** button under the weather (top right of the four) opens a free aviation chart centered on your spot, and TFRs are drawn on it. Tap a TFR to open the FAA's details page for it. It works on phones and tablets without signing in. Two cautions: it is a pilot's sectional chart, so it is busy and not drone-specific, and it does not show every TFR the FAA lists (some, such as launch and security TFRs, can be missing). Use it for a quick look and still confirm against the FAA's TFR list above.
+**Easier on a phone: the Airspace chart button.** The **🛩 Airspace chart — SkyVector** button under the weather (always top left) opens a free aviation chart centered on your spot, and TFRs are drawn on it. Tap a TFR to open the FAA's details page for it. It works on phones and tablets without signing in. Two cautions: it is a pilot's sectional chart, so it is busy and not drone-specific, and it does not show every TFR the FAA lists (some, such as launch and security TFRs, can be missing). Use it for a quick look and still confirm against the FAA's TFR list above.
 
 **Easier on a phone: an FAA-approved airspace app.** The FAA's TFR list is built for a desktop screen. The FAA's B4UFLY service is delivered through FAA-approved apps from private companies, and these show airspace advisories, including TFRs, on a map around you. That's much easier to read at the launch site. Treat the map as a quick look, and still confirm against the FAA's current TFR and NOTAM pages, because an app can lag behind or miss a notice.
 
