@@ -672,8 +672,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-tfr { display: block; width: 100%; padding: 9px; background: #e0301e; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-notam { display: block; width: 100%; padding: 9px; background: #7f3fbf; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-facmap { display: block; width: 100%; padding: 9px; background: #1f6f8b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
-  .wx-airmap { display: block; grid-column: 1 / -1; width: 100%; padding: 9px; background: #3d4a9c; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
-  .wx-radar { display: block; width: 100%; padding: 9px; background: #1a6b3c; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-airmap { display: block; width: 100%; padding: 9px; background: #3d4a9c; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
 
   /* Accessibility: screen-reader text, visible keyboard focus, bigger tap targets, 16px form text (stops iOS zoom-on-focus) */
   .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
@@ -735,7 +734,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.8</p>
+      <p>Free Drone Preflight Checklist · v4.0.9</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -783,11 +782,10 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <div class="wx-status">Locating...</div>
   </div>
   <div class="wx-tfr-row" style="margin-top:10px;">
-    <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener">⚠️ TFRs — FAA.gov</a>
-    <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener">📋 NOTAMs — AIM</a>
-    <a class="wx-radar" href="https://radar.weather.gov" target="_blank" rel="noopener">🌧 Radar — NWS</a>
     <a class="wx-facmap" href="https://experience.arcgis.com/experience/e6e8b84c6f1144f69a30f9632ebe4352" target="_blank" rel="noopener">🗺 Facility map — FAA</a>
     <a class="wx-airmap" id="wx-airmap" href="https://skyvector.com/" target="_blank" rel="noopener">🛩 Airspace chart — SkyVector</a>
+    <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener">⚠️ TFRs — FAA.gov</a>
+    <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener">📋 NOTAMs — AIM</a>
   </div>
 </div>
 
@@ -4250,7 +4248,7 @@ async function renderWeather(lat, lon, attempt = 1) {
             <div class="wx-label">Precipitation</div>
             <div class="wx-value ${pb.cls}">${pb.val}</div>
             ${pb.lines.map(l => `<div class="wx-sub">${l}</div>`).join('')}
-            <a class="wx-link" href="https://www.rainviewer.com/map.html?loc=${lat.toFixed(3)},${lon.toFixed(3)},8&layer=radar" target="_blank" rel="noopener">Radar map ›</a>
+            <a class="wx-link" href="${region === 'intl' ? 'https://www.rainviewer.com/map.html?loc=' + lat.toFixed(3) + ',' + lon.toFixed(3) + ',8&layer=radar' : nwsRadarUrl(lat, lon)}" target="_blank" rel="noopener">Radar map ›</a>
           </div>
           <div class="wx-item">
             <div class="wx-label">KP Index</div>
@@ -4272,7 +4270,6 @@ async function renderWeather(lat, lon, attempt = 1) {
         <div class="wx-updated" id="wx-updated">Updated ${now} · ${srcText}<span id="wx-age"></span></div>
         <div class="wx-disclaimer">Guide only. Conditions can differ at your site. Check your own weather sources and look at the sky before you fly. Radar: <a href="https://www.rainviewer.com" target="_blank" rel="noopener">RainViewer</a>.</div>
         `;
-        document.querySelectorAll('.wx-radar').forEach(a => { a.href = nwsRadarUrl(lat, lon); });
         refreshAge();
       };
       lastDraw = draw;

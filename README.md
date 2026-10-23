@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.9
+
+- **Better radar link** — in the USA, **Radar map ›** in the Precipitation tile now opens the National Weather Service radar, centred on your spot. Outside the USA it still opens RainViewer. The separate **Radar — NWS** button below the tiles is gone, since the tile link does the same job.
+- **Even buttons** — the four buttons under the weather (USA only) are now a tidy two-by-two grid: **Facility map** and **Airspace chart** on top, **TFRs** and **NOTAMs** below.
+
+---
+
 ## What's new in v4.0.8
 
 - **Keep screen on** — a new setting in **⚙ Settings**. Turn it on and the screen will not lock while the app is open and in view. It is off by default (it uses more battery), is included in Back up and restore, and shows a note if your phone or browser can't do it.
