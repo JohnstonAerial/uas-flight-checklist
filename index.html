@@ -699,11 +699,19 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-tfr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .wx-tfr { display: block; width: 100%; padding: 9px; background: #e0301e; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-notam { display: block; width: 100%; padding: 9px; background: #7f3fbf; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-notam .gl { display: block; white-space: nowrap; font-weight: 600; font-size: 12px; margin-top: 1px; color: #efe3ff; }
+  .wx-tfr .gl { display: block; white-space: nowrap; font-weight: 600; font-size: 12px; margin-top: 1px; color: #ffe3de; }
   .wx-facmap .gl { display: block; font-weight: 600; font-size: 12px; margin-top: 1px; }
   .wx-facmap .gl.ok { color: #b9f3c8; } .wx-facmap .gl.zero { color: #ffd98a; }
   .wx-gridnote { display: none; grid-column: 1 / -1; font-size: 11px; color: var(--text-muted); text-align: center; line-height: 1.35; }
   .wx-tfr-row.gridok .wx-gridnote { display: block; }
-  .wx-tfr-row.cc .wx-gridnote, .wx-tfr-row.none .wx-gridnote, body.intl .wx-tfr-row .wx-gridnote { display: none; }
+  .wx-codes { display: none; grid-column: 1 / -1; text-align: center; font-size: 12px; color: var(--text-muted); line-height: 2; }
+  .wx-tfr-row.gridok .wx-codes.has { display: block; }
+  .wx-codes button { font: inherit; font-weight: 700; color: var(--text); background: var(--card-bg, rgba(127,127,127,.15)); border: 1px solid rgba(127,127,127,.4); border-radius: 8px; padding: 2px 8px; margin: 0 3px; cursor: pointer; white-space: nowrap; }
+  .wx-codes button.sel { background: #7a3fc0; color: #fff; border-color: #7a3fc0; }
+  .wx-codes button.sel small { color: #e9dcff; }
+  .wx-codes button small { font-weight: 500; color: var(--text-muted); }
+  .wx-tfr-row.cc .wx-gridnote, .wx-tfr-row.none .wx-gridnote, body.intl .wx-tfr-row .wx-gridnote, .wx-tfr-row.cc .wx-codes, .wx-tfr-row.none .wx-codes, body.intl .wx-tfr-row .wx-codes { display: none !important; }
   .wx-facmap { display: block; width: 100%; padding: 9px; background: #1f6f8b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-airmap { display: block; width: 100%; padding: 9px; background: #3d4a9c; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
 
@@ -767,7 +775,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.12</p>
+      <p>Free Drone Preflight Checklist · v4.0.13</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -825,9 +833,10 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <a class="wx-cabtn" id="wx-cabtn" href="https://nrc.canada.ca/en/drone-tool/" target="_blank" rel="noopener">🇨🇦 Drone map — NRC</a>
     <a class="wx-wwbtn" id="wx-wwbtn" href="https://en.wikipedia.org/wiki/Civil_aviation_authority" target="_blank" rel="noopener">🌍 Find your aviation authority</a>
     <div class="wx-ccnote" id="wx-ccnote">No button for your country yet. <a id="wx-ccmail" href="#">Tell us which country</a> and we will look at adding it.</div>
-    <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener">⚠️ TFRs — FAA.gov</a>
-    <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener">📋 NOTAMs — AIM</a>
-    <div class="wx-gridnote" id="wx-gridnote">Guide only. Check LAANC before you fly.</div>
+    <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener">⚠️ TFRs — FAA.gov<span class="gl" id="wx-tfrline"></span></a>
+    <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener">📋 NOTAMs — AIM<span class="gl" id="wx-notamline"></span></a>
+    <div class="wx-gridnote" id="wx-gridnote">Guide only. Check LAANC and the TFR list before you fly. NOTAMs copies the airport shown on it. Tap a code below to switch, or All to copy them together.</div>
+    <div class="wx-codes" id="wx-codes"></div>
   </div>
 </div>
 
@@ -1449,6 +1458,30 @@ async function gridLookup(lat, lon) {
     clearTimeout(tm);
     if (key === gridKey) { show('', ''); gridKey = ''; }
   }
+}
+// How many TFRs the FAA lists for the state of this spot (and nationwide). A count only: it does not say whether one is near you, so the button still opens the FAA's own list. The list comes through our proxy (the FAA's server does not allow direct browser requests); if the proxy has no answer, the button stays as it was.
+let tfrList = null, tfrAt = 0, tfrKey = '', metarData2Latest = null;
+async function tfrLookup(lat, lon) {
+  const line = document.getElementById('wx-tfrline');
+  if (!line) return;
+  const key = Number(lat).toFixed(2) + ',' + Number(lon).toFixed(2);
+  if (key === tfrKey && line.textContent) return;
+  tfrKey = key; line.textContent = '';
+  try {
+    const su = 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties_Generalized_Boundaries/FeatureServer/0/query?geometry=' + Number(lon).toFixed(4) + '%2C' + Number(lat).toFixed(4) + '&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=STATE_ABBR&returnGeometry=false&f=json';
+    const [sr, lr] = await Promise.all([
+      fetchT(su, 9000),
+      (tfrList && Date.now() - tfrAt < 300000) ? null : fetchT(METAR_PROXY + '/tfr', 9000)
+    ]);
+    if (!sr.ok || (lr && !lr.ok)) throw new Error('tfr');
+    const sd = await sr.json();
+    if (lr) { const l = await lr.json(); if (!Array.isArray(l)) throw new Error('tfr list'); tfrList = l; tfrAt = Date.now(); }
+    const st = sd && sd.features && sd.features[0] && String(sd.features[0].attributes.STATE_ABBR || '').toUpperCase();
+    if (!st || !/^[A-Z]{2}$/.test(st) || !tfrList || key !== tfrKey) return;
+    const inSt = tfrList.filter(t => String(t.state).toUpperCase() === st).length;
+    const wide = tfrList.filter(t => String(t.state).toUpperCase() === 'USA').length;
+    line.textContent = st + ': ' + inSt + (wide ? ' · US: ' + wide : '');
+  } catch (e) { if (key === tfrKey) line.textContent = ''; }
 }
 function nwsRadarUrl(lat, lon) {
   // NWS radar page opens centered on the chosen location (settings are base64 JSON)
@@ -3631,7 +3664,9 @@ async function fetchMetar(lat, lon) {
     let obs = null;
     const tsrc = all.find(x => x.d <= METAR_RADIUS_MI && x.age !== null && x.age <= WIND_OBS_MAX_AGE_MIN && typeof x.st.temp === 'number' && isFinite(x.st.temp) && typeof x.st.dewp === 'number' && isFinite(x.st.dewp));
     if (tsrc) obs = { station: tsrc.st.icaoId || '?', dist: tsrc.d, ageMin: tsrc.age, tempC: tsrc.st.temp, dewC: Math.min(tsrc.st.dewp, tsrc.st.temp) };
-    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, count: pool.length, ageMin: best.age, lowCloud, lower, also, vis, lowVis, precipReport, wind, windier, obs, obsc, hazard };
+    // The nearest few reporting airports (for the NOTAM code picker)
+    const nearby = pool.slice(0, 3).map(x => ({ station: x.st.icaoId || '', dist: x.d }));
+    return { metar: best.st, station: best.st.icaoId || '?', dist: best.d, nearby, count: pool.length, ageMin: best.age, lowCloud, lower, also, vis, lowVis, precipReport, wind, windier, obs, obsc, hazard };
   } catch (e) {
     console.warn('METAR fetch failed:', e.message);
     throw e;   // the caller tells "service failed" apart from "no station nearby"
@@ -4144,6 +4179,48 @@ async function renderWeather(lat, lon, attempt = 1) {
         auRow.classList.toggle('none', !which && (cc ? cc !== 'US' : region === 'intl'));
         const wantGrid = !which && !(cc ? cc !== 'US' : region === 'intl');
         if (wantGrid) gridLookup(lat, lon);
+        if (wantGrid) tfrLookup(lat, lon);
+        // NOTAM Search opens with an empty Location box: show the nearest weather-station airport and copy it when the button is tapped, to paste there
+        const nl = document.getElementById('wx-notamline');
+        if (nl) {
+          const stn = metarData2 && metarData2.station && /^[A-Z0-9]{3,4}$/.test(metarData2.station) ? metarData2.station : '';
+          const list = (metarData2 && metarData2.nearby || []).filter(x => /^[A-Z0-9]{3,4}$/.test(x.station));
+          const allCode = list.map(x => x.station).join(',');
+          // A code (or "All") picked from the list stays picked while it is still available
+          let keep = '';
+          if (nl.dataset.sel === 'ALL' && list.length > 1) keep = 'ALL';
+          else if (nl.dataset.sel && list.some(x => x.station === nl.dataset.sel)) keep = nl.dataset.sel;
+          if (keep) nl.dataset.sel = keep; else delete nl.dataset.sel;
+          const use = keep === 'ALL' ? allCode : (keep || stn);
+          nl.textContent = use; nl.dataset.icao = use;
+          const cd = document.getElementById('wx-codes');
+          if (cd) {
+            cd.innerHTML = list.length > 1 ? 'Nearby: ' + list.map(x => '<button type="button" data-c="' + x.station + '"' + (keep !== 'ALL' && x.station === use ? ' class="sel"' : '') + '>' + x.station + ' <small>' + fmtDist(x.dist) + '</small></button>').join('') + '<button type="button" data-c="ALL"' + (keep === 'ALL' ? ' class="sel"' : '') + '>All ' + list.length + '</button>' : '';
+            cd.classList.toggle('has', list.length > 1);
+            if (!cd.dataset.bound) {
+              cd.dataset.bound = '1';
+              cd.addEventListener('click', (e) => {
+                const bt = e.target.closest('button[data-c]'); if (!bt) return;
+                const pick = bt.dataset.c, sm = bt.querySelector('small'), was = sm ? sm.textContent : '', wasAll = bt.textContent;
+                const cur = (metarData2Latest && metarData2Latest.nearby || []).filter(x => /^[A-Z0-9]{3,4}$/.test(x.station));
+                const code = pick === 'ALL' ? cur.map(x => x.station).join(',') : pick;
+                nl.dataset.sel = pick; nl.dataset.icao = code; nl.textContent = code;
+                cd.querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === bt));
+                try { navigator.clipboard.writeText(code).then(() => { if (sm) { sm.textContent = 'copied'; setTimeout(() => { sm.textContent = was; }, 3000); } else { bt.textContent = wasAll + ' · copied'; setTimeout(() => { bt.textContent = wasAll; }, 3000); } }, () => {}); } catch (er) {}
+              });
+            }
+          }
+          metarData2Latest = metarData2;
+          const nb = nl.parentElement;
+          if (nb && !nb.dataset.copy) {
+            nb.dataset.copy = '1';
+            nb.addEventListener('click', () => {
+              const code = nl.dataset.icao;
+              if (!code) return;
+              try { navigator.clipboard.writeText(code).then(() => { nl.textContent = code.length > 5 ? 'copied' : code + ' · copied'; setTimeout(() => { nl.textContent = nl.dataset.icao; }, 4000); }, () => {}); } catch (e) {}
+            });
+          }
+        }
         const cm = document.getElementById('wx-ccmail');
         if (cm) { const v = appVer(); cm.href = 'mailto:info@JohnstonAerial.com?subject=' + encodeURIComponent('Checklist: please add my country ' + v) + '&body=' + encodeURIComponent('My country is:\n\nThe official drone map or aviation authority website, if you know it:\n\n\n---\nApp version: ' + v); }
       }

@@ -11,6 +11,16 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors });
 
     const url = new URL(request.url);
+    // Current TFR list from the FAA (no key; the FAA site does not allow direct browser requests)
+    if (url.pathname === '/tfr') {
+      const t = await fetch('https://tfr.faa.gov/tfrapi/getTfrList', { cf: { cacheTtl: 300, cacheEverything: true } });
+      const tb = t.ok ? await t.text() : '[]';
+      return new Response(tb || '[]', {
+        status: t.ok ? 200 : t.status,
+        headers: { ...cors, 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300' },
+      });
+    }
+
     if (url.pathname !== '/metar') return new Response('Not found', { status: 404, headers: cors });
 
     const lat = parseFloat(url.searchParams.get('lat'));

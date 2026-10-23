@@ -242,9 +242,9 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 
 ### TFRs
 
-The **⚠️ TFRs** button opens the FAA's list for the whole country, so most of what you see will be far from you. To narrow it down:
+The **⚠️ TFRs** button shows a count under its name, such as **NC: 3 · US: 12**: how many TFRs the FAA lists for your state, then how many are nationwide. It is a count only. It does not say whether one is near you, so open the list and check. The button opens the FAA's list for the whole country, so most of what you see will be far from you. To narrow it down:
 
-1. In the left sidebar, open **Please select a state** and pick your state.
+1. In the left sidebar, open **Please select a state** and pick your state. **On a phone, turn it sideways first.** The page then shows its search boxes down the left side. Tap the **second box** (search by state), scroll to your state and pick it. That is what makes the list usable on a phone.
 2. If nothing is listed, there are no TFRs in your state right now. If you fly near a border, check the neighboring state too.
 3. Tap the **magnifier** icon next to an entry to see it on the map.
 4. Read the **Type** column. VIP, Security, and Hazards (fires, for example) are the ones that matter for flying.
@@ -265,9 +265,13 @@ The button also reads the grid at your spot and shows it on the button: **400 ft
 
 Like the TFR page, the NOTAM search is easier to use in your browser with your phone turned sideways.
 
-The **NOTAMs** button opens the FAA's NOTAM search. A few tips make it much less noisy:
+The **📋 NOTAMs** button opens the FAA's NOTAM search, which starts with an empty **Location** box. To save typing, the button shows the nearest airport code (for example **KRDU**) and copies it when you tap it. Open the FAA page, paste into **Location** and press **Search**.
 
-1. **Search by airport code, not coordinates.** A coordinate search also returns center-wide notices for your whole region (for central NC they show as "ZDC"). Enter the codes of your nearest airports instead, such as the ones on the weather card, plus any airport near your job site.
+Want a different airport? Under the buttons, the **Nearby** row lists up to three airports with their distances. Tap one to switch the button to it, and the code is copied. Tap **All 3** to copy all three, comma-separated, and search them together. Only airports that report weather appear in the list, so for a small field that isn't there, type its code yourself.
+
+A few tips make the NOTAM search much less noisy:
+
+1. **Search by airport code, not coordinates.** A coordinate search also returns center-wide notices for your whole region (for central NC they show as "ZDC"). Enter the codes of your nearest airports instead (the **Nearby** row has them), plus any airport near your job site.
 2. **Use the free-text search** to find notices aimed at you. Try **UAS** or **drone**.
 3. **Check the dates first.** Look at the start and end times before anything else, since many notices are expired or haven't started yet. Times are in UTC (Zulu), so convert them to your local time. For example, 1200Z is 8 AM Eastern daylight time.
 4. **Know which notices matter to a small drone:**

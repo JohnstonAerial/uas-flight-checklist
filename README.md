@@ -106,6 +106,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.13
+
+- **TFR count on the button** — the **⚠️ TFRs — FAA.gov** button now shows how many TFRs the FAA lists for your state and nationwide, for example **NC: 3 · US: 12**. It is a count only and does not say whether one is near you, so the button still opens the FAA's list. (This uses the small Cloudflare Worker already used for weather. If you run your own copy, update `uas-metar-worker.js`; without it the count just doesn't appear.)
+- **NOTAMs: nearby airport codes** — the FAA's NOTAM search opens with an empty **Location** box. The **📋 NOTAMs — AIM** button now shows the nearest airport and copies its code when you tap it, ready to paste. Under the buttons a **Nearby** row lists up to three airports with their distances. Tap one to switch to it, or tap **All 3** to copy all three comma-separated and search them together.
+- **HOW-TO** — new tips for using the FAA's TFR page on a phone (turn it sideways, then use the search by state box) and for the NOTAM steps.
+
+---
+
 ## What's new in v4.0.12
 
 - **FAA grid map button** — the **Facility map — FAA** button is now **🗺 FAA grid map**. It opens the FAA's UAS Facility Map already centered on the place you chose, so there is no pop-up to accept and nothing to search for. The button also shows what the FAA grid says at that spot, such as **400 ft · LAANC**, **0 ft · FAA approval** or **No grid here**. It is a guide only, so still check LAANC or your airspace app before you fly. USA only, like the TFR and NOTAM buttons.
@@ -779,7 +787,7 @@ Restoring **replaces** that device's settings with the backup. A backup includes
 Cloud ceiling comes from real METAR reports from the FAA/NWS [Aviation Weather Center](https://aviationweather.gov), which needs no key but blocks direct browser requests. The checklist reaches it through a tiny Cloudflare Worker (`uas-metar-worker.js` in this repo) that holds no secrets. This deployment already points at one, so a fork works as-is. To run your own:
 
 1. Create a free [Cloudflare](https://cloudflare.com) account → **Workers & Pages → Create → Hello World**
-2. Paste in the contents of `uas-metar-worker.js` and deploy
+2. Paste in the contents of `uas-metar-worker.js` and deploy (it also serves the TFR count)
 3. In `index.html`, set `METAR_PROXY` to your Worker's URL
 
 ### Host it
