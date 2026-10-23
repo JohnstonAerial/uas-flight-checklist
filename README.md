@@ -106,6 +106,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.14
+
+- **The wind reminder moved to the top** — the note that obstructions and terrain can make it windier where you fly now sits at the top of the weather card, under the place name, instead of between the tiles. On a calm day it stays quiet gray. When wind needs attention (the airport or model wind is at caution level or higher, or a nearby station is windier) it turns amber and bold with a ⚠️.
+
+---
+
 ## What's new in v4.0.13
 
 - **TFR count on the button** — the **⚠️ TFRs — FAA.gov** button now shows how many TFRs the FAA lists for your state and nationwide, for example **NC: 3 · US: 12**. It is a count only and does not say whether one is near you, so the button still opens the FAA's list. (This uses the small Cloudflare Worker already used for weather. If you run your own copy, update `uas-metar-worker.js`; without it the count just doesn't appear.)
