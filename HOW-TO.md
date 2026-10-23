@@ -1,7 +1,8 @@
 # How to use the UAS Flight Checklist
 
-Short guides for seven things people ask about: backing up and restoring your setup, saving different setups ("profiles"), using the app with no signal, saving a record of your preflight, printing the checklist, using it outside the USA, and checking TFRs and NOTAMs (USA only).
+Short guides for eight things people ask about: finding your way around the three tabs, backing up and restoring your setup, saving different setups ("profiles"), using the app with no signal, saving a record of your preflight, printing the checklist, using it outside the USA, and checking TFRs and NOTAMs (USA only).
 
+- [Find your way around](#find-your-way-around)
 - [Back up and restore your setup](#back-up-and-restore-your-setup)
 - [Make your own profiles](#make-your-own-profiles)
 - [Use it with no signal](#use-it-with-no-signal)
@@ -12,15 +13,29 @@ Short guides for seven things people ask about: backing up and restoring your se
 
 ---
 
+## Find your way around
+
+The app has three tabs at the top.
+
+- **🌤 Conditions** is where it opens: the preflight weather card, the airspace and TFR buttons, and the place you're checking.
+- **✅ Checklist** is your checklist. The General, Mapping and Commercial tabs, and your own tabs, show here.
+- **⚙ Settings** has **Settings** and **Back up & restore**. A small red dot on it means a backup is due.
+
+The app remembers the tab you used last on that device. Tapping **Customize** in Settings takes you to the checklist so you can edit it. Backing up and restoring work the same from any tab, because they save everything the app has stored on that device.
+
+**Change the place you're checking.** On **Conditions**, tap **Change**, then tap the search box. Your saved places (the last 10) drop down; type to narrow them, or type a town, ZIP code or latitude, longitude and tap **Search**.
+
+---
+
 ## Back up and restore your setup
 
 **Back it up after you make changes.** Your customized list lives only in that one browser on that one device. If the browser data gets cleared, you switch phones, or you open it somewhere else, your changes are gone and you'd have to rebuild them from scratch. A backup takes about a minute:
 
-1. Tap **💾 Back up & restore** under the page header.
+1. Tap the **⚙ Settings** tab, then **💾 Back up & restore**.
 2. Tap **Save file** (or **Copy code** and paste it into a note).
 3. Keep the file somewhere you'll find it, like a cloud folder.
 
-If you ever need it back, **Restore from file…** brings your whole setup back in one tap. Get in the habit of backing up every time you change something, not just when you move to a new device. That's what lets you experiment without worrying. After you change your list or settings (including Pilot, Drone and Reg. #), a red reminder with a **Back up now** button appears (once you press **Done**, if you were customizing) under the **Settings** and **Back up & restore** buttons until you back up or dismiss it.
+If you ever need it back, **Restore from file…** brings your whole setup back in one tap. Get in the habit of backing up every time you change something, not just when you move to a new device. That's what lets you experiment without worrying. After you change your list or settings (including Pilot, Drone and Reg. #), a red dot appears on the **⚙ Settings** tab, and a red reminder with a **Back up now** button appears there (once you press **Done**, if you were customizing) until you back up or dismiss it.
 
 Your checklist setup is stored on your device. If you get a new phone, clear your browser data, or want the same setup on a tablet, you'd have to rebuild it. A backup saves it so you can bring it back, or copy it to another device, in a minute.
 
@@ -34,7 +49,7 @@ It does not include saved flight records. Those are separate files that you keep
 
 **To back up**
 
-1. Tap **💾 Back up & restore** under the page header.
+1. Tap the **⚙ Settings** tab, then **💾 Back up & restore**.
 2. Leave **Include current progress** ticked if you're moving to another device today and want your ticks to come with you. Untick it to save only your setup, which is best for a backup you'll keep.
 3. Tap **Save file**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files** or send it to yourself. In Chrome or Edge on a computer a Save dialog opens, so you choose the folder. In Safari or Firefox the browser takes over, and the app says **Backup started. If your browser asks, choose where to save it.** The file goes to your Downloads folder unless your browser is set to ask where to save.
 
@@ -130,7 +145,7 @@ I did the same thing for my other kinds of work: one backup file each for Genera
 
 **Make yours:** start from whatever tab is closest to your work. Hide what you never use, add the checks you keep forgetting, and write them in your own words and for your own gear. The best items come from the mistakes you've already made once.
 
-**To switch to it later:** tap **💾 Back up & restore**, then **Restore from file…**, and choose the file. The page reloads with that setup.
+**To switch to it later:** tap the **⚙ Settings** tab, then **💾 Back up & restore**, then **Restore from file…**, and choose the file. The page reloads with that setup.
 
 **Good to know**
 

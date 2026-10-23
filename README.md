@@ -106,6 +106,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.1.0
+
+- **Three tabs: Conditions, Checklist, Settings** — the app now opens on **🌤 Conditions**, the preflight weather card. **✅ Checklist** is one tap away, and **⚙ Settings** holds **Settings** and **Back up & restore**. The General, Mapping and Commercial tabs show on the Checklist and Settings tabs. The app remembers the tab you used last on that device. A red dot on **⚙ Settings** means a backup is due. Nothing you saved changes: your tabs, customized lists, progress and settings are the same as before, and **Customize** from Settings takes you to the checklist.
+- **Saved places drop down from the search box** — under **Change**, tap the search box to see your saved places, and type to narrow them. It now remembers your last **10** places (it was 5).
+- **The guide-only reminder moved to the top** — "Guide only. Check your own weather sources and the sky before you fly." now sits at the top of the weather card. The bottom line keeps just the radar credit.
+
+---
+
 ## What's new in v4.0.14
 
 - **The wind reminder moved to the top** — the note that obstructions and terrain can make it windier where you fly now sits at the top of the weather card, under the place name, instead of between the tiles. On a calm day it stays quiet gray. When wind needs attention (the airport or model wind is at caution level or higher, or a nearby station is windier) it turns amber and bold with a ⚠️.
@@ -768,10 +776,10 @@ Version 3 is a major update built around making the checklist *yours*:
 
 ## Back up & restore
 
-Your settings and progress are stored in the browser on the device you're using. They don't sync by themselves, and a checklist added to your Home Screen can keep its own separate copy from the browser tab (iPhones and iPads always do). It works the same on any phone, tablet or computer, in any current browser. **Back up & restore** (the **💾 Back up & restore** button under the page header) saves a copy of your setup. Use it to move to another device, to move from your browser to the Home Screen app (or back), to get your settings back on the same device after clearing your browser, or to keep several setups and switch between them. See [Make your own profiles](HOW-TO.md#make-your-own-profiles).
+Your settings and progress are stored in the browser on the device you're using. They don't sync by themselves, and a checklist added to your Home Screen can keep its own separate copy from the browser tab (iPhones and iPads always do). It works the same on any phone, tablet or computer, in any current browser. **Back up & restore** (under the **⚙ Settings** tab: **💾 Back up & restore**) saves a copy of your setup. Use it to move to another device, to move from your browser to the Home Screen app (or back), to get your settings back on the same device after clearing your browser, or to keep several setups and switch between them. See [Make your own profiles](HOW-TO.md#make-your-own-profiles).
 
 **To back up**
-1. Tap **💾 Back up & restore** under the page header
+1. Tap the **⚙ Settings** tab, then **💾 Back up & restore**
 2. Choose whether to **Include current progress** (leave it off to move only your settings)
 3. Tap **Copy code** to copy a code you can paste into a message or note, **Save file** to save or share a small backup file, or (on a computer) **Share…** to send the code with AirDrop, Mail or Messages
 

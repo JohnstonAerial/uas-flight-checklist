@@ -645,9 +645,13 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-result { display: block; width: 100%; text-align: left; font-family: inherit; font-size: 14px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-top: 6px; cursor: pointer; }
   .wx-result small { display: block; color: var(--text-muted); font-size: 11px; margin-top: 1px; }
   .wx-note { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+  .wx-grid > .wx-guidenote { grid-column: 1 / -1; margin-top: 0; font-size: 11px; }
   .wx-grid > .wx-windnote.wx-warn { font-weight: 700; }
   .wx-grid > .wx-windnote { grid-column: 1 / -1; margin-top: 0; font-size: 11px; }
   .wx-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .wx-sug { margin-top: 6px; border: 1px solid var(--border); border-radius: 10px; background: var(--card); overflow: hidden; max-height: 260px; overflow-y: auto; }
+  .wx-sug button { display: block; width: 100%; text-align: left; font-family: inherit; font-size: 14px; color: var(--text); background: none; border: 0; border-bottom: 1px solid var(--border); padding: 10px 12px; cursor: pointer; }
+  .wx-sug button:last-child { border-bottom: 0; }
   .wx-chip { font-family: inherit; font-size: 12px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 5px 10px; cursor: pointer; }
   .wx-status { font-size: 12px; color: var(--text-muted); text-align: center; padding: 6px 0 2px; }
   .wx-alert { color: #e0301e; } .wx-warn { color: var(--amber); } .wx-good { color: var(--green); }
@@ -729,6 +733,19 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
 
   .print-fields { display: none; }
   /* ── Print: plain checklist you can tick with a pencil ── */
+  /* Three views: Conditions, Checklist, Settings (screen only; print always prints the checklist) */
+  .mainnav { display: none; }
+  @media screen {
+    .mainnav { display: flex; gap: 6px; padding: 8px 12px; background: var(--bg); }
+    .mainnav .nv { position: relative; flex: 1; font-family: inherit; font-size: 13px; font-weight: 700; padding: 10px 4px; border-radius: 10px; border: 1px solid var(--border, rgba(127,127,127,.35)); background: var(--card-bg, rgba(127,127,127,.12)); color: var(--text-muted); cursor: pointer; }
+    body.view-wx .mainnav .nv-wx, body.view-ck .mainnav .nv-ck, body.view-set .mainnav .nv-set { background: #2563EB; border-color: #2563EB; color: #fff; }
+    body.bk-dirty .mainnav .nv-set::after { content: ''; position: absolute; top: 5px; right: 8px; width: 9px; height: 9px; border-radius: 50%; background: #e0301e; box-shadow: 0 0 0 2px var(--bg); }
+    body.view-wx .panel, body.view-wx .tabs, body.view-wx .progress-bar-wrap { display: none !important; }
+    body:not(.view-wx) #wx-panel, body:not(.view-wx) #region-card { display: none !important; }
+    body:not(.view-ck) .progress-bar-wrap { display: none !important; }
+    body.view-ck .panel.active:not(.editing) .settings { display: none; }
+    body.view-set .panel.active > :not(.settings) { display: none !important; }
+  }
   @media print {
     .bk-banner { display: none !important; }
     @page { margin: 14mm 12mm; }
@@ -776,7 +793,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.14</p>
+      <p>Free Drone Preflight Checklist · v4.1.0</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -791,6 +808,12 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="progress-bar-wrap">
     <div class="progress-bar-fill" id="header-bar" style="width:0%"></div>
   </div>
+</div>
+
+<div class="mainnav" id="mainnav" role="tablist" aria-label="Sections">
+  <button type="button" class="nv nv-wx" role="tab" data-v="wx" onclick="setView('wx')">🌤 Conditions</button>
+  <button type="button" class="nv nv-ck" role="tab" data-v="ck" onclick="setView('ck')">✅ Checklist</button>
+  <button type="button" class="nv nv-set" role="tab" data-v="set" onclick="setView('set')">⚙ Settings</button>
 </div>
 
 <div class="print-fields" aria-hidden="true">
@@ -1632,6 +1655,33 @@ function updateProgress(panel) {
   document.addEventListener('contextmenu', (e) => { if (e.target.closest('.item')) e.preventDefault(); });
 })();
 
+// Which of the three views is showing (Conditions, Checklist or Settings); remembered on this device
+const VIEW_KEY = 'uasView';
+function setView(v, noSave) {
+  if (v !== 'wx' && v !== 'ck' && v !== 'set') v = 'wx';
+  document.body.classList.remove('view-wx', 'view-ck', 'view-set');
+  document.body.classList.add('view-' + v);
+  document.querySelectorAll('#mainnav .nv').forEach(b => { const on = b.dataset.v === v; b.setAttribute('aria-selected', String(on)); });
+  if (!noSave) { try { localStorage.setItem(VIEW_KEY, v); } catch (e) {} }
+  if (v !== 'set') {
+    // Leaving Settings: close its sections, otherwise they hide the checklist
+    document.querySelectorAll('.panel .settings').forEach(st => { st.classList.remove('open', 'open-bak'); st.querySelectorAll('.settings-toggle').forEach(t => t.setAttribute('aria-expanded', 'false')); });
+  }
+  if (v === 'set') {
+    // Settings opens ready to use: show the Settings section unless Settings or Back up & restore is already open
+    const st = document.querySelector('.panel.active .settings');
+    if (st && !st.classList.contains('open') && !st.classList.contains('open-bak')) { const t = st.querySelector('.tg-set'); if (t) t.click(); }
+  }
+  if (!noSave) window.scrollTo(0, 0);
+}
+(function () {
+  let v = 'wx'; try { v = localStorage.getItem(VIEW_KEY) || 'wx'; } catch (e) {}
+  setView(v, true);
+  // Customizing happens on the checklist: starting it from Settings moves you there
+  const ob = new MutationObserver(() => { if (document.querySelector('.panel.editing') && !document.body.classList.contains('view-ck')) setView('ck'); });
+  document.querySelectorAll('.panel').forEach(pn => ob.observe(pn, { attributes: true, attributeFilter: ['class'] }));
+})();
+
 function showPanel(panel, tab) {
   closeItemMenu();
   current = panel;
@@ -1651,6 +1701,7 @@ function showPanel(panel, tab) {
   tab.classList.add('active');
   tab.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
   updateProgress(panel);
+  if (document.body.classList.contains('view-set')) setView('set', true);
   window.scrollTo(0, 0);
 }
 
@@ -2967,6 +3018,7 @@ if (restoredAt) {
 
 ['zeitview','mapping','general'].forEach(updateProgress);
 foldFinishedOnLoad();
+if (document.body.classList.contains('view-set')) setView('set', true);   // opened on Settings last time: open its section now that it exists
 
 // After a restore from a code or file: start at the top with Settings closed, and say so
 (function () {
@@ -3920,22 +3972,39 @@ function toggleLocPicker() {
 }
 
 function renderChips() {
-  const box = document.getElementById('wx-chips');
+  // Saved places drop down under the search box when you tap it; typing filters them
+  const box = document.getElementById('wx-chips'), q = document.getElementById('wx-q');
   box.innerHTML = '';
-  const add = (label, fn) => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'wx-chip'; b.textContent = label; b.onclick = fn;
-    box.appendChild(b);
+  const acts = [];
+  if (site) acts.push(['📍 Use my location', () => chooseSite(null)]);
+  recentSites.forEach(r => acts.push([r.name, () => chooseSite(r)]));
+  if (!acts.length) return;
+  const list = document.createElement('div');
+  list.className = 'wx-sug'; list.setAttribute('role', 'listbox'); list.hidden = true;
+  box.appendChild(list);
+  const draw = () => {
+    const t = q.value.trim().toLowerCase();
+    list.innerHTML = '';
+    const shown = acts.filter(x => !t || x[0].toLowerCase().includes(t));
+    shown.forEach(x => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('role', 'option'); b.textContent = x[0];
+      b.onmousedown = ev => ev.preventDefault();
+      b.onclick = () => x[1]();
+      list.appendChild(b);
+    });
+    list.hidden = !shown.length;
   };
-  if (site) add('📍 Use my location', () => chooseSite(null));
-  recentSites.forEach(r => add(r.name, () => chooseSite(r)));
+  q.onfocus = q.onclick = q.oninput = draw;
+  q.onblur = () => setTimeout(() => { list.hidden = true; }, 150);
+  draw();
 }
 
 function chooseSite(s) {
   site = s;
   store('wxSite', site);
   if (s) {
-    recentSites = [s, ...recentSites.filter(r => Math.abs(r.lat - s.lat) > 0.01 || Math.abs(r.lon - s.lon) > 0.01)].slice(0, 5);
+    recentSites = [s, ...recentSites.filter(r => Math.abs(r.lat - s.lat) > 0.01 || Math.abs(r.lon - s.lon) > 0.01)].slice(0, 10);
     store('wxRecent', recentSites);
   }
   document.getElementById('wx-picker').hidden = true;
@@ -3950,6 +4019,7 @@ async function searchSite(e) {
   const out = document.getElementById('wx-results');
   if (!q) return;
   out.innerHTML = '';
+  { const sg = document.querySelector('.wx-sug'); if (sg) sg.hidden = true; }
   const note = (t) => { const d = document.createElement('div'); d.className = 'wx-note'; d.textContent = t; out.appendChild(d); };
 
   // "35.59, -78.50" style coordinates
@@ -4386,6 +4456,7 @@ async function renderWeather(lat, lon, attempt = 1) {
             ${windHtsHTML(wx, windOk ? windMph : null)}`;
         body.innerHTML = `
         <div class="wx-grid">
+          <div class="wx-note wx-guidenote">Guide only. Check your own weather sources and the sky before you fly.</div>
           <div class="wx-note wx-windnote${windCaution ? ' wx-warn' : ''}">${windCaution ? '⚠️ ' : ''}Obstructions/terrain can make it windier where you fly.</div>
           <div class="wx-item">
             ${windHTML}
@@ -4436,7 +4507,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         ${goldenLine}
         <div class="wx-night" id="wx-night" hidden></div>
         <div class="wx-updated" id="wx-updated">Updated ${now} · ${srcText}<span id="wx-age"></span></div>
-        <div class="wx-disclaimer">Guide only. Conditions can differ at your site. Check your own weather sources and look at the sky before you fly. Radar: <a href="https://www.rainviewer.com" target="_blank" rel="noopener">RainViewer</a>.</div>
+        <div class="wx-disclaimer">Radar: <a href="https://www.rainviewer.com" target="_blank" rel="noopener">RainViewer</a>.</div>
         `;
         refreshAge();
       };
