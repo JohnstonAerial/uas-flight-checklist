@@ -227,7 +227,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 
 - **The buttons follow the place you look up**, not just your **Where you fly** setting. When you search for a place and pick it, the app remembers its country. A US pilot who looks up a site in Australia gets Australia's button, and a pilot outside the USA who looks up a US site gets the US ones.
 - **🛩 Airspace chart — SkyVector** is always the top-left button. It has charts for many countries (its TFR overlay is US only, and it knows nothing about your country's drone rules).
-- **In the USA:** **Facility map — FAA**, **TFRs — FAA.gov** and **NOTAMs — AIM** sit beside and below it.
+- **In the USA:** **FAA grid map**, **TFRs — FAA.gov** and **NOTAMs — AIM** sit beside and below it.
 - **Countries with their own button:** **🇦🇺 Drone safety apps — CASA** (Australia, the regulator's list of verified drone safety apps), **🇦🇷 Drones — ANAC** (Argentina, rules and registration), **🇫🇷 Drones — DGAC** (France, the government's open-category drone page, with the restrictions map, registration and rules), **🇧🇪 Drone map — Droneguide** (Belgium, the official national map), **🇬🇧 Drone map — NATS** (the UK, the map the CAA points to) and **🇨🇦 Drone map — NRC** (Canada, the National Research Council's drone site selection tool). In these countries the FAA buttons are hidden, because they don't apply there.
 - **Any other country:** with **Outside USA** chosen, or a place picked from search in another country, you get **🌍 Find your aviation authority**, a list of national aviation authorities with their websites, and a line asking you to tell us which country to add. GPS and typed coordinates carry no country, so for them the app goes by the time zone and your setting.
 - These buttons are links to official pages. Pages can move, and none of them replaces the rules in your own country, so check before you fly.
@@ -238,7 +238,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 
 ## Check TFRs and NOTAMs before you fly (USA)
 
-**This section is for flying in the USA only.** TFRs and NOTAMs here are the FAA's. In countries outside the USA the **Facility map**, **TFRs** and **NOTAMs** buttons are hidden, so use your own country's aviation authority and drone airspace app instead (see [Use it outside the USA](#use-it-outside-the-usa)).
+**This section is for flying in the USA only.** TFRs and NOTAMs here are the FAA's. In countries outside the USA the **FAA grid map**, **TFRs** and **NOTAMs** buttons are hidden, so use your own country's aviation authority and drone airspace app instead (see [Use it outside the USA](#use-it-outside-the-usa)).
 
 ### TFRs
 
@@ -255,9 +255,11 @@ The **⚠️ TFRs** button opens the FAA's list for the whole country, so most o
 
 **Easier on a phone: an FAA-approved airspace app.** The FAA's TFR list is built for a desktop screen. The FAA's B4UFLY service is delivered through FAA-approved apps from private companies, and these show airspace advisories, including TFRs, on a map around you. That's much easier to read at the launch site. Treat the map as a quick look, and still confirm against the FAA's current TFR and NOTAM pages, because an app can lag behind or miss a notice.
 
-### UAS Facility Maps
+### FAA grid map (UAS Facility Maps)
 
-The **🗺 Facility map — FAA** button opens the FAA's UAS Facility Maps (also called "Visualize it"). Near airports in controlled airspace the map is split into grids, and each grid shows the highest altitude the FAA can approve automatically through LAANC. A grid showing 0 is not available for automatic approval. Like the TFR and NOTAM pages, it is easier to read in your browser, with your phone turned sideways. It is a planning aid: your airspace app and your LAANC authorization are still what you fly by.
+The **🗺 FAA grid map** button opens the FAA's UAS Facility Map, centered on the place you chose. Near airports in controlled airspace the map is split into grids, and each grid shows the highest altitude the FAA can approve automatically through LAANC. A grid showing 0 is not available for automatic approval.
+
+The button also reads the grid at your spot and shows it on the button: **400 ft · LAANC** (a ceiling above zero with LAANC available), **100 ft · no LAANC**, **0 ft · FAA approval** (authorization needed) or **No grid here** (the FAA has no grid at that spot, which is common away from controlled airports). If the FAA's data service can't be reached, the button still opens the map but shows no line. This is a guide only. It does not show TFRs, and it does not replace LAANC or your airspace app, so check those before you fly.
 
 ### Reading NOTAMs
 

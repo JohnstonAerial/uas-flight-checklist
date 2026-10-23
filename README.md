@@ -106,6 +106,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.12
+
+- **FAA grid map button** — the **Facility map — FAA** button is now **🗺 FAA grid map**. It opens the FAA's UAS Facility Map already centered on the place you chose, so there is no pop-up to accept and nothing to search for. The button also shows what the FAA grid says at that spot, such as **400 ft · LAANC**, **0 ft · FAA approval** or **No grid here**. It is a guide only, so still check LAANC or your airspace app before you fly. USA only, like the TFR and NOTAM buttons.
+
+---
+
 ## What's new in v4.0.11
 
 - **Buttons for your country** — the buttons under the weather now follow the place you look up. Countries with their own official drone resource get a button: **Australia** (CASA's verified drone safety apps), **Argentina** (ANAC rules and registration), **France** (the DGAC open-category page), **Belgium** (the Droneguide map), **the UK** (the NATS restriction zones map) and **Canada** (the NRC drone site selection tool). In those countries the FAA buttons are hidden, since they don't apply.

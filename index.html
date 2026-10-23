@@ -699,6 +699,11 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-tfr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .wx-tfr { display: block; width: 100%; padding: 9px; background: #e0301e; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-notam { display: block; width: 100%; padding: 9px; background: #7f3fbf; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-facmap .gl { display: block; font-weight: 600; font-size: 12px; margin-top: 1px; }
+  .wx-facmap .gl.ok { color: #b9f3c8; } .wx-facmap .gl.zero { color: #ffd98a; }
+  .wx-gridnote { display: none; grid-column: 1 / -1; font-size: 11px; color: var(--text-muted); text-align: center; line-height: 1.35; }
+  .wx-tfr-row.gridok .wx-gridnote { display: block; }
+  .wx-tfr-row.cc .wx-gridnote, .wx-tfr-row.none .wx-gridnote, body.intl .wx-tfr-row .wx-gridnote { display: none; }
   .wx-facmap { display: block; width: 100%; padding: 9px; background: #1f6f8b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-airmap { display: block; width: 100%; padding: 9px; background: #3d4a9c; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
 
@@ -762,7 +767,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.11</p>
+      <p>Free Drone Preflight Checklist · v4.0.12</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -811,7 +816,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   </div>
   <div class="wx-tfr-row" style="margin-top:10px;">
     <a class="wx-airmap" id="wx-airmap" href="https://skyvector.com/" target="_blank" rel="noopener">🛩 Airspace chart — SkyVector</a>
-    <a class="wx-facmap" href="https://experience.arcgis.com/experience/e6e8b84c6f1144f69a30f9632ebe4352" target="_blank" rel="noopener">🗺 Facility map — FAA</a>
+    <a class="wx-facmap" id="wx-gridbtn" href="https://www.arcgis.com/apps/mapviewer/index.html?webmap=3b4034c30d8e4e0d8d4b7967dcde8cce" target="_blank" rel="noopener">🗺 FAA grid map<span class="gl" id="wx-gridline"></span></a>
     <a class="wx-aubtn" id="wx-aubtn" href="https://www.casa.gov.au/drones/safety-apps" target="_blank" rel="noopener">🇦🇺 Drone safety apps — CASA</a>
     <a class="wx-arbtn" id="wx-arbtn" href="https://www.argentina.gob.ar/anac/rpa-rpas" target="_blank" rel="noopener">🇦🇷 Drones — ANAC</a>
     <a class="wx-frbtn" id="wx-frbtn" href="https://www.ecologie.gouv.fr/exploitation-drones-en-categorie-ouverte" target="_blank" rel="noopener">🇫🇷 Drones — DGAC</a>
@@ -822,6 +827,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <div class="wx-ccnote" id="wx-ccnote">No button for your country yet. <a id="wx-ccmail" href="#">Tell us which country</a> and we will look at adding it.</div>
     <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener">⚠️ TFRs — FAA.gov</a>
     <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener">📋 NOTAMs — AIM</a>
+    <div class="wx-gridnote" id="wx-gridnote">Guide only. Check LAANC before you fly.</div>
   </div>
 </div>
 
@@ -1415,6 +1421,35 @@ function restoreProgress() {
   if (n) restoredAt = data.savedAt;
 }
 
+// FAA UAS Facility Map grid at a spot (public FAA data service, no key): the altitude ceiling LAANC uses around controlled airports. US only; shows nothing where the FAA has no grid, and hides itself if the service can't be reached.
+let gridKey = '';
+async function gridLookup(lat, lon) {
+  const row = document.querySelector('.wx-tfr-row'), btn = document.getElementById('wx-gridbtn'), line = document.getElementById('wx-gridline');
+  if (!row || !btn) return;
+  // The tap opens the FAA's map (grids included) centered on this spot
+  btn.href = 'https://www.arcgis.com/apps/mapviewer/index.html?webmap=3b4034c30d8e4e0d8d4b7967dcde8cce&center=' + Number(lon).toFixed(5) + ',' + Number(lat).toFixed(5) + '&level=12';
+  const key = Number(lat).toFixed(4) + ',' + Number(lon).toFixed(4);
+  if (key === gridKey && btn.dataset.done) return;
+  gridKey = key; delete btn.dataset.done;
+  const show = (t, cls) => { if (line) { line.textContent = t; line.className = 'gl' + (cls ? ' ' + cls : ''); } };
+  show('', ''); row.classList.remove('gridok');
+  const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 9000);
+  try {
+    const u = 'https://services6.arcgis.com/ssFJjBXIUyZDrSYZ/arcgis/rest/services/FAA_UAS_FacilityMap_Data/FeatureServer/0/query?geometry=' + Number(lon).toFixed(5) + '%2C' + Number(lat).toFixed(5) + '&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=CEILING%2CAPT1_LAANC&returnGeometry=false&f=json';
+    const r = await fetch(u, { signal: ctl.signal }); clearTimeout(tm);
+    if (!r.ok) throw new Error('grid ' + r.status);
+    const d = await r.json();
+    if (key !== gridKey) return;
+    const f0 = d && d.features && d.features[0] && d.features[0].attributes;
+    if (!f0 || typeof f0.CEILING !== 'number') show('No grid here', '');
+    else if (f0.CEILING > 0) show(f0.CEILING + ' ft · ' + (f0.APT1_LAANC === 1 ? 'LAANC' : 'no LAANC'), 'ok');
+    else show('0 ft · FAA approval', 'zero');
+    btn.dataset.done = '1'; row.classList.add('gridok');
+  } catch (e) {
+    clearTimeout(tm);
+    if (key === gridKey) { show('', ''); gridKey = ''; }
+  }
+}
 function nwsRadarUrl(lat, lon) {
   // NWS radar page opens centered on the chosen location (settings are base64 JSON)
   try {
@@ -4107,6 +4142,8 @@ async function renderWeather(lat, lon, attempt = 1) {
         auRow.classList.toggle('cc', !!which);
         // A place with no button of its own: outside the USA by its search country code, or the Outside USA setting for GPS and typed places
         auRow.classList.toggle('none', !which && (cc ? cc !== 'US' : region === 'intl'));
+        const wantGrid = !which && !(cc ? cc !== 'US' : region === 'intl');
+        if (wantGrid) gridLookup(lat, lon);
         const cm = document.getElementById('wx-ccmail');
         if (cm) { const v = appVer(); cm.href = 'mailto:info@JohnstonAerial.com?subject=' + encodeURIComponent('Checklist: please add my country ' + v) + '&body=' + encodeURIComponent('My country is:\n\nThe official drone map or aviation authority website, if you know it:\n\n\n---\nApp version: ' + v); }
       }
