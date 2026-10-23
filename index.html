@@ -603,6 +603,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-hnote { margin-top: 3px; font-size: 10.5px; font-style: italic; color: var(--text-muted); line-height: 1.3; }
   .wx-hshear { margin-top: 4px; padding: 3px 6px; border: 1px solid var(--amber); border-radius: 7px; line-height: 1.3; }
   .wx-li { margin-top: 1px; }
+  .wx-elev { margin-top: 8px; }
+  .wx-elev .wx-warn { font-weight: 700; }
   .wx-model { margin-top: 8px; }
   .wx-model strong { font-weight: 700; }
   .wx-loc { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: -4px 0 10px; font-size: 13px; color: var(--text); }
@@ -615,6 +617,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-result { display: block; width: 100%; text-align: left; font-family: inherit; font-size: 14px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-top: 6px; cursor: pointer; }
   .wx-result small { display: block; color: var(--text-muted); font-size: 11px; margin-top: 1px; }
   .wx-note { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+  .wx-grid > .wx-windnote { grid-column: 1 / -1; margin-top: 0; font-size: 11px; }
   .wx-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .wx-chip { font-family: inherit; font-size: 12px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 5px 10px; cursor: pointer; }
   .wx-status { font-size: 12px; color: var(--text-muted); text-align: center; padding: 6px 0 2px; }
@@ -732,7 +735,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.0.7</p>
+      <p>Free Drone Preflight Checklist · v4.0.8</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -1598,6 +1601,27 @@ function nightSet(v) {
   document.querySelectorAll('.region-row').forEach(r => r.classList.toggle('night-on', !!v));
   if (lastDraw) lastDraw();
 }
+// Keep screen on (Settings, off by default, saved on this device and in Back up & restore): asks the phone to keep the screen awake while the app is open and in view
+const WAKE_KEY = 'uasKeepAwake';
+let wakeSentinel = null;
+function wakeSupported() { try { return !!(navigator.wakeLock && navigator.wakeLock.request); } catch (e) { return false; } }
+function wakeOn() { try { return localStorage.getItem(WAKE_KEY) === '1'; } catch (e) { return false; } }
+async function wakeAcquire() {
+  if (!wakeOn() || !wakeSupported() || document.visibilityState !== 'visible' || wakeSentinel) return;
+  try {
+    const sn = await navigator.wakeLock.request('screen');
+    wakeSentinel = sn;
+    sn.addEventListener('release', () => { if (wakeSentinel === sn) wakeSentinel = null; });   // the phone can drop it (low battery, app hidden); it is requested again when the app is back in view
+  } catch (e) { wakeSentinel = null; }
+}
+function wakeRelease() { const sn = wakeSentinel; wakeSentinel = null; if (sn) { try { sn.release(); } catch (e) {} } }
+function wakeSet(v) {
+  try { if (v) localStorage.setItem(WAKE_KEY, '1'); else localStorage.removeItem(WAKE_KEY); } catch (e) {}
+  document.querySelectorAll('.wake-sel').forEach(x => { x.value = v ? '1' : '0'; });
+  if (v) wakeAcquire(); else wakeRelease();
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') wakeAcquire(); });
+document.addEventListener('pointerdown', () => { if (wakeOn() && !wakeSentinel) wakeAcquire(); }, { passive: true });   // some browsers only allow it after a tap
 const REGION_KEY = 'uasRegion';
 let region = (function () { try { const v = localStorage.getItem(REGION_KEY); return v === 'us' || v === 'intl' ? v : null; } catch (e) { return null; } })();
 const US_ONLY_ITEMS = [/^Check TFRs \(US\) at tfr\.faa\.gov$/, /^LAANC \(US\) —/, /^Recheck TFRs \(US\)/];   // hidden outside the USA
@@ -2283,9 +2307,13 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const row = document.createElement('div');
   row.className = 'keep-row region-row';
   row.innerHTML = '<span>🌍 Where you fly</span><select class="region-sel" aria-label="Where you fly" onchange="applyRegion(this.value, true)"><option value="us">USA</option><option value="intl">Outside USA</option></select><div class="region-hint">Changes the checklist items, weather units and airspace links to match your country.</div>' +
-    '<div class="rbreak"></div><span>🌙 I fly at night</span><select class="night-sel" aria-label="I fly at night" onchange="nightSet(this.value === \'1\')"><option value="0">No</option><option value="1">Yes</option></select><div class="region-hint nh">Best window will include night hours. Check your lights and training requirements first.</div>';
+    '<div class="rbreak"></div><span>🌙 I fly at night</span><select class="night-sel" aria-label="I fly at night" onchange="nightSet(this.value === \'1\')"><option value="0">No</option><option value="1">Yes</option></select><div class="region-hint nh">Best window will include night hours. Check your lights and training requirements first.</div>' +
+    '<div class="rbreak"></div><span>🔆 Keep screen on</span><select class="wake-sel" aria-label="Keep screen on" onchange="wakeSet(this.value === \'1\')"><option value="0">No</option><option value="1">Yes</option></select><div class="region-hint wh"></div>';
   row.querySelector('select').value = region || 'us';
   row.querySelector('.night-sel').value = nightOn() ? '1' : '0';
+  row.querySelector('.wake-sel').value = wakeOn() ? '1' : '0';
+  if (wakeSupported()) row.querySelector('.wh').textContent = 'Stops the screen from locking while this app is open and in view. Uses more battery, so it is off unless you turn it on.';
+  else { row.querySelector('.wake-sel').disabled = true; row.querySelector('.wh').textContent = 'This phone or browser can\u2019t keep the screen on from a web page.'; }
   row.classList.toggle('night-on', nightOn());
   panelEl.querySelector('.keep-row').after(row);
 });
@@ -2423,7 +2451,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -2450,7 +2478,7 @@ function xferWarm(el) {
   xferEncode(snap).then(code => { xferPre = { key, code }; }).catch(() => {});
 }
 // Back-up reminder: shown under the Settings / Back up & restore buttons after anything that a backup carries is changed
-const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'uasNight', 'uasHideHints', 'wxUnits', 'uasWindUnit', 'uasTheme'];
+const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasWindUnit', 'uasTheme'];
 let bkReady = false;
 setTimeout(() => { bkReady = true; }, 2000);
 // ?notrack on the address turns off the back-up reminder (and, on the public site, Cloudflare counting); ?track turns both back on
@@ -3666,6 +3694,22 @@ function tempColor(f) {
 }
 const fmtDist = (mi) => isMetric() ? Math.round(mi * 1.609344) + ' km' : Math.round(mi) + ' mi';
 const fmtAlt = (ft) => isMetric() ? (Math.round(ft * 0.3048 / 10) * 10).toLocaleString() + ' m' : Number(ft).toLocaleString() + ' ft';
+// Elevation of the forecast point and a density altitude estimate (from the model's own temperature, dew point and surface pressure there); null when any piece is missing
+function elevDens(om) {
+  try {
+    const c = om && om.current, el = om && om.elevation;
+    if (!c || typeof el !== 'number' || !isFinite(el)) return null;
+    const tF = c.temperature_2m, dF = c.dew_point_2m, p = c.surface_pressure;
+    if (![tF, dF, p].every(v => typeof v === 'number' && isFinite(v)) || p < 300 || p > 1100) return null;
+    const tK = (tF - 32) * 5 / 9 + 273.15, dC = (dF - 32) * 5 / 9;
+    const e = 6.112 * Math.exp(17.62 * dC / (243.12 + dC));            // vapour pressure, hPa
+    const tv = tK / (1 - 0.378 * e / p);                                // virtual temperature
+    const rho = p * 100 / (287.05 * tv);                                // air density, kg/m3
+    const daM = 44330.8 * (1 - Math.pow(rho / 1.225, 0.234969));        // standard-atmosphere altitude with that density
+    const elFt = el / 0.3048, daFt = daM / 0.3048;
+    return { elFt: Math.round(elFt / 10) * 10, daFt: Math.round(daFt / 100) * 100, diff: daFt - elFt };
+  } catch (err) { return null; }
+}
 function updateUnitsButton() {
   const b = document.getElementById('wx-units');
   if (!b) return;
@@ -3911,7 +3955,7 @@ async function renderWeather(lat, lon, attempt = 1) {
   lastDraw = null;
   try {
       const [wxRes, kpData, metarData, radarRes] = await Promise.allSettled([
-        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m&hourly=visibility,wind_speed_10m,wind_gusts_10m,wind_speed_80m,wind_speed_120m,cloud_cover,precipitation_probability,precipitation,weather_code,cape,temperature_2m,dew_point_2m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=10`),
+        fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation,weather_code,relative_humidity_2m,dew_point_2m,surface_pressure&hourly=visibility,wind_speed_10m,wind_gusts_10m,wind_speed_80m,wind_speed_120m,cloud_cover,cloud_cover_low,precipitation_probability,precipitation,weather_code,cape,temperature_2m,dew_point_2m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=10`),
         fetchKP(),
         fetchMetar(lat, lon),
         fetchRadar(lat, lon)
@@ -4169,13 +4213,11 @@ async function renderWeather(lat, lon, attempt = 1) {
             <div class="wx-sub" data-rec-age="${Date.now() - ow.ageMin * 60000}">${ow.station} · ${fmtDist(ow.dist)} away · ${ageText(ow.ageMin * 60000)}</div>
             ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${NB(modelTxt)}</strong></div>` : ''}
             ${windierHtml}
-            ${windHtsHTML(wx, windOk ? windMph : null)}
-            <div class="wx-note wx-windnote">Obstructions/terrain can make it windier where you fly.</div>` : `
+            ${windHtsHTML(wx, windOk ? windMph : null)}` : `
             <div class="wx-label">Wind</div>
             <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + windChipHtml() + (dirOk ? ' ' + windDirHtml(wx.wind.deg) : '') : '—'}</div>
             <div class="wx-sub">${windOk ? (gustMph ? 'Sustained\u00A0/\u00A0Gusts' : 'No gusts reported') : 'No wind data'}</div>
-            ${windHtsHTML(wx, windOk ? windMph : null)}
-            <div class="wx-note wx-windnote">Obstructions/terrain can make it windier where you fly.</div>`;
+            ${windHtsHTML(wx, windOk ? windMph : null)}`;
         body.innerHTML = `
         <div class="wx-grid">
           <div class="wx-item">
@@ -4190,8 +4232,10 @@ async function renderWeather(lat, lon, attempt = 1) {
             ${alsoTxt() ? `<div class="wx-sub wx-also">${alsoTxt()}</div>` : ''}
             ${lowCloudTxt() ? `<div class="wx-sub">${lowCloudTxt()}</div>` : ''}
             ${maxAltTxt() ? `<div class="wx-sub"><strong>${maxAltTxt()}</strong></div>` : ''}
+            ${(() => { const H = om && om.hourly; if (!H || !H.cloud_cover || hIdx < 0) return ''; const c = H.cloud_cover[hIdx], lo = H.cloud_cover_low ? H.cloud_cover_low[hIdx] : null; if (c == null || !isFinite(c)) return ''; return `<div class="wx-sub wx-model">Model for your spot: <strong>${Math.round(c)}%\u00A0cloud${lo != null && isFinite(lo) ? '<br>' + Math.round(lo) + '%\u00A0low' : ''}</strong></div>`; })()}
             ${metarData2 ? cloudHtml(m, ceilFt, om, hIdx) : ''}
           </div>
+          <div class="wx-note wx-windnote">Obstructions/terrain can make it windier where you fly.</div>
           <div class="wx-item">
             <div class="wx-label">Temperature</div>
             <div class="wx-value ${tempOk ? tempColor(wx.main.temp) : ''}">${tempOk ? fmtTemp(wx.main.temp) : '—'}</div>
@@ -4200,6 +4244,7 @@ async function renderWeather(lat, lon, attempt = 1) {
             <div class="wx-value wx-vis-val ${visBelowMin() ? 'wx-alert' : (typeof visM === 'number' && visM >= 4828 ? 'wx-good' : '')}">${visTxt()}<span class="wx-vis-src">${visSrc()}</span></div>
             ${visBelowMin() ? '<div class="wx-sub wx-alert">⛔ Below 3 SM minimum</div>' : ''}
             ${visNote() ? `<div class="wx-sub">${visNote()}</div>` : ''}
+            ${(() => { const ed = elevDens(om); return ed ? `<div class="wx-sub wx-elev">Elevation ${NB(fmtAlt(ed.elFt))}<br><span class="${ed.diff >= 1500 ? 'wx-warn' : ''}">Density alt ${NB(fmtAlt(ed.daFt))}</span></div>` : ''; })()}
           </div>
           <div class="wx-item">
             <div class="wx-label">Precipitation</div>

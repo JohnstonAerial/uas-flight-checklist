@@ -106,6 +106,15 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.0.8
+
+- **Keep screen on** — a new setting in **⚙ Settings**. Turn it on and the screen will not lock while the app is open and in view. It is off by default (it uses more battery), is included in Back up and restore, and shows a note if your phone or browser can't do it.
+- **Elevation and density altitude** — the Temperature tile now shows the elevation of your spot and an estimated density altitude (how thin the air acts, from temperature, humidity and pressure). It turns bold when the air is much thinner than the elevation alone, which can mean less lift and shorter battery life.
+- **Cloud tile model line** — the Cloud Ceiling tile adds "Model for your spot" with the forecast cloud cover and low cloud, so it lines up with the Wind tile.
+- **Tidier tiles** — the note about obstructions and terrain now sits once on its own line under the Wind and Cloud Ceiling tiles.
+
+---
+
 ## What's new in v4.0.7
 
 - **Quieter location label** — the place name on the forecast strip no longer has a pin and now uses the same grey as the strip's title, so it reads as a reminder of where the forecast is for and not something you can tap.
