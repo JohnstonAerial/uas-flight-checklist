@@ -320,6 +320,20 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .print-tip strong { font-weight: 700; }
   .print-tip .pt-x { position: absolute; top: 0; right: 0; width: 38px; height: 38px; border: 0; background: transparent; color: var(--text-muted); font-size: 20px; line-height: 1; cursor: pointer; border-radius: 10px; }
   .panel.editing .print-tip { display: none; }
+  /* 4.1.1: Customize beside the progress count; Print, PDF and Save flight record after the last section */
+  .pc-top { display: flex; align-items: center; gap: 10px; flex: 1 1 100%; }
+  .pc-top .progress-info { flex: 1 1 0; min-width: 0; }
+  .pc-cust { font-family: inherit; font-size: 12px; font-weight: 600; color: var(--blue); background: transparent; border: 1px solid var(--blue); border-radius: 20px; padding: 6px 12px; min-height: 34px; white-space: nowrap; cursor: pointer; flex: 0 0 auto; }
+  .pc-cust:active { background: var(--blue-light); }
+  .pc-bottom { background: var(--card); border-radius: 14px; padding: 12px 14px; margin: 14px 0 6px; box-shadow: var(--shadow); display: flex; }
+  .pc-bottom .pc-btns { flex: 1 1 100%; margin-bottom: 0; }
+  .pc-jump { display: block; width: 100%; font-family: inherit; font-size: 12.5px; color: var(--link); background: none; border: 0; text-align: center; text-decoration: underline; padding: 2px 12px 8px; cursor: pointer; line-height: 1.35; }
+  .pc-moved { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 10px; padding: 10px 12px; border: 1px solid var(--blue); border-radius: 12px; background: var(--blue-light); font-size: 13px; line-height: 1.35; color: var(--text); }
+  .pc-moved b { display: block; margin-bottom: 2px; }
+  .pc-moved .pm-go { display: inline-block; margin-top: 6px; padding: 0; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--link); background: none; border: 0; text-decoration: underline; cursor: pointer; }
+  .pc-moved .pm-x { margin-left: auto; flex: 0 0 auto; width: 32px; height: 32px; margin-top: -6px; margin-right: -8px; border: 0; background: transparent; color: var(--text-muted); font-size: 20px; line-height: 1; cursor: pointer; }
+  .panel.editing .pc-bottom, .panel.editing .pc-jump, .panel.editing .pc-moved { display: none; }
+  @media print { .pc-bottom, .pc-jump, .pc-moved, .pc-cust { display: none !important; } }
   .pc-cap { font-size: 10px; letter-spacing: .5px; color: var(--text-muted); text-align: center; margin: 0 0 3px; font-weight: 600; }
   .pc-join { display: flex; border: 1px solid var(--blue); border-radius: 20px; overflow: hidden; }
   .pc-btns .pc-join .rec-btn { flex: 1 1 0; width: auto; border: 0; border-radius: 0; flex-direction: row; gap: 6px; min-height: 40px; padding: 6px 4px; }
@@ -793,7 +807,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.1.0</p>
+      <p>Free Drone Preflight Checklist · v4.1.1</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2605,7 +2619,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', 'uasMovedOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -5238,6 +5252,44 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
     b.after(tip);   // below the buttons, so they sit the same whether or not the tip is showing
   }
 });
+// 4.1.1: Customize sits beside the progress count; Print, PDF and Save flight record sit after the last section, with a pointer for pilots who looked at the top
+(function () {
+  try { if (localStorage.getItem('uasRegion') === null && localStorage.getItem('uasMovedOff') === null) localStorage.setItem('uasMovedOff', '1'); } catch (e) {}   // brand-new visitors never knew the old spot
+  const movedOff = () => { try { return localStorage.getItem('uasMovedOff') === '1'; } catch (e) { return false; } };
+  document.querySelectorAll('.panel').forEach(panelEl => {
+    const card = panelEl.querySelector(':scope > .progress-card'); if (!card) return;
+    const info = card.querySelector('.progress-info'), col = card.querySelector('.pc-btns'), anchor = panelEl.querySelector(':scope > .coffee-note');
+    if (!info || !col) return;
+    const bottom = document.createElement('div'); bottom.className = 'pc-bottom'; bottom.appendChild(col);
+    if (anchor) anchor.before(bottom); else panelEl.appendChild(bottom);
+    const top = document.createElement('div'); top.className = 'pc-top';
+    info.replaceWith(top);
+    const cust = document.createElement('button'); cust.type = 'button'; cust.className = 'pc-cust';
+    cust.textContent = '\u270E Customize'; cust.setAttribute('aria-label', 'Customize this checklist');
+    cust.onclick = () => toggleEdit(cust);
+    top.append(info, cust);
+    const goBottom = () => { try { bottom.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { bottom.scrollIntoView(); } };
+    const jump = document.createElement('button'); jump.type = 'button'; jump.className = 'pc-jump';
+    jump.textContent = '\u2193 Print, PDF and Save flight record are at the bottom'; jump.onclick = goBottom;
+    card.after(jump);
+    if (!movedOff()) {
+      const n = document.createElement('div'); n.className = 'pc-moved'; n.setAttribute('role', 'note');
+      n.innerHTML = '<span aria-hidden="true">\u2139\uFE0F</span><div><b>Moved: Print, PDF and Save flight record</b>They are now at the bottom of the checklist.<br><button type="button" class="pm-go">Jump there \u2193</button></div><button type="button" class="pm-x" aria-label="Dismiss this notice">\u00D7</button>';
+      n.querySelector('.pm-go').onclick = goBottom;
+      n.querySelector('.pm-x').onclick = () => { try { localStorage.setItem('uasMovedOff', '1'); } catch (e) {} document.querySelectorAll('.pc-moved').forEach(x => x.remove()); };
+      card.before(n);
+    }
+  });
+})();
+// 4.1.1b: one footer for every tab (Buy me a coffee, Help & guides, Send feedback, and on the live site the version line)
+(function () {
+  const panels = [...document.querySelectorAll('.panel')]; if (!panels.length) return;
+  const gen = document.getElementById('panel-general') || panels[0];
+  const foot = document.createElement('div'); foot.id = 'site-foot';
+  ['.coffee-note', '.foot-links', '.ver-line'].forEach(sel => { const e = gen.querySelector(':scope > ' + sel); if (e) foot.appendChild(e); });
+  panels.forEach(pn => pn.querySelectorAll(':scope > .coffee-note, :scope > .foot-links, :scope > .ver-line').forEach(e => e.remove()));
+  panels[panels.length - 1].after(foot);
+})();
 </script>
 
 <!-- Cloudflare Web Analytics (skipped on browsers where you opened the page once with ?notrack on the end; ?track turns it back on) -->

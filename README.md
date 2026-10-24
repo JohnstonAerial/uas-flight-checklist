@@ -106,6 +106,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.1.1
+
+- **Customize is on the Checklist tab** — a small **✎ Customize** button sits beside the percentage at the top of the checklist. It opens the same Customize screen as before, and **⚙ Settings → Customize** still works too.
+- **Print, PDF and Save flight record moved to the bottom** — they are now in a card after the last section, just above the footer. Tap **↓ Print, PDF and Save flight record are at the bottom** under the progress card to jump straight there. The first time you open the app after this change, a blue **Moved** notice says the same, with a **Jump there** link. Close it with the **×** and it stays closed on that device. The choice is saved with **Back up & restore**. New visitors never see it.
+- **One footer on every tab** — **buy me a coffee**, **Help & guides**, **Send feedback** and the version number now show at the bottom of **Conditions**, **Checklist** and **Settings**, not only the checklist.
+
+---
+
 ## What's new in v4.1.0
 
 - **Three tabs: Conditions, Checklist, Settings** — the app now opens on **🌤 Conditions**, the preflight weather card. **✅ Checklist** is one tap away, and **⚙ Settings** holds **Settings** and **Back up & restore**. The General, Mapping and Commercial tabs show on the Checklist and Settings tabs. The app remembers the tab you used last on that device. A red dot on **⚙ Settings** means a backup is due. Nothing you saved changes: your tabs, customized lists, progress and settings are the same as before, and **Customize** from Settings takes you to the checklist.

@@ -18,7 +18,7 @@ Short guides for eight things people ask about: finding your way around the thre
 The app has three tabs at the top.
 
 - **🌤 Conditions** is where it opens: the preflight weather card, the airspace and TFR buttons, and the place you're checking.
-- **✅ Checklist** is your checklist. The General, Mapping and Commercial tabs, and your own tabs, show here.
+- **✅ Checklist** is your checklist. The General, Mapping and Commercial tabs, and your own tabs, show here. **✎ Customize** is beside the percentage at the top. **Print**, **PDF** and **Save flight record** are in a card at the bottom, and a line under the progress card jumps you there.
 - **⚙ Settings** has **Settings** and **Back up & restore**. A small red dot on it means a backup is due.
 
 The app remembers the tab you used last on that device. Tapping **Customize** in Settings takes you to the checklist so you can edit it. Backing up and restoring work the same from any tab, because they save everything the app has stored on that device.
@@ -83,7 +83,7 @@ The app keeps one setup at a time on your device: your tab names and icons, whic
 
 **Example: a "Timelapse" setup**
 
-1. Tap **⚙ Settings**, then **Customize** in the **Your checklist & tab** row.
+1. Tap **✎ Customize** at the top of the **✅ Checklist** tab (or **⚙ Settings**, then **Customize** in the **Your checklist & tab** row).
 2. Rename a tab (for example, **Timelapse**) in the **Tab name** box. You can also change its icon: tap **Change ›** next to **Tab icon**, then pick a drone icon (and a color), type your own emoji, or choose **No icon**.
 3. Tap **Hide** on items you don't need, and add your own at the bottom of any section. Use **Hide this tab** on tabs you don't want to see. Tap **✓ Done**.
 4. In **💾 Back up & restore**, untick **Include current progress**, then tap **Save file**.
@@ -177,7 +177,7 @@ Still worth doing: the checklist's own tip to screenshot your mission brief. The
 
 ## Save a flight record
 
-Want a copy of what you checked, plus the details of the flight? Tap **Save flight record**, on the right of the buttons at the top of the checklist (under **Print | PDF** on a narrow screen).
+Want a copy of what you checked, plus the details of the flight? Tap **Save flight record**, in the card at the bottom of the checklist, under **Print | PDF**. From the top, tap **↓ Print, PDF and Save flight record are at the bottom** to jump there.
 
 1. Tap **Save flight record**.
 2. Fill in what you want to keep: the customer, the site (type an address or place name, or leave it blank) and any notes. **More details** has boxes for airspace authorization (for example a LAANC reference, altitude and times), flight time and visual observer. Everything is optional.
@@ -190,7 +190,7 @@ You get one file, named like `flight-record-2026-10-06-1415-smith-roofing.pdf` (
 
 Want your name and aircraft printed on every record? In **⚙ Settings**, type your name in **Default pilot**, your drone in **Default drone** and its registration number in **Default reg. #**. They are printed near the top of each saved record, and filled in on the checklist **PDF** too. They stay on that device, and **Back up & restore** carries them. Leave a box empty and nothing is printed for it.
 
-**Fly more than one drone?** Give each drone its own tab. Tap **⚙ Settings**, then **Customize**, and under **For records and PDFs saved from this tab** type that tab's **Pilot**, **Drone** and **Reg. #**. A box you leave empty uses the default from Settings. To start a new drone with the same list, use **Clone another tab onto this one…** (see "Make your own profiles"). Back up when you're done.
+**Fly more than one drone?** Give each drone its own tab. Tap **✎ Customize** on the Checklist tab, and under **For records and PDFs saved from this tab** type that tab's **Pilot**, **Drone** and **Reg. #**. A box you leave empty uses the default from Settings. To start a new drone with the same list, use **Clone another tab onto this one…** (see "Make your own profiles"). Back up when you're done.
 
 If you close the Share sheet without choosing anything, the Save record box stays open with what you typed. If you close the box by tapping outside it, what you typed comes back for the next 12 hours. It is cleared once you save or copy the record, or tap **Cancel**.
 
@@ -202,7 +202,7 @@ If the Share sheet doesn't open, the app shows a box with **Share…** and **Dow
 
 ## Print it and use a pencil
 
-You can print the checklist and take it to the site. Open the tab you want, then tap **Print** in Safari. In the Home Screen app, open the page in Safari first, since the Home Screen app can't print. Check items off with a pencil during preflight and again after the flight. Print each tab you need, since only the open tab prints.
+You can print the checklist and take it to the site. Open the tab you want, scroll to the bottom of the checklist (or tap **↓ Print, PDF and Save flight record are at the bottom**), then tap **Print** in Safari. In the Home Screen app, open the page in Safari first, since the Home Screen app can't print. Check items off with a pencil during preflight and again after the flight. Print each tab you need, since only the open tab prints.
 
 **Print** uses your browser's page settings, so paper size and margins come from its print dialog. **Print** is always one column in large type, with every section open. It has no layout choice. If you want it compact, tap **PDF**, choose **Compact** in **⚙ Settings**, and print the PDF. For a different paper, tap **PDF** instead. Using the Home Screen app, or no printer? Tap **PDF** as well. It makes the same sheet as a PDF file, with your checked and flagged items marked and lines for date, time, site, pilot and visual observer, that you can save to Files, email or print later. It works in the Home Screen app too, and like printing it covers only the open tab.
 
