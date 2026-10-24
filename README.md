@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.1.2
+
+- **Official drone maps for 13 more countries** — the button under the weather now follows the place you look up and opens that country's official drone map or airspace page: **Austria** (Dronespace), **Switzerland** (FOCA drone map), **Italy** (D-Flight), **Spain** (ENAIRE), **Denmark** (dronezoner, via droneregler.dk), **Sweden** (LFV), **Norway** (Avinor), **Finland** (Traficom), **Poland** (DroneRadar), **Czech Republic** (DroneMap), **the Netherlands** (GoDrone), **Germany** (dipul) and **Ireland** (IAA). The FAA buttons are hidden in those countries, since they don't apply there. Some of these sites open in the local language.
+- **Search understands a country** — type the town with its country, such as **Munich, Germany**, **Berlin Germany** or **Dublin Ireland**, and the results are limited to that country. Before, adding a country name found nothing.
+
+---
+
 ## What's new in v4.1.1
 
 - **Customize is on the Checklist tab** — a small **✎ Customize** button sits beside the percentage at the top of the checklist. It opens the same Customize screen as before, and **⚙ Settings → Customize** still works too.
@@ -144,7 +151,7 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ## What's new in v4.0.11
 
-- **Buttons for your country** — the buttons under the weather now follow the place you look up. Countries with their own official drone resource get a button: **Australia** (CASA's verified drone safety apps), **Argentina** (ANAC rules and registration), **France** (the DGAC open-category page), **Belgium** (the Droneguide map), **the UK** (the NATS restriction zones map) and **Canada** (the NRC drone site selection tool). In those countries the FAA buttons are hidden, since they don't apply.
+- **Buttons for your country** — the buttons under the weather now follow the place you look up. Countries with their own official drone resource get a button: **Australia** (CASA's verified drone safety apps), **Argentina** (ANAC rules and registration), **France** (the DGAC open-category page), **Belgium** (the Droneguide map), **the UK** (the NATS restriction zones map) and **Canada** (the NRC drone site selection tool), plus 13 European countries added in v4.1.2 (see below). In those countries the FAA buttons are hidden, since they don't apply.
 - **Another country?** With **Outside USA** chosen, or a place from search in a country we don't have yet, you get **🌍 Find your aviation authority** (a list of national authorities) and a line asking you to tell us which country to add.
 - **SkyVector always top left** — the airspace chart button stays in the top-left corner whatever the country, with the other buttons beside and below it.
 
