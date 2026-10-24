@@ -106,6 +106,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.1
+
+- **Preferences | Back up & restore** — the top of the **⚙ Settings** tab is now a two-part switch, so you no longer open "Settings" inside "Settings". **⚙ Preferences** holds your display, limits, drones and info settings; **💾 Back up & restore** holds Back up and Restore. One half is always showing. The bar at the bottom now says **▴ Back to the top**.
+- **Back up & restore in the footer of every tab** — the link at the bottom of **Conditions**, **Checklist** and **Settings** opens **Back up & restore** straight away. From Conditions or Checklist, a **← Back** bar at the top returns you to where you were.
+- **Fix** — on **Default** in **Settings → Limits**, the drone name box and **Delete this drone** no longer show (there is nothing to rename or delete on Default).
+
+---
+
 ## What's new in v4.2.0
 
 - **Drones, each with their own limits** — add a drone in **⚙ Settings → Limits** (**＋ Add a drone**), name it, and set its own **wind**, **Kp** and **cold/heat** limits. A new drone starts as a copy of the limits you see, and your current limits stay as **Default**, so nothing changes until you add one. Once you have a drone, a blue pill under the place name on **Conditions** shows which drone's limits are in use, for example **Mini 4 Pro · wind 5 / 10 mph**. Tap it to switch: the Wind, Temperature and KP tiles, the Best window, the 24-hour strip and the no-flyable-window banner all follow the drone you pick. Drones are not tied to checklist tabs, so you can fly the same Mapping tab with a different drone on a different day. The drone list is included in **Back up & restore**.

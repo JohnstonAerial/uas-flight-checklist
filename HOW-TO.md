@@ -19,7 +19,7 @@ The app has three tabs at the top.
 
 - **🌤 Conditions** is where it opens: the preflight weather card, the airspace and TFR buttons, and the place you're checking.
 - **✅ Checklist** is your checklist. The General, Mapping and Commercial tabs, and your own tabs, show here. **✎ Customize** is beside the percentage at the top. **Print**, **PDF** and **Save flight record** are in a card at the bottom, and a line under the progress card jumps you there.
-- **⚙ Settings** has **Settings** and **Back up & restore**. A small red dot on it means a backup is due.
+- **⚙ Settings** has a two-part switch: **Preferences** and **Back up & restore**. A small red dot on the tab means a backup is due. The **💾 Back up & restore** link in the footer of every tab takes you straight to the backup half.
 
 The app remembers the tab you used last on that device. Tapping **Customize** in Settings takes you to the checklist so you can edit it. Backing up and restoring work the same from any tab, because they save everything the app has stored on that device.
 
@@ -37,7 +37,7 @@ The app remembers the tab you used last on that device. Tapping **Customize** in
 
 **Back it up after you make changes.** Your customized list lives only in that one browser on that one device. If the browser data gets cleared, you switch phones, or you open it somewhere else, your changes are gone and you'd have to rebuild them from scratch. A backup takes about a minute:
 
-1. Tap the **⚙ Settings** tab, then **💾 Back up & restore**.
+1. Tap the **⚙ Settings** tab, then **💾 Back up & restore** (or tap the **💾 Back up & restore** link at the bottom of any tab).
 2. Tap **Save file** (or **Copy code** and paste it into a note).
 3. Keep the file somewhere you'll find it, like a cloud folder.
 
@@ -55,7 +55,7 @@ It does not include saved flight records. Those are separate files that you keep
 
 **To back up**
 
-1. Tap the **⚙ Settings** tab, then **💾 Back up & restore**.
+1. Tap the **⚙ Settings** tab, then **💾 Back up & restore** (or tap the **💾 Back up & restore** link at the bottom of any tab).
 2. Leave **Include current progress** ticked if you're moving to another device today and want your ticks to come with you. Untick it to save only your setup, which is best for a backup you'll keep.
 3. Tap **Save file**. On an iPhone or iPad the Share sheet opens, so you can choose **Save to Files** or send it to yourself. In Chrome or Edge on a computer a Save dialog opens, so you choose the folder. In Safari or Firefox the browser takes over, and the app says **Backup started. If your browser asks, choose where to save it.** The file goes to your Downloads folder unless your browser is set to ask where to save.
 
@@ -212,7 +212,7 @@ You can print the checklist and take it to the site. Open the tab you want, scro
 
 **Print** uses your browser's page settings, so paper size and margins come from its print dialog. **Print** is always one column in large type, with every section open. It has no layout choice. If you want it compact, tap **PDF**, choose **Compact** in **⚙ Settings**, and print the PDF. For a different paper, tap **PDF** instead. Using the Home Screen app, or no printer? Tap **PDF** as well. It makes the same sheet as a PDF file, with your checked and flagged items marked and lines for date, time, site, pilot and visual observer, that you can save to Files, email or print later. It works in the Home Screen app too, and like printing it covers only the open tab.
 
-**Too much small print in Settings?** Tap **Hide explanations** at the top of **⚙ Settings** (or of **Back up & restore**) to fold away the grey explanation text. Tap **ⓘ Show explanations** to bring it back. The app remembers your choice on that device, and it is saved with your backup. The note that your settings are saved on this device only always stays.
+**Too much small print in Settings?** Tap **Hide explanations** at the top of **Preferences** (or of **Back up & restore**) to fold away the grey explanation text. Tap **ⓘ Show explanations** to bring it back. The app remembers your choice on that device, and it is saved with your backup. The note that your settings are saved on this device only always stays.
 
 **Choose how the PDF looks.** Open **⚙ Settings** and look for **PDF layout** and **PDF paper** near the bottom. **Compact** puts the items in two columns at a slightly smaller size, so a full checklist takes about half the pages (the General list is 2 pages instead of 4 on Letter). **Large print** keeps the bigger, one-column layout. **Letter** and **A4** pick the paper size. The first time, the app chooses Letter for English and North American browsers and A4 elsewhere, and then remembers your choice. It applies to the checklist **PDF** and to the PDF in a saved flight record, and **Back up & restore** carries it with your other settings. After you save a PDF, the message tells you which layout and paper it used.
 

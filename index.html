@@ -665,6 +665,12 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-refresh { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: none; font-family: inherit; padding: 2px 6px; }
   .wx-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
   .wx-item { background: var(--section-bg); border-radius: 10px; padding: 9px 11px; }
+  /* 4.2.1a: Preferences | Back up & restore as a two-part switch */
+  .set-heads { gap: 0; background: var(--section-bg); border: 1px solid var(--border); border-radius: 14px; padding: 3px; }
+  .set-heads .settings-toggle { border: 0; border-radius: 11px; background: transparent; box-shadow: none; font-weight: 700; color: var(--text-muted); }
+  .set-heads .settings-toggle .chev { display: none; }
+  .settings.open .set-heads .tg-set, .settings.open-bak .set-heads .tg-bak { background: #2563EB; color: #fff; border: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+  .foot-links .foot-bak { white-space: nowrap; }
   /* 4.2.0a: drones, each with its own limits */
   .dr-row-pill { margin: 0 0 8px; }
   .dr-pill { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 11px; border-radius: 10px; border: 1px solid var(--link); background: rgba(37,99,235,0.10); color: var(--link); font-family: inherit; font-size: 13px; font-weight: 700; text-align: left; cursor: pointer; }
@@ -683,6 +689,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .dr-tag { background: #2563EB; color: #fff; border-radius: 999px; padding: 1px 7px; font-size: 10px; font-weight: 700; margin-left: 6px; }
   .dr-btn { border: 1px solid var(--link); color: var(--link); background: transparent; border-radius: 999px; padding: 5px 11px; font-family: inherit; font-size: 12px; font-weight: 700; white-space: nowrap; cursor: pointer; }
   .dr-edit { display: flex; align-items: center; gap: 8px; margin: 8px 0 2px; }
+  .dr-edit[hidden] { display: none; }
   .dr-edit input { flex: 1; min-width: 0; font-family: inherit; font-size: 16px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 7px 10px; }
   .dr-del { background: transparent; border: 0; color: #dc2626; font-family: inherit; font-size: 12px; cursor: pointer; padding: 6px 2px; white-space: nowrap; }
   .dr-for { margin: 10px 0 2px; font-size: 12px; color: var(--text-muted); }
@@ -876,7 +883,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.2.0</p>
+      <p>Free Drone Preflight Checklist · v4.2.1</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2979,11 +2986,11 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const mkTg = (cls, label, key, other) => {
     const t = document.createElement('button'); t.type = 'button'; t.className = 'settings-toggle ' + cls; t.setAttribute('aria-expanded', 'false');
     t.innerHTML = '<span>' + label + '</span><span class="chev" aria-hidden="true">▾</span>';
-    t.onclick = () => { const o = !wrap.classList.contains(key); wrap.classList.remove('open', 'open-bak'); if (o) wrap.classList.add(key); if (!wrap.classList.contains('open-bak')) xferClearMsg(wrap);
+    t.onclick = () => { if (wrap.classList.contains(key)) return; const o = true; wrap.classList.remove('open', 'open-bak'); if (o) wrap.classList.add(key); if (!wrap.classList.contains('open-bak')) xferClearMsg(wrap);
       tgSet.setAttribute('aria-expanded', String(wrap.classList.contains('open'))); tgBak.setAttribute('aria-expanded', String(wrap.classList.contains('open-bak'))); };
     return t;
   };
-  const tgSet = mkTg('tg-set', '⚙ Settings', 'open'), tgBak = mkTg('tg-bak', '💾 Back up &amp; restore', 'open-bak');
+  const tgSet = mkTg('tg-set', '⚙ Preferences', 'open'), tgBak = mkTg('tg-bak', '💾 Back up &amp; restore', 'open-bak');
   heads.append(tgSet, tgBak);
   const bkb = makeBkBanner(() => { if (tgBak.getAttribute('aria-expanded') !== 'true') tgBak.click(); try { tgBak.scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) {} });
   const bodySet = document.createElement('div'); bodySet.className = 'settings-body body-set';
@@ -2991,7 +2998,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const note = document.createElement('div'); note.className = 'settings-note';
   note.textContent = 'Your progress and settings are saved on this device only and don\'t sync. Each browser, and each Home Screen app, keeps its own copy. To move them to another device or browser, use Back up & restore.';
   const help = document.createElement('div'); help.className = 'settings-help foot-links';
-  help.innerHTML = '<a href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener">📘 Help &amp; guides</a><span class="foot-sep" aria-hidden="true"> · </span><a class="fb-link" href="#">✉ Send feedback</a>';
+  help.innerHTML = '<a class="foot-bak" href="#">💾 Back up &amp; restore</a><span class="foot-sep" aria-hidden="true"> · </span><a href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener">📘 Help &amp; guides</a><span class="foot-sep" aria-hidden="true"> · </span><a class="fb-link" href="#">✉ Send feedback</a>';
   const fbl = help.querySelector('.fb-link');
   const fbVer = appVer();
   fbl.href = 'mailto:info@JohnstonAerial.com?subject=' + encodeURIComponent('Checklist feedback ' + fbVer) +
@@ -3033,10 +3040,9 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   if (hintsHidden()) bodyBak.classList.add('hide-hints');
   bodySet.append(note, hb, grp('Display', true), thb, reg, cust, keep, grp('Limits'), wl, grp('Your info'), fnb, acb, grp('PDF'), pdb); bodyBak.append(makeXfer()); bodyBak.querySelector('.xfer-sub').after(hb2);
   [bodySet, bodyBak].forEach((bd, bi) => {           // a small arrow at the bottom closes the section and goes back up to the buttons
-    const up = document.createElement('button'); up.type = 'button'; up.className = 'set-up'; up.textContent = '\u25B4 ' + (bi ? 'Close back up & restore' : 'Close settings');
+    const up = document.createElement('button'); up.type = 'button'; up.className = 'set-up'; up.textContent = '\u25B4 Back to the top';
     
     up.onclick = () => {
-      wrap.classList.remove('open', 'open-bak'); tgSet.setAttribute('aria-expanded', 'false'); tgBak.setAttribute('aria-expanded', 'false'); xferClearMsg(wrap);
       try { const r = heads.getBoundingClientRect(); if (r.top < 110 || r.bottom > window.innerHeight) heads.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
     };
     bd.appendChild(up);
@@ -5428,6 +5434,29 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
       g.classList.remove('lim-flash'); void g.offsetWidth; g.classList.add('lim-flash');
     }, 120);
   };
+  // 4.2.1a: footer link "Back up & restore" opens Settings on the Back up & restore half; from another tab a bar leads back
+  window.bakOpen = function () {
+    const prev = (document.body.className.match(/view-(wx|ck|set)/) || [0, 'wx'])[1];
+    const y0 = window.scrollY;
+    clearBar();
+    setView('set', true);
+    const tgb = document.querySelector('.panel.active .tg-bak');
+    if (tgb && tgb.getAttribute('aria-expanded') !== 'true') tgb.click();
+    if (prev !== 'set') {
+      const bar = document.createElement('div'); bar.id = 'lim-back'; bar.className = 'lim-back';
+      bar.innerHTML = '<button type="button">\u2190 Back<small>Back up &amp; restore</small></button>';
+      bar.querySelector('button').onclick = () => { setView(prev, true); setTimeout(() => window.scrollTo(0, y0), 30); };
+      document.body.appendChild(bar);
+    }
+    setTimeout(() => {
+      const hd = document.querySelector('.panel.active .set-heads');
+      if (hd) window.scrollTo(0, Math.max(0, hd.getBoundingClientRect().top + window.scrollY - (prev !== 'set' ? 64 : 12)));
+    }, 120);
+  };
+  document.addEventListener('click', function (e) {
+    const fb = e.target.closest && e.target.closest('.foot-bak'); if (!fb) return;
+    e.preventDefault(); window.bakOpen();
+  }, true);
   document.addEventListener('click', function (e) {
     const gb = e.target.closest && e.target.closest('.wx-gear'); if (!gb) return;
     e.preventDefault(); e.stopPropagation();
