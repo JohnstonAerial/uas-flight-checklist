@@ -14,7 +14,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 <table>
   <tr>
-    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="The Conditions tab with Conditions, Checklist and Settings tabs on top, then live preflight conditions for Miami: wind with Windier nearby, cloud ceiling, precipitation, visibility, the 10-day wind outlook, and the Airspace chart, FAA grid map, TFRs and NOTAMs buttons with nearby airport codes" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="The Conditions tab with Conditions, Checklist and Settings tabs on top, then live preflight conditions for Miami: wind with Windier nearby, cloud ceiling, precipitation, visibility, the 10-day wind outlook, and the Airspace chart, FAA UAS Facility Map, TFRs and NOTAMs buttons with nearby airport codes" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
     <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/01-checklist-dark.png"><img src="screenshots/01-checklist-light.png" alt="The Checklist tab with custom mission tabs, the percentage and a Customize button, the four sections folded, then a card with Print, PDF and Save flight record, and the footer with the version" width="170"></picture><br><sub><b>Checklist</b></sub></td>
   </tr>
   <tr>
@@ -103,6 +103,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 - **Night note only when it matters** — the lights and training reminder under **I fly at night** always shows when night flying is on, and is an ordinary explanation (hidden with the others) when it is off. The setting now reads **No / Yes** so it fits on a phone.
 - **Steady text size on iPhone** — turning the phone sideways no longer enlarges small text.
 - **Small fixes on iPhone** — **Appearance** and **PDF layout** no longer overlap or get cut off, and the **Default reg. #** box no longer cuts off its hint.
+
+---
+
+## What's new in v4.2.2
+
+- **FAA UAS Facility Map, for the whole area** — the old **FAA grid map** button is now **🗺 FAA UAS Facility Map**, the FAA's own name. Its line now looks at every grid square within 3 miles of your place, not one square, and shows the spread: for example **0–400 ft nearby · LAANC**. It turns amber when some nearby squares are 0 ft (FAA approval needed there), and stays green when every square is above 0. If every nearby square matches you get one number, such as **400 ft · LAANC**, and where the FAA has no grid within 3 miles it says **No grid nearby**. Tap the button to open the FAA's map for the exact square.
+- **Change how long your progress is kept, from the checklist** — the note under the progress card now ends **clears after 12 hours · change**. Tap **change** to open **Preferences** at **Clear saved progress after**; a **← Back to Checklist** bar returns you to the same spot.
 
 ---
 
