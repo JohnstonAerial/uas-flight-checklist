@@ -25,6 +25,9 @@ The app remembers the tab you used last on that device. Tapping **Customize** in
 
 **Change the place you're checking.** On **Conditions**, tap **Change**, then tap the search box. Your saved places (the last 10) drop down; type to narrow them, or type a town, ZIP code or latitude, longitude and tap **Search**.
 
+**Change a limit from Conditions.** Tap the small ⚙ in the corner of the **Wind**, **Temperature** or **KP Index** tile. **Settings** opens at **Limits**; change the numbers, then tap **← Back to Conditions** at the top to return to the same spot.
+
+
 ---
 
 ## Back up and restore your setup

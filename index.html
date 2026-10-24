@@ -665,6 +665,14 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-refresh { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: none; font-family: inherit; padding: 2px 6px; }
   .wx-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
   .wx-item { background: var(--section-bg); border-radius: 10px; padding: 9px 11px; }
+  /* 4.1.3a: gear on the Wind, Temperature and KP tiles opens Settings at Limits, with a bar back to Conditions */
+  .wx-gear { float: right; width: 26px; height: 26px; margin: -5px -5px 0 4px; padding: 0; border: none; border-radius: 50%; background: rgba(37,99,235,0.14); color: var(--link, #2563EB); font-size: 14px; line-height: 26px; text-align: center; cursor: pointer; }
+  .wx-gear:active { background: rgba(37,99,235,0.3); }
+  .lim-back { position: fixed; top: 0; left: 0; right: 0; z-index: 60; display: flex; justify-content: center; padding: 8px 12px 6px; pointer-events: none; }
+  .lim-back button { pointer-events: auto; width: 100%; max-width: 560px; padding: 11px 14px; border: none; border-radius: 12px; background: #1d4ed8; color: #fff; font-size: 14px; font-weight: 700; text-align: left; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.35); }
+  .lim-back small { font-weight: 500; opacity: 0.85; margin-left: 6px; }
+  .set-grp.lim-flash, .lim-flash-row { animation: limflash 1.6s ease-out 1; }
+  @keyframes limflash { 0% { background: rgba(245,158,11,0.35); } 100% { background: transparent; } }
   .wx-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
   .wx-value { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.1; }
   .wx-vislab { margin-top: 8px; }
@@ -846,7 +854,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.1.2</p>
+      <p>Free Drone Preflight Checklist · v4.1.3</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -4521,14 +4529,14 @@ async function renderWeather(lat, lon, attempt = 1) {
         // The terrain/obstruction note turns amber when wind needs attention: the airport reading or the model is at caution or above, or a nearby station is windier
         const windCaution = (ow && windColor(owMph, owGust) !== 'wx-good') || (windOk && windColor(windMph, gustMph) !== 'wx-good') || wiList.length > 0;
         const windHTML = ow ? `
-            <div class="wx-label">Wind</div>
+            <div class="wx-label"><button type="button" class="wx-gear" data-lim="wind" aria-label="Edit your wind limits in Settings">⚙</button>Wind</div>
             <div class="wx-value ${windColor(owMph, owGust)}">${fmtSpeedNum(owMph) + (owGust ? ' / ' + fmtSpeedNum(owGust) : '') + ' ' + windChipHtml() + owArrow}</div>
             <div class="wx-sub">${owGust ? 'Sustained\u00A0/\u00A0Gusts' : 'No gusts reported'}${owDirTxt ? '\u00A0· ' + owDirTxt : ''}</div>
             <div class="wx-sub" data-rec-age="${Date.now() - ow.ageMin * 60000}">${ow.station} · ${fmtDist(ow.dist)} away · ${ageText(ow.ageMin * 60000)}</div>
             ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${NB(modelTxt)}</strong></div>` : ''}
             ${windierHtml}
             ${windHtsHTML(wx, windOk ? windMph : null)}` : `
-            <div class="wx-label">Wind</div>
+            <div class="wx-label"><button type="button" class="wx-gear" data-lim="wind" aria-label="Edit your wind limits in Settings">⚙</button>Wind</div>
             <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + windChipHtml() + (dirOk ? ' ' + windDirHtml(wx.wind.deg) : '') : '—'}</div>
             <div class="wx-sub">${windOk ? (gustMph ? 'Sustained\u00A0/\u00A0Gusts' : 'No gusts reported') : 'No wind data'}</div>
             ${windHtsHTML(wx, windOk ? windMph : null)}`;
@@ -4552,7 +4560,7 @@ async function renderWeather(lat, lon, attempt = 1) {
             ${metarData2 ? cloudHtml(m, ceilFt, om, hIdx) : ''}
           </div>
           <div class="wx-item">
-            <div class="wx-label">Temperature</div>
+            <div class="wx-label"><button type="button" class="wx-gear" data-lim="temp" aria-label="Edit your temperature limits in Settings">⚙</button>Temperature</div>
             <div class="wx-value ${tempOk ? tempColor(wx.main.temp) : ''}">${tempOk ? fmtTemp(wx.main.temp) : '—'}</div>
             ${obsT ? `<div class="wx-sub" data-rec-age="${Date.now() - obsT.ageMin * 60000}">${obsT.station} · ${fmtDist(obsT.dist)} away · ${ageText(obsT.ageMin * 60000)}</div>` : ''}
             <div class="wx-label wx-vislab">Visibility</div>
@@ -4568,7 +4576,7 @@ async function renderWeather(lat, lon, attempt = 1) {
             <a class="wx-link" href="${region === 'intl' ? 'https://www.rainviewer.com/map.html?loc=' + lat.toFixed(3) + ',' + lon.toFixed(3) + ',8&layer=radar' : nwsRadarUrl(lat, lon)}" target="_blank" rel="noopener">Radar map ›</a>
           </div>
           <div class="wx-item">
-            <div class="wx-label">KP Index</div>
+            <div class="wx-label"><button type="button" class="wx-gear" data-lim="kp" aria-label="Edit your Kp limits in Settings">⚙</button>KP Index</div>
             <div class="wx-value ${kp !== null ? kpColor(kp) : ''}">${kpVal}</div>
             <div class="wx-sub">${kpNoteFn()}</div>
           </div>
@@ -5353,6 +5361,32 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
   ['.coffee-note', '.foot-links', '.ver-line'].forEach(sel => { const e = gen.querySelector(':scope > ' + sel); if (e) foot.appendChild(e); });
   panels.forEach(pn => pn.querySelectorAll(':scope > .coffee-note, :scope > .foot-links, :scope > .ver-line').forEach(e => e.remove()));
   panels[panels.length - 1].after(foot);
+})();
+
+// 4.1.3a: the gear on the Wind, Temperature and KP tiles opens Settings at Limits; a bar at the top brings you back to Conditions
+(function () {
+  let backY = 0;
+  function clearBar() { const b = document.getElementById('lim-back'); if (b) b.remove(); }
+  const _sv = setView;
+  setView = function (v, noSave) { if (v !== 'set') clearBar(); return _sv.apply(this, arguments); };
+  document.addEventListener('click', function (e) {
+    const gb = e.target.closest && e.target.closest('.wx-gear'); if (!gb) return;
+    e.preventDefault(); e.stopPropagation();
+    backY = window.scrollY;
+    clearBar();
+    setView('set', true);
+    const bar = document.createElement('div'); bar.id = 'lim-back'; bar.className = 'lim-back';
+    bar.innerHTML = '<button type="button">← Back to Conditions<small>Limits</small></button>';
+    bar.querySelector('button').onclick = () => { setView('wx', true); setTimeout(() => window.scrollTo(0, backY), 30); };
+    document.body.appendChild(bar);
+    setTimeout(() => {
+      const st = document.querySelector('.panel.active .settings');
+      const g = st && [...st.querySelectorAll('.set-grp')].find(d => /^Limits$/i.test(d.textContent.trim()));
+      if (!g) return;
+      window.scrollTo(0, Math.max(0, g.getBoundingClientRect().top + window.scrollY - 64));
+      g.classList.remove('lim-flash'); void g.offsetWidth; g.classList.add('lim-flash');
+    }, 120);
+  }, true);
 })();
 </script>
 

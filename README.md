@@ -106,6 +106,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.1.3
+
+- **Gear on the Wind, Temperature and KP tiles** — a small ⚙ in the corner of those three tiles on **Conditions** opens **Settings** right at **Limits**, where your wind, Kp and cold/heat limits live. A blue **← Back to Conditions** bar at the top takes you straight back to where you were. The bar only shows when you arrive from a gear, and it disappears if you switch tabs yourself.
+
+---
+
 ## What's new in v4.1.2
 
 - **Official drone maps for 13 more countries** — the button under the weather now follows the place you look up and opens that country's official drone map or airspace page: **Austria** (Dronespace), **Switzerland** (FOCA drone map), **Italy** (D-Flight), **Spain** (ENAIRE), **Denmark** (dronezoner, via droneregler.dk), **Sweden** (LFV), **Norway** (Avinor), **Finland** (Traficom), **Poland** (DroneRadar), **Czech Republic** (DroneMap), **the Netherlands** (GoDrone), **Germany** (dipul) and **Ireland** (IAA). The FAA buttons are hidden in those countries, since they don't apply there. Some of these sites open in the local language.
