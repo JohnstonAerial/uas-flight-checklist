@@ -665,6 +665,28 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-refresh { font-size: 11px; color: var(--link); cursor: pointer; background: none; border: none; font-family: inherit; padding: 2px 6px; }
   .wx-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
   .wx-item { background: var(--section-bg); border-radius: 10px; padding: 9px 11px; }
+  /* 4.2.0a: drones, each with its own limits */
+  .dr-row-pill { margin: 0 0 8px; }
+  .dr-pill { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 11px; border-radius: 10px; border: 1px solid var(--link); background: rgba(37,99,235,0.10); color: var(--link); font-family: inherit; font-size: 13px; font-weight: 700; text-align: left; cursor: pointer; }
+  .dr-pill small { font-weight: 500; color: var(--text-muted); font-size: 11px; margin-left: 4px; }
+  .dr-menu { margin: -4px 0 8px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+  .dr-menu button { display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%; padding: 10px 12px; border: 0; border-top: 1px solid var(--border); background: transparent; color: var(--text); font-family: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+  .dr-menu button:first-child { border-top: 0; }
+  .dr-menu button small { display: block; color: var(--text-muted); font-size: 11px; font-weight: 400; }
+  .dr-menu button.on { background: rgba(37,99,235,0.14); }
+  .dr-menu button.on b:after { content: ' \2713'; color: var(--link); }
+  .dr-menu button.act { color: var(--link); font-weight: 700; }
+  .dr-block { padding: 8px 16px 0; text-align: left; font-size: 14px; color: var(--text); }
+  .dr-item { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 9px 0; border-top: 1px solid var(--border); }
+  .dr-item:first-child { border-top: 0; }
+  .dr-item small { display: block; color: var(--text-muted); font-size: 11.5px; }
+  .dr-tag { background: #2563EB; color: #fff; border-radius: 999px; padding: 1px 7px; font-size: 10px; font-weight: 700; margin-left: 6px; }
+  .dr-btn { border: 1px solid var(--link); color: var(--link); background: transparent; border-radius: 999px; padding: 5px 11px; font-family: inherit; font-size: 12px; font-weight: 700; white-space: nowrap; cursor: pointer; }
+  .dr-edit { display: flex; align-items: center; gap: 8px; margin: 8px 0 2px; }
+  .dr-edit input { flex: 1; min-width: 0; font-family: inherit; font-size: 16px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 7px 10px; }
+  .dr-del { background: transparent; border: 0; color: #dc2626; font-family: inherit; font-size: 12px; cursor: pointer; padding: 6px 2px; white-space: nowrap; }
+  .dr-for { margin: 10px 0 2px; font-size: 12px; color: var(--text-muted); }
+  .panel.editing .body-set > .dr-block { display: none; }
   /* 4.1.3a: gear on the Wind, Temperature and KP tiles opens Settings at Limits, with a bar back to Conditions */
   .wx-gear { float: right; width: 26px; height: 26px; margin: -5px -5px 0 4px; padding: 0; border: none; border-radius: 50%; background: rgba(37,99,235,0.14); color: var(--link, #2563EB); font-size: 14px; line-height: 26px; text-align: center; cursor: pointer; }
   .wx-gear:active { background: rgba(37,99,235,0.3); }
@@ -854,7 +876,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.1.3</p>
+      <p>Free Drone Preflight Checklist · v4.2.0</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -896,6 +918,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <span class="wx-loc-label">📍 <span id="wx-loc-name">My location</span></span>
     <button class="wx-loc-btn" onclick="toggleLocPicker()">Change</button>
   </div>
+  <div class="dr-row-pill" id="dr-row" hidden><button type="button" class="dr-pill" id="dr-pill" aria-haspopup="listbox" aria-expanded="false"></button></div>
+  <div class="dr-menu" id="dr-menu" role="listbox" hidden></div>
   <div class="wx-picker" id="wx-picker" hidden>
     <form class="wx-search" onsubmit="searchSite(event)">
       <input id="wx-q" type="search" placeholder="Town, ZIP, or lat, lon" autocomplete="off" autocapitalize="words" enterkeyhint="search">
@@ -2679,7 +2703,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', 'uasMovedOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasDrones', 'uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', 'uasMovedOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -2706,7 +2730,7 @@ function xferWarm(el) {
   xferEncode(snap).then(code => { xferPre = { key, code }; }).catch(() => {});
 }
 // Back-up reminder: shown under the Settings / Back up & restore buttons after anything that a backup carries is changed
-const BK_WATCH = ['uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasWindUnit', 'uasTheme'];
+const BK_WATCH = ['uasDrones', 'uasTabs', 'uasCustomItems', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasProgressHours', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasWindUnit', 'uasTheme'];
 let bkReady = false;
 setTimeout(() => { bkReady = true; }, 2000);
 // ?notrack on the address turns off the back-up reminder (and, on the public site, Cloudflare counting); ?track turns both back on
@@ -3111,7 +3135,7 @@ if (document.body.classList.contains('view-set')) setView('set', true);   // ope
 <script>
 const KP_DEF = { a: 4, r: 5 };   // standard Kp warning points: amber at 4 (active), red at 5 (storm)
 function kpLimits() {
-  let o = null; try { o = JSON.parse(localStorage.getItem('uasKpLimits')); } catch (e) {}
+  let o = null; try { o = JSON.parse(limGet('uasKpLimits')); } catch (e) {}
   const ok = (v) => typeof v === 'number' && isFinite(v) && v >= 1 && v <= 9 ? v : null;
   const a = ok(o && o.a) || KP_DEF.a;
   let r = ok(o && o.r) || KP_DEF.r;
@@ -3124,9 +3148,28 @@ function kpColor(kp) {
   if (kp >= l.a) return 'wx-warn';
   return 'wx-good';
 }
+// 4.2.0a: drones. Each drone keeps its own wind, Kp and temperature limits. "Default" is the original limits (the old storage keys), so nothing changes until a drone is added.
+const DR_KEY = 'uasDrones';
+function drData() {
+  let o = null; try { o = JSON.parse(localStorage.getItem(DR_KEY)); } catch (e) {}
+  if (!o || !Array.isArray(o.list)) o = { sel: 'default', list: [] };
+  if (o.sel !== 'default' && !o.list.some(d => d.id === o.sel)) o.sel = 'default';
+  return o;
+}
+function drSaveData(o) { try { if (o.list.length) localStorage.setItem(DR_KEY, JSON.stringify(o)); else localStorage.removeItem(DR_KEY); } catch (e) {} }
+function drActive() { const o = drData(); return o.sel === 'default' ? null : (o.list.find(d => d.id === o.sel) || null); }
+function drRaw(d, key) { try { if (!d) return JSON.parse(localStorage.getItem(key)); return (d.u && d.u[key]) || null; } catch (e) { return null; } }
+function limGet(key) { const v = drRaw(drActive(), key); return v ? JSON.stringify(v) : null; }
+function limSet(key, val) {
+  const d = drActive();
+  if (!d) { if (val) localStorage.setItem(key, JSON.stringify(val)); else localStorage.removeItem(key); return; }
+  const o = drData(), dd = o.list.find(x => x.id === o.sel); if (!dd) return;
+  dd.u = dd.u || {}; if (val) dd.u[key] = val; else delete dd.u[key];
+  drSaveData(o);
+}
 const WIND_DEF = { w: 23, g: 25 };   // standard limits in mph; the amber point is two-thirds of each limit
 function windLimits() {
-  let o = null; try { o = JSON.parse(localStorage.getItem('uasWindLimits')); } catch (e) {}
+  let o = null; try { o = JSON.parse(limGet('uasWindLimits')); } catch (e) {}
   const ok = (v) => typeof v === 'number' && isFinite(v) && v > 0 ? v : null;
   return { w: ok(o && o.w), g: ok(o && o.g) };
 }
@@ -3908,7 +3951,7 @@ const fmtVis = (m) => m == null ? '—' : isMetric() ? (m / 1000).toFixed(1) + '
 const fmtPrecip = (mm) => isMetric() ? (mm < 10 ? mm.toFixed(1) : Math.round(mm)) + '\u00a0mm' : (mm / 25.4).toFixed(2) + '\u00a0in';
 const TEMP_DEF = { ca: 40, cr: 14, ha: 95, hr: 104 };   // standard limits in °F: cold amber/red (at or below), heat amber/red (at or above)
 function tempLimits() {
-  let o = null; try { o = JSON.parse(localStorage.getItem('uasTempLimits')); } catch (e) {}
+  let o = null; try { o = JSON.parse(limGet('uasTempLimits')); } catch (e) {}
   const ok = (v) => typeof v === 'number' && isFinite(v) && v > -100 && v < 200 ? v : null;
   const u = { ca: ok(o && o.ca), cr: ok(o && o.cr), ha: ok(o && o.ha), hr: ok(o && o.hr) };
   const ca = u.ca != null ? u.ca : TEMP_DEF.ca, ha = u.ha != null ? u.ha : TEMP_DEF.ha;
@@ -3974,7 +4017,7 @@ function wlSave() {
   const a = document.activeElement, w = a && a.classList.contains('wl-w') ? a : null, g = a && a.classList.contains('wl-g') ? a : null;
   const cur = windLimits(), toMph = (i) => { const v = parseFloat(i.value); return isFinite(v) && v > 0 ? Math.round(v / WIND_UNITS[windUnitKey()].f * 10) / 10 : null; };
   const o = { w: w ? toMph(w) : cur.w, g: g ? toMph(g) : cur.g };
-  try { if (o.w || o.g) localStorage.setItem('uasWindLimits', JSON.stringify(o)); else localStorage.removeItem('uasWindLimits'); } catch (e) {}
+  try { limSet('uasWindLimits', (o.w || o.g) ? o : null); } catch (e) {}
   wlSync();
   if (lastDraw) { lastDraw(); }
 }
@@ -3989,7 +4032,7 @@ function kpSave() {
   const a = document.activeElement, ka = a && a.classList.contains('kp-a') ? a : null, kr = a && a.classList.contains('kp-r') ? a : null;
   const cur = kpLimits(), num = (i) => { const v = parseFloat(i.value); return isFinite(v) && v >= 1 && v <= 9 ? Math.round(v * 10) / 10 : null; };
   const o = { a: ka ? num(ka) : cur.ua, r: kr ? num(kr) : cur.ur };
-  try { if (o.a || o.r) localStorage.setItem('uasKpLimits', JSON.stringify(o)); else localStorage.removeItem('uasKpLimits'); } catch (e) {}
+  try { limSet('uasKpLimits', (o.a || o.r) ? o : null); } catch (e) {}
   const l = kpLimits();
   document.querySelectorAll('.kp-a, .kp-r').forEach(i => { if (i !== a) { const k = i.classList.contains('kp-a') ? l.ua : l.ur; i.value = k != null ? String(k) : ''; } });
   if (lastDraw) { lastDraw(); }
@@ -4009,7 +4052,7 @@ function tpSave() {
     if (a && a.classList.contains('tp-' + k)) { const v = parseFloat(a.value); o[k] = isFinite(v) ? Math.round((isMetric() ? v * 9 / 5 + 32 : v) * 10) / 10 : null; }
     else o[k] = cur.u[k];
   });
-  try { if (TP_K.some(k => o[k] != null)) localStorage.setItem('uasTempLimits', JSON.stringify(o)); else localStorage.removeItem('uasTempLimits'); } catch (e) {}
+  try { limSet('uasTempLimits', TP_K.some(k => o[k] != null) ? o : null); } catch (e) {}
   tpSync();
   if (lastDraw) { lastDraw(); }
 }
@@ -5369,14 +5412,12 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
   function clearBar() { const b = document.getElementById('lim-back'); if (b) b.remove(); }
   const _sv = setView;
   setView = function (v, noSave) { if (v !== 'set') clearBar(); return _sv.apply(this, arguments); };
-  document.addEventListener('click', function (e) {
-    const gb = e.target.closest && e.target.closest('.wx-gear'); if (!gb) return;
-    e.preventDefault(); e.stopPropagation();
+  window.limOpen = function () {
     backY = window.scrollY;
     clearBar();
     setView('set', true);
     const bar = document.createElement('div'); bar.id = 'lim-back'; bar.className = 'lim-back';
-    bar.innerHTML = '<button type="button">← Back to Conditions<small>Limits</small></button>';
+    bar.innerHTML = '<button type="button">\u2190 Back to Conditions<small>Limits</small></button>';
     bar.querySelector('button').onclick = () => { setView('wx', true); setTimeout(() => window.scrollTo(0, backY), 30); };
     document.body.appendChild(bar);
     setTimeout(() => {
@@ -5386,7 +5427,101 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
       window.scrollTo(0, Math.max(0, g.getBoundingClientRect().top + window.scrollY - 64));
       g.classList.remove('lim-flash'); void g.offsetWidth; g.classList.add('lim-flash');
     }, 120);
+  };
+  document.addEventListener('click', function (e) {
+    const gb = e.target.closest && e.target.closest('.wx-gear'); if (!gb) return;
+    e.preventDefault(); e.stopPropagation();
+    window.limOpen();
   }, true);
+})();
+
+// 4.2.0a: drone pill on Conditions, drone list in Settings > Limits
+(function () {
+  const esc = (t) => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const nm = (d) => d ? (d.name || 'Drone') : 'Default';
+  function sums(d) {
+    const w = drRaw(d, 'uasWindLimits') || {}, k = drRaw(d, 'uasKpLimits') || {}, t = drRaw(d, 'uasTempLimits') || {};
+    const wv = w.w || WIND_DEF.w, gv = w.g || WIND_DEF.g, ka = k.a || KP_DEF.a, kr = k.r || KP_DEF.r;
+    const tv = (key) => tpShow(t[key] != null ? t[key] : TEMP_DEF[key]);
+    return { wind: fmtSpeedNum(wv) + ' / ' + fmtSpeedNum(gv) + ' ' + speedUnit(),
+             all: 'Wind ' + fmtSpeedNum(wv) + '/' + fmtSpeedNum(gv) + ' ' + speedUnit() + ' · Kp ' + ka + '/' + kr + ' · Cold ' + tv('ca') + '/' + tv('cr') + ' · Heat ' + tv('ha') + '/' + tv('hr') + ' ' + (isMetric() ? '°C' : '°F') };
+  }
+  function afterChange() {
+    wlSync(); kpSync(); tpSync(); drSync();
+    if (typeof lastDraw !== 'undefined' && lastDraw) lastDraw();
+    if (typeof bkMark === 'function') bkMark();
+  }
+  function select(id) { const o = drData(); o.sel = id; if (o.list.length) drSaveData(o); afterChange(); }
+  window.drSync = function () {
+    const o = drData(), act = drActive();
+    const row = document.getElementById('dr-row'), pill = document.getElementById('dr-pill'), menu = document.getElementById('dr-menu');
+    if (row && pill) {
+      row.hidden = !o.list.length;
+      pill.innerHTML = '<span>🚁 ' + esc(nm(act)) + '<small>wind ' + esc(sums(act).wind) + '</small></span><span>' + (menu && !menu.hidden ? '▴' : '▾') + '</span>';
+      pill.setAttribute('aria-expanded', menu && !menu.hidden ? 'true' : 'false');
+      if (!o.list.length && menu) menu.hidden = true;
+    }
+    if (menu && !menu.hidden) menuFill();
+    document.querySelectorAll('.dr-block').forEach(b => {
+      const all = [null].concat(o.list);
+      const list = b.querySelector('.dr-list'); list.innerHTML = '';
+      all.forEach(d => {
+        const isSel = (d ? d.id : 'default') === o.sel;
+        const it = document.createElement('div'); it.className = 'dr-item';
+        it.innerHTML = '<span><b>' + esc(nm(d)) + '</b>' + (isSel ? '<span class="dr-tag">in use</span>' : '') + '<small>' + esc(sums(d).all) + '</small></span>' + (isSel ? '' : '<button type="button" class="dr-btn">Use &amp; edit</button>');
+        const bt = it.querySelector('button'); if (bt) bt.onclick = () => select(d ? d.id : 'default');
+        list.appendChild(it);
+      });
+      const ed = b.querySelector('.dr-edit'), inp = b.querySelector('.dr-name');
+      ed.hidden = !act;
+      if (act && inp !== document.activeElement) inp.value = act.name || '';
+      b.querySelector('.dr-for').innerHTML = 'Limits for <b>' + esc(nm(act)) + '</b>' + (act ? '' : ' (the standard set)') + ':';
+    });
+  };
+  function menuFill() {
+    const o = drData(), menu = document.getElementById('dr-menu'); menu.innerHTML = '';
+    [null].concat(o.list).forEach(d => {
+      const id = d ? d.id : 'default', b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'option');
+      if (id === o.sel) b.className = 'on';
+      b.innerHTML = '<span><b>' + esc(nm(d)) + '</b><small>wind ' + esc(sums(d).wind) + '</small></span>';
+      b.onclick = () => { menu.hidden = true; select(id); };
+      menu.appendChild(b);
+    });
+    const e = document.createElement('button'); e.type = 'button'; e.className = 'act'; e.innerHTML = '<span>⚙ Edit drones &amp; limits</span><span>›</span>';
+    e.onclick = () => { menu.hidden = true; drSync(); window.limOpen(); };
+    menu.appendChild(e);
+  }
+  const pill = document.getElementById('dr-pill'), menu = document.getElementById('dr-menu');
+  if (pill) pill.onclick = () => { menu.hidden = !menu.hidden; if (!menu.hidden) menuFill(); drSync(); };
+  document.addEventListener('click', e => { const path = e.composedPath ? e.composedPath() : []; if (menu && !menu.hidden && !path.includes(menu) && !path.includes(pill)) { menu.hidden = true; drSync(); } });
+  document.addEventListener('input', e => { if (e.target.matches && e.target.matches('.wl-w, .wl-g, .kp-a, .kp-r, .tp-ca, .tp-cr, .tp-ha, .tp-hr')) drSync(); });
+  // Settings > Limits: the list, rename, delete, add
+  document.querySelectorAll('.wl-block').forEach(wl => {
+    const b = document.createElement('div'); b.className = 'dr-block';
+    b.innerHTML = '<div class="dr-list"></div><div class="dr-edit" hidden><input type="text" class="dr-name" maxlength="40" aria-label="Drone name" placeholder="Drone name"><button type="button" class="dr-del">Delete this drone</button></div><div style="margin-top:8px"><button type="button" class="dr-btn dr-add">＋ Add a drone</button></div><div class="dr-for"></div>';
+    wl.before(b);
+    b.querySelector('.dr-name').addEventListener('input', ev => {
+      const o = drData(), d = o.list.find(x => x.id === o.sel); if (!d) return;
+      d.name = ev.target.value.slice(0, 40); drSaveData(o); drSync(); if (typeof bkMark === 'function') bkMark();
+    });
+    b.querySelector('.dr-del').onclick = () => {
+      const o = drData(), d = o.list.find(x => x.id === o.sel); if (!d) return;
+      if (!confirm('Delete "' + (d.name || 'this drone') + '" and its limits?')) return;
+      o.list = o.list.filter(x => x !== d); o.sel = 'default'; drSaveData(o); afterChange();
+    };
+    b.querySelector('.dr-add').onclick = () => {
+      const o = drData(), cur = drActive();
+      const u = {}; ['uasWindLimits', 'uasKpLimits', 'uasTempLimits'].forEach(k => { const v = drRaw(cur, k); if (v) u[k] = JSON.parse(JSON.stringify(v)); });
+      const d = { id: 'd' + Date.now().toString(36) + Math.floor(Math.random() * 1000), name: 'Drone ' + (o.list.length + 1), u: u };
+      o.list.push(d); o.sel = d.id; drSaveData(o); afterChange();
+      const inp = b.querySelector('.dr-name'); inp.focus(); inp.select();
+    };
+  });
+  // other windows / a restored backup
+  window.addEventListener('storage', e => { if (e.key === DR_KEY || e.key === null) afterChange(); });
+  updateUnitsButtonHook();
+  function updateUnitsButtonHook() { const f = window.updateUnitsButton; if (typeof f === 'function') { window.updateUnitsButton = function () { const r = f.apply(this, arguments); try { drSync(); } catch (e) {} return r; }; } }
+  drSync();
 })();
 </script>
 

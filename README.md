@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.0
+
+- **Drones, each with their own limits** — add a drone in **⚙ Settings → Limits** (**＋ Add a drone**), name it, and set its own **wind**, **Kp** and **cold/heat** limits. A new drone starts as a copy of the limits you see, and your current limits stay as **Default**, so nothing changes until you add one. Once you have a drone, a blue pill under the place name on **Conditions** shows which drone's limits are in use, for example **Mini 4 Pro · wind 5 / 10 mph**. Tap it to switch: the Wind, Temperature and KP tiles, the Best window, the 24-hour strip and the no-flyable-window banner all follow the drone you pick. Drones are not tied to checklist tabs, so you can fly the same Mapping tab with a different drone on a different day. The drone list is included in **Back up & restore**.
+- **The ⚙ gear opens the drone you're using** — the gear on the Wind, Temperature and KP tiles takes you to the limits for the selected drone, with the **← Back to Conditions** bar to return.
+
+---
+
 ## What's new in v4.1.3
 
 - **Gear on the Wind, Temperature and KP tiles** — a small ⚙ in the corner of those three tiles on **Conditions** opens **Settings** right at **Limits**, where your wind, Kp and cold/heat limits live. A blue **← Back to Conditions** bar at the top takes you straight back to where you were. The bar only shows when you arrive from a gear, and it disappears if you switch tabs yourself.
