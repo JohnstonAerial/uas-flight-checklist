@@ -23,7 +23,7 @@ The app has three tabs at the top.
 
 The app remembers the tab you used last on that device. Tapping **Customize** in Settings takes you to the checklist so you can edit it. Backing up and restoring work the same from any tab, because they save everything the app has stored on that device.
 
-**Change the place you're checking.** On **Conditions**, tap **Change**, then tap the search box. Your saved places (the last 10) drop down; type to narrow them, or type a town, ZIP code or latitude, longitude and tap **Search**. Names that start with St, St. or Ste (St Paul, St. Louis) also find the "Saint" spelling.
+**Change the place you're checking.** On **Conditions**, tap **Change**, then tap the search box. Your saved places (the last 10) drop down; type to narrow them, or type a town, ZIP code or latitude, longitude and tap **Search**. Abbreviations work too: St Paul, Ft Worth, Mt Airy and N Charleston find Saint Paul, Fort Worth, Mount Airy and North Charleston. In Canada add the province (**Toronto ON**); in Australia add the state (**Sydney NSW**).
 
 **Change a limit from Conditions.** Tap the small ⚙ in the corner of the **Wind**, **Temperature** or **KP Index** tile. Once you have added a drone, the gears are hidden; tap the blue drone pill and choose **⚙ Edit drones & limits** instead. **Settings** opens at **Limits**; change the numbers, then tap **← Back to Conditions** at the top to return to the same spot.
 

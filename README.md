@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.4
+
+- **Place search finds more of the world** — it now understands **Canadian provinces** and **Australian states** (**Toronto ON**, **Calgary, Alberta**, **Sydney NSW**), about 100 country names and codes (**Auckland NZ**, **Cape Town South Africa**), and common local-language names (**Wien**, **Roma**, **Warszawa**, **Koeln**, **Ciudad de Mexico** find Vienna, Rome, Warsaw, Cologne and Mexico City). When nothing matches, the message suggests adding the country.
+- **Abbreviations work** — **Ft Worth**, **Pt Pleasant**, **Mt. Airy**, **N Charleston**, **Lk Havasu**, **Hot Spgs**, **Mc Kinney** and **O Fallon** are found. The search also tries the other spelling, so a town filed as "Mt Pleasant" turns up when you type "Mount Pleasant NC".
+
+---
+
 ## What's new in v4.2.3
 
 - **"St", "St." and "Ste" places are found** — searching **St Paul Minnesota**, **St. Louis** or **Ste Genevieve** now finds the city. The place database spells these out as "Saint" and "Sainte", so the search looks up both spellings and shows the combined results, with your state or country first.

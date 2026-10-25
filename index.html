@@ -887,7 +887,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.2.3</p>
+      <p>Free Drone Preflight Checklist · v4.2.4</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -4164,6 +4164,9 @@ async function searchSite(e) {
     }
   }
 
+  // 4.2.4b: local-language names the place database ranks badly (Wien finds Wien, Missouri); search the English name first
+  const ALIAS = { wien:'Vienna', roma:'Rome', firenze:'Florence', venezia:'Venice', napoli:'Naples', milano:'Milan', torino:'Turin', genova:'Genoa', praha:'Prague', warszawa:'Warsaw', krakow:'Krakow', gdansk:'Gdansk', wroclaw:'Wroclaw', goteborg:'Gothenburg', kobenhavn:'Copenhagen', koeln:'Cologne', koln:'Cologne', munchen:'Munich', muenchen:'Munich', nurnberg:'Nuremberg', nuernberg:'Nuremberg', 'ciudad de mexico':'Mexico City', lisboa:'Lisbon', bruxelles:'Brussels', brussel:'Brussels', geneve:'Geneva', zuerich:'Zurich', 'den haag':'The Hague', antwerpen:'Antwerp', sevilla:'Seville', moskva:'Moscow', athina:'Athens', bucuresti:'Bucharest', beograd:'Belgrade', helsingfors:'Helsinki', 'sankt petersburg':'Saint Petersburg', 'sao paulo':'Sao Paulo', 'rio de janeiro':'Rio de Janeiro', 'nueva york':'New York', londres:'London', parigi:'Paris', napels:'Naples' };
+  const aNorm = (n) => n.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[.']/g, '').trim();
   // "Angier NC" / "Angier, NC" -> search the town, then prefer that state
   // Also accepts the full state name ("Ocala Florida", "Ocala, Florida") and a trailing "USA"
   let name = q, state = null;
@@ -4178,10 +4181,25 @@ async function searchSite(e) {
     }
   }
 
-  // "Munich, Germany" / "Berlin Germany" / "Dublin IE" -> search the city, restrict to that country
+  // "Toronto ON" / "Calgary, Alberta" / "Sydney NSW" -> search the city, restrict to that country and keep that province or state first
   let ccode = '';
-  if (!state) {
-    const CN = { germany:'DE', deutschland:'DE', netherlands:'NL', holland:'NL', 'the netherlands':'NL', ireland:'IE', belgium:'BE', belgique:'BE', france:'FR', 'united kingdom':'GB', uk:'GB', england:'GB', scotland:'GB', wales:'GB', canada:'CA', australia:'AU', austria:'AT', switzerland:'CH', italy:'IT', spain:'ES', portugal:'PT', denmark:'DK', sweden:'SE', norway:'NO', finland:'FI', poland:'PL', 'new zealand':'NZ', mexico:'MX', japan:'JP', argentina:'AR', brazil:'BR', de:'DE', nl:'NL', ie:'IE', be:'BE', fr:'FR', gb:'GB', ca:'CA', au:'AU', at:'AT', ch:'CH', it:'IT', es:'ES' };
+  const wholeAlias = !!ALIAS[aNorm(qq)];
+  if (!state && !wholeAlias) {
+    const REG = { ON:['CA','Ontario'], QC:['CA','Quebec'], BC:['CA','British Columbia'], AB:['CA','Alberta'], MB:['CA','Manitoba'], SK:['CA','Saskatchewan'], NS:['CA','Nova Scotia'], NB:['CA','New Brunswick'], NL:['CA','Newfoundland and Labrador'], PE:['CA','Prince Edward Island'], PEI:['CA','Prince Edward Island'], YT:['CA','Yukon'], NU:['CA','Nunavut'],
+      NSW:['AU','New South Wales'], VIC:['AU','Victoria'], QLD:['AU','Queensland'], TAS:['AU','Tasmania'], ACT:['AU','Australian Capital Territory'], NT:['', ''],
+      ONTARIO:['CA','Ontario'], QUEBEC:['CA','Quebec'], 'BRITISH COLUMBIA':['CA','British Columbia'], ALBERTA:['CA','Alberta'], MANITOBA:['CA','Manitoba'], SASKATCHEWAN:['CA','Saskatchewan'], 'NOVA SCOTIA':['CA','Nova Scotia'], 'NEW BRUNSWICK':['CA','New Brunswick'], NEWFOUNDLAND:['CA','Newfoundland and Labrador'],
+      'NEW SOUTH WALES':['AU','New South Wales'], QUEENSLAND:['AU','Queensland'], TASMANIA:['AU','Tasmania'], 'WESTERN AUSTRALIA':['AU','Western Australia'], 'SOUTH AUSTRALIA':['AU','South Australia'], 'NORTHERN TERRITORY':['AU','Northern Territory'] };
+    const rk = Object.keys(REG).sort((x, y) => y.length - x.length);
+    for (const k of rk) {
+      const rm = qq.match(new RegExp('^(.+?)[,\\s]+' + k.replace(/ /g, '\\s+') + '$', 'i'));
+      if (rm && rm[1].trim()) { name = rm[1].trim().replace(/,$/, ''); if (REG[k][0]) { ccode = REG[k][0]; state = REG[k][1]; } break; }
+    }
+  }
+  // "Munich, Germany" / "Berlin Germany" / "Dublin IE" -> search the city, restrict to that country
+  if (!state && !wholeAlias) {
+    const CN = { germany:'DE', deutschland:'DE', netherlands:'NL', holland:'NL', 'the netherlands':'NL', ireland:'IE', belgium:'BE', belgique:'BE', france:'FR', 'united kingdom':'GB', uk:'GB', england:'GB', scotland:'GB', wales:'GB', 'northern ireland':'GB', canada:'CA', australia:'AU', austria:'AT', switzerland:'CH', italy:'IT', spain:'ES', portugal:'PT', denmark:'DK', sweden:'SE', norway:'NO', finland:'FI', poland:'PL', 'new zealand':'NZ', mexico:'MX', japan:'JP', argentina:'AR', brazil:'BR', brasil:'BR',
+      czechia:'CZ', 'czech republic':'CZ', slovakia:'SK', hungary:'HU', romania:'RO', bulgaria:'BG', greece:'GR', turkey:'TR', ukraine:'UA', croatia:'HR', slovenia:'SI', serbia:'RS', estonia:'EE', latvia:'LV', lithuania:'LT', iceland:'IS', luxembourg:'LU', malta:'MT', cyprus:'CY', israel:'IL', uae:'AE', 'saudi arabia':'SA', qatar:'QA', egypt:'EG', morocco:'MA', kenya:'KE', nigeria:'NG', 'south africa':'ZA', india:'IN', pakistan:'PK', 'sri lanka':'LK', nepal:'NP', bangladesh:'BD', china:'CN', 'hong kong':'HK', taiwan:'TW', 'south korea':'KR', korea:'KR', thailand:'TH', vietnam:'VN', malaysia:'MY', singapore:'SG', indonesia:'ID', philippines:'PH', chile:'CL', peru:'PE', colombia:'CO', ecuador:'EC', uruguay:'UY', 'costa rica':'CR', panama:'PA', 'dominican republic':'DO', jamaica:'JM', bahamas:'BS',
+      de:'DE', nl:'NL', ie:'IE', be:'BE', fr:'FR', gb:'GB', ca:'CA', au:'AU', at:'AT', ch:'CH', it:'IT', es:'ES', nz:'NZ', mx:'MX', jp:'JP', br:'BR', ar:'AR', dk:'DK', se:'SE', fi:'FI', pl:'PL', cz:'CZ', pt:'PT', gr:'GR', tr:'TR', za:'ZA', sg:'SG', hk:'HK', tw:'TW', kr:'KR', th:'TH', my:'MY', ph:'PH', ae:'AE', il:'IL', ro:'RO', hu:'HU', ua:'UA', is:'IS', lu:'LU' };
     const cm = qq.match(/^(.+?)[,\s]+((?:the\s+)?[A-Za-z]+(?:\s[A-Za-z]+)?)$/);
     if (cm) {
       const key = cm[2].toLowerCase();
@@ -4192,27 +4210,47 @@ async function searchSite(e) {
 
   note('Searching…');
   try {
-    // 4.2.3a: the place database spells it out ("Saint Paul"), so "St Paul" / "St. Louis" / "Ste Genevieve" also search the long spelling
-    name = name.replace(/^(ste?)\.(?=\s|$)/i, '$1');
+    // 4.2.4a: the place database spells words out ("Saint Paul", "Fort Worth", "Mount Airy") but some towns are filed short ("Mt Pleasant"),
+    // so a search also tries the other spelling: St/Ste/Ft/Pt/Mt/Lk and N/S/E/W up front, Spgs/Hts/Bch... at the end, "Mc Kinney", "O Fallon"
+    name = name.replace(/\b(st|ste|ft|pt|mt|mtn|lk|spgs|spg|hts|bch|hbr|vly|jct)\./gi, '$1');
+    const LEAD = { st: 'Saint', ste: 'Sainte', ft: 'Fort', pt: 'Point', mt: 'Mount', mtn: 'Mountain', lk: 'Lake', n: 'North', s: 'South', e: 'East', w: 'West' };
+    const BACK = { saint: 'St', sainte: 'Ste', fort: 'Ft', point: 'Pt', mount: 'Mt' };
+    const TAIL = { spgs: 'Springs', spg: 'Spring', hts: 'Heights', bch: 'Beach', hbr: 'Harbor', vly: 'Valley', jct: 'Junction' };
+    const variants = (n) => {
+      const out = [], back = [], add = (v, to) => { if (v && v.toLowerCase() !== n.toLowerCase() && ![...out, ...back].some(o => o.toLowerCase() === v.toLowerCase())) (to || out).push(v); };
+      const akey = aNorm(n);
+      if (ALIAS[akey]) add(ALIAS[akey]);
+      const w = n.split(/\s+/);
+      if (w.length > 1) {
+        const f = w[0].toLowerCase(), rest = w.slice(1).join(' ');
+        if (LEAD[f]) add(LEAD[f] + ' ' + rest);
+        if (BACK[f]) add(BACK[f] + ' ' + rest, back);
+        const l = w[w.length - 1].toLowerCase();
+        if (TAIL[l]) add(w.slice(0, -1).join(' ') + ' ' + TAIL[l]);
+        if ((f === 'mc' || f === 'mac') && w.length === 2) add(w[0] + w[1]);
+        if (f === 'o' && w.length === 2) add("O'" + w[1]);
+      }
+      return [...out, n, ...back].slice(0, 3);
+    };
     const geo = async (n) => {
       const r = await fetchT('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(n) + '&count=10&language=en&format=json' + (ccode ? '&countryCode=' + ccode : ''));
       if (!r.ok) throw new Error('search ' + r.status);
       return (await r.json()).results || [];
     };
-    const sm0 = name.match(/^(ste?)\s+(.+)$/i);
+    const vs = variants(name);
     let list;
-    if (sm0) {
-      const alt = (sm0[1].toLowerCase() === 'ste' ? 'Sainte ' : 'Saint ') + sm0[2];
-      const [a, b] = await Promise.all([geo(name), geo(alt).catch(() => [])]);
+    if (vs.length > 1) {
+      const res = await Promise.all(vs.map((v, k) => k ? geo(v).catch(() => []) : geo(v)));
       const seen = new Set(); list = [];
-      for (let i = 0; i < Math.max(a.length, b.length); i++) {
-        [b[i], a[i]].forEach(r => { if (r && !seen.has(r.id)) { seen.add(r.id); list.push(r); } });
+      for (let i = 0; i < 10; i++) {
+        // the long spelling first (it is how most places are filed), then what was typed, then the short spelling
+        res.forEach(a => { const r = a && a[i]; if (r && !seen.has(r.id)) { seen.add(r.id); list.push(r); } });
       }
     } else list = await geo(name);
     if (state) { const f = list.filter(r => r.admin1 === state); if (f.length) list = f; }
     list = list.slice(0, 6);
     out.innerHTML = '';
-    if (!list.length) { note('No matches. Try a nearby town, a postal code or ZIP code, or coordinates.'); return; }
+    if (!list.length) { note('No matches. Try adding the country (for example Toronto, Canada), a nearby town, a postal code or ZIP code, or coordinates.'); return; }
     list.forEach(r => {
       const region = r.admin1 ? (r.country_code === 'US' && STATE_ABBR[r.admin1] ? STATE_ABBR[r.admin1] : r.admin1) : '';
       const label = r.name + (region ? ', ' + region : '') + (r.country_code && r.country_code !== 'US' ? ', ' + r.country_code : '');
