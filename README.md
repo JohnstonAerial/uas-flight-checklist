@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.3
+
+- **"St", "St." and "Ste" places are found** — searching **St Paul Minnesota**, **St. Louis** or **Ste Genevieve** now finds the city. The place database spells these out as "Saint" and "Sainte", so the search looks up both spellings and shows the combined results, with your state or country first.
+- **The ⚙ gears step aside once you add a drone** — when you have at least one drone, the gears on the **Wind**, **Temperature** and **KP Index** tiles are hidden. The blue drone pill's **⚙ Edit drones & limits** line takes you to the same place. Without a drone, the gears stay.
+
+---
+
 ## What's new in v4.2.2
 
 - **FAA UAS Facility Map, for the whole area** — the old **FAA grid map** button is now **🗺 FAA UAS Facility Map**, the FAA's own name. Its line now looks at every grid square within 3 miles of your place, not one square, and shows the spread: for example **0–400 ft nearby · LAANC**. It turns amber when some nearby squares are 0 ft (FAA approval needed there), and stays green when every square is above 0. If every nearby square matches you get one number, such as **400 ft · LAANC**, and where the FAA has no grid within 3 miles it says **No grid nearby**. Tap the button to open the FAA's map for the exact square.

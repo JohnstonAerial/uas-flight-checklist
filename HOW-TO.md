@@ -23,9 +23,9 @@ The app has three tabs at the top.
 
 The app remembers the tab you used last on that device. Tapping **Customize** in Settings takes you to the checklist so you can edit it. Backing up and restoring work the same from any tab, because they save everything the app has stored on that device.
 
-**Change the place you're checking.** On **Conditions**, tap **Change**, then tap the search box. Your saved places (the last 10) drop down; type to narrow them, or type a town, ZIP code or latitude, longitude and tap **Search**.
+**Change the place you're checking.** On **Conditions**, tap **Change**, then tap the search box. Your saved places (the last 10) drop down; type to narrow them, or type a town, ZIP code or latitude, longitude and tap **Search**. Names that start with St, St. or Ste (St Paul, St. Louis) also find the "Saint" spelling.
 
-**Change a limit from Conditions.** Tap the small ⚙ in the corner of the **Wind**, **Temperature** or **KP Index** tile. **Settings** opens at **Limits**; change the numbers, then tap **← Back to Conditions** at the top to return to the same spot.
+**Change a limit from Conditions.** Tap the small ⚙ in the corner of the **Wind**, **Temperature** or **KP Index** tile. Once you have added a drone, the gears are hidden; tap the blue drone pill and choose **⚙ Edit drones & limits** instead. **Settings** opens at **Limits**; change the numbers, then tap **← Back to Conditions** at the top to return to the same spot.
 
 **Fly more than one drone? Give each its own limits.** Open **Settings → Limits** and tap **＋ Add a drone**. Name it, then set its wind, Kp and cold/heat limits in the boxes below. Your original limits stay as **Default**. Back on **Conditions**, tap the blue drone pill under the place name to pick which drone you're flying today; the tiles and the Best window use that drone's limits. The pill only shows once you've added a drone. Drones are not linked to checklist tabs. To remove one, select it in Settings → Limits and tap **Delete this drone**.
 

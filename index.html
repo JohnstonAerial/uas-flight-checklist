@@ -698,6 +698,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .panel.editing .body-set > .dr-block { display: none; }
   /* 4.1.3a: gear on the Wind, Temperature and KP tiles opens Settings at Limits, with a bar back to Conditions */
   .wx-gear { float: right; width: 26px; height: 26px; margin: -5px -5px 0 4px; padding: 0; border: none; border-radius: 50%; background: rgba(37,99,235,0.14); color: var(--link, #2563EB); font-size: 14px; line-height: 26px; text-align: center; cursor: pointer; }
+  /* 4.2.3b: once a drone is added the pill menu's 'Edit drones & limits' is the way in, so the tile gears step aside */
+  body.has-drones .wx-gear { display: none; }
   .wx-gear:active { background: rgba(37,99,235,0.3); }
   .lim-back { position: fixed; top: 0; left: 0; right: 0; z-index: 60; display: flex; justify-content: center; padding: 8px 12px 6px; pointer-events: none; }
   .lim-back button { pointer-events: auto; width: 100%; max-width: 560px; padding: 11px 14px; border: none; border-radius: 12px; background: #1d4ed8; color: #fff; font-size: 14px; font-weight: 700; text-align: left; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.35); }
@@ -885,7 +887,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.2.2</p>
+      <p>Free Drone Preflight Checklist · v4.2.3</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -4190,10 +4192,23 @@ async function searchSite(e) {
 
   note('Searching…');
   try {
-    const res = await fetchT('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(name) + '&count=10&language=en&format=json' + (ccode ? '&countryCode=' + ccode : ''));
-    if (!res.ok) throw new Error('search ' + res.status);
-    const data = await res.json();
-    let list = data.results || [];
+    // 4.2.3a: the place database spells it out ("Saint Paul"), so "St Paul" / "St. Louis" / "Ste Genevieve" also search the long spelling
+    name = name.replace(/^(ste?)\.(?=\s|$)/i, '$1');
+    const geo = async (n) => {
+      const r = await fetchT('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(n) + '&count=10&language=en&format=json' + (ccode ? '&countryCode=' + ccode : ''));
+      if (!r.ok) throw new Error('search ' + r.status);
+      return (await r.json()).results || [];
+    };
+    const sm0 = name.match(/^(ste?)\s+(.+)$/i);
+    let list;
+    if (sm0) {
+      const alt = (sm0[1].toLowerCase() === 'ste' ? 'Sainte ' : 'Saint ') + sm0[2];
+      const [a, b] = await Promise.all([geo(name), geo(alt).catch(() => [])]);
+      const seen = new Set(); list = [];
+      for (let i = 0; i < Math.max(a.length, b.length); i++) {
+        [b[i], a[i]].forEach(r => { if (r && !seen.has(r.id)) { seen.add(r.id); list.push(r); } });
+      }
+    } else list = await geo(name);
     if (state) { const f = list.filter(r => r.admin1 === state); if (f.length) list = f; }
     list = list.slice(0, 6);
     out.innerHTML = '';
@@ -5510,6 +5525,7 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
     const row = document.getElementById('dr-row'), pill = document.getElementById('dr-pill'), menu = document.getElementById('dr-menu');
     if (row && pill) {
       row.hidden = !o.list.length;
+      document.body.classList.toggle('has-drones', o.list.length > 0);
       pill.innerHTML = '<span>🚁 ' + esc(nm(act)) + '<small>wind ' + esc(sums(act).wind) + '</small></span><span>' + (menu && !menu.hidden ? '▴' : '▾') + '</span>';
       pill.setAttribute('aria-expanded', menu && !menu.hidden ? 'true' : 'false');
       if (!o.list.length && menu) menu.hidden = true;
