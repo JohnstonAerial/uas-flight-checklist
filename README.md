@@ -106,6 +106,11 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.5
+
+- **Steadier Conditions screen.** The page no longer jumps around while the weather loads, so you won't tap the wrong button as the tiles fill in.
+- **Clearer packing item.** It now reads "Pack the drone, controller and all gear — cases and bags zipped and latched."
+
 ## What's new in v4.2.4
 
 - **Place search finds more of the world** — it now understands **Canadian provinces** and **Australian states** (**Toronto ON**, **Calgary, Alberta**, **Sydney NSW**), about 100 country names and codes (**Auckland NZ**, **Cape Town South Africa**), and common local-language names (**Wien**, **Roma**, **Warszawa**, **Koeln**, **Ciudad de Mexico** find Vienna, Rome, Warsaw, Cologne and Mexico City). When nothing matches, the message suggests adding the country.

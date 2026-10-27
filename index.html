@@ -748,6 +748,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-sug button:last-child { border-bottom: 0; }
   .wx-chip { font-family: inherit; font-size: 12px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 5px 10px; cursor: pointer; }
   .wx-status { font-size: 12px; color: var(--text-muted); text-align: center; padding: 6px 0 2px; }
+  .wx-status.wx-loading { min-height: 100vh; }   /* keeps the page from jumping when the weather fills in */
   .wx-alert { color: #e0301e; } .wx-warn { color: var(--amber); } .wx-good { color: var(--green); }
   .wx-key-prompt { font-size: 12px; color: var(--text-muted); background: var(--section-bg); border-radius: 8px; padding: 8px 10px; text-align: center; }
   .wx-key-prompt a { color: var(--link); }
@@ -887,7 +888,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.2.4</p>
+      <p>Free Drone Preflight Checklist · v4.2.5</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -940,7 +941,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <div class="wx-chips" id="wx-chips"></div>
   </div>
   <div id="wx-body">
-    <div class="wx-status">Locating...</div>
+    <div class="wx-status wx-loading">Locating...</div>
   </div>
   <div class="wx-tfr-row" style="margin-top:10px;">
     <a class="wx-airmap" id="wx-airmap" href="https://skyvector.com/" target="_blank" rel="noopener">🛩 Airspace chart — SkyVector</a>
@@ -1100,7 +1101,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Confirm upload complete and submission accepted in platform app</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Mark mission complete in platform app — do not leave job open</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Let site contact know you're finished — if you notified them</div></div>
-      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Pack drone properly in case — confirm all parts undamaged and stowed securely</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Pack the drone, controller and all gear — cases and bags zipped and latched</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Let batteries cool before charging — a hot battery should rest first</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Put batteries on charger when home — don't leave discharged</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Log the flight — site, flight time and any issues (tap Save flight record)</div></div>
@@ -1235,7 +1236,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Transfer/back up data before leaving site — copy all files to a backup drive and verify the file count</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Upload to your processing platform</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Let site contact know you're finished — if you notified them</div></div>
-      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Pack drone properly in case — confirm all parts undamaged and stowed securely</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Pack the drone, controller and all gear — cases and bags zipped and latched</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Let batteries cool before charging — a hot battery should rest first</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Put batteries on charger when home — don't leave discharged</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Log the flight — site, flight time and any issues (tap Save flight record)</div></div>
@@ -1354,7 +1355,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Inspect drone after landing — props, body, gimbal, no damage</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Transfer/back up footage if needed — copy files to backup drive</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Let site contact know you're finished — if you notified them</div></div>
-      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Pack drone properly in case — confirm all parts undamaged and stowed securely</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Pack the drone, controller and all gear — cases and bags zipped and latched</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Let batteries cool before charging — a hot battery should rest first</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Put batteries on charger when home — don't leave discharged</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Log the flight — site, flight time and any issues (tap Save flight record)</div></div>
@@ -4294,7 +4295,7 @@ async function loadWeather() {
   const key = site ? site.lat + ',' + site.lon : 'gps';
   // Keep showing the last good reading (dimmed) while refreshing the same place; otherwise show Loading
   if (goodDraw && goodKey === key && lastWeatherAt) body.style.opacity = '0.55';
-  else { body.style.opacity = ''; body.innerHTML = '<div class="wx-status">Loading...</div>'; }
+  else { body.style.opacity = ''; body.innerHTML = '<div class="wx-status wx-loading">Loading...</div>'; }
   updateLocLabel();
 
   if (site) { renderWeather(site.lat, site.lon); return; }
