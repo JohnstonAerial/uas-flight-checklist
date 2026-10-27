@@ -888,7 +888,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.2.6</p>
+      <p>Free Drone Preflight Checklist · v4.2.7</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -2720,7 +2720,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasDrones', 'uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', 'uasMovedOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasDrones', 'uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindHts', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', 'uasMovedOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -3192,9 +3192,12 @@ function windLimits() {
 // Wind by height (Wind tile, tap "more"): surface, 260 ft and 400 ft (10, 80 and 120 m)
 // Keep a list entry together on one line (a plain space becomes a no-break space) so lists wrap between entries, not inside them
 const NB = (t) => String(t).replace(/ /g, '\u00A0');
+// The open/closed choice is remembered on this device (and goes with Back up and restore)
 let windHtsOpen = false;
+try { windHtsOpen = localStorage.getItem('uasWindHts') === '1'; } catch (e) {}
 function windHtsToggle(btn) {
   windHtsOpen = !windHtsOpen;
+  try { localStorage.setItem('uasWindHts', windHtsOpen ? '1' : '0'); } catch (e) {}
   document.querySelectorAll('.wx-hts').forEach(d => { d.hidden = !windHtsOpen; });
   document.querySelectorAll('.wx-h4').forEach(d => { d.hidden = windHtsOpen; });
   document.querySelectorAll('.wx-more').forEach(b => { b.textContent = windHtsOpen ? '\u25B4 fewer' : '\u25BE more'; b.setAttribute('aria-expanded', windHtsOpen ? 'true' : 'false'); });
@@ -4615,7 +4618,7 @@ async function renderWeather(lat, lon, attempt = 1) {
 
       const kp = kpData2;
       const kpVal = kp !== null ? kp.toFixed(1) : '—';
-      const kpNoteFn = () => { const l = kpLimits(); return kp === null ? 'Unavailable — check another source before flying' : kp >= l.r ? '⛔ High — GPS/compass risk' : kp >= l.a ? '⚠️ Elevated — monitor' : 'Normal — good to fly'; };
+      const kpNoteFn = () => { const l = kpLimits(); return kp === null ? 'Unavailable' : kp >= l.r ? '⛔ High — GPS and compass can be affected' : kp >= l.a ? '⚠️ Elevated — monitor' : 'Normal'; };
 
       const now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
@@ -4871,12 +4874,18 @@ function recWeatherLines() {
     const q = (sel) => { const e = it.querySelector(sel); return e ? recNoEmoji(e.textContent) : ''; };
     const label = q('.wx-label'), val = (() => { const e = it.querySelector('.wx-value'); if (!e) return ''; const c = e.cloneNode(true); c.querySelectorAll('.ws-chip').forEach(x => x.replaceWith(document.createTextNode(speedUnit()))); return recNoEmoji(c.textContent); })().replace(/\s*[\u2190-\u2199]\s*/g, ' ').trim();   // no wind arrow in the record; the "From NE" text says it
     const subs = [...it.querySelectorAll('.wx-sub, .wx-vis-val')].map(e => {
-      let t = recNoEmoji(e.textContent.replace(/\s*[\u25BE\u25B4]\s*(more|fewer)/, ''));
+      // Lists of stations ("Windier nearby", "Also reporting", "Lower nearby"): a space after the heading and a comma between entries
+      const ce = e.cloneNode(true); ce.querySelectorAll('br').forEach(br => br.replaceWith(document.createTextNode(', '))); ce.querySelectorAll('.wx-li').forEach((li, i) => li.prepend(document.createTextNode(i ? ', ' : ' ')));
+      let t = recNoEmoji(ce.textContent.replace(/\s*[\u25BE\u25B4]\s*(more|fewer)/, ''));
       if (e.classList.contains('wx-vis-val')) t = 'Visibility ' + t;
       const ts = e.getAttribute('data-rec-age');              // record shows a clock time, not "21 min ago"
       if (ts) t = t.replace(/ · (just now|\d+ min ago|\d+ hrs? ago)/, ' · observed ' + new Date(+ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-      return t.replace(/ \((just now|\d+ min ago|\d+ hrs? ago)\)/, '');
+      // Inside the record's own brackets, any other brackets become square ones so they don't pile up: "(forecast))"
+      return t.replace(/ \((just now|\d+ min ago|\d+ hrs? ago)\)/, '').replace(/\(([^()]*)\)/g, '[$1]');
     }).filter(Boolean);
+    // The altitude rows sit in a part that may be collapsed: the record always lists both heights
+    const alts = [...it.querySelectorAll('.wx-hts .wx-hrow')].map(r => { const sp = r.querySelector('span'), b = r.querySelector('b'); return sp && b ? recNoEmoji(sp.textContent) + ': ' + recNoEmoji(b.textContent) : ''; }).filter(Boolean);
+    if (alts.length) { const k = subs.findIndex(t => /^(400 ft|120 m): /.test(t)); if (k > -1) subs.splice(k, 1); subs.push('Forecast aloft, ' + alts.join(', ')); }
     if (label) out.push(label + ': ' + (val || '—') + (subs.length ? ' (' + subs.join('; ') + ')' : ''));
   });
   const sun = body.querySelector('.wx-sun'); if (sun) out.push(recNoEmoji(sun.textContent).replace(/\s*·\s*/g, ' · '));

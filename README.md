@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.7
+
+- **Wind by height stays open.** Tap **more** on the Wind tile once and it stays open, even after you close and reopen the app. It also goes with Back up and restore.
+- **Both heights in your flight record.** The saved PDF and flight record now always list the forecast wind at 260 ft and 400 ft (80 m and 120 m in metric), whether or not the section is expanded.
+- **Tidier flight record.** The Conditions lines now put a space and commas between stations (Windier nearby, Also reporting, Lower nearby), separate Elevation from Density alt, and no longer stack brackets like "(forecast))".
+- **Kp tile wording.** The Kp tile now just says **Normal** instead of "good to fly", and the high warning reads "GPS and compass can be affected". Colors and your adjustable warning levels are unchanged.
+
 ## What's new in v4.2.6
 
 - **No more false "Radar echoes nearby."** Faint, tan-colored radar returns (clear-air echoes, insects and ground clutter) are no longer counted as rain, so a clear sky no longer shows echoes nearby. Real rain is still detected.
