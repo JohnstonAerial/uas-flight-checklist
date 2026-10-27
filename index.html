@@ -888,7 +888,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.2.5</p>
+      <p>Free Drone Preflight Checklist · v4.2.6</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -3668,6 +3668,7 @@ function decodeHazard(wx) {
 const RADAR_ZOOM = 7;          // about 1 km per pixel
 const RADAR_NEAR_PX = 5;       // "nearby" = within about 5 pixels (roughly 3 miles)
 const RADAR_MIN_PIXELS = 4;    // a single stray pixel is usually clutter, birds or insects: require a small cluster of echoes
+const RADAR_MIN_SPREAD = 80;   // colour strength: the tan clutter palette stays under 72, the lightest real rain (pale blue) is 102
 const RADAR_MIN_ALPHA = 120;   // ignore the faint tan haze (very light returns, drizzle aloft, clutter)
 const RADAR_MAX_AGE_MIN = 30;  // ignore radar frames older than this
 
@@ -3714,7 +3715,10 @@ async function fetchRadar(lat, lon) {
     const alphaAt = (x, y) => {
       const t = tiles[Math.floor(x / 256) + ',' + Math.floor(y / 256)];
       if (!t) return 0;
-      return t[(((y % 256) + 256) % 256 * 256 + ((x % 256) + 256) % 256) * 4 + 3];
+      const i = (((y % 256) + 256) % 256 * 256 + ((x % 256) + 256) % 256) * 4;
+      // The faint tan returns (clear-air echoes, insects, ground clutter) are grey-brown; real rain is blue, green, yellow or red
+      if (Math.max(t[i], t[i + 1], t[i + 2]) - Math.min(t[i], t[i + 1], t[i + 2]) < RADAR_MIN_SPREAD) return 0;
+      return t[i + 3];
     };
     // The coverage layer is opaque where there is NO radar
     const covered = cov[(py * 256 + px) * 4 + 3] === 0;

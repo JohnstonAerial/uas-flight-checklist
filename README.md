@@ -106,6 +106,10 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.6
+
+- **No more false "Radar echoes nearby."** Faint, tan-colored radar returns (clear-air echoes, insects and ground clutter) are no longer counted as rain, so a clear sky no longer shows echoes nearby. Real rain is still detected.
+
 ## What's new in v4.2.5
 
 - **Steadier Conditions screen.** The page no longer jumps around while the weather loads, so you won't tap the wrong button as the tiles fill in.
