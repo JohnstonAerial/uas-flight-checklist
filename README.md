@@ -106,6 +106,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.10
+
+- **Inspect, then charge.** On every checklist, **Batteries inspected for damage** now comes before **All drone batteries fully charged**, so you look for swelling, cracks or corrosion before you rely on the charge. Your ticks and any order you set yourself are untouched.
+- **A cleaner forecast strip title.** It reads **Forecast** now. The **24 hours / 10 days** switch beside it already shows the range.
+- **New Wind, Aloft and Kp icons.** The Wind tile and the strip's Wind chip show a small drawing of blue wind streams, the Aloft chip shows the same streams with an up arrow, and the Kp tile and its Settings row show a magnet. They look the same on every phone and computer. The open view list on the strip still shows emoji, because a phone's own picker can only show text.
+- **Drone picture, drone only.** The little drone on the Best window box, the drone picker, the Default drone row and the **Add a drone** button no longer has green grass behind it.
+- **A clearer airspace note.** Under the airspace buttons it now says what the copied airport code is for: "NOTAMs copies the airport code to paste in its location box." It also fits three lines on a phone.
+
 ## What's new in v4.2.9
 
 - **Your drone, as a picture.** The **Best window** / **Possible window** box, the drone picker under your location, the **Default drone** row in Settings and the **Add a drone** button now show a small drone picture instead of a dove or helicopter emoji. It looks the same on every phone and computer.
