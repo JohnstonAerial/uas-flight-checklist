@@ -15,7 +15,7 @@ Short guides for eight things people ask about: finding your way around the thre
 
 ## Find your way around
 
-The app has three tabs at the top.
+The app has three tabs at the top. The three buttons stay at the same height on every tab, so you can flip between them without them moving under your thumb.
 
 - **🌤 Conditions** is where it opens: the preflight weather card, the airspace and TFR buttons, and the place you're checking.
 - **✅ Checklist** is your checklist. The General, Mapping and Commercial tabs, and your own tabs, show here. **✎ Customize** is beside the percentage at the top. **Print**, **PDF** and **Save flight record** are in a card at the bottom, and a line under the progress card jumps you there.

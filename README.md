@@ -106,6 +106,10 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.12
+
+- **The three buttons stay put.** **Conditions**, **Checklist** and **Settings** used to sit at a different height on each tab, because the General / Mapping / Commercial strip was hidden on Conditions. Conditions now shows a **Conditions** label in that strip, so the buttons are at the same height on all three tabs and don't move when you switch.
+
 ## What's new in v4.2.11
 
 - **A new picture on the Preflight Conditions title.** The satellite dish beside **Preflight Conditions** is now a small drawing of a sun behind a cloud with rain and a wind curl. It matches the Wind and Kp icons and looks the same on every phone and computer.

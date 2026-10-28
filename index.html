@@ -116,6 +116,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .tabs { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .tabs::-webkit-scrollbar { display: none; }
   .tab { flex: 1 0 auto; white-space: nowrap; padding: 8px 12px 9px; text-align: center; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; letter-spacing: 0.2px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 1px; }
+  .tabs-cond { display: none; }
+  .tc { flex: 1 0 auto; white-space: nowrap; padding: 8px 12px 9px; text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 0.2px; color: #fff; border-bottom: 3px solid #fff; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 1px; }
   .tab-ico { font-size: 26px; line-height: 1.15; }
   .tab-lbl { line-height: 1.2; }
   .tab-ico svg { display: block; width: 28px; height: 28px; }
@@ -849,13 +851,15 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     .mainnav .nv { position: relative; flex: 1; font-family: inherit; font-size: 13px; font-weight: 700; padding: 10px 4px; border-radius: 10px; border: 1px solid var(--border, rgba(127,127,127,.35)); background: var(--card-bg, rgba(127,127,127,.12)); color: var(--text-muted); cursor: pointer; }
     body.view-wx .mainnav .nv-wx, body.view-ck .mainnav .nv-ck, body.view-set .mainnav .nv-set { background: #2563EB; border-color: #2563EB; color: #fff; }
     body.bk-dirty .mainnav .nv-set::after { content: ''; position: absolute; top: 5px; right: 8px; width: 9px; height: 9px; border-radius: 50%; background: #e0301e; box-shadow: 0 0 0 2px var(--bg); }
-    body.view-wx .panel, body.view-wx .tabs, body.view-wx .progress-bar-wrap { display: none !important; }
+    body.view-wx .panel, body.view-wx .tabs { display: none !important; }
+    body.view-wx .tabs-cond { display: flex; }
     body:not(.view-wx) #wx-panel, body:not(.view-wx) #region-card { display: none !important; }
-    body:not(.view-ck) .progress-bar-wrap { display: none !important; }
+    body:not(.view-ck) .progress-bar-wrap { visibility: hidden; }
     body.view-ck .panel.active:not(.editing) .settings { display: none; }
     body.view-set .panel.active > :not(.settings) { display: none !important; }
   }
   @media print {
+    .tabs-cond { display: none !important; }
     .bk-banner { display: none !important; }
     @page { margin: 14mm 12mm; }
     :root:root:root { --green:#0F6E56; --green-light:#E1F5EE; --text:#000; --text-muted:#000; --text-light:#000; --card:#fff; --section-bg:#fff; --border:#999; --bg:#fff; --amber-light:#fff; }
@@ -902,7 +906,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.2.11</p>
+      <p>Free Drone Preflight Checklist · v4.2.12</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -914,6 +918,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <div class="tab" onclick="showPanel('mapping',this)">🗺 Mapping</div>
     <div class="tab" onclick="showPanel('zeitview',this)">📋 Commercial</div>
   </div>
+  <div class="tabs-cond" aria-hidden="true"><div class="tc"><span class="tab-ico">🌤</span><span class="tab-lbl">Conditions</span></div></div>
   <div class="progress-bar-wrap">
     <div class="progress-bar-fill" id="header-bar" style="width:0%"></div>
   </div>
