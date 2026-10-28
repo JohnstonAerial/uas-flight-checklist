@@ -106,6 +106,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.9
+
+- **Your drone, as a picture.** The **Best window** / **Possible window** box, the drone picker under your location, the **Default drone** row in Settings and the **Add a drone** button now show a small drone picture instead of a dove or helicopter emoji. It looks the same on every phone and computer.
+- **Icons on the weather tiles.** Each tile and each view of the forecast strip has a small icon in front of its name (wind, cloud, temperature, visibility, rain, Kp and humidity). The Temperature tile now reads **Temp** so the icon and the gear fit on one line.
+- **Cloud layers sit under the airport line.** The reported layers ("Bkn 400 · Ovc 4,700 ft") now come right after the station and age, ahead of the model numbers. A single layer that only repeats the ceiling at the top of the tile is left out.
+
 ## What's new in v4.2.8
 
 - **A tidier forecast strip.** The Next 24 hours / Next 10 days strip is smaller and more uniform on a phone. The unit now sits beside the view chip ("in mph", "in °F", "in SM", "in mm"), and the notes fit on one line.

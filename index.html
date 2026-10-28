@@ -12,6 +12,8 @@
 <meta name="apple-mobile-web-app-title" content="UAS Checklist">
 <meta name="theme-color" content="#0f2a4a">
 <script>/* manual light/dark choice (Settings > Appearance); Auto follows the device. Set before first paint to avoid a flash. */
+// Drone picture used instead of an emoji (same on every device)
+const DRONE_IMG = '<img class="dr-ico" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAAAtCAMAAAA6Ct2cAAABgFBMVEVbXl213ZOjpKSg2mhqmFWcn5pnZ2nK5ahWVlawsLBUlDJk0x+Jh4wYGxy2y6rQ1M4iIiKGqGvIysU9swxaUGS9wMPB+3ElKyV5b4h30UKF9S09PT0zM0Q7PUA9Qj8+RkNVPHlCO05+foCBfYWqqtSq/6q/xr/C168AAABz1jBLtRtZxSRRuSNHqhjn5+jHx8nV1teVl5hmyik7pRK0tranp6r///8zmA2qqqqT6Ex+fn6Ih4r29vhRmA9zdniG5TtpaG6z+m1WVlYqiAhVwxuC3Dqb8052dna7u8Gn+Fh4eHh6eIJnuCqGhoa/v79IiQZ65C+bmqKdo6JWV1pmZma4ubnE/YpSqCuXmJlJSUlUVVSIiImYmJiUp46lpaW3t7gGAwkRFRM4ODh2dnd3d3djrRyIiImYmJiFpXGH2EupypK4xbep6msaGho0NDhJSktqamp0dXV+g4ZqqU7d3OBnZ2djtRx5yUqEhISWlpaZmZmRvHWWt4eFyFeZ1m2mpqcIxAH6AAAAgHRSTlPu8WT4/+Or72yi//8l65zhFv+n+yX+/48j//90D////xX/bz8GA3mwAP7+/v7+/v3+/P76/PwB+QP+A/v+/v3+/v4I+//+/jD7/Ur//60E9v/7//0wsv/9TRssTbH/eM3//xFqkv+Ojv/9///8Efz+UdH///8T//9vN8//////iz83y6gAAAaASURBVHjajZUHVxs5EICFOzWXnlzvt9W7sldre2XWi7Gx40IgQCCU0EMNLb3/9ZuR1tgQcu+GxyKNZj7NjDSCKN+QfP4qrZt3v2FPrtR6SHne2FpUvHOVsrjV2EBW+f+BXFcRu560OX82q5wH4Cqv3sZpO/Uchp7rev8N8jyZ0Gyb0vdL33217dIype2GTL3sud8AScjQ3GpkmbGdGhpfKhsaPY2z5cjcjSGhcK8AeRhsrVFLWPQ0UhN1/cYJvIosO1bij0YNIs57l0AYTTnynoLMHA2DxWRo4Za9SRCvs7mLrOHjGQYSf1buogQIs53doYxSTvnMTJAqv+rJ5tJww0vx4JhaDgiF4whRYUS1HdgBwuGntGgFdxV3EpeB/6Sx8BRkofFETL38pKv84BQtQi3LqiNq8TwiV6ktM8dhlLe3TraYzQJeE1lAQXfqlmWDWJazA/mK/J68R5vEQv9qHWG0LS4JwZjfMva+/XYWrojSZg5zbGvuywLeu34gnEs/lK629GXOsusQ/ikiF57OrTpsMwShZjGsZPmEQ2SU2WmAPUWObcuIQOJfVh0YO9TntJnK/ylzGqr1FFucrLz6qQRJJHw+bQHLDjGS5SDVotwHA5IKOy8vLv15sT2v2wkoJ6dNzsFRgl5KUh1qy33fxy650A1X91pZ9lrKb3LM42W6I1hw4CSeiOtSvqLXLjWNoEHZtnzWy0m/tCzmJxYVxfv6wnudiPIbV6BSLG2newQiSl2BCfucKF5j81Z4uy++J8pc+oJY9urXjxGWYeNkc1Eh7iy0hnga8pc4yrWLICjSBj5Xl96D2S1O6aZCPMXbYQ6Nvy1jlPmuxbtV6yvQ6kJ3vzJW5sfNNsZRU1xRI2wRRp9dCKcf7ky6WOxyingt7f5XSs/r+HucMrZcQwciH56hfujl9mKjAUFh9d5BWrZdvCAYkp22IthzYDPb2HgG+8eX8LXs3OxJcP3iWMyxNnH+vB+Py2KXQGnmYIY3RE80HGfaceYWxCvvun8RdxLrJ0oYoQ4/XVh6F8EqW5T49LzXRI/QIKB12MKOzC0tJTjzI3DcQ7/2vpD3lFv3IjfuHgUc2sI5QCc/IM2AHv1EO8KC42bTb1IH245NM58Mk2RfXzI5MjLyz0iERP6+MZIERd/j5O7w+jE8fJZz2+KBz+PJOPT5NH0khTZJX5Se+Ryerml4IY7X18njMZTHIH2kLwl/xHwses2hjnUgngy2f+cOaB5xfgZ96p/xM+pEo3fGDj/WHYYgdpvx4PAByMTExIMHBXI49mAslJVikWKnClJSGBXIDLzhAZn55Sg2Bj7RPsCs0DjldtHxyeFEYWKiADJRIFFYLYjxIbwT3KdYBITdPgCjaNKyLX/Gd1amP4JLFNKKT9MVMKpDGWm0UIIflBIpdGSicACvOcQbLUAJbWh263OpcM22j9bW1wLL2i98f1DH8qx82CvtsgO4ePx6Se1IB1QqlQr7cBq8+QGGU9XPUP79T1P3d+mj9fXhtZ9pc1dV9/dXdj98mppS1b0V/K9zfQ/dSlW1WlLJXqEKIqB7Dr3+4XNpCkAqaPZQF/P5b2tra0EziFUqldYbVZ2CdXD/vMvPrheqpVK1WkIAUavn0akfeVAYVLvhqmqmFYu9GBgYiM2/aGUyXX1p6vv5wP80JSZVFVZIj5canQ7edGf6YEXXtJs3s1lT0yrqZRnwmz3GGSL3yaAMfooHrUEdRNUrhqFpmpkFivE6I4zCryq/kHTsPuhwiM4kIwUCyGTePArmkYORmNlc1jTN7ZZY1nX81fVBOVR1CCF4ocoZfvQOSEz1j80BvQKRaNlsLmfOD7RaLbkg6CjCCYmGL0GVUEEMQzcM/OiGVnkRm4dYzBxQzNevt7dft0KKLo3gD/jBVroOpxDr0GFF64IMTddMDdLJjedGzW1My5S+uIeGJRNO8DVRXcHQEWxoIQhNcKLpOcwoBxgpGpRc06WBAMFXx19ToKEAuIauhmGSeRjBzuiHKY2PA2Z01Bw1W9JVimHKUzTCkY46HBqmJsMlQDCyojCQE2BC2TZlGLCLJjcXGMmU8YndISjwhTHJmXjKIqcezmhLeAMEdgkzBUPQZCExU9I7nHnMiOQAoQlMroN5+FBGYWZFJFncSjPF5YQhKuB6AACmhpE150Fn5sg4ILJIGc89RIaQUeiLjpiwFfzIc4BLms2KMxFJGHoOJ2CT+xfn4YAVVdgp+QAAAABJRU5ErkJggg==">';
 try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 </script>
 <style>
@@ -697,6 +699,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .dr-for { margin: 10px 0 2px; font-size: 12px; color: var(--text-muted); }
   .panel.editing .body-set > .dr-block { display: none; }
   /* 4.1.3a: gear on the Wind, Temperature and KP tiles opens Settings at Limits, with a bar back to Conditions */
+  .dr-ico { height: 1.15em; width: auto; vertical-align: -0.22em; }
   .wx-gear { float: right; width: 26px; height: 26px; margin: -5px -5px 0 4px; padding: 0; border: none; border-radius: 50%; background: rgba(37,99,235,0.14); color: var(--link, #2563EB); font-size: 14px; line-height: 26px; text-align: center; cursor: pointer; }
   /* 4.2.3b: once a drone is added the pill menu's 'Edit drones & limits' is the way in, so the tile gears step aside */
   body.has-drones .wx-gear { display: none; }
@@ -890,7 +893,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.2.8</p>
+      <p>Free Drone Preflight Checklist · v4.2.9</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)">☕ Buy me a coffee</a>
@@ -3028,7 +3031,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     '<div class="fn-hint"><div class="fn-ex"></div>Date, time and customer are added for you.</div>';
   const acb = document.createElement('div'); acb.className = 'fn-block ac-block';
   acb.innerHTML = '<div class="fn-row"><span>👤 Default pilot</span><input type="text" class="fn-in ac-in" data-k="uasPilot" maxlength="40" placeholder="Your name" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Pilot name" oninput="acSave(this)"></div>' +
-    '<div class="fn-row"><span>🚁 Default drone</span><input type="text" class="fn-in ac-in" data-k="uasDrone" maxlength="40" placeholder="e.g. Mavic 4 Pro" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Drone name or model" oninput="acSave(this)"></div>' +
+    '<div class="fn-row"><span>' + DRONE_IMG + ' Default drone</span><input type="text" class="fn-in ac-in" data-k="uasDrone" maxlength="40" placeholder="e.g. Mavic 4 Pro" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Drone name or model" oninput="acSave(this)"></div>' +
     '<div class="fn-row"><span>🪪 Default reg. #</span><input type="text" class="fn-in ac-in" data-k="uasRegNo" maxlength="30" placeholder="FA3…" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-label="Drone registration number" oninput="acSave(this)"></div>' +
     '<div class="fn-hint">Printed at the top of saved records and the PDF. A tab uses these only if its own Pilot, Drone and Reg. # (under Customize) are blank.</div>';
   const pdb = document.createElement('div'); pdb.className = 'pdfset';
@@ -3278,7 +3281,7 @@ function cloudHtml(metar, ceilFt, om, hIdx) {
   const COV = { FEW: 'Few', SCT: 'Scattered', BKN: 'Broken', OVC: 'Overcast', OVX: 'Sky obscured', VV: 'Sky obscured' };
   const layers = ((metar && metar.clouds) || []).map(c => ({ cov: COV[c.code || c.cover], base: c.base_feet_agl })).filter(x => x.cov && x.base != null && isFinite(x.base)).sort((a, b) => a.base - b.base).slice(0, 4);
   let top = '';
-  if (ceilFt !== null && layers.length) top = '<div class="wx-lay">' + layers.map((x, i) => '<span>' + ({ Few: 'Few', Scattered: 'Sct', Broken: 'Bkn', Overcast: 'Ovc', 'Sky obscured': 'Obscd' }[x.cov] || x.cov) + ' <b>' + (i < layers.length - 1 ? fmtAlt(x.base).replace(/\s*[A-Za-z]+$/, '') : fmtAlt(x.base)) + '</b></span>').join(' \u00B7 ') + '</div>';   // with no ceiling the note above already lists the layers
+  if (ceilFt !== null && layers.length > 1) top = '<div class="wx-lay">' + layers.map((x, i) => '<span>' + ({ Few: 'Few', Scattered: 'Sct', Broken: 'Bkn', Overcast: 'Ovc', 'Sky obscured': 'Obscd' }[x.cov] || x.cov) + ' <b>' + (i < layers.length - 1 ? fmtAlt(x.base).replace(/\s*[A-Za-z]+$/, '') : fmtAlt(x.base)) + '</b></span>').join(' \u00B7 ') + '</div>';   // with no ceiling the note above already lists the layers
   if (!top) return '';
   return '<div class="wx-cl">' + top + '</div>';
 }
@@ -3405,6 +3408,7 @@ function hourStripHtml(om, hIdx) {
   const cls = { 'wx-good': 'hc-good', 'wx-warn': 'hc-warn', 'wx-alert': 'hc-alert' };
   const altLab = metric ? '120 m' : '400 ft';
   const views = [['wind', 'Wind']];
+  const vIcon = { wind: '🌬', alt: '🎈', temp: '🌡', vis: '👁', cloud: '☁️', rain: '🌧' };
   if (H.wind_speed_120m) views.push(['alt', 'Aloft']);
   if (H.temperature_2m) views.push(['temp', 'Temp']);
   if (H.visibility) views.push(['vis', 'Visibility']);
@@ -3497,8 +3501,8 @@ function hourStripHtml(om, hIdx) {
     keyTxt = 'Tap a day\u00A0· later days are a rough guide';
   }
   const seg = '<span class="hs-seg" role="group" aria-label="Forecast range"><button type="button" class="' + (dayMode ? '' : 'on') + '" aria-pressed="' + (!dayMode) + '" onclick="stripSpanSet(\'12h\')">24 hours</button><button type="button" class="' + (dayMode ? 'on' : '') + '" aria-pressed="' + dayMode + '" onclick="stripSpanSet(\'10d\')">10 days</button></span>';
-  const opts = views.map(v => '<option value="' + v[0] + '"' + (v[0] === view ? ' selected' : '') + '>' + v[1] + '</option>').join('');
-  return '<div class="wx-strip"><div class="hs-title">Next ' + (dayMode ? '10 days' : '24 hours') + ' <span class="ws-chip hs-chip"><span class="hs-lab">' + name + '</span><select class="hs-sel" aria-label="Hourly forecast view" onchange="stripViewSet(this.value)">' + opts + '</select></span> ' + (unitLab ? '<span class="hs-unit">in ' + (view === 'wind' || view === 'alt' ? windChipHtml() : unitLab) + '</span> ' : '') + seg + '<span class="hs-loc">' + String(site ? site.name : 'My location').replace(/[<>&"]/g, '') + '</span></div><div class="hs-cap">' + capTxt + '</div><div class="hs-row" role="group" aria-label="Hour by hour ' + name + ' forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">' + keyTxt + '</div></div>';
+  const opts = views.map(v => '<option value="' + v[0] + '"' + (v[0] === view ? ' selected' : '') + '>' + vIcon[v[0]] + ' ' + v[1] + '</option>').join('');
+  return '<div class="wx-strip"><div class="hs-title">Next ' + (dayMode ? '10 days' : '24 hours') + ' <span class="ws-chip hs-chip"><span class="hs-lab">' + vIcon[view] + '\u00A0' + name + '</span><select class="hs-sel" aria-label="Hourly forecast view" onchange="stripViewSet(this.value)">' + opts + '</select></span> ' + (unitLab ? '<span class="hs-unit">in ' + (view === 'wind' || view === 'alt' ? windChipHtml() : unitLab) + '</span> ' : '') + seg + '<span class="hs-loc">' + String(site ? site.name : 'My location').replace(/[<>&"]/g, '') + '</span></div><div class="hs-cap">' + capTxt + '</div><div class="hs-row" role="group" aria-label="Hour by hour ' + name + ' forecast, scrolls sideways" tabindex="0">' + cells + '</div><div class="hs-key">' + keyTxt + '</div></div>';
 }
 function calmHtml(c, H, hIdx, siteTag) {
   if (!c || c.kind === 'ok') return '';
@@ -3506,19 +3510,19 @@ function calmHtml(c, H, hIdx, siteTag) {
   const altTxt = (cc) => cc.alt ? 'Longer: ' + hr(hIdx + cc.alt.a) + ' – ' + hr(Math.min(hIdx + cc.alt.b + 1, H.time.length - 1)) + ' · ' : '';
   if (c.kind === 'window') {
     const from = c.a === 0 ? 'Now' : hr(hIdx + c.a), to = hr(Math.min(hIdx + c.b + 1, H.time.length - 1));
-    return '<div class="wx-window good"><div class="wx-window-t">🕊 Best window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
+    return '<div class="wx-window good"><div class="wx-window-t">' + DRONE_IMG + ' Best window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
       altTxt(c) + (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.night ? 'Night hours included \u2014 anti-collision lights required · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now \u2014 the forecast can\u2019t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
   }
   if (c.kind === 'caution') {
     const from = c.a === 0 ? 'Now' : hr(hIdx + c.a), to = hr(Math.min(hIdx + c.b + 1, H.time.length - 1));
-    return '<div class="wx-window caution"><div class="wx-window-t">🕊 Possible window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
+    return '<div class="wx-window caution"><div class="wx-window-t">' + DRONE_IMG + ' Possible window <b>' + from + ' – ' + to + '</b>' + siteTag + '</div><div class="wx-window-s">' +
       'Fly with caution — wind is above your orange point (' + fmtSpeedNum(c.aw) + ' / ' + fmtSpeedNum(c.ag) + ' ' + speedUnit() + ') · ' + altTxt(c) +
       (c.wasWet ? 'Rain clears by ' + from + ' · ' : '') + (c.night ? 'Night hours included — anti-collision lights required · ' : '') + (c.lowNow ? 'Low cloud or visibility reported now — the forecast can’t see it, so check the airport report before you go · ' : '') + 'Wind up to ' + fmtSpeed(c.maxW) + ', gusts up to ' + fmtSpeed(c.maxG) + '</div></div>';
   }
   const nt = nightOn(), dl = nt ? 'hours' : 'daylight hours';
   const why = c.cause === 'wind' ? 'Wind or gusts at or above your limits (' + fmtSpeedNum(c.W) + ' / ' + fmtSpeedNum(c.G) + ' ' + speedUnit() + ') for most of the ' + dl
     : c.cause === 'wet' ? 'Rain or storms in the forecast for most of the ' + dl : 'Low cloud or visibility reported now or forecast for most of the ' + dl;
-  return '<div class="wx-window none"><div class="wx-window-t">🕊 No flyable ' + (nt ? '' : 'daylight ') + 'window in the next 12 hrs</div><div class="wx-window-s">' + (c.lowNow && c.cause === 'wind' ? 'Low cloud or visibility is reported now · ' : '') + why + '</div></div>';
+  return '<div class="wx-window none"><div class="wx-window-t">' + DRONE_IMG + ' No flyable ' + (nt ? '' : 'daylight ') + 'window in the next 12 hrs</div><div class="wx-window-s">' + (c.lowNow && c.cause === 'wind' ? 'Low cloud or visibility is reported now · ' : '') + why + '</div></div>';
 }
 
 function windArrow(deg) {
@@ -4651,14 +4655,14 @@ async function renderWeather(lat, lon, attempt = 1) {
         // The terrain/obstruction note turns amber when wind needs attention: the airport reading or the model is at caution or above, or a nearby station is windier
         const windCaution = (ow && windColor(owMph, owGust) !== 'wx-good') || (windOk && windColor(windMph, gustMph) !== 'wx-good') || wiList.length > 0;
         const windHTML = ow ? `
-            <div class="wx-label"><button type="button" class="wx-gear" data-lim="wind" aria-label="Edit your wind limits in Settings">⚙</button>Wind</div>
+            <div class="wx-label"><button type="button" class="wx-gear" data-lim="wind" aria-label="Edit your wind limits in Settings">⚙</button>🌬 Wind</div>
             <div class="wx-value ${windColor(owMph, owGust)}">${fmtSpeedNum(owMph) + (owGust ? ' / ' + fmtSpeedNum(owGust) : '') + ' ' + windChipHtml() + owArrow}</div>
             <div class="wx-sub">${owGust ? 'Sustained\u00A0/\u00A0Gusts' : 'No gusts reported'}${owDirTxt ? '\u00A0· ' + owDirTxt : ''}</div>
             <div class="wx-sub" data-rec-age="${Date.now() - ow.ageMin * 60000}">${ow.station} · ${fmtDist(ow.dist)} away · ${ageText(ow.ageMin * 60000)}</div>
             ${windOk ? `<div class="wx-sub wx-model">Model for your spot: <strong class="${windColor(windMph, gustMph)}">${NB(modelTxt)}</strong></div>` : ''}
             ${windierHtml}
             ${windHtsHTML(wx, windOk ? windMph : null)}` : `
-            <div class="wx-label"><button type="button" class="wx-gear" data-lim="wind" aria-label="Edit your wind limits in Settings">⚙</button>Wind</div>
+            <div class="wx-label"><button type="button" class="wx-gear" data-lim="wind" aria-label="Edit your wind limits in Settings">⚙</button>🌬 Wind</div>
             <div class="wx-value ${windOk ? windColor(windMph, gustMph) : ''}">${windOk ? fmtSpeedNum(windMph) + (gustMph ? ' / ' + fmtSpeedNum(gustMph) : '') + ' ' + windChipHtml() + (dirOk ? ' ' + windDirHtml(wx.wind.deg) : '') : '—'}</div>
             <div class="wx-sub">${windOk ? (gustMph ? 'Sustained\u00A0/\u00A0Gusts' : 'No gusts reported') : 'No wind data'}</div>
             ${windHtsHTML(wx, windOk ? windMph : null)}`;
@@ -4670,40 +4674,40 @@ async function renderWeather(lat, lon, attempt = 1) {
             ${windHTML}
           </div>
           <div class="wx-item">
-            <div class="wx-label">Cloud Ceiling</div>
+            <div class="wx-label">☁️ Cloud Ceiling</div>
             <div class="wx-value ${ceilClass}">${ceilTxt}</div>
             <div class="wx-sub">${ceilNote}</div>
             ${metarData2 ? `<div class="wx-sub"${metarData2.ageMin != null ? ' data-rec-age="' + (Date.now() - metarData2.ageMin * 60000) + '"' : ''}>${stationId} · ${fmtDist(metarData2.dist)} away${metarData2.ageMin != null ? ' · ' + ageText(metarData2.ageMin * 60000) : ''}</div>` : ''}
+            ${metarData2 ? cloudHtml(m, ceilFt, om, hIdx) : ''}
             ${lowerTxt() ? `<div class="wx-sub">${lowerTxt()}</div>` : ''}
             ${alsoTxt() ? `<div class="wx-sub wx-also">${alsoTxt()}</div>` : ''}
             ${lowCloudTxt() ? `<div class="wx-sub">${lowCloudTxt()}</div>` : ''}
             ${maxAltTxt() ? `<div class="wx-sub"><strong>${maxAltTxt()}</strong></div>` : ''}
             ${(() => { const H = om && om.hourly; if (!H || !H.cloud_cover || hIdx < 0) return ''; const c = H.cloud_cover[hIdx], lo = H.cloud_cover_low ? H.cloud_cover_low[hIdx] : null; if (c == null || !isFinite(c)) return ''; return `<div class="wx-sub wx-model">Model for your spot: <strong>${Math.round(c)}%\u00A0cloud${lo != null && isFinite(lo) ? '<br>' + Math.round(lo) + '%\u00A0low' : ''}</strong></div>`; })()}
-            ${metarData2 ? cloudHtml(m, ceilFt, om, hIdx) : ''}
           </div>
           <div class="wx-item">
-            <div class="wx-label"><button type="button" class="wx-gear" data-lim="temp" aria-label="Edit your temperature limits in Settings">⚙</button>Temperature</div>
+            <div class="wx-label"><button type="button" class="wx-gear" data-lim="temp" aria-label="Edit your temperature limits in Settings">⚙</button>🌡 Temp</div>
             <div class="wx-value ${tempOk ? tempColor(wx.main.temp) : ''}">${tempOk ? fmtTemp(wx.main.temp) : '—'}</div>
             ${obsT ? `<div class="wx-sub" data-rec-age="${Date.now() - obsT.ageMin * 60000}">${obsT.station} · ${fmtDist(obsT.dist)} away · ${ageText(obsT.ageMin * 60000)}</div>` : ''}
-            <div class="wx-label wx-vislab">Visibility</div>
+            <div class="wx-label wx-vislab">👁 Visibility</div>
             <div class="wx-value wx-vis-val ${visBelowMin() ? 'wx-alert' : (typeof visM === 'number' && visM >= 4828 ? 'wx-good' : '')}">${visTxt()}<span class="wx-vis-src">${visSrc()}</span></div>
             ${visBelowMin() ? '<div class="wx-sub wx-alert">⛔ Below 3 SM minimum</div>' : ''}
             ${visNote() ? `<div class="wx-sub">${visNote()}</div>` : ''}
             ${(() => { const ed = elevDens(om); return ed ? `<div class="wx-sub wx-elev">Elevation ${NB(fmtAlt(ed.elFt))}<br><span class="${ed.diff >= 1500 ? 'wx-warn' : ''}">Density alt ${NB(fmtAlt(ed.daFt))}</span></div>` : ''; })()}
           </div>
           <div class="wx-item">
-            <div class="wx-label">Precipitation</div>
+            <div class="wx-label">🌧 Precipitation</div>
             <div class="wx-value ${pb.cls}">${pb.val}</div>
             ${pb.lines.map(l => `<div class="wx-sub">${l}</div>`).join('')}
             <a class="wx-link" href="${region === 'intl' ? 'https://www.rainviewer.com/map.html?loc=' + lat.toFixed(3) + ',' + lon.toFixed(3) + ',8&layer=radar' : nwsRadarUrl(lat, lon)}" target="_blank" rel="noopener">Radar map ›</a>
           </div>
           <div class="wx-item">
-            <div class="wx-label"><button type="button" class="wx-gear" data-lim="kp" aria-label="Edit your Kp limits in Settings">⚙</button>KP Index</div>
+            <div class="wx-label"><button type="button" class="wx-gear" data-lim="kp" aria-label="Edit your Kp limits in Settings">⚙</button>🌌 KP Index</div>
             <div class="wx-value ${kp !== null ? kpColor(kp) : ''}">${kpVal}</div>
             <div class="wx-sub">${kpNoteFn()}</div>
           </div>
           <div class="wx-item">
-            <div class="wx-label">Humidity</div>
+            <div class="wx-label">💧 Humidity</div>
             <div class="wx-value ${humCls()}">${dewOk ? Math.round(wx.humidity) + '%' : '—'}</div>
             <div class="wx-sub">${dewSub()}</div>
             ${obscTxt() ? `<div class="wx-sub">${obscTxt()}</div>` : ''}
@@ -5583,7 +5587,7 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
     if (row && pill) {
       row.hidden = !o.list.length;
       document.body.classList.toggle('has-drones', o.list.length > 0);
-      pill.innerHTML = '<span>🚁 ' + esc(nm(act)) + '<small>wind ' + esc(sums(act).wind) + '</small></span><span>' + (menu && !menu.hidden ? '▴' : '▾') + '</span>';
+      pill.innerHTML = '<span>' + DRONE_IMG + ' ' + esc(nm(act)) + '<small>wind ' + esc(sums(act).wind) + '</small></span><span>' + (menu && !menu.hidden ? '▴' : '▾') + '</span>';
       pill.setAttribute('aria-expanded', menu && !menu.hidden ? 'true' : 'false');
       if (!o.list.length && menu) menu.hidden = true;
     }
@@ -5624,7 +5628,7 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
   // Settings > Limits: the list, rename, delete, add
   document.querySelectorAll('.wl-block').forEach(wl => {
     const b = document.createElement('div'); b.className = 'dr-block';
-    b.innerHTML = '<div class="dr-list"></div><div class="dr-edit" hidden><input type="text" class="dr-name" maxlength="40" aria-label="Drone name" placeholder="Drone name"><button type="button" class="dr-del">Delete this drone</button></div><div style="margin-top:8px"><button type="button" class="dr-btn dr-add">＋ Add a drone</button></div><div class="dr-for"></div>';
+    b.innerHTML = '<div class="dr-list"></div><div class="dr-edit" hidden><input type="text" class="dr-name" maxlength="40" aria-label="Drone name" placeholder="Drone name"><button type="button" class="dr-del">Delete this drone</button></div><div style="margin-top:8px"><button type="button" class="dr-btn dr-add">' + DRONE_IMG + ' Add a drone</button></div><div class="dr-for"></div>';
     wl.before(b);
     b.querySelector('.dr-name').addEventListener('input', ev => {
       const o = drData(), d = o.list.find(x => x.id === o.sel); if (!d) return;
