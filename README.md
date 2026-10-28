@@ -106,6 +106,17 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.8
+
+- **A tidier forecast strip.** The Next 24 hours / Next 10 days strip is smaller and more uniform on a phone. The unit now sits beside the view chip ("in mph", "in °F", "in SM", "in mm"), and the notes fit on one line.
+- **Pick the wind unit from the strip.** In the Wind and Aloft views the unit is a picker, the same one as on the Wind tile, and the two stay in sync.
+- **Simpler Wind view.** The small blue rain chance under the wind tiles is gone. Rain has its own view, and the best-window line already counts it.
+- **Temp view without the extra line.** The tiles are plainly temperatures, so the caption is gone.
+- **No empty "Today".** In the evening the 10-day strip starts at tomorrow instead of showing a blank tile.
+- **Cleaner day summaries.** Tap a day and the summary starts at the useful part ("Best 11a–6p · 6–9 mph · rain 1%") without repeating the day.
+- **Wind by height no longer jumps.** The build-up note shows the unit once, so changing the wind unit doesn't add a line.
+- **US spelling.** "Gray" and "colors" in the notes.
+
 ## What's new in v4.2.7
 
 - **Wind by height stays open.** Tap **more** on the Wind tile once and it stays open, even after you close and reopen the app. It also goes with Back up and restore.
