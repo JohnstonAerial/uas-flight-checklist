@@ -14,7 +14,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 <table>
   <tr>
-    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="The Conditions tab with Conditions, Checklist and Settings tabs on top, then live preflight conditions for Miami: wind with Windier nearby, cloud ceiling, precipitation, visibility, the 10-day wind outlook, and the Airspace chart, FAA UAS Facility Map, TFRs and NOTAMs buttons with nearby airport codes" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="The Conditions tab with Conditions, Checklist and Settings tabs on top, then live preflight conditions for Cheyenne: wind with Windier nearby, cloud ceiling, precipitation, visibility, the 10-day wind outlook, and the Airspace chart, FAA UAS Facility Map, TFRs and NOTAMs buttons with nearby airport codes" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
     <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/01-checklist-dark.png"><img src="screenshots/01-checklist-light.png" alt="The Checklist tab with custom mission tabs, the percentage and a Customize button, the four sections folded, then a card with Print, PDF and Save flight record, and the footer with the version" width="170"></picture><br><sub><b>Checklist</b></sub></td>
   </tr>
   <tr>
@@ -105,6 +105,11 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 - **Small fixes on iPhone** — **Appearance** and **PDF layout** no longer overlap or get cut off, and the **Default reg. #** box no longer cuts off its hint.
 
 ---
+
+## What's new in v4.2.11
+
+- **A new picture on the Preflight Conditions title.** The satellite dish beside **Preflight Conditions** is now a small drawing of a sun behind a cloud with rain and a wind curl. It matches the Wind and Kp icons and looks the same on every phone and computer.
+- **Updated screenshots.** The Conditions, Settings and Back up & restore screenshots in this guide now show the current icons and the Forecast strip.
 
 ## What's new in v4.2.10
 
