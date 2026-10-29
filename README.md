@@ -106,6 +106,15 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.2.13
+
+- **Drawn icons instead of emoji.** The three buttons now have their own pictures, and so do the sunrise and sunset line, golden hour, your location pin, the humidity tile, the drone on the **Max legal altitude** line, the **Pilot** fields and the Back up & restore switch. They look the same on every phone and computer.
+- **Each button says what's inside.** **Conditions** says *Weather & airspace*, **Checklist** says *Checks & log* and **Settings** says *Back up*. The three buttons are laid out the same way on every screen and stay at one height.
+- **Settings shows its two parts at the top.** **Preferences** and **Back up & restore** are now in the blue bar when you open Settings, so you can see where Back up & restore is. Pressing **Done** after customizing no longer leaves Settings blank. The **Your checklist & tab** row names the tab you are editing.
+- **Weather and Airspace in the blue bar.** On Conditions, tap **Airspace** to jump to the airspace buttons, or **Weather** to go back up. The underline follows you as you scroll.
+- **A ↑ Top button.** Once you scroll down a screen, a small **↑ Top** button appears at the bottom right and takes you back to the top and the three buttons.
+- **No jump on first open.** The app now opens on the tab you used last without flashing the wrong one first.
+
 ## What's new in v4.2.12
 
 - **The three buttons stay put.** **Conditions**, **Checklist** and **Settings** used to sit at a different height on each tab, because the General / Mapping / Commercial strip was hidden on Conditions. Conditions now shows a **Conditions** label in that strip, so the buttons are at the same height on all three tabs and don't move when you switch.

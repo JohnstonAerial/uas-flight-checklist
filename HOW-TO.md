@@ -17,9 +17,11 @@ Short guides for eight things people ask about: finding your way around the thre
 
 The app has three tabs at the top. The three buttons stay at the same height on every tab, so you can flip between them without them moving under your thumb.
 
-- **🌤 Conditions** is where it opens: the preflight weather card, the airspace and TFR buttons, and the place you're checking.
-- **✅ Checklist** is your checklist. The General, Mapping and Commercial tabs, and your own tabs, show here. **✎ Customize** is beside the percentage at the top. **Print**, **PDF** and **Save flight record** are in a card at the bottom, and a line under the progress card jumps you there.
-- **⚙ Settings** has a two-part switch: **Preferences** and **Back up & restore**. A small red dot on the tab means a backup is due. The **💾 Back up & restore** link in the footer of every tab takes you straight to the backup half.
+- **Conditions** (*Weather & airspace*) is where it opens: the preflight weather card, the airspace and TFR buttons, and the place you're checking. The blue bar at the top has **Weather** and **Airspace**; tap **Airspace** to jump to the airspace buttons and **Weather** to go back up.
+- **Checklist** (*Checks & log*) is your checklist. The General, Mapping and Commercial tabs, and your own tabs, show here. **✎ Customize** is beside the percentage at the top. **Print**, **PDF** and **Save flight record** are in a card at the bottom, and a line under the progress card jumps you there.
+- **Settings** (*Back up*) has a two-part switch in the blue bar at the top: **Preferences** and **Back up & restore**. A small red dot on the tab means a backup is due. The **Back up & restore** link in the footer of every tab takes you straight to the backup half.
+
+On a long page, a small **↑ Top** button appears at the bottom right. Tap it to go back to the top, where the three buttons are.
 
 The app remembers the tab you used last on that device. Tapping **Customize** in Settings takes you to the checklist so you can edit it. Backing up and restoring work the same from any tab, because they save everything the app has stored on that device.
 
