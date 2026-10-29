@@ -15,13 +15,13 @@ Short guides for eight things people ask about: finding your way around the thre
 
 ## Find your way around
 
-The app has three tabs at the top. The three buttons stay at the same height on every tab, so you can flip between them without them moving under your thumb.
+The app has three main buttons at the very top, in the blue bar under the title: **Conditions**, **Checklist** and **Settings**. They stay at the same place on every screen, so you can flip between them without them moving under your thumb. Just under them is a row that switches between the parts of the screen you are in.
 
-- **Conditions** (*Weather & airspace*) is where it opens: the preflight weather card, the airspace and TFR buttons, and the place you're checking. The blue bar at the top has **Weather** and **Airspace**; tap **Airspace** to jump to the airspace buttons and **Weather** to go back up.
-- **Checklist** (*Checks & log*) is your checklist. The General, Mapping and Commercial tabs, and your own tabs, show here. **✎ Customize** is beside the percentage at the top. **Print**, **PDF** and **Save flight record** are in a card at the bottom, and a line under the progress card jumps you there.
-- **Settings** (*Back up*) has a two-part switch in the blue bar at the top: **Preferences** and **Back up & restore**. A small red dot on the tab means a backup is due. The **Back up & restore** link in the footer of every tab takes you straight to the backup half.
+- **Conditions** (*Weather & airspace*) is where it opens: the preflight weather card, the airspace and TFR buttons, and the place you're checking. The row under the buttons has **Weather** and **Airspace**; tap **Airspace** to jump to the airspace buttons and **Weather** to go back up.
+- **Checklist** (*Checks & log*) is your checklist. The row under the buttons shows your tabs (General, Mapping and Commercial, and your own). **✎ Customize** is beside the percentage at the top. **Print**, **PDF** and **Save flight record** are in a card at the bottom, and the blue **↓ Log the flight** button under your tabs jumps you there.
+- **Settings** (*Back up*, or *Back up & restore* on a wider screen) has a two-part row under the buttons: **Preferences** and **Back up & restore**. A small red dot on the button means a backup is due. The **Back up & restore** link in the footer of every tab takes you straight to the backup half.
 
-On a long page, a small **↑ Top** button appears at the bottom right. Tap it to go back to the top, where the three buttons are.
+On a long page, a small **↑ Top** button appears at the bottom right after you scroll a little. Tap it to go back to the top, where the three buttons are.
 
 The app remembers the tab you used last on that device. Tapping **Customize** in Settings takes you to the checklist so you can edit it. Backing up and restoring work the same from any tab, because they save everything the app has stored on that device.
 

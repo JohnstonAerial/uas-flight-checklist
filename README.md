@@ -4,7 +4,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 **Use it now:** [checklist.johnstonaerial.com](https://checklist.johnstonaerial.com)
 
-📘 **New here?** Start with the [How-to guides](HOW-TO.md). You can also open them in the app with the **📘 Help** button at the top of the page, or the **Help & guides** link at the bottom of any tab.
+📘 **New here?** Start with the [How-to guides](HOW-TO.md). You can also open them in the app with the gold **Help** button at the top of the page, or the **Help & guides** link at the bottom of any tab.
 
 ☕ **Free to use.** If it helps you, you can [buy me a coffee](https://buymeacoffee.com/JohnstonAerial).
 
@@ -105,6 +105,15 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 - **Small fixes on iPhone** — **Appearance** and **PDF layout** no longer overlap or get cut off, and the **Default reg. #** box no longer cuts off its hint.
 
 ---
+
+## What's new in v4.3.0
+
+- **The three main buttons are now at the very top.** **Conditions**, **Checklist** and **Settings** sit in the blue bar right under the title, and they never move. The switch for the part you are in sits just under them: **Weather / Airspace**, your checklist tabs, or **Preferences / Back up & restore**. The selected button turns white.
+- **The switches look like switches.** The row under the three buttons is now a soft rounded track with the one you are on filled in, so it is clear you can tap the others.
+- **A "Log the flight" button on the Checklist.** Right under your checklist tabs, one tap (**↓ Log the flight · Print, PDF, Save**) jumps you down to **Print**, **PDF** and **Save flight record**. It is blue in light mode and white in dark mode so it is easy to spot. The old "Moved: Print, PDF and Save" note is gone.
+- **Shorter labels that always fit.** **Conditions** says *Weather & airspace* (*Wx & airspace* on a narrow phone), **Checklist** says *Checks & log*, and **Settings** says *Back up* on a phone and *Back up & restore* on a wider screen.
+- **More drawn icons.** **Help** is a gold question mark and **Buy me a coffee** is a gold cup. The **Cloud Ceiling**, **Temp**, **Visibility** and **Precipitation** tiles, and the **Print**, **PDF** and **Save flight record** buttons, have their own pictures too. They look the same on every phone and computer.
+- **The ↑ Top button shows up on tall screens too.** It now appears after a short scroll, so it also shows on an iPad held upright. The extra "Back to the top" button at the bottom of Settings is gone, since **↑ Top** does the job.
 
 ## What's new in v4.2.13
 
