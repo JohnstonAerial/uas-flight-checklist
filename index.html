@@ -32,9 +32,35 @@ const ALOFT_IMG = '<svg class="wind-ico" viewBox="0 0 64 64" fill="none" stroke-
 // Magnet picture for the Kp (geomagnetic) tile and its Settings row
 const KP_IMG = '<svg class="wind-ico" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 20v14a18 18 0 0 0 36 0V20" stroke="#B0BEC5" stroke-width="10"/><path d="M9 6h10v14H9z" fill="#EF5350" stroke="none"/><path d="M45 6h10v14H45z" fill="#42A5F5" stroke="none"/></svg>';
 const DRONE_IMG = '<img class="dr-ico" alt="" src="data:image/png;base64,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">';
+const STOP_IMG = '<svg class="wind-ico" viewBox="0 0 24 24" aria-hidden="true"><polygon points="8,1.5 16,1.5 22.5,8 22.5,16 16,22.5 8,22.5 1.5,16 1.5,8" fill="#d93025" transform="translate(-.5 -.5) scale(1.04)"/><rect x="6" y="10.6" width="12" height="2.8" rx="1.2" fill="#fff"/></svg>';
+const WARN_IMG = '<svg class="wind-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2L22.6 20.6a1.2 1.2 0 0 1-1 1.8H2.4a1.2 1.2 0 0 1-1-1.8z" fill="#F5B83D" stroke="#F5B83D" stroke-width="1" stroke-linejoin="round"/><rect x="10.8" y="8.5" width="2.4" height="6.5" rx="1.2" fill="#3b2a00"/><circle cx="12" cy="18" r="1.4" fill="#3b2a00"/></svg>';
+const BOLT_IMG = '<svg class="wind-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.8 1.5L4.5 13.5h6l-1.5 9 9.5-12.5h-6.2z" fill="#F5B83D" stroke="#c98a00" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+const NOSIG_IMG = '<svg class="wind-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a14 14 0 0 1 20 0M5.5 12.8a9 9 0 0 1 13 0M9 16.5a4 4 0 0 1 6 0" fill="none" stroke="#6b7a90" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="20" r="1.6" fill="#6b7a90"/><path d="M3.5 3.5l17 17" stroke="#d93025" stroke-width="2.6" stroke-linecap="round"/></svg>';
+const MOON_IMG = '<svg class="wind-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A9 9 0 0 1 9.5 4a9 9 0 1 0 10.5 10.5z" fill="#F5B83D"/><circle cx="18" cy="5" r="1.1" fill="#F5B83D"/><circle cx="21" cy="9" r=".8" fill="#F5B83D"/></svg>';
+const MAIL_IMG = '<svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.2" fill="#fff" stroke="#394a63" stroke-width="2"/><path d="M3.5 7l8.5 6.5L20.5 7" fill="none" stroke="#2f80ed" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const HELP_IMG = '<svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="#F5B83D"/><path d="M8.6 9.3a3.5 3.5 0 1 1 5.2 3c-1 .6-1.6 1.2-1.6 2.3" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round"/><circle cx="12.2" cy="17.9" r="1.4" fill="#fff"/></svg>', COFFEE_IMG = '<svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>';
 const CEIL_IMG = '<svg class="wind-ico ceil-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 18.5a4.2 4.2 0 0 1-.4-8.4 5.6 5.6 0 0 1 10.8-1.2 4.8 4.8 0 0 1 .6 9.6z" fill="#9fb3c8"/><path d="M4 21.2h16" stroke="#F5B83D" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="3 2.4"/></svg>', TEMP_IMG = '<svg class="wind-ico temp-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7.6" y="1.8" width="8.8" height="15" rx="4.4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.1"/><circle cx="12" cy="17.8" r="5.4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.1"/><rect x="8.7" y="5" width="6.6" height="12" fill="#e2e8f0"/><rect x="10.4" y="7" width="3.2" height="11" rx="1.6" fill="#E8504A"/><circle cx="12" cy="17.8" r="3.6" fill="#E8504A"/></svg>', VIS_IMG = '<svg class="wind-ico vis-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M1.8 12C4 7.6 7.6 5.4 12 5.4s8 2.2 10.2 6.6C20 16.4 16.4 18.6 12 18.6S4 16.4 1.8 12z" fill="#f4f1ea" stroke="#94a3b8" stroke-width="1.2"/><circle cx="12" cy="12" r="4.2" fill="#4a90d9"/><circle cx="12" cy="12" r="2" fill="#1e3a5f"/><circle cx="13.2" cy="10.8" r=".9" fill="#fff"/></svg>', RAIN_IMG = '<svg class="wind-ico rain-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 14a4 4 0 0 1-.4-8 5.4 5.4 0 0 1 10.4-1.1 4.6 4.6 0 0 1 .6 9.1z" fill="#9fb3c8"/><path d="M7.5 15.6 c0 0 -2.2 2.8 -2.2 4.4 a2.2 2.2 0 0 0 4.4 0 c0 -1.6 -2.2 -4.4 -2.2 -4.4z" fill="#4a90d9"/><path d="M12 17.4 c0 0 -2.2 2.8 -2.2 4.4 a2.2 2.2 0 0 0 4.4 0 c0 -1.6 -2.2 -4.4 -2.2 -4.4z" fill="#4a90d9"/><path d="M16.5 15.6 c0 0 -2.2 2.8 -2.2 4.4 a2.2 2.2 0 0 0 4.4 0 c0 -1.6 -2.2 -4.4 -2.2 -4.4z" fill="#4a90d9"/></svg>';
+const RESET_IMG = '<svg class="wind-ico reset-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 12a8.2 8.2 0 1 1-2.6-6" fill="none" stroke="#2f80ed" stroke-width="2.4" stroke-linecap="round"/><path d="M20.6 3.4v5.2h-5.2z" fill="#2f80ed"/><path d="M12 7.6V12l3 1.8" fill="none" stroke="#8aa4c4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const APPEAR_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#fff" stroke="#6b7a90" stroke-width="1.8"/><path d="M12 2.5a9.5 9.5 0 0 0 0 19z" fill="#2b3a55"/></svg>';
+const NIGHT_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.6A8.6 8.6 0 0 1 9.4 4 8.6 8.6 0 1 0 20 14.6z" fill="#f5c542" stroke="#d99c14" stroke-width="1.4"/><path d="M17.5 3.5v3M16 5h3" stroke="#f5c542" stroke-width="1.5"/></svg>';
+const SCREEN_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="3" width="11" height="18" rx="2.6" fill="#fff" stroke="#6b7a90" stroke-width="1.8"/><rect x="8.4" y="5.4" width="7.2" height="11.4" rx="1" fill="#59a8f5"/><path d="M12 19h.01" stroke="#6b7a90" stroke-width="2"/><path d="M3 5.5l1.4 1M21 5.5l-1.4 1M2.6 10.5h1.6M19.8 10.5h1.6" stroke="#f5b301" stroke-width="1.7"/></svg>';
+const SNOW_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2f8fe8" stroke-width="2"><path d="M12 2.5v19M3.8 7.3l16.4 9.4M3.8 16.7L20.2 7.3"/></g><g stroke="#2f8fe8" stroke-width="1.6"><path d="M9.6 4.4L12 6.6l2.4-2.2M9.6 19.6L12 17.4l2.4 2.2"/></g></svg>';
+const FLAME_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c.6 3.4 5.6 5.4 5.6 11a5.6 5.6 0 0 1-11.2 0c0-2.2 1-3.6 2.2-4.8.1 1.6.9 2.4 1.8 2.6C10 8.6 10.2 5.6 12 2.5z" fill="#ff8a2a" stroke="#d9531a" stroke-width="1.3"/><path d="M12 12.2c1.6 1.6 2.6 2.6 2.6 4a2.6 2.6 0 0 1-5.2 0c0-1.2.8-2 1.4-2.8.4.8 1 1.2 1.2 1.2z" fill="#ffd54a"/></svg>';
+const FILE_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8.5L19 7.5V21H6z" fill="#fff" stroke="#6b7a90" stroke-width="1.7"/><path d="M14.5 3v4.5H19" stroke="#6b7a90" stroke-width="1.5"/><path d="M8.6 12h7M8.6 15h7M8.6 18h4" stroke="#8aa4c4" stroke-width="1.5"/></svg>';
+const ID_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.4" fill="#fff" stroke="#6b7a90" stroke-width="1.7"/><circle cx="8.6" cy="11" r="2.1" fill="#8aa4c4"/><path d="M5.4 16.4c.6-1.6 1.8-2.2 3.2-2.2s2.6.6 3.2 2.2" stroke="#8aa4c4" stroke-width="1.5"/><path d="M14 9.5h5M14 12.5h5M14 15.5h3" stroke="#8aa4c4" stroke-width="1.5"/></svg>';
+const GLOBE_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10.5" fill="#fff" stroke="#1f5fae" stroke-width="2.2"/><ellipse cx="12" cy="12" rx="4.6" ry="10.5" stroke="#1f5fae" stroke-width="1.8"/><path d="M1.5 12h21M3.4 7h17.2M3.4 17h17.2" stroke="#1f5fae" stroke-width="1.8"/></svg>';
+const LAYOUT_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="2.5" width="17" height="19" rx="2.2" fill="#fff" stroke="#394a63" stroke-width="2.2"/><rect x="6" y="5.5" width="5.2" height="13" rx="1" fill="#2f80ed"/><rect x="12.8" y="5.5" width="5.2" height="13" rx="1" fill="#2f80ed"/></svg>';
+const PAPER_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="5.5" y="2.5" width="13" height="19" rx="1.8" fill="#fff" stroke="#394a63" stroke-width="2.2"/><path d="M9 6.5l3-3 3 3M12 3.5v7M9 17.5l3 3 3-3M12 20.5v-7" stroke="#2f80ed" stroke-width="2"/></svg>';
 const PRINT_IMG = '<svg class="rec-ico print-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="6.5" rx="1" fill="#fff" stroke="#94a3b8" stroke-width="1"/><rect x="2.5" y="8" width="19" height="9" rx="2.2" fill="#475569"/><rect x="6.5" y="13" width="11" height="8.5" rx="1" fill="#fff" stroke="#94a3b8" stroke-width="1"/><path d="M8.6 16h6.8M8.6 18.4h4.6" stroke="#9ca3af" stroke-width="1.2" stroke-linecap="round"/><circle cx="18.4" cy="10.6" r="1" fill="#F5B83D"/></svg>', PDF_IMG = '<svg class="rec-ico pdf-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 2.5h8.2l5 5v13a1.4 1.4 0 0 1-1.4 1.4H5.5a1.4 1.4 0 0 1-1.4-1.4V3.9a1.4 1.4 0 0 1 1.4-1.4z" fill="#fff" stroke="#94a3b8" stroke-width="1"/><path d="M13.7 2.5v5h5" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1" stroke-linejoin="round"/><rect x="3" y="12.2" width="14" height="6.4" rx="1.3" fill="#E8504A"/><text x="10" y="17.2" font-family="Arial,Helvetica,sans-serif" font-size="5.2" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg>', SAVEREC_IMG = '<svg class="rec-ico save-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="18" rx="2" fill="#f4f1ea" stroke="#94a3b8" stroke-width="1"/><rect x="8.6" y="2" width="6.8" height="3.8" rx="1.2" fill="#64748b"/><path d="M8 11h8M8 14.2h8M8 17.4h5" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/><path d="M13.5 8.2l1.2 1.2 2.2-2.4" stroke="#22a05a" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+/* 4.3.1a: Safari private tabs can refuse to save; keep settings in memory for the visit so Light/Dark and the other switches still work */
+(function(){ try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); return; } catch (e) {}
+  var m = {}; try { var ok = false; try { ok = !!window.localStorage; } catch (e2) {}
+    if (!ok) { var o = { getItem: function (k) { return Object.prototype.hasOwnProperty.call(m, k) ? m[k] : null; }, setItem: function (k, v) { m[k] = String(v); }, removeItem: function (k) { delete m[k]; }, clear: function () { m = {}; }, key: function (i) { return Object.keys(m)[i] || null; } }; Object.defineProperty(window, 'localStorage', { configurable: true, get: function () { return o; } }); return; } } catch (e3) {}
+  try { var P = Storage.prototype, h = Object.prototype.hasOwnProperty;
+    P.getItem = function (k) { return h.call(m, k) ? m[k] : null; }; P.setItem = function (k, v) { m[k] = String(v); };
+    P.removeItem = function (k) { delete m[k]; }; P.clear = function () { m = {}; };
+    P.key = function (i) { return Object.keys(m)[i] || null; };
+    Object.defineProperty(P, 'length', { get: function () { return Object.keys(m).length; } }); } catch (e) {} })();
 try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 </script>
 <style>
@@ -353,6 +379,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .pc-bottom .pc-btns { flex: 1 1 100%; margin-bottom: 0; }
   .pc-jump { display: block; width: 100%; box-sizing: border-box; margin: 0 0 10px; padding: 7px 12px; min-height: 36px; font-family: inherit; font-size: 14px; color: #fff; background: var(--blue); border: 1px solid var(--blue); border-radius: 18px; cursor: pointer; line-height: 1.35; text-align: center; }
   .pc-jump:active { filter: brightness(.9); }
+  .pc-jump.fit-off { display: none !important; }   /* 4.3.1c: the whole checklist already fits on screen */
+  body.cond-fits .tabs-cond { display: none !important; }   /* 4.3.1c: Weather and Airspace are both on screen, nothing to jump between */
   /* 4.3.0c: light mode = blue pill, white lettering; dark mode = white pill, blue lettering */
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pc-jump { color: var(--blue); background: #fff; border-color: #fff; } }
   :root[data-theme="dark"] .pc-jump { color: var(--blue); background: #fff; border-color: #fff; }
@@ -471,7 +499,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .body-set .keep-row > span, .body-set .region-row > span { flex: 1 1 auto; }
   .body-set .keep-row select { font-size: 15px; flex: 1 1 52%; min-width: 0; }
   .body-set .cust-row { flex-wrap: wrap; row-gap: 8px; }
-  .body-set .cust-row::before { content: '📝 Your checklist & tab' attr(data-tab); font-size: 14px; white-space: nowrap; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .body-set .cust-row::before { content: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2217%22 height=%2217%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M5 4.5h11.5l2.5 2.5v13H5z%22 fill=%22%23fff8d6%22 stroke=%22%23b79b3b%22 stroke-width=%221.6%22/%3E%3Cpath d=%22M8 9.5h7M8 12.5h5%22 stroke=%22%23c9b25a%22 stroke-width=%221.5%22/%3E%3Cpath d=%22M14.5 20l.5-3 6-6 2.2 2.2-6 6z%22 fill=%22%23f08a24%22 stroke=%22%23a85a10%22 stroke-width=%221.2%22/%3E%3C/svg%3E") " Your checklist & tab" attr(data-tab); font-size: 14px; white-space: nowrap; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .body-set .cust-row .cust-btn { font-size: 13px; padding: 6px 12px; white-space: nowrap; flex: 0 0 auto; }
   .body-set .cust-row .cust-toggle { margin-left: auto; }
   .fn-block { padding: 8px 16px 10px; border-top: 1px solid var(--border); text-align: left; }
@@ -902,6 +930,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-codes button small { font-weight: 500; color: var(--text-muted); }
   .wx-tfr-row.cc .wx-gridnote, .wx-tfr-row.none .wx-gridnote, body.intl .wx-tfr-row .wx-gridnote, .wx-tfr-row.cc .wx-codes, .wx-tfr-row.none .wx-codes, body.intl .wx-tfr-row .wx-codes { display: none !important; }
   .wx-facmap { display: block; width: 100%; padding: 9px; background: #1f6f8b; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-bi { width: 1.5em; height: 1.5em; vertical-align: -0.4em; margin-right: 4px; }
   .wx-airmap { display: block; width: 100%; padding: 9px; background: #3d4a9c; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
 
   /* Accessibility: screen-reader text, visible keyboard focus, bigger tap targets, 16px form text (stops iOS zoom-on-focus) */
@@ -988,7 +1017,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.3.0</p>
+      <p>Free Drone Preflight Checklist · v4.3.1</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -1048,8 +1077,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <div class="wx-status wx-loading">Locating...</div>
   </div>
   <div class="wx-tfr-row" style="margin-top:10px;">
-    <a class="wx-airmap" id="wx-airmap" href="https://skyvector.com/" target="_blank" rel="noopener">🛩 Airspace chart — SkyVector</a>
-    <a class="wx-facmap" id="wx-gridbtn" href="https://www.arcgis.com/apps/mapviewer/index.html?webmap=3b4034c30d8e4e0d8d4b7967dcde8cce" target="_blank" rel="noopener">🗺 FAA UAS Facility Map<span class="gl" id="wx-gridline"></span></a>
+    <a class="wx-airmap" id="wx-airmap" href="https://skyvector.com/" target="_blank" rel="noopener"><svg class="wx-bi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.2" fill="none" stroke="#f5b301" stroke-width="1.7" stroke-dasharray="3.2 2.6" stroke-linecap="round"/><path d="M12 5.2c.7 0 1.1.7 1.1 1.6v3.6l5.6 2.9v1.6l-5.6-1.5v2.9l1.7 1.3v1.2L12 17.6l-2.8.6V17l1.7-1.3v-2.9l-5.6 1.5v-1.6l5.6-2.9V6.8c0-.9.4-1.6 1.1-1.6z" fill="#f1f5f9"/></svg> Airspace chart — SkyVector</a>
+    <a class="wx-facmap" id="wx-gridbtn" href="https://www.arcgis.com/apps/mapviewer/index.html?webmap=3b4034c30d8e4e0d8d4b7967dcde8cce" target="_blank" rel="noopener"><svg class="wx-bi" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3.5" width="20" height="17" rx="3" fill="#eaf3f6"/><rect x="2" y="3.5" width="10" height="8.5" rx="3" fill="#8fdc9f"/><rect x="12" y="3.5" width="10" height="8.5" rx="3" fill="#ffd966"/><rect x="2" y="12" width="10" height="8.5" rx="3" fill="#ffb347"/><rect x="12" y="12" width="10" height="8.5" rx="3" fill="#ff8a80"/><path d="M12 2.2a5 5 0 0 0-5 5c0 3.6 5 8.8 5 8.8s5-5.2 5-8.8a5 5 0 0 0-5-5z" fill="#1f3a5f" stroke="#fff" stroke-width="1.3"/><circle cx="12" cy="7.2" r="1.8" fill="#fff"/></svg> FAA UAS Facility Map<span class="gl" id="wx-gridline"></span></a>
     <a class="wx-aubtn" id="wx-aubtn" href="https://www.casa.gov.au/drones/safety-apps" target="_blank" rel="noopener">🇦🇺 Drone safety apps — CASA</a>
     <a class="wx-arbtn" id="wx-arbtn" href="https://www.argentina.gob.ar/anac/rpa-rpas" target="_blank" rel="noopener">🇦🇷 Drones — ANAC</a>
     <a class="wx-frbtn" id="wx-frbtn" href="https://www.ecologie.gouv.fr/exploitation-drones-en-categorie-ouverte" target="_blank" rel="noopener">🇫🇷 Drones — DGAC</a>
@@ -1071,8 +1100,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <a class="wx-cabtn" id="wx-cabtn" href="https://nrc.canada.ca/en/drone-tool/" target="_blank" rel="noopener">🇨🇦 Drone map — NRC</a>
     <a class="wx-wwbtn" id="wx-wwbtn" href="https://en.wikipedia.org/wiki/Civil_aviation_authority" target="_blank" rel="noopener">🌍 Find your aviation authority</a>
     <div class="wx-ccnote" id="wx-ccnote">No button for your country yet. <a id="wx-ccmail" href="#">Tell us which country</a> and we will look at adding it.</div>
-    <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener">⚠️ TFRs — FAA.gov<span class="gl" id="wx-tfrline"></span></a>
-    <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener">📋 NOTAMs — AIM<span class="gl" id="wx-notamline"></span></a>
+    <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener"><svg class="wx-bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l10 17.4a1 1 0 0 1-.9 1.5H2.9a1 1 0 0 1-.9-1.5z" fill="#ffc83d" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 9v5.2" stroke="#4a2a00" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17.4" r="1.3" fill="#4a2a00"/></svg> TFRs — FAA.gov<span class="gl" id="wx-tfrline"></span></a>
+    <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener"><svg class="wx-bi" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="4" width="15" height="17.5" rx="2.2" fill="#fff"/><rect x="8" y="2" width="8" height="4.4" rx="1.4" fill="#5b2a92" stroke="#fff" stroke-width="1.2"/><path d="M8 10.5h8M8 13.7h8M8 16.9h5" stroke="#9a8bb3" stroke-width="1.6" stroke-linecap="round"/></svg> NOTAMs — AIM<span class="gl" id="wx-notamline"></span></a>
     <div class="wx-gridnote" id="wx-gridnote">Guide only. Check LAANC and TFRs before you fly. NOTAMs copies the airport code to paste in its location box. Tap a code to switch, or All.</div>
     <div class="wx-codes" id="wx-codes"></div>
   </div>
@@ -1104,6 +1133,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Check TFRs (US) at tfr.faa.gov</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">LAANC (US) — check if authorization required and apply; allow time if manual approval needed</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Check NOTAMs (US) at notams.aim.faa.gov — look for notices affecting your flight area</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Local and state rules — check city, county and state drone laws, and any park or property rules, for where you launch and fly</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Batteries inspected for damage — check for swelling, cracks, or corrosion</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">All drone batteries fully charged, spares included</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Controller and phone/tablet fully charged</div></div>
@@ -1236,6 +1266,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Check TFRs (US) at tfr.faa.gov</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">LAANC (US) — check if authorization required and apply; allow time if manual approval needed</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Check NOTAMs (US) at notams.aim.faa.gov — look for notices affecting your flight area</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Local and state rules — check city, county and state drone laws, and any park or property rules, for where you launch and fly</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Batteries inspected for damage — check for swelling, cracks, or corrosion</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">All drone batteries fully charged, spares included</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Controller and phone/tablet fully charged</div></div>
@@ -1368,6 +1399,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Check TFRs (US) at tfr.faa.gov</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">LAANC (US) — check if authorization required and apply; allow time if manual approval needed</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Check NOTAMs (US) at notams.aim.faa.gov — look for notices affecting your flight area</div></div>
+      <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Local and state rules — check city, county and state drone laws, and any park or property rules, for where you launch and fly</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Batteries inspected for damage — check for swelling, cracks, or corrosion</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">All drone batteries fully charged, spares included</div></div>
       <div class="item" onclick="toggle(this)"><div class="check-circle"><svg class="check-icon" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Controller and phone/tablet fully charged</div></div>
@@ -1944,14 +1976,36 @@ function syncCondStrip() {
   // 4.3.0l: how far down the page is, whichever element the browser scrolls (window, <html> or <body>), so the Top button also shows on Safari/Mac
   function scrollPos() { return Math.max(window.pageYOffset || 0, document.documentElement ? document.documentElement.scrollTop : 0, document.body ? document.body.scrollTop : 0); }
   function topBtn() { try { const b = document.getElementById('to-top'); if (b) b.classList.toggle('show', scrollPos() > Math.min(window.innerHeight * 0.8, 350)); } catch (e) {} }
-  function tick() { try { syncCondStrip(); } catch (e) {} topBtn(); }
+  // 4.3.1c: on a tall window the Weather/Airspace switch and the Log the flight button have nothing to jump to, so they step aside
+  var stripH = 86, pillH = 46;
+  function syncFit() { try {
+    const vh = window.innerHeight, de = document.documentElement, b = document.body;
+    const strip = document.querySelector('.tabs-cond');
+    if (strip && b.classList.contains('view-wx')) {
+      const shown = !b.classList.contains('cond-fits');
+      if (shown && strip.offsetHeight > 20) stripH = strip.offsetHeight + 10;
+      // the real bottom of the content, not scrollHeight (that is never less than the window height, which made the strip flash on and off)
+      let cb = 0; Array.prototype.forEach.call(b.children, function (e) { if (!e.offsetParent || getComputedStyle(e).position === 'fixed') return; cb = Math.max(cb, e.getBoundingClientRect().bottom + window.scrollY); }); cb += 24;
+      b.classList.toggle('cond-fits', cb + (shown ? 0 : stripH) <= vh + (shown ? 0 : 2));
+    } else b.classList.remove('cond-fits');
+    document.querySelectorAll('.panel').forEach(function (pn) {
+      const j = pn.querySelector('.pc-jump'), bt = pn.querySelector('.pc-bottom'); if (!j || !bt) return;
+      if (!pn.classList.contains('active') || !b.classList.contains('view-ck') || pn.classList.contains('editing')) { j.classList.remove('fit-off'); return; }
+      const off = j.classList.contains('fit-off'); if (!off && j.offsetHeight > 10) pillH = j.offsetHeight + 10;
+      const r = bt.getBoundingClientRect(), bottomEdge = r.bottom + window.scrollY - (off ? 0 : pillH);
+      j.classList.toggle('fit-off', bottomEdge <= vh - 8);
+    });
+  } catch (e) {} }
+  window.__syncFit = syncFit;
+  function tick() { try { syncCondStrip(); } catch (e) {} topBtn(); syncFit(); }
   const onScroll = function () { if (t) return; t = requestAnimationFrame(function () { t = 0; tick(); }); };
   window.addEventListener('scroll', onScroll, { passive: true });
   document.addEventListener('scroll', onScroll, { passive: true, capture: true });
   window.addEventListener('resize', tick);
   window.addEventListener('load', tick);
   window.addEventListener('pageshow', tick);
-  setInterval(topBtn, 500);
+  setInterval(function () { topBtn(); syncFit(); }, 500);
+  document.addEventListener('click', function () { setTimeout(syncFit, 80); setTimeout(syncFit, 400); }, true);
   window.__topToTop = function () { const smooth = !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); try { window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' }); } catch (e) { window.scrollTo(0, 0); } if (document.body && document.body.scrollTop) document.body.scrollTop = 0; if (document.documentElement && document.documentElement.scrollTop && !smooth) document.documentElement.scrollTop = 0; };
 })();
 
@@ -2007,7 +2061,7 @@ document.querySelectorAll('.panel .complete-banner').forEach(b => {
   b.after(h);
   const row = document.createElement('div');
   row.className = 'keep-row';
-  row.innerHTML = '<span>💾 Saved in this browser only · clears after</span>' +
+  row.innerHTML = '<span>'+BAK_IMG+' Saved in this browser only · clears after</span>' +
     '<select class="keep-hours" aria-label="How long this device keeps your saved checklist progress" onchange="setKeepHours(this.value)">' +
     '<option value="1">1 hour</option><option value="4">4 hours</option><option value="12">12 hours</option><option value="24">24 hours</option><option value="72">3 days</option></select>';
   h.after(row);
@@ -2054,6 +2108,7 @@ const REGION_KEY = 'uasRegion';
 let region = (function () { try { const v = localStorage.getItem(REGION_KEY); return v === 'us' || v === 'intl' ? v : null; } catch (e) { return null; } })();
 const US_ONLY_ITEMS = [/^Check TFRs \(US\) at tfr\.faa\.gov$/, /^LAANC \(US\) —/, /^Recheck TFRs \(US\)/];   // hidden outside the USA
 const INTL_SWAPS = [                                                               // reworded outside the USA
+  { re: /^Local and state rules —/, text: "Local rules — check regional and local drone rules, and any park or property rules, for where you launch and fly" },
   { re: /^Check NOTAMs \(US\) at notams\.aim\.faa\.gov/, text: "Check NOTAMs — look for notices affecting your flight area (use your country's aviation authority or NOTAM service)" }
 ];
 document.querySelectorAll('.item').forEach(it => {
@@ -2735,9 +2790,9 @@ document.querySelectorAll('.panel').forEach(panelEl => {
 document.querySelectorAll('.panel').forEach(panelEl => {
   const row = document.createElement('div');
   row.className = 'keep-row region-row';
-  row.innerHTML = '<span>🌍 Where you fly</span><select class="region-sel" aria-label="Where you fly" onchange="applyRegion(this.value, true)"><option value="us">USA</option><option value="intl">Outside USA</option></select><div class="region-hint">Changes the checklist items, weather units and airspace links to match your country.</div>' +
-    '<div class="rbreak"></div><span>🌙 I fly at night</span><select class="night-sel" aria-label="I fly at night" onchange="nightSet(this.value === \'1\')"><option value="0">No</option><option value="1">Yes</option></select><div class="region-hint nh">Best window will include night hours. Check your lights and training requirements first.</div>' +
-    '<div class="rbreak"></div><span>🔆 Keep screen on</span><select class="wake-sel" aria-label="Keep screen on" onchange="wakeSet(this.value === \'1\')"><option value="0">No</option><option value="1">Yes</option></select><div class="region-hint wh"></div>';
+  row.innerHTML = '<span>'+GLOBE_IMG+' Where you fly</span><select class="region-sel" aria-label="Where you fly" onchange="applyRegion(this.value, true)"><option value="us">USA</option><option value="intl">Outside USA</option></select><div class="region-hint">Changes the checklist items, weather units and airspace links to match your country.</div>' +
+    '<div class="rbreak"></div><span>'+NIGHT_IMG+' I fly at night</span><select class="night-sel" aria-label="I fly at night" onchange="nightSet(this.value === \'1\')"><option value="0">No</option><option value="1">Yes</option></select><div class="region-hint nh">Best window will include night hours. Check your lights and training requirements first.</div>' +
+    '<div class="rbreak"></div><span>'+SCREEN_IMG+' Keep screen on</span><select class="wake-sel" aria-label="Keep screen on" onchange="wakeSet(this.value === \'1\')"><option value="0">No</option><option value="1">Yes</option></select><div class="region-hint wh"></div>';
   row.querySelector('select').value = region || 'us';
   row.querySelector('.night-sel').value = nightOn() ? '1' : '0';
   row.querySelector('.wake-sel').value = wakeOn() ? '1' : '0';
@@ -3150,7 +3205,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const keep = panelEl.querySelector('.keep-row:not(.region-row)');
   const reg = panelEl.querySelector('.region-row');
   const cust = panelEl.querySelector('.cust-row');
-  keep.querySelector('span').textContent = '💾 Clear saved progress after';
+  keep.querySelector('span').innerHTML = RESET_IMG + ' Clear saved progress after';
   const wrap = document.createElement('div'); wrap.className = 'settings';
   const heads = document.createElement('div'); heads.className = 'set-heads';
   const mkTg = (cls, label, key, other) => {
@@ -3168,7 +3223,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   const note = document.createElement('div'); note.className = 'settings-note';
   note.textContent = 'Your progress and settings are saved on this device only and don\'t sync. Each browser, and each Home Screen app, keeps its own copy. To move them to another device or browser, use Back up & restore.';
   const help = document.createElement('div'); help.className = 'settings-help foot-links';
-  help.innerHTML = '<a class="foot-bak" href="#">' + BAK_IMG + ' Back up &amp; restore</a><span class="foot-sep" aria-hidden="true"> · </span><a href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener">' + HELP_IMG + ' Help &amp; guides</a><span class="foot-sep" aria-hidden="true"> · </span><a class="fb-link" href="#">✉ Send feedback</a>';
+  help.innerHTML = '<a class="foot-bak" href="#">' + BAK_IMG + ' Back up &amp; restore</a><span class="foot-sep" aria-hidden="true"> · </span><a href="https://github.com/JohnstonAerial/uas-flight-checklist#readme" target="_blank" rel="noopener">' + HELP_IMG + ' Help &amp; guides</a><span class="foot-sep" aria-hidden="true"> · </span><a class="fb-link" href="#">' + MAIL_IMG + ' Send feedback</a>';
   const fbl = help.querySelector('.fb-link');
   const fbVer = appVer();
   fbl.href = 'mailto:info@JohnstonAerial.com?subject=' + encodeURIComponent('Checklist feedback ' + fbVer) +
@@ -3178,20 +3233,20 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     '<div class="wl-hint">Sustained\u00A0/\u00A0gusts. Orange at about two‑thirds of the limit, red at the limit.</div>' +
     '<div class="wl-row kp-row"><span>' + KP_IMG + ' Kp warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-a" aria-label="Kp index where the warning turns orange"> / <input type="number" inputmode="decimal" min="1" max="9" step="0.1" class="kp-r" aria-label="Kp index where the warning turns red"></span></div>' +
     '<div class="wl-hint">Orange at\u00A0/\u00A0red at, from 1 to 9. Standard is 4\u00A0/\u00A05. Higher Kp can disturb GPS and the compass.</div>' +
-    '<div class="wl-row tp-row"><span>🥶 Cold warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ca" aria-label="Temperature at or below which the warning turns orange"> / <input type="number" inputmode="decimal" class="tp-cr" aria-label="Temperature at or below which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
-    '<div class="wl-row tp-row"><span>🥵 Heat warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ha" aria-label="Temperature at or above which the warning turns orange"> / <input type="number" inputmode="decimal" class="tp-hr" aria-label="Temperature at or above which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
+    '<div class="wl-row tp-row"><span>'+SNOW_IMG+' Cold warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ca" aria-label="Temperature at or below which the warning turns orange"> / <input type="number" inputmode="decimal" class="tp-cr" aria-label="Temperature at or below which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
+    '<div class="wl-row tp-row"><span>'+FLAME_IMG+' Heat warning</span><span class="wl-ctl"><input type="number" inputmode="decimal" class="tp-ha" aria-label="Temperature at or above which the warning turns orange"> / <input type="number" inputmode="decimal" class="tp-hr" aria-label="Temperature at or above which the warning turns red"><span class="tp-unit">°F</span></span></div>' +
     '<div class="wl-hint">Orange at\u00A0/\u00A0red at. Standard: cold 40\u00A0/\u00A014\u00A0°F (4\u00A0/\u00A0−10\u00A0°C), heat 95\u00A0/\u00A0104\u00A0°F (35\u00A0/\u00A040\u00A0°C). Check your aircraft\'s operating range.</div>';
   const fnb = document.createElement('div'); fnb.className = 'fn-block';
-  fnb.innerHTML = '<div class="fn-row"><span>📋 Record file name starts with</span><input type="text" class="fn-in" maxlength="40" placeholder="flight-record" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Saved flight record file names start with" oninput="fnSave(this)"></div>' +
+  fnb.innerHTML = '<div class="fn-row"><span>'+FILE_IMG+' Record file name starts with</span><input type="text" class="fn-in" maxlength="40" placeholder="flight-record" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Saved flight record file names start with" oninput="fnSave(this)"></div>' +
     '<div class="fn-hint"><div class="fn-ex"></div>Date, time and customer are added for you.</div>';
   const acb = document.createElement('div'); acb.className = 'fn-block ac-block';
   acb.innerHTML = '<div class="fn-row"><span>' + PILOT_IMG + ' Default pilot</span><input type="text" class="fn-in ac-in" data-k="uasPilot" maxlength="40" placeholder="Your name" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Pilot name" oninput="acSave(this)"></div>' +
     '<div class="fn-row"><span>' + DRONE_IMG + ' Default drone</span><input type="text" class="fn-in ac-in" data-k="uasDrone" maxlength="40" placeholder="e.g. Mavic 4 Pro" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" aria-label="Drone name or model" oninput="acSave(this)"></div>' +
-    '<div class="fn-row"><span>🪪 Default reg. #</span><input type="text" class="fn-in ac-in" data-k="uasRegNo" maxlength="30" placeholder="FA3…" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-label="Drone registration number" oninput="acSave(this)"></div>' +
+    '<div class="fn-row"><span>'+ID_IMG+' Default reg. #</span><input type="text" class="fn-in ac-in" data-k="uasRegNo" maxlength="30" placeholder="FA3…" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-label="Drone registration number" oninput="acSave(this)"></div>' +
     '<div class="fn-hint">Printed at the top of saved records and the PDF. A tab uses these only if its own Pilot, Drone and Reg. # (under Customize) are blank.</div>';
   const pdb = document.createElement('div'); pdb.className = 'pdfset';
-  pdb.innerHTML = '<div class="pd-row"><span>📄 PDF layout</span><div class="pd-seg" role="radiogroup" aria-label="PDF layout"><button type="button" role="radio" data-k="layout" data-v="compact">Compact</button><button type="button" role="radio" data-k="layout" data-v="large">Large print</button></div></div>' +
-    '<div class="pd-row"><span>📏 PDF paper</span><div class="pd-seg" role="radiogroup" aria-label="PDF paper size"><button type="button" role="radio" data-k="paper" data-v="letter">Letter</button><button type="button" role="radio" data-k="paper" data-v="a4">A4</button></div></div>' +
+  pdb.innerHTML = '<div class="pd-row"><span>'+LAYOUT_IMG+' PDF layout</span><div class="pd-seg" role="radiogroup" aria-label="PDF layout"><button type="button" role="radio" data-k="layout" data-v="compact">Compact</button><button type="button" role="radio" data-k="layout" data-v="large">Large print</button></div></div>' +
+    '<div class="pd-row"><span>'+PAPER_IMG+' PDF paper</span><div class="pd-seg" role="radiogroup" aria-label="PDF paper size"><button type="button" role="radio" data-k="paper" data-v="letter">Letter</button><button type="button" role="radio" data-k="paper" data-v="a4">A4</button></div></div>' +
     '<div class="pd-hint"><b>Compact:</b> two columns, fewer pages. <b>Large print:</b> one column, bigger type. Applies to the checklist PDF and saved flight records. <b>Print</b> is always one column in large type.</div>';
   pdb.addEventListener('click', e => {
     const bt = e.target.closest('button[data-k]'); if (!bt) return;
@@ -3199,7 +3254,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
     pdfSetSync();
   });
   const thb = document.createElement('div'); thb.className = 'pdfset themeset';
-  thb.innerHTML = '<div class="pd-row"><span>🌗 Appearance</span><div class="pd-seg" role="radiogroup" aria-label="Appearance"><button type="button" role="radio" data-th="auto">Auto</button><button type="button" role="radio" data-th="light">Light</button><button type="button" role="radio" data-th="dark">Dark</button></div></div>' +
+  thb.innerHTML = '<div class="pd-row"><span>'+APPEAR_IMG+' Appearance</span><div class="pd-seg" role="radiogroup" aria-label="Appearance"><button type="button" role="radio" data-th="auto">Auto</button><button type="button" role="radio" data-th="light">Light</button><button type="button" role="radio" data-th="dark">Dark</button></div></div>' +
     '<div class="pd-hint">Auto follows device settings. Choose Light or Dark to override it.</div>';
   thb.addEventListener('click', e => { const bt = e.target.closest('button[data-th]'); if (bt) themeSet(bt.dataset.th); });
   const grp = (t, f) => { const d = document.createElement('div'); d.className = 'set-grp' + (f ? ' first' : ''); d.textContent = t; return d; };
@@ -3218,7 +3273,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   card.appendChild(mini);
   const tip = panelEl.querySelector('.flag-hint');
   const sn = document.createElement('div'); sn.className = 'saved-note';
-  sn.innerHTML = '💾 Saved on this device and browser only · clears after <span class="saved-hours"></span> <a class="saved-chg" href="#">· change</a>';
+  sn.innerHTML = BAK_IMG + ' Saved on this device and browser only · clears after <span class="saved-hours"></span> <a class="saved-chg" href="#">· change</a>';
   tip.after(sn);
   const en = document.createElement('div'); en.className = 'edit-note';
   en.innerHTML = '<button type="button" class="en-mini" onclick="editTipShow()">ⓘ How to customize ›</button><div class="en-full">' +
@@ -3246,13 +3301,15 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   panelEl.appendChild(help);
 });
 refreshEditBars();
-function themeGet() { try { const t = JSON.parse(localStorage.getItem('uasTheme') || '""'); return t === 'light' || t === 'dark' ? t : 'auto'; } catch (e) { return 'auto'; } }
+var themeMem = null;
+function themeGet() { if (themeMem) return themeMem; try { const t = JSON.parse(localStorage.getItem('uasTheme') || '""'); return t === 'light' || t === 'dark' ? t : 'auto'; } catch (e) { return 'auto'; } }
 function themeApply() {
   const t = themeGet();
   if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
   document.querySelectorAll('.themeset button[data-th]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.th === t)));
 }
 function themeSet(t) {
+  themeMem = t;
   try { if (t === 'light' || t === 'dark') localStorage.setItem('uasTheme', JSON.stringify(t)); else localStorage.removeItem('uasTheme'); } catch (e) {}
   themeApply();
 }
@@ -4067,8 +4124,8 @@ function ceilingNote(ft, metar) {
   }
   let note;
   const intl = region === 'intl';   // the cloud rules below are US rules; outside the USA say it neutrally
-  if (ft <= 500) note = intl ? '⚠️ Very low ceiling — check your local cloud and visibility rules' : '⛔ Cannot fly — below minimums';
-  else if (ft < 1000) note = intl ? '⚠️ Very low — keep clear of cloud' : '⚠️ Very low — stay 500 ft below clouds';
+  if (ft <= 500) note = intl ? WARN_IMG + ' Very low ceiling — check your local cloud and visibility rules' : STOP_IMG + ' Cannot fly — below minimums';
+  else if (ft < 1000) note = intl ? WARN_IMG + ' Very low — keep clear of cloud' : WARN_IMG + ' Very low — stay 500 ft below clouds';
   else if (ft < 3000) note = intl ? 'Low ceiling — keep clear of cloud' : 'Low ceiling — stay 500 ft below clouds';
   else note = 'Good for ops';
   const low = metar ? lowestLayer(metar) : null;
@@ -4444,11 +4501,11 @@ function showOffline() {
     lastDraw = goodDraw;
     goodDraw();
     const t = tnb(new Date(lastWeatherAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-    const msg = '📴 No signal — weather isn\'t updating. Showing data from ' + t + '.';
+    const msg = NOSIG_IMG + ' No signal — weather isn\'t updating. Showing data from ' + t + '.';
     body.insertAdjacentHTML('afterbegin', '<div class="wx-status wx-warn">' + msg + '</div>');
     srSay('No signal. Weather isn\'t updating. Showing data from ' + t + '.');
   } else {
-    const msg = '📴 No signal — can\'t load the weather. It will load when you\'re back online.';
+    const msg = NOSIG_IMG + ' No signal — can\'t load the weather. It will load when you\'re back online.';
     body.innerHTML = '<div class="wx-status wx-alert">' + msg + '</div>';
     srSay('No signal. Can\'t load the weather.');
   }
@@ -4551,7 +4608,7 @@ async function renderWeather(lat, lon, attempt = 1) {
           }
           const cape = H.cape || [], wc = H.weather_code || [];
           const stormHr = hrs.find(i => wc[i] >= 95 || (cape[i] >= 1000 && H.precipitation_probability[i] >= 30));
-          if (stormHr !== undefined) out.storm = '⚡ Storms possible ~' + hrLabel(stormHr);
+          if (stormHr !== undefined) out.storm = BOLT_IMG + ' Storms possible ~' + hrLabel(stormHr);
           return (out.rain || out.storm) ? out : null;
         })(),
         precipNext: (() => {
@@ -4589,10 +4646,10 @@ async function renderWeather(lat, lon, attempt = 1) {
         return !!(sr && ss && n && (n < sr || n > ss));
       };
       const nightTxt = () => nightOn()   // "I fly at night" on: a calm reminder instead of a warning
-        ? (region === 'intl' ? '🌙 Night flying on — check your local rules for night flying' : '🌙 Night flying on — <span style="white-space:nowrap">anti-collision</span> light visible 3 SM')
+        ? (region === 'intl' ? MOON_IMG + ' Night flying on — check your local rules for night flying' : MOON_IMG + ' Night flying on — <span style="white-space:nowrap">anti-collision</span> light visible 3 SM')
         : region === 'intl'
-        ? '🌙 Sun is down — check your local rules for night flying'
-        : '🌙 Sun is down — night flight needs an <span style="white-space:nowrap">anti-collision</span> light visible 3 SM';
+        ? MOON_IMG + ' Sun is down — check your local rules for night flying'
+        : MOON_IMG + ' Sun is down — night flight needs an <span style="white-space:nowrap">anti-collision</span> light visible 3 SM';
       const fmtT = (iso) => iso ? tnb(new Date(iso).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})) : '—';
       // AfterGlow opens at this same spot (it reads lat, lon and name from the link)
       const agName = (typeof site !== 'undefined' && site && site.name) ? String(site.name).slice(0, 60) : 'Current location';
@@ -4776,7 +4833,7 @@ async function renderWeather(lat, lon, attempt = 1) {
 
       const kp = kpData2;
       const kpVal = kp !== null ? kp.toFixed(1) : '—';
-      const kpNoteFn = () => { const l = kpLimits(); return kp === null ? 'Unavailable' : kp >= l.r ? '⛔ High — GPS and compass can be affected' : kp >= l.a ? '⚠️ Elevated — monitor' : 'Normal'; };
+      const kpNoteFn = () => { const l = kpLimits(); return kp === null ? 'Unavailable' : kp >= l.r ? STOP_IMG + ' High — GPS and compass can be affected' : kp >= l.a ? WARN_IMG + ' Elevated — monitor' : 'Normal'; };
 
       const now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
@@ -4818,7 +4875,7 @@ async function renderWeather(lat, lon, attempt = 1) {
         body.innerHTML = `
         <div class="wx-grid">
           <div class="wx-note wx-guidenote">Guide only. Check your own weather sources and the sky before you fly.</div>
-          <div class="wx-note wx-windnote${windCaution ? ' wx-warn' : ''}">${windCaution ? '⚠️ ' : ''}Obstructions/terrain can make it windier where you fly.</div>
+          <div class="wx-note wx-windnote${windCaution ? ' wx-warn' : ''}">${windCaution ? WARN_IMG + ' ' : ''}Obstructions/terrain can make it windier where you fly.</div>
           <div class="wx-item">
             ${windHTML}
           </div>
@@ -4840,7 +4897,7 @@ async function renderWeather(lat, lon, attempt = 1) {
             ${obsT ? `<div class="wx-sub" data-rec-age="${Date.now() - obsT.ageMin * 60000}">${obsT.station} · ${fmtDist(obsT.dist)} away · ${ageText(obsT.ageMin * 60000)}</div>` : ''}
             <div class="wx-label wx-vislab">${VIS_IMG} Visibility</div>
             <div class="wx-value wx-vis-val ${visBelowMin() ? 'wx-alert' : (typeof visM === 'number' && visM >= 4828 ? 'wx-good' : '')}">${visTxt()}<span class="wx-vis-src">${visSrc()}</span></div>
-            ${visBelowMin() ? '<div class="wx-sub wx-alert">⛔ Below 3 SM minimum</div>' : ''}
+            ${visBelowMin() ? '<div class="wx-sub wx-alert">' + STOP_IMG + ' Below 3 SM minimum</div>' : ''}
             ${visNote() ? `<div class="wx-sub">${visNote()}</div>` : ''}
             ${(() => { const ed = elevDens(om); return ed ? `<div class="wx-sub wx-elev">Elevation ${NB(fmtAlt(ed.elFt))}<br><span class="${ed.diff >= 1500 ? 'wx-warn' : ''}">Density alt ${NB(fmtAlt(ed.daFt))}</span></div>` : ''; })()}
           </div>

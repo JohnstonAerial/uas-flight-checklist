@@ -106,6 +106,16 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.3.1
+
+- **A new checklist item: Local and state rules.** Right after the NOTAM line on all three tabs: check city, county and state drone laws, and any park or property rules, for where you launch and fly. Outside the USA it reads "Local rules" and points to regional and local rules. Each tab has one more item than before.
+- **The Weather / Airspace switch hides when it isn't needed.** On a tall screen where everything is already showing, the switch under the three main buttons goes away. It comes back when the page grows.
+- **The "Log the flight" button hides when you can already see Print, PDF and Save.** With the checklist collapsed, those buttons are already on screen, so the jump button steps aside. Expand everything and it returns.
+- **Settings has pictures on 11 more rows:** Appearance, **Where you fly**, **I fly at night**, **Keep screen on**, **Your checklist & tab**, **Cold warning**, **Heat warning**, **Record file name**, **Default reg. #**, **PDF layout** and **PDF paper**. **Clear saved progress after** has its own circular-arrow-with-clock picture too.
+- **The four airspace buttons have drawn icons:** Airspace chart, FAA UAS Facility Map, TFRs and NOTAMs.
+- **The warning lines are drawn, too:** a red stop sign (cannot fly, high Kp, below 3 SM), an amber triangle (very low ceiling, elevated Kp, windy), a lightning bolt (storms possible), Wi-Fi with a red slash (no signal) and a moon (night). **Send feedback** has an envelope, and the "Saved on this device" notes use the same disk as **Back up & restore**.
+- **Settings keep working in Safari private tabs,** where the browser refuses to save anything. Your choices (Light, Dark and the rest) hold for as long as the tab is open, then they are gone, as with any private tab.
+
 ## What's new in v4.3.0
 
 - **The three main buttons are now at the very top.** **Conditions**, **Checklist** and **Settings** sit in the blue bar right under the title, and they never move. The switch for the part you are in sits just under them: **Weather / Airspace**, your checklist tabs, or **Preferences / Back up & restore**. The selected button turns white.
