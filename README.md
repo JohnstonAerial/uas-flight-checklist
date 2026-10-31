@@ -532,6 +532,7 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 | Type this in the link box | The item shows | What it does |
 |---|---|---|
+| `shortcuts://run-shortcut?name=Open%20Air%20Control` | **Open Air Control ›** | Runs an iPhone or iPad Shortcut named **Open Air Control**, which opens the Air Control app (Aloft's app for LAANC authorizations). See the tip below. |
 | `airaware.aloft.ai` or `https://airaware.aloft.ai` | **Open airaware.aloft.ai ›** | Opens the website. On an iPhone, a site with its own app may open in that app. |
 | `mailto:someone@example.com` | **someone@example.com ›** | Starts an email to that address. You can add a subject and message, for example `mailto:someone@example.com?subject=Job%20done&body=Job%20complete`. |
 | `tel:+19105551212` | **+19105551212 ›** | Starts a phone call. |
@@ -544,11 +545,11 @@ Spaces aren't allowed in a link: write `%20` for a space, `%0A` for a new line a
 
 **iPhone tip: open an app that has no web address.** Some apps can't be opened with a link. Make a Shortcut that opens the app, then link to the Shortcut:
 
-1. In the **Shortcuts** app, tap **+** and add the **Open App** action. Choose the app, such as Air Aware.
-2. Name the shortcut as an action, for example **Open Air Aware**.
-3. In the checklist's **Link or app address** box, type `shortcuts://run-shortcut?name=Open%20Air%20Aware`. The name must match the shortcut's name exactly, with `%20` for each space.
+1. In the **Shortcuts** app, tap **+** and add the **Open App** action. Choose the app, such as **Air Control** (Aloft's app for LAANC authorizations) or **Air Aware**.
+2. Name the shortcut as an action, for example **Open Air Control**.
+3. In the checklist's **Link or app address** box, type `shortcuts://run-shortcut?name=Open%20Air%20Control`. The name must match the shortcut's name exactly, with `%20` for each space.
 
-The item then shows **Open Air Aware ›**, the shortcut's own name. Tapping it runs the shortcut, which opens your app. The Shortcuts app may flash on screen first, and iOS may ask you to allow it the first time. This works on iPhone and iPad only.
+The item then shows **Open Air Control ›**, the shortcut's own name. Tapping it runs the shortcut, which opens your app. **Air Aware works the same way:** choose Air Aware in step 1, name the shortcut **Open Air Aware**, and use `shortcuts://run-shortcut?name=Open%20Air%20Aware`. The Shortcuts app may flash on screen first. On an iPhone, a box may ask whether to open the shortcut: confirm it (the Return key works) and the app opens. On an iPad it may open straight away. This works on iPhone and iPad only.
 
 - **Fix: the Customize button fits on small or zoomed phone screens** — it is no longer cut off at the right edge.
 
