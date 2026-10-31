@@ -106,6 +106,11 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.3.2
+
+- **The location box says you can type coordinates.** Under the search box on **Conditions** (tap **Change**) a short line now reads "Or type coordinates with a comma, like 35.50, -78.66". If you fly somewhere with no town name to speak of, type your latitude and longitude with a comma between them and the app uses that exact spot. It always worked; now it says so.
+- **Outside the USA, no more postal-code hint.** The place database does not reliably know full postal codes outside the USA, so under **Outside USA** the box reads "Town or lat, lon", and the line under it suggests a town or coordinates. A search that finds nothing suggests a nearby town or coordinates too. ZIP codes still work in the USA.
+
 ## What's new in v4.3.1
 
 - **A new checklist item: Local and state rules.** Right after the NOTAM line on all three tabs: check city, county and state drone laws, and any park or property rules, for where you launch and fly. Outside the USA it reads "Local rules" and points to regional and local rules. Each tab has one more item than before.

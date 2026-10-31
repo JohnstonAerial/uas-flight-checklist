@@ -847,6 +847,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-loc-btn { flex-shrink: 0; font-size: 12px; color: var(--link); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 14px; font-family: inherit; padding: 3px 10px; }
   .wx-picker { background: var(--section-bg); border-radius: 10px; padding: 10px; margin-bottom: 10px; }
   .wx-search { display: flex; gap: 6px; }
+  .wx-q-hint { font-size: 12px; color: var(--text-muted); margin: 6px 2px 0; }
   .wx-search input { flex: 1; min-width: 0; font-size: 16px; font-family: inherit; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--text); }
   .wx-search button { font-size: 13px; font-family: inherit; padding: 0 12px; border: none; border-radius: 8px; background: var(--blue); color: #fff; cursor: pointer; }
   .wx-result { display: block; width: 100%; text-align: left; font-family: inherit; font-size: 14px; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-top: 6px; cursor: pointer; }
@@ -1017,7 +1018,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.3.1</p>
+      <p>Free Drone Preflight Checklist · v4.3.2</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -1070,6 +1071,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
       <input id="wx-q" type="search" placeholder="Town, ZIP, or lat, lon" autocomplete="off" autocapitalize="words" enterkeyhint="search">
       <button type="submit">Search</button>
     </form>
+    <div class="wx-q-hint" id="wx-q-hint">Or type coordinates with a comma, like <b>35.50, -78.66</b></div>
     <div id="wx-results"></div>
     <div class="wx-chips" id="wx-chips"></div>
   </div>
@@ -2127,7 +2129,8 @@ function applyRegion(r, changeUnits) {
   document.body.classList.toggle('intl', intl);
   document.querySelectorAll('.item[data-region="us"]').forEach(it => it.classList.toggle('region-hidden', intl));
   document.querySelectorAll('.item[data-orig]').forEach(it => { it.querySelector('.item-text').textContent = intl ? it.dataset.intl : it.dataset.orig; });
-  const q = document.getElementById('wx-q'); if (q) q.placeholder = intl ? 'Town, postal code, or lat, lon' : 'Town, ZIP, or lat, lon';
+  const q = document.getElementById('wx-q'); if (q) q.placeholder = intl ? 'Town or lat, lon' : 'Town, ZIP, or lat, lon';
+  const qh = document.getElementById('wx-q-hint'); if (qh) qh.innerHTML = intl ? 'Or type coordinates with a comma, like <b>44.50, -64.30</b>. Postal codes may not be found: use a town or coordinates.' : 'Or type coordinates with a comma, like <b>35.50, -78.66</b>';
   document.querySelectorAll('.region-sel').forEach(sel => { sel.value = r; });
   const card = document.getElementById('region-card'); if (card) card.remove();
   if (changeUnits && r !== prev) { try { localStorage.setItem('uasWindUnit', intl ? 'kmh' : 'mph'); } catch (e) {} if (typeof wlSync === 'function') wlSync(); }   // wind starts in the usual unit for the country chosen
@@ -4473,7 +4476,7 @@ async function searchSite(e) {
     if (state) { const f = list.filter(r => r.admin1 === state); if (f.length) list = f; }
     list = list.slice(0, 6);
     out.innerHTML = '';
-    if (!list.length) { note('No matches. Try adding the country (for example Toronto, Canada), a nearby town, a postal code or ZIP code, or coordinates.'); return; }
+    if (!list.length) { note(region === 'intl' ? 'No matches. Try adding the country (for example Toronto, Canada), a nearby town, or coordinates like 44.50, -64.30.' : 'No matches. Try adding the country (for example Toronto, Canada), a nearby town, a ZIP code, or coordinates like 35.50, -78.66.'); return; }
     list.forEach(r => {
       const region = r.admin1 ? (r.country_code === 'US' && STATE_ABBR[r.admin1] ? STATE_ABBR[r.admin1] : r.admin1) : '';
       const label = r.name + (region ? ', ' + region : '') + (r.country_code && r.country_code !== 'US' ? ', ' + r.country_code : '');
