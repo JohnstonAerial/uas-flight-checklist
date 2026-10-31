@@ -551,6 +551,8 @@ Spaces aren't allowed in a link: write `%20` for a space, `%0A` for a new line a
 
 The item then shows **Open Air Control ›**, the shortcut's own name. Tapping it runs the shortcut, which opens your app. **Air Aware works the same way:** choose Air Aware in step 1, name the shortcut **Open Air Aware**, and use `shortcuts://run-shortcut?name=Open%20Air%20Aware`. The Shortcuts app may flash on screen first. On an iPhone, a box may ask whether to open the shortcut: confirm it (the Return key works) and the app opens. On an iPad it may open straight away. This works on iPhone and iPad only.
 
+**The shortcut opens the app, not your spot.** A Shortcut can't pass your location to Air Control. To see your location, use the **FAA UAS Facility Map** button on the **Conditions** tab: it opens centered on the place you set in the app.
+
 - **Fix: the Customize button fits on small or zoomed phone screens** — it is no longer cut off at the right edge.
 
 ---

@@ -120,6 +120,8 @@ Spaces aren't allowed in a link: write `%20` for a space, `%0A` for a new line a
 
 The item then shows **Open Air Control ›**, the shortcut's own name. Tapping it runs the shortcut, which opens your app. **Air Aware works the same way:** choose Air Aware in step 1, name the shortcut **Open Air Aware**, and use `shortcuts://run-shortcut?name=Open%20Air%20Aware`. The Shortcuts app may flash on screen first. On an iPhone, a box may ask whether to open the shortcut: confirm it (the Return key works) and the app opens. On an iPad it may open straight away. This works on iPhone and iPad only.
 
+**The shortcut opens the app, not your spot.** A Shortcut can't pass your location to Air Control. To see your location, use the **FAA UAS Facility Map** button on the **Conditions** tab: it opens centered on the place you set in the app.
+
 **Tip: one tab for each drone.** If you fly more than one aircraft, make a tab for each. Open **Customize** on the tab you want to set up and tap **Clone another tab onto this one…**. Choose the tab to copy from, read the confirmation (it names both tabs, and the one you're on is the one that gets replaced), and tap **Replace**. Then rename the tab, pick its icon, and type its own **Drone** and **Reg. #** under **For records and PDFs saved from this tab**. **Undo** appears right after, and works until you leave or reload the page. **Restore original list** brings the tab's own list back. Back up afterwards.
 
 **Copy one item to another tab.** Each item you added has a **Copy to…** button in **Customize**. Choose the tab, and the item and its link are copied into the same section. If that tab already has the item, it tells you instead of adding a second one.
