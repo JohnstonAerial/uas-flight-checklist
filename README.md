@@ -106,6 +106,10 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.3.3
+
+- **Location now works in Chrome on a Mac.** On some Macs, Chrome could not find your location with the app's usual quick request and the weather panel said "Your location is taking too long to find." The app now asks for a precise fix, which Chrome answers. Nothing changes on a phone or in other browsers.
+
 ## What's new in v4.3.2
 
 - **The location box says you can type coordinates.** Under the search box on **Conditions** (tap **Change**) a short line now reads "Or type coordinates with a comma, like 35.50, -78.66". If you fly somewhere with no town name to speak of, type your latitude and longitude with a comma between them and the app uses that exact spot. It always worked; now it says so.
