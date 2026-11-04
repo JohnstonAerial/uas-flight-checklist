@@ -844,7 +844,11 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-sug .pin-ico { width: 1.2em; height: 1.2em; vertical-align: -0.25em; }
   .wx-loc-label .pin-ico { width: 1.3em; height: 1.3em; vertical-align: -0.3em; }
   .wx-loc-label { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .wx-loc-btn { flex-shrink: 0; font-size: 12px; color: var(--link); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 14px; font-family: inherit; padding: 3px 10px; }
+  .wx-loc-near { margin: -6px 0 10px 2px; font-size: 12px; color: var(--text-muted); }
+  .wx-loc-near[hidden] { display: none; }
+  .wx-loc-btns { display: flex; gap: 6px; flex-shrink: 0; }
+  .wx-loc-btn[hidden] { display: none !important; }
+  .wx-loc-btn { flex-shrink: 0; text-decoration: none; font-size: 12px; color: var(--link); cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 14px; font-family: inherit; padding: 3px 10px; }
   .wx-picker { background: var(--section-bg); border-radius: 10px; padding: 10px; margin-bottom: 10px; }
   .wx-search { display: flex; gap: 6px; }
   .wx-q-hint { font-size: 12px; color: var(--text-muted); margin: 6px 2px 0; }
@@ -1019,7 +1023,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.3.4</p>
+      <p>Free Drone Preflight Checklist · v4.3.5</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -1063,19 +1067,20 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   </div>
   <div class="wx-loc">
     <span class="wx-loc-label"><span id="pin-ico"></span> <span id="wx-loc-name">My location</span></span>
-    <button class="wx-loc-btn" onclick="toggleLocPicker()">Change</button>
+    <span class="wx-loc-btns"><a class="wx-loc-btn" id="wx-loc-map" target="_blank" rel="noopener" hidden>Map</a><button class="wx-loc-btn" onclick="toggleLocPicker()">Change</button></span>
   </div>
-  <div class="dr-row-pill" id="dr-row" hidden><button type="button" class="dr-pill" id="dr-pill" aria-haspopup="listbox" aria-expanded="false"></button></div>
-  <div class="dr-menu" id="dr-menu" role="listbox" hidden></div>
+  <div class="wx-loc-near" id="wx-loc-near" hidden></div>
   <div class="wx-picker" id="wx-picker" hidden>
     <form class="wx-search" onsubmit="searchSite(event)">
       <input id="wx-q" type="search" placeholder="Town, ZIP, or lat, lon" autocomplete="off" autocapitalize="words" enterkeyhint="search">
       <button type="submit">Search</button>
     </form>
-    <div class="wx-q-hint" id="wx-q-hint">Or type coordinates with a comma, like <b>35.50, -78.66</b></div>
+    <div class="wx-q-hint" id="wx-q-hint">Or type coordinates, like <b>35.50, -78.66</b> (degrees, minutes, seconds work too)</div>
     <div id="wx-results"></div>
     <div class="wx-chips" id="wx-chips"></div>
   </div>
+  <div class="dr-row-pill" id="dr-row" hidden><button type="button" class="dr-pill" id="dr-pill" aria-haspopup="listbox" aria-expanded="false"></button></div>
+  <div class="dr-menu" id="dr-menu" role="listbox" hidden></div>
   <div id="wx-body">
     <div class="wx-status wx-loading">Locating...</div>
   </div>
@@ -2132,7 +2137,7 @@ function applyRegion(r, changeUnits) {
   document.querySelectorAll('.item[data-region="us"]').forEach(it => it.classList.toggle('region-hidden', intl));
   document.querySelectorAll('.item[data-orig]').forEach(it => { it.querySelector('.item-text').textContent = intl ? it.dataset.intl : it.dataset.orig; });
   const q = document.getElementById('wx-q'); if (q) q.placeholder = intl ? 'Town or lat, lon' : 'Town, ZIP, or lat, lon';
-  const qh = document.getElementById('wx-q-hint'); if (qh) qh.innerHTML = intl ? 'Or type coordinates with a comma, like <b>44.50, -64.30</b>. Postal codes may not be found: use a town or coordinates.' : 'Or type coordinates with a comma, like <b>35.50, -78.66</b>';
+  const qh = document.getElementById('wx-q-hint'); if (qh) qh.innerHTML = intl ? 'Or type coordinates, like <b>44.50, -64.30</b> (degrees, minutes, seconds work too). Postal codes may not be found: use a town or coordinates.' : 'Or type coordinates, like <b>35.50, -78.66</b> (degrees, minutes, seconds work too)';
   document.querySelectorAll('.region-sel').forEach(sel => { sel.value = r; });
   const card = document.getElementById('region-card'); if (card) card.remove();
   if (changeUnits && r !== prev) { try { localStorage.setItem('uasWindUnit', intl ? 'kmh' : 'mph'); } catch (e) {} if (typeof wlSync === 'function') wlSync(); }   // wind starts in the usual unit for the country chosen
@@ -3301,7 +3306,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   bar.innerHTML = '<span class="eb-title">✎ Editing: <b class="eb-name"></b></span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button><div class="eb-chips"></div>';
   panelEl.prepend(bar);
   const coffee = document.createElement('div'); coffee.className = 'coffee-note';
-  coffee.innerHTML = 'Built by a Part 107 pilot, for pilots. Free to use. If it helped you fly smarter, <a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee</a> ' + COFFEE_IMG + '<br>Also from Johnston Aerial: <a href="https://afterglow.johnstonaerial.com/" target="_blank" rel="noopener">Afterglow sky forecast</a>';
+  coffee.innerHTML = 'Built by a Part 107 pilot, for pilots. Free to use. If it helped you fly smarter, <span style="white-space:nowrap"><a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee</a> ' + COFFEE_IMG + '</span><br>Also from Johnston Aerial:<br><a href="https://afterglow.johnstonaerial.com/" target="_blank" rel="noopener">Afterglow sky forecast</a>';
   panelEl.appendChild(coffee);
   panelEl.appendChild(help);
 });
@@ -4320,8 +4325,38 @@ function friendlyWxError(e) {
   return 'Weather unavailable: ' + m;
 }
 
+// 4.3.5e: for a typed or pasted coordinate spot, say which US community it is near (National Weather Service lookup; no name outside the USA)
+const nearCache = {};
+async function updateNear() {
+  const el = document.getElementById('wx-loc-near'); if (!el) return;
+  el.hidden = true; el.textContent = '';
+  if (!site || !isFinite(site.lat) || !isFinite(site.lon) || !/^-?\d+(\.\d+)?, -?\d+(\.\d+)?$/.test(String(site.name))) return;
+  const key = Number(site.lat).toFixed(3) + ',' + Number(site.lon).toFixed(3);
+  const show = (t) => { if (t && site && key === Number(site.lat).toFixed(3) + ',' + Number(site.lon).toFixed(3)) { el.textContent = t; el.hidden = false; } };
+  if (key in nearCache) { show(nearCache[key]); return; }
+  try {
+    const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 6000);
+    const r = await fetch('https://api.weather.gov/points/' + key, { signal: ctl.signal });
+    clearTimeout(tm);
+    if (!r.ok) { nearCache[key] = ''; return; }
+    const d = await r.json(), rl = d && d.properties && d.properties.relativeLocation && d.properties.relativeLocation.properties;
+    const t = rl && rl.city ? 'Near ' + rl.city + (rl.state ? ', ' + rl.state : '') : '';
+    nearCache[key] = t; show(t);
+  } catch (e) { /* no name: the coordinates and the Map link still work */ }
+}
+
 function updateLocLabel() {
+  updateNear();
   document.getElementById('wx-loc-name').textContent = site ? site.name : 'My location';
+  // 4.3.5c: a Map link for a searched or typed spot, so you can see where it is
+  const mp = document.getElementById('wx-loc-map');
+  if (mp) {
+    if (site && isFinite(site.lat) && isFinite(site.lon)) { const ll = Number(site.lat).toFixed(5) + ',' + Number(site.lon).toFixed(5);
+      // iPhone and iPad: Apple Maps opens straight into the Maps app (Google Maps asks first); everything else: Google Maps
+      const apple = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      mp.href = apple ? 'https://maps.apple.com/?ll=' + ll + '&q=' + encodeURIComponent(site.name) : 'https://www.google.com/maps/search/?api=1&query=' + ll; mp.setAttribute('aria-label', 'Show ' + site.name + ' on a map (opens in a new tab)'); mp.hidden = false; }
+    else { mp.hidden = true; mp.removeAttribute('href'); }
+  }
 }
 
 function toggleLocPicker() {
@@ -4373,6 +4408,63 @@ function chooseSite(s) {
   loadWeather();
 }
 
+// 4.3.5b: coordinates typed or pasted as decimal degrees ("35.59, -78.50"), degrees/minutes/seconds
+// ("35°12'30"N 78°30'15"W", NGS style "35 07 03.1763(N) 078 49 59.0882(W)"), compact aviation style
+// (351230N 0783015W), or a pasted Google/Apple Maps link
+function parseCoordsText(q) {
+  let s = String(q).toUpperCase()
+    .replace(/[′’‘`´]/g, "'").replace(/[″”“]/g, '"').replace(/[º˚]/g, '°').replace(/''/g, '"')
+    .replace(/[°'"()]/g, ' ').replace(/[−–—]/g, '-');
+  const re = /([NSEW])?\s*(-)?\s*(\d+(?:\.\d+)?)(?:\s+(\d+(?:\.\d+)?))?(?:\s+(\d+(?:\.\d+)?))?\s*([NSEW])?/g;
+  const parts = []; let m, last = 0;
+  while ((m = re.exec(s)) !== null) {
+    if (m[0] === '') { re.lastIndex++; continue; }
+    // "N 35 12 30 W 78 ...": the letter after the first number belongs to the next coordinate
+    if (m[1] && m[6]) re.lastIndex -= (m[0].length - m[0].lastIndexOf(m[6]));
+    const between = s.slice(last, m.index);
+    if (between.replace(/[\s,;]/g, '') !== '') return null;
+    last = re.lastIndex;
+    const d = parseFloat(m[3]), mi = m[4] != null ? parseFloat(m[4]) : 0, se = m[5] != null ? parseFloat(m[5]) : 0;
+    if (mi >= 60 || se >= 60) return null;
+    let v = d + mi / 60 + se / 3600;
+    const h = (m[1] && m[6]) ? m[1] : (m[1] || m[6] || null);
+    if (h) { if (h === 'S' || h === 'W') v = -v; } else if (m[2]) v = -v;
+    parts.push({ v, h });
+    if (parts.length > 2) return null;
+  }
+  if (s.slice(last).replace(/[\s,;]/g, '') !== '' || parts.length !== 2) return null;
+  let lat = parts[0], lon = parts[1];
+  const isLat = (p) => p.h === 'N' || p.h === 'S', isLon = (p) => p.h === 'E' || p.h === 'W';
+  if (isLon(parts[0]) || isLat(parts[1])) { if (isLat(parts[0]) || isLon(parts[1])) return null; lat = parts[1]; lon = parts[0]; }
+  else if (isLat(parts[0]) && isLon(parts[1])) { /* normal order */ }
+  else if ((parts[0].h && !parts[1].h) || (!parts[0].h && parts[1].h)) return null;
+  if (Math.abs(lat.v) > 90 || Math.abs(lon.v) > 180) return null;
+  return { lat: lat.v, lon: lon.v };
+}
+function parseCoords(q) {
+  const ok = (la, lo) => (isFinite(la) && isFinite(lo) && Math.abs(la) <= 90 && Math.abs(lo) <= 180) ? { lat: la, lon: lo } : null;
+  const t = String(q).trim();
+  if (/^https?:\/\//i.test(t)) {
+    let u = t; try { u = decodeURIComponent(t); } catch (e) {}
+    const n = '(-?\\d{1,3}(?:\\.\\d+)?)';
+    const pats = [
+      new RegExp('!3d' + n + '!4d' + n),                       // Google place pin
+      new RegExp('@' + n + ',' + n),                           // Google map centre
+      new RegExp('[?&](?:q|ll|query|center|sll|destination|daddr|coordinate)=\\s*' + n + '\\s*[, +]\\s*' + n)   // Google and Apple Maps
+    ];
+    for (const re of pats) { const m = u.match(re); if (m) return ok(parseFloat(m[1]), parseFloat(m[2])); }
+    return null;
+  }
+  const c = t.toUpperCase().replace(/[°'"′″]/g, '').match(/^(\d{2})(\d{2})(\d{2}(?:\.\d+)?)?\s*([NS])[\s,;]*(\d{3})(\d{2})(\d{2}(?:\.\d+)?)?\s*([EW])$/);
+  if (c) {
+    if (+c[2] >= 60 || +c[6] >= 60 || +(c[3] || 0) >= 60 || +(c[7] || 0) >= 60) return null;
+    const la = (+c[1] + +c[2] / 60 + +(c[3] || 0) / 3600) * (c[4] === 'S' ? -1 : 1);
+    const lo = (+c[5] + +c[6] / 60 + +(c[7] || 0) / 3600) * (c[8] === 'W' ? -1 : 1);
+    return ok(la, lo);
+  }
+  return parseCoordsText(q);
+}
+
 async function searchSite(e) {
   e.preventDefault();
   const q = document.getElementById('wx-q').value.trim();
@@ -4382,15 +4474,13 @@ async function searchSite(e) {
   { const sg = document.querySelector('.wx-sug'); if (sg) sg.hidden = true; }
   const note = (t) => { const d = document.createElement('div'); d.className = 'wx-note'; d.textContent = t; out.appendChild(d); };
 
-  // "35.59, -78.50" style coordinates
-  const c = q.match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);
+  // "35.59, -78.50" decimal coordinates, degrees/minutes/seconds, compact aviation style, or a pasted map link
+  const c = parseCoords(q);
   if (c) {
-    const lat = parseFloat(c[1]), lon = parseFloat(c[2]);
-    if (Math.abs(lat) <= 90 && Math.abs(lon) <= 180) {
-      chooseSite({ name: lat.toFixed(3) + ', ' + lon.toFixed(3), lat, lon });
-      return;
-    }
+    chooseSite({ name: c.lat.toFixed(3) + ', ' + c.lon.toFixed(3), lat: c.lat, lon: c.lon });
+    return;
   }
+  if (/^https?:\/\//i.test(q)) { note("That link doesn't show coordinates (short links like maps.app.goo.gl can't be read). Open it, copy the long address from the browser bar, or type the coordinates."); return; }
 
   // 4.2.4b: local-language names the place database ranks badly (Wien finds Wien, Missouri); search the English name first
   const ALIAS = { wien:'Vienna', roma:'Rome', firenze:'Florence', venezia:'Venice', napoli:'Naples', milano:'Milan', torino:'Turin', genova:'Genoa', praha:'Prague', warszawa:'Warsaw', krakow:'Krakow', gdansk:'Gdansk', wroclaw:'Wroclaw', goteborg:'Gothenburg', kobenhavn:'Copenhagen', koeln:'Cologne', koln:'Cologne', munchen:'Munich', muenchen:'Munich', nurnberg:'Nuremberg', nuernberg:'Nuremberg', 'ciudad de mexico':'Mexico City', lisboa:'Lisbon', bruxelles:'Brussels', brussel:'Brussels', geneve:'Geneva', zuerich:'Zurich', 'den haag':'The Hague', antwerpen:'Antwerp', sevilla:'Seville', moskva:'Moscow', athina:'Athens', bucuresti:'Bucharest', beograd:'Belgrade', helsingfors:'Helsinki', 'sankt petersburg':'Saint Petersburg', 'sao paulo':'Sao Paulo', 'rio de janeiro':'Rio de Janeiro', 'nueva york':'New York', londres:'London', parigi:'Paris', napels:'Naples' };

@@ -106,6 +106,16 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.3.5
+
+- **Type coordinates the way you find them.** In the location box (**Conditions**, then **Change**) you can still type decimal coordinates like **35.50, -78.66**. You can now also type or paste degrees, minutes and seconds, like **35°30'00"N 78°39'36"W** or **35 30 00 N, 78 39 36 W**, the style on survey datasheets (**35 07 03.17630(N) 078 49 59.08821(W)**), the compact aviation style (**353000N 0783936W**), or a **Google Maps or Apple Maps link**. A W or S letter sets the sign, so you no longer have to remember the minus. Short links like maps.app.goo.gl can't be read, so the app says so and suggests copying the long address from the browser bar.
+- **A Map button next to Change.** For a spot you searched for or typed, **Map** shows it on a map. On an iPhone or iPad it opens Apple Maps, and everywhere else it opens Google Maps.
+- **Which town it is near (USA only).** When you type coordinates, a small line under the location says what community they are near, like "Near Angier, NC", from the National Weather Service. Outside the USA there is no name, and if the lookup fails the line simply does not appear.
+- **The search box opens right under Change.** It used to open below the drone picker; now the location and its search stay together.
+- **The footer wraps neatly.** On a narrow screen the coffee link stays together on one line, and the Afterglow link sits on its own line.
+
+---
+
 ## What's new in v4.3.4
 
 - **A second TFR button that is easier on a phone (USA only).** Under **TFRs — FAA.gov** and **NOTAMs — AIM** there is now a full-width **TFR list (unofficial)** button. It opens atisalerts.com, a third-party list of the FAA's TFRs grouped by state that reads much better on a phone than the FAA's own page. It is unofficial, can lag, and gives dates by day only, so confirm on the FAA site before you fly. The note under the buttons says so. The button is hidden when you choose **Outside USA**.
@@ -1067,6 +1077,7 @@ Ideas for items of your own: a tracker tag in the drone or case (charged and on 
 - [Open-Meteo](https://open-meteo.com) — wind, gusts, wind at 400 ft, temperature, visibility, sunrise/sunset (no key required)
 - [Aviation Weather Center](https://aviationweather.gov/data/api/) — METAR cloud ceiling (no key, via a small Cloudflare Worker)
 - [NOAA Space Weather](https://services.swpc.noaa.gov) — KP Index (no key required)
+- [National Weather Service](https://www.weather.gov/documentation/services-web-api) — the "Near ..." community name shown under coordinates you type (USA only, no key required)
 - [aviationweather.gov](https://aviationweather.gov) — TFR and NOTAM links
 - Hosted free on [GitHub Pages](https://pages.github.com)
 - Weather proxy via [Cloudflare Workers](https://workers.cloudflare.com)

@@ -236,6 +236,7 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 - **Ceiling warnings:** low-cloud notes say "check your local cloud and visibility rules" instead of quoting US rules.
 - **Night notice:** after sunset or before sunrise it says to check your local rules for night flying. The same line is printed on a saved flight record.
 - **Place search:** you can search by town, postal code (ZIP code in the USA), or enter coordinates. Add the country to search outside the USA, for example **Munich, Germany**.
+- **Typing coordinates:** use decimal degrees like **35.50, -78.66**, or degrees, minutes and seconds like **35°30'00"N 78°39'36"W** (a W or S letter sets the sign, so no minus is needed). The compact aviation style (**353000N 0783936W**) and a pasted Google Maps or Apple Maps link work too. Short links like maps.app.goo.gl can't be read: open the link and copy the long address from the browser bar. For a spot you typed, **Map** shows it on a map, and in the USA a line under it says what community it is near.
 
 **What works worldwide**
 
