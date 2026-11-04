@@ -597,7 +597,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .panel.editing .section.collapsed .add-row { display: flex; }
   .cust-row .sec-all { margin: 0 4px; }
   .item.region-hidden, .panel.editing .item.region-hidden { display: none !important; }
-  body.intl .wx-tfr-row .wx-facmap, body.intl .wx-tfr-row .wx-tfr, body.intl .wx-tfr-row .wx-notam { display: none; }
+  body.intl .wx-tfr-row .wx-facmap, body.intl .wx-tfr-row .wx-tfr, body.intl .wx-tfr-row .wx-tfrlist, body.intl .wx-tfr-row .wx-notam { display: none; }
   body.intl .wx-tfr-row:not(.au):not(.ar):not(.fr):not(.be):not(.uk):not(.ca):not(.none) .wx-airmap { grid-column: 1 / -1; }
   .wx-aubtn { display: none; width: 100%; padding: 9px; background: #00843d; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-arbtn { display: none; width: 100%; padding: 9px; background: #2f7fb8; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
@@ -657,7 +657,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-tfr-row.au .wx-aubtn { display: block; }
   body:not(.intl) .wx-tfr-row.au .wx-aubtn { grid-column: 1 / -1; order: 9; }
   /* A place in a country that has its own button: the FAA buttons mean nothing there, so they go, and SkyVector and the country button sit side by side */
-  .wx-tfr-row.cc .wx-facmap, .wx-tfr-row.cc .wx-tfr, .wx-tfr-row.cc .wx-notam, .wx-tfr-row.none .wx-facmap, .wx-tfr-row.none .wx-tfr, .wx-tfr-row.none .wx-notam { display: none; }
+  .wx-tfr-row.cc .wx-facmap, .wx-tfr-row.cc .wx-tfr, .wx-tfr-row.cc .wx-tfrlist, .wx-tfr-row.cc .wx-notam, .wx-tfr-row.none .wx-facmap, .wx-tfr-row.none .wx-tfr, .wx-tfr-row.none .wx-tfrlist, .wx-tfr-row.none .wx-notam { display: none; }
   body:not(.intl) .wx-tfr-row.cc .wx-aubtn, body:not(.intl) .wx-tfr-row.cc .wx-arbtn, body:not(.intl) .wx-tfr-row.cc .wx-frbtn, body:not(.intl) .wx-tfr-row.cc .wx-bebtn, body:not(.intl) .wx-tfr-row.cc .wx-ukbtn, body:not(.intl) .wx-tfr-row.cc .wx-cabtn, body:not(.intl) .wx-tfr-row.cc .wx-nlbtn, body:not(.intl) .wx-tfr-row.cc .wx-debtn, body:not(.intl) .wx-tfr-row.cc .wx-iebtn, body:not(.intl) .wx-tfr-row.cc .wx-atbtn, body:not(.intl) .wx-tfr-row.cc .wx-chbtn, body:not(.intl) .wx-tfr-row.cc .wx-itbtn, body:not(.intl) .wx-tfr-row.cc .wx-esbtn, body:not(.intl) .wx-tfr-row.cc .wx-dkbtn, body:not(.intl) .wx-tfr-row.cc .wx-sebtn, body:not(.intl) .wx-tfr-row.cc .wx-nobtn, body:not(.intl) .wx-tfr-row.cc .wx-fibtn, body:not(.intl) .wx-tfr-row.cc .wx-plbtn, body:not(.intl) .wx-tfr-row.cc .wx-czbtn { grid-column: auto; order: 0; }
   body:not(.intl) .wx-tfr-row.cc .wx-airmap { order: 0; }
   .wx-wwbtn { display: none; width: 100%; padding: 9px; background: #4d5560; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
@@ -917,6 +917,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-tfr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .wx-tfr { display: block; width: 100%; padding: 9px; background: #e0301e; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-notam { display: block; width: 100%; padding: 9px; background: #7f3fbf; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
+  .wx-tfrlist { display: block; grid-column: 1 / -1; width: 100%; padding: 9px; background: #9c2a1a; color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; letter-spacing: 0.3px; cursor: pointer; box-sizing: border-box; }
   .wx-notam .gl { display: block; white-space: nowrap; font-weight: 600; font-size: 12px; margin-top: 1px; color: #efe3ff; }
   .wx-tfr .gl { display: block; white-space: nowrap; font-weight: 600; font-size: 12px; margin-top: 1px; color: #ffe3de; }
   .wx-facmap .gl { display: block; font-weight: 600; font-size: 12px; margin-top: 1px; }
@@ -1018,7 +1019,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.3.3</p>
+      <p>Free Drone Preflight Checklist · v4.3.4</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -1104,7 +1105,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <div class="wx-ccnote" id="wx-ccnote">No button for your country yet. <a id="wx-ccmail" href="#">Tell us which country</a> and we will look at adding it.</div>
     <a class="wx-tfr" href="https://tfr.faa.gov/tfr2/list.html" target="_blank" rel="noopener"><svg class="wx-bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l10 17.4a1 1 0 0 1-.9 1.5H2.9a1 1 0 0 1-.9-1.5z" fill="#ffc83d" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 9v5.2" stroke="#4a2a00" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17.4" r="1.3" fill="#4a2a00"/></svg> TFRs — FAA.gov<span class="gl" id="wx-tfrline"></span></a>
     <a class="wx-notam" href="https://notams.aim.faa.gov/notamSearch/" target="_blank" rel="noopener"><svg class="wx-bi" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="4" width="15" height="17.5" rx="2.2" fill="#fff"/><rect x="8" y="2" width="8" height="4.4" rx="1.4" fill="#5b2a92" stroke="#fff" stroke-width="1.2"/><path d="M8 10.5h8M8 13.7h8M8 16.9h5" stroke="#9a8bb3" stroke-width="1.6" stroke-linecap="round"/></svg> NOTAMs — AIM<span class="gl" id="wx-notamline"></span></a>
-    <div class="wx-gridnote" id="wx-gridnote">Guide only. Check LAANC and TFRs before you fly. NOTAMs copies the airport code to paste in its location box. Tap a code to switch, or All.</div>
+    <a class="wx-tfrlist" href="https://atisalerts.com/tfrs" target="_blank" rel="noopener"><svg class="wx-bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l10 17.4a1 1 0 0 1-.9 1.5H2.9a1 1 0 0 1-.9-1.5z" fill="#ffc83d" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 9v5.2" stroke="#4a2a00" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17.4" r="1.3" fill="#4a2a00"/></svg> TFR list (unofficial)</a>
+    <div class="wx-gridnote" id="wx-gridnote">Guide only. Check LAANC and TFRs before you fly. The unofficial TFR list can lag, so confirm on the FAA site. NOTAMs copies the airport code to paste in its location box. Tap a code to switch, or All.</div>
     <div class="wx-codes" id="wx-codes"></div>
   </div>
 </div>
@@ -3299,7 +3301,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   bar.innerHTML = '<span class="eb-title">✎ Editing: <b class="eb-name"></b></span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button><div class="eb-chips"></div>';
   panelEl.prepend(bar);
   const coffee = document.createElement('div'); coffee.className = 'coffee-note';
-  coffee.innerHTML = 'Built by a Part 107 pilot, for pilots. Free to use. If it helped you fly smarter, <a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee</a> ' + COFFEE_IMG + '';
+  coffee.innerHTML = 'Built by a Part 107 pilot, for pilots. Free to use. If it helped you fly smarter, <a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee</a> ' + COFFEE_IMG + '<br>Also from Johnston Aerial: <a href="https://afterglow.johnstonaerial.com/" target="_blank" rel="noopener">Afterglow sky forecast</a>';
   panelEl.appendChild(coffee);
   panelEl.appendChild(help);
 });

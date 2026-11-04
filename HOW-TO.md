@@ -269,6 +269,8 @@ The first time you open the app it asks **Where do you fly?** Choose **Outside U
 
 ### TFRs
 
+**An easier list on a phone:** under the TFRs and NOTAMs buttons there is a **TFR list (unofficial)** button. It opens atisalerts.com, which shows the FAA's TFRs grouped by state in a layout that fits a phone. It is not the FAA, it can lag, and it gives dates by day only, so use it to look around and then confirm on the FAA site before you fly.
+
 The **⚠️ TFRs** button shows a count under its name, such as **NC: 3 · US: 12**: how many TFRs the FAA lists for your state, then how many are nationwide. It is a count only. It does not say whether one is near you, so open the list and check. The button opens the FAA's list for the whole country, so most of what you see will be far from you. To narrow it down:
 
 1. In the left sidebar, open **Please select a state** and pick your state. **On a phone, turn it sideways first.** The page then shows its search boxes down the left side. Tap the **second box** (search by state), scroll to your state and pick it. That is what makes the list usable on a phone.

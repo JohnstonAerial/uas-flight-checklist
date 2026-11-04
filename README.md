@@ -106,6 +106,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.3.4
+
+- **A second TFR button that is easier on a phone (USA only).** Under **TFRs — FAA.gov** and **NOTAMs — AIM** there is now a full-width **TFR list (unofficial)** button. It opens atisalerts.com, a third-party list of the FAA's TFRs grouped by state that reads much better on a phone than the FAA's own page. It is unofficial, can lag, and gives dates by day only, so confirm on the FAA site before you fly. The note under the buttons says so. The button is hidden when you choose **Outside USA**.
+- **A link to Afterglow at the bottom.** Under the coffee note on each tab, **Also from Johnston Aerial: Afterglow sky forecast** opens my free sunrise and sunset forecast and planning app.
+
+---
+
 ## What's new in v4.3.3
 
 - **Location now works in Chrome on a Mac.** On some Macs, Chrome could not find your location with the app's usual quick request and the weather panel said "Your location is taking too long to find." The app now asks for a precise fix, which Chrome answers. Nothing changes on a phone or in other browsers.
