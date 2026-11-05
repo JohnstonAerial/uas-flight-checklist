@@ -106,6 +106,16 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.4.0
+
+- **Afterglow opens right at your place.** The **AfterGlow sky forecast** button sits under the Golden hour times in the weather card on **Conditions**. It says where it will open: "Will the sky color up at Houston?", "near Angier", or "here" when the place is only coordinates or your own position. Tap it and Afterglow opens already set to that place.
+- **Coming the other way works too.** The blue **Drone Preflight Checklist** button in Afterglow opens this app with the weather for the place you were looking at. A small note, "Spot from Afterglow: ...", shows for about 12 seconds, and the place is added to your recent places like any place you pick. A place that makes no sense is ignored and you stay where you were.
+- **A new look.** The blue bar at the top is now a gradient, from sky blue through the usual blue to deep indigo, and the Afterglow button is midnight navy with gold, so it looks like Afterglow and never like one of the orange weather warnings.
+- **How the link opens depends on your device.** On a computer, the Afterglow link reuses one tab instead of opening a new one each time. On a phone or tablet in a browser it opens in the same tab, so the Back button returns you here. In a Home Screen app it opens Afterglow in the in-app browser; tap **X** to come back.
+- **Your place travels in the link itself.** It is sent in the web address of the link you tap, nothing more.
+
+---
+
 ## What's new in v4.3.5
 
 - **Type coordinates the way you find them.** In the location box (**Conditions**, then **Change**) you can still type decimal coordinates like **35.50, -78.66**. You can now also type or paste degrees, minutes and seconds, like **35°30'00"N 78°39'36"W** or **35 30 00 N, 78 39 36 W**, the style on survey datasheets (**35 07 03.17630(N) 078 49 59.08821(W)**), the compact aviation style (**353000N 0783936W**), or a **Google Maps or Apple Maps link**. A W or S letter sets the sign, so you no longer have to remember the minus. Short links like maps.app.goo.gl can't be read, so the app says so and suggests copying the long address from the browser bar.

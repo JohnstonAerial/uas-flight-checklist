@@ -132,6 +132,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
 
   .header {
     background: var(--blue);
+    background-image: linear-gradient(100deg, #2b83d6 0%, #185FA5 50%, #23408f 100%); /* 4.3.6f: same sky-to-indigo blue as the checklist button in Afterglow */
     padding: 16px 16px 0;
     padding-top: max(16px, env(safe-area-inset-top));
     color: white;
@@ -877,6 +878,11 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .wx-disclaimer { font-size: 10px; color: var(--text-light); text-align: center; margin-top: 8px; line-height: 1.4; }
   .wx-golden { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 3px; }
   .wx-golden .wx-link { margin-top: 2px; }
+  /* 4.3.6g: the AfterGlow link looks like AfterGlow itself: midnight-navy gradient (lighter indigo to near-black) with a gold glow and gold title, so it never reads as the checklist's orange warnings; same in light and dark */
+  .wx-ag-btn { display: flex; align-items: center; justify-content: center; gap: 10px; box-sizing: border-box; width: 100%; max-width: 420px; margin: 10px auto 2px; padding: 10px 14px; border-radius: 10px; background: radial-gradient(90% 140% at 100% 120%, rgba(242,184,75,0.55) 0%, rgba(242,184,75,0) 62%), linear-gradient(160deg, #3b4380 0%, #1f2447 45%, #0d0f1e 100%); border: 1px solid rgba(242,184,75,0.65); color: #f5e6d3; text-shadow: 0 1px 2px rgba(0,0,0,0.5); font-size: 14px; font-weight: 700; line-height: 1.25; text-align: left; text-decoration: none; }
+  .wx-ag-btn b { color: #F2B84B; font-weight: 700; }
+  .wx-ag-btn small { display: block; font-size: 12px; font-weight: 500; opacity: 0.9; }
+  .wx-ag-btn svg { width: 28px; height: 28px; flex: none; }
   .gh-w { white-space: nowrap; }
   @media (max-width: 560px) { .gh-t, .gh-w { display: block; } .gh-sep { display: none; } }
   .wx-window { margin: 10px 0 2px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; text-align: center; color: var(--text-muted); }
@@ -1023,7 +1029,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.3.5</p>
+      <p>Free Drone Preflight Checklist · v4.4.0</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -4810,12 +4816,20 @@ async function renderWeather(lat, lon, attempt = 1) {
       }
       const amEl = document.getElementById('wx-airmap');
       if (amEl && isFinite(Number(lat)) && isFinite(Number(lon))) amEl.href = 'https://skyvector.com/?ll=' + Number(lat).toFixed(4) + ',' + Number(lon).toFixed(4) + '&chart=301&zoom=1';
+      // 4.3.6b: say which place the AfterGlow link opens ("at Houston", "near Angier", or "here" when the spot is only coordinates or your own position)
+      const agWhere = (() => {
+        const n = (typeof site !== 'undefined' && site && site.name) ? String(site.name).trim() : '';
+        if (!n || /^-?\d+(\.\d+)?, -?\d+(\.\d+)?$/.test(n) || /^(my|current) location$/i.test(n)) return 'here';
+        const near = /^near /i.test(n), city = n.replace(/^near /i, '').split(',')[0].trim().slice(0, 30);
+        return city ? (near ? 'near ' : 'at ') + city.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])) : 'here';
+      })();
+      const AG_ICON = '<svg viewBox="0 0 32 32" fill="none" stroke="#F2B84B" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 22h24M9 22a7 7 0 0 1 14 0M16 6v4M6.5 11.5l2.6 2.6M25.5 11.5l-2.6 2.6M2.5 17h3M26.5 17h3"/></svg>';
       const agUrl = 'https://afterglow.johnstonaerial.com/?lat=' + Number(lat).toFixed(4) + '&lon=' + Number(lon).toFixed(4) + '&name=' + encodeURIComponent(agName);
       let goldenLine = '';
       try {
         const gs = wx.sunrise ? goldenHours(String(wx.sunrise).slice(0, 10), lat, lon, siteOff || 0) : [];
         const hm = (mins) => fmtT(String(wx.sunrise).slice(0, 10) + 'T' + String(Math.floor(mins / 60) % 24).padStart(2, '0') + ':' + String(mins % 60).padStart(2, '0'));
-        if (gs.length) goldenLine = '<div class="wx-golden"><span class="gh-t">' + GOLDEN_IMG + ' Golden hour</span> ' + gs.map(a => '<span class="gh-w">' + hm(a[0]) + ' – ' + hm(a[1]) + '</span>').join('<span class="gh-sep"> · </span>') + '</div><div class="wx-golden"><a class="wx-link" href="' + agUrl + '" target="_blank" rel="noopener">Will the sky color up? AfterGlow sky forecast ›</a></div>';
+        if (gs.length) goldenLine = '<div class="wx-golden"><span class="gh-t">' + GOLDEN_IMG + ' Golden hour</span> ' + gs.map(a => '<span class="gh-w">' + hm(a[0]) + ' – ' + hm(a[1]) + '</span>').join('<span class="gh-sep"> · </span>') + '</div><a class="wx-ag-btn" href="' + agUrl + '" target="_blank" rel="noopener" data-reuse="afterglow_tab">' + AG_ICON + '<span><b>AfterGlow sky forecast</b><small>Will the sky color up ' + agWhere + '? ›</small></span></a>';
       } catch (e) {}
 
       // Ceiling from METAR (kept in feet; converted for display)
@@ -5153,6 +5167,45 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showPanel(t.dataset.pid, t); return; }
     if (n) { e.preventDefault(); showPanel(n.dataset.pid, n); n.focus(); }
   }));
+})();
+
+// 4.3.6i: AfterGlow link. Computer (mouse): reuse one named tab. Phone or tablet in a browser: open in the same tab (Back returns; no tab pile-up). Installed Home Screen app: plain new-tab link (opens the in-app browser). A shared named tab on phones felt like a dead button, so that is avoided.
+document.addEventListener('click', function (ev) {
+  try {
+    var a = ev.target.closest && ev.target.closest('a[data-reuse]');
+    if (!a || ev.defaultPrevented || ev.button || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+    if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) return;   // installed app: leave it to open the in-app browser as before
+    if (!window.matchMedia || !matchMedia('(hover: hover) and (pointer: fine)').matches) { ev.preventDefault(); location.href = a.href; return; }   // phone or tablet in a browser: same tab, Back returns here
+    var w = window.open(a.href, a.dataset.reuse);
+    if (w) { ev.preventDefault(); try { w.focus(); } catch (e) {} }
+  } catch (e) {}
+});
+// 4.3.6a: opened from Afterglow with ?lat=&lon=&name= on the address: use that spot for the weather (like picking a place),
+// then take those three items off the address so a reload doesn't reset the spot
+(function applyIncomingSpot() {
+  try {
+    const q = new URLSearchParams(location.search);
+    if (!q.has('lat') || !q.has('lon')) return;
+    const lat = parseFloat(q.get('lat')), lon = parseFloat(q.get('lon'));
+    let nm = String(q.get('name') || '').replace(/[\u0000-\u001f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 60);
+    ['lat', 'lon', 'name'].forEach(k => q.delete(k));
+    const rest = q.toString();
+    try { history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + location.hash); } catch (e) {}
+    if (!isFinite(lat) || !isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) return;
+    // a bare "My location" or "Dropped pin" from the other app means nothing here; show the coordinates (the "Near <town>" line then names them)
+    if (!nm || /^(my location|dropped pin|current location)$/i.test(nm)) nm = lat.toFixed(3) + ', ' + lon.toFixed(3);
+    site = { name: nm, lat: lat, lon: lon };
+    store('wxSite', site);
+    recentSites = [site, ...recentSites.filter(r => Math.abs(r.lat - lat) > 0.01 || Math.abs(r.lon - lon) > 0.01)].slice(0, 10);
+    store('wxRecent', recentSites);
+    const near = document.getElementById('wx-loc-near');
+    if (near && near.parentNode) {
+      const d = document.createElement('div'); d.className = 'wx-note'; d.id = 'wx-from-ag'; d.style.margin = '-4px 0 8px 2px';
+      d.textContent = 'Spot from Afterglow: ' + nm;
+      near.parentNode.insertBefore(d, near.nextSibling);
+      setTimeout(() => { if (d.parentNode) d.parentNode.removeChild(d); }, 12000);
+    }
+  } catch (e) {}
 })();
 
 loadWeather();
