@@ -14,7 +14,7 @@ A free, mobile-friendly drone preflight checklist web app with live weather cond
 
 <table>
   <tr>
-    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="The Conditions tab with Conditions, Checklist and Settings tabs on top, then live preflight conditions for Cheyenne: wind with Windier nearby, cloud ceiling, precipitation, visibility, the 10-day wind outlook, and the Airspace chart, FAA UAS Facility Map, TFRs and NOTAMs buttons with nearby airport codes" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
+    <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/08-conditions-dark.png"><img src="screenshots/08-conditions-light.png" alt="The Conditions tab with Conditions, Checklist and Settings tabs on top, then live preflight conditions for Fayetteville, NC: wind, cloud ceiling, precipitation, visibility, the best flying window and the 24-hour forecast, the AfterGlow sky forecast button for that place, and the Airspace chart, FAA UAS Facility Map, TFRs and NOTAMs buttons with nearby airport codes" width="170"></picture><br><sub><b>Live conditions</b></sub></td>
     <td align="center" width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="screenshots/01-checklist-dark.png"><img src="screenshots/01-checklist-light.png" alt="The Checklist tab with custom mission tabs, the percentage and a Customize button, the four sections folded, then a card with Print, PDF and Save flight record, and the footer with the version" width="170"></picture><br><sub><b>Checklist</b></sub></td>
   </tr>
   <tr>
