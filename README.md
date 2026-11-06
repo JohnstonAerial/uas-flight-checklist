@@ -106,6 +106,10 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.4.1
+
+- **Best window times are easier on the eyes.** The times in the green **Best window** and orange **Possible window** lines are now plain bold instead of extra heavy, so they no longer look bigger than the label next to them.
+
 ## What's new in v4.4.0
 
 - **Afterglow opens right at your place.** The **AfterGlow sky forecast** button sits under the Golden hour times in the weather card on **Conditions**. It says where it will open: "Will the sky color up at Houston?", "near Angier", or "here" when the place is only coordinates or your own position. Tap it and Afterglow opens already set to that place.
