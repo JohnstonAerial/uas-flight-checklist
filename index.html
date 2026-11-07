@@ -1029,7 +1029,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p id="verTap">Free Drone Preflight Checklist · v4.4.2</p>
+      <p id="verTap">Free Drone Preflight Checklist · v4.4.3</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -6028,8 +6028,8 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
 <!-- Hidden "don't count my visits" switch: tap the version text 5 times -->
 <script>
 (function () {
-  var KEY = 'uasNoTrack', el = document.querySelector('#verTap');
-  if (!el) return;
+  var KEY = 'uasNoTrack', els = document.querySelectorAll('.ver-line, #verTap');
+  if (!els.length) return;
   var n = 0, t0 = 0;
   function isOff() { try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
   function show() {
@@ -6053,13 +6053,13 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
     d.appendChild(m); d.appendChild(b); d.appendChild(c);
     document.body.appendChild(d);
   }
-  el.addEventListener('click', function () {
+  Array.prototype.forEach.call(els, function (el) { el.style.cursor = 'pointer'; el.addEventListener('click', function () {
     var now = Date.now();
     if (now - t0 > 4000) n = 0;
     if (n === 0) t0 = now;
     n++;
     if (n >= 5) { n = 0; show(); }
-  });
+  }); });
 })();
 </script>
 </body>
