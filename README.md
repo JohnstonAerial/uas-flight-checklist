@@ -106,6 +106,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.4.2
+
+- **Turn off counting of your own visits.** Tap the version text under the title five times to open a small box with a switch. It does the same as opening the page with `?notrack` (which also turns off the back-up reminder), and it works in the app on your Home Screen too, where you cannot type an address.
+
+---
+
 ## What's new in v4.4.1
 
 - **Best window times are easier on the eyes.** The times in the green **Best window** and orange **Possible window** lines are now plain bold instead of extra heavy, so they no longer look bigger than the label next to them.

@@ -1029,7 +1029,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>UAS Flight Checklists</h1>
-      <p>Free Drone Preflight Checklist · v4.4.1</p>
+      <p id="verTap">Free Drone Preflight Checklist · v4.4.2</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -6025,5 +6025,42 @@ document.querySelectorAll('.panel .pc-btns').forEach(col => {
 })();
 </script>
 <!-- End Cloudflare Web Analytics -->
+<!-- Hidden "don't count my visits" switch: tap the version text 5 times -->
+<script>
+(function () {
+  var KEY = 'uasNoTrack', el = document.querySelector('#verTap');
+  if (!el) return;
+  var n = 0, t0 = 0;
+  function isOff() { try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
+  function show() {
+    var old = document.getElementById('ntPanel'); if (old) old.remove();
+    var off = isOff();
+    var d = document.createElement('div'); d.id = 'ntPanel'; d.setAttribute('role', 'dialog');
+    d.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;width:min(88%,340px);padding:14px 16px;border-radius:12px;background:#1b1b1f;color:#f3efe6;border:1px solid #c9a24a;font:14px/1.4 system-ui,sans-serif;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.4)';
+    var m = document.createElement('div');
+    m.textContent = off ? 'Visit counting is off on this device.' : 'Visit counting is on for this device.';
+    m.style.marginBottom = '10px';
+    var b = document.createElement('button'); b.type = 'button';
+    b.textContent = off ? 'Turn counting on' : 'Turn counting off';
+    b.style.cssText = 'font:inherit;padding:8px 14px;margin:0 4px;border-radius:8px;border:1px solid #c9a24a;background:#c9a24a;color:#1b1b1f;cursor:pointer';
+    b.onclick = function () {
+      try { if (off) localStorage.removeItem(KEY); else localStorage.setItem(KEY, '1'); } catch (e) {}
+      show();
+    };
+    var c = document.createElement('button'); c.type = 'button'; c.textContent = 'Close';
+    c.style.cssText = 'font:inherit;padding:8px 14px;margin:0 4px;border-radius:8px;border:1px solid #888;background:transparent;color:#f3efe6;cursor:pointer';
+    c.onclick = function () { d.remove(); };
+    d.appendChild(m); d.appendChild(b); d.appendChild(c);
+    document.body.appendChild(d);
+  }
+  el.addEventListener('click', function () {
+    var now = Date.now();
+    if (now - t0 > 4000) n = 0;
+    if (n === 0) t0 = now;
+    n++;
+    if (n >= 5) { n = 0; show(); }
+  });
+})();
+</script>
 </body>
 </html>
