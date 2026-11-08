@@ -5,11 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>UAS Flight Checklists</title>
+<title>Drone Preflight Checklist</title>
+<meta name="description" content="A free drone preflight checklist with the weather built in: wind, clouds, airport reports and radar for your flight spot. Customizable, works offline, no account.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Drone Preflight Checklist">
+<meta property="og:description" content="A free drone preflight checklist with the weather built in: wind, clouds, airport reports and radar for your flight spot. Customizable, works offline, no account.">
+<meta property="og:site_name" content="Johnston Aerial">
+<meta property="og:url" content="https://checklist.johnstonaerial.com/">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<meta name="apple-mobile-web-app-title" content="UAS Checklist">
+<meta name="apple-mobile-web-app-title" content="Drone Checklist">
 <meta name="theme-color" content="#0f2a4a">
 <script>/* manual light/dark choice (Settings > Appearance); Auto follows the device. Set before first paint to avoid a flash. */
 // Drone picture used instead of an emoji (same on every device)
@@ -1028,8 +1034,8 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
 <div class="header" role="banner">
   <div class="header-top">
     <div>
-      <h1>UAS Flight Checklists</h1>
-      <p id="verTap">Free Drone Preflight Checklist · v4.4.3</p>
+      <h1>Drone Preflight Checklist</h1>
+      <p id="verTap">Free, with the weather built in · v4.4.4</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -5326,7 +5332,7 @@ function buildRecord(o) {
 
   const v = appVer();
   L.push('');
-  const foot = 'UAS Flight Checklists' + (v ? ' ' + v : '') + ' · checklist.johnstonaerial.com';
+  const foot = 'Drone Preflight Checklist' + (v ? ' ' + v : '') + ' · checklist.johnstonaerial.com';
   L.push(foot);
   return L.join('\n') + '\n';
 }
@@ -5480,7 +5486,7 @@ PdfDoc.prototype = {
       objs[6 + i * 2] = '<< /Length ' + data.length + ' >>\nstream\n' + data + '\nendstream';
     }
     const infoId = 5 + n * 2;
-    objs[infoId] = '<< /Title (' + pdfEsc(pdfEnc(this.title)) + ') /Producer (UAS Flight Checklists) >>';
+    objs[infoId] = '<< /Title (' + pdfEsc(pdfEnc(this.title)) + ') /Producer (Drone Preflight Checklist) >>';
     let out = '%PDF-1.4\n%âãÏÓ\n'; const off = [];
     for (let i = 1; i <= infoId; i++) { off[i] = out.length; out += i + ' 0 obj\n' + objs[i] + '\nendobj\n'; }
     const xr = out.length;
@@ -5513,7 +5519,7 @@ function recCollect(panelEl, includeAll) {  // the items on a tab, in order, as 
   });
   return { secs: secs, total: total, done: done, flagged: flagged, nas: nas };
 }
-function recPdfFoot() { const v = recVersion(); return 'UAS Flight Checklists' + (v ? ' ' + v : '') + ' · checklist.johnstonaerial.com'; }
+function recPdfFoot() { const v = recVersion(); return 'Drone Preflight Checklist' + (v ? ' ' + v : '') + ' · checklist.johnstonaerial.com'; }
 function buildRecordPdf(o) {
   const d = new PdfDoc(recPdfFoot(), 'Flight Record', { paper: pdfPaper(), compact: pdfLayout() === 'compact' });
   d.h1('Flight Record');
@@ -5545,10 +5551,10 @@ function pdfPrefText() { return (pdfLayout() === 'compact' ? 'Compact' : 'Large 
 function pdfPrefSave(layout, paper) { try { localStorage.setItem(PDF_LAYOUT_KEY, layout); localStorage.setItem(PDF_PAPER_KEY, paper); } catch (e) {} }
 function buildChecklistPdf(panelEl, tabName, layout, paper) {
   layout = layout || pdfLayout(); paper = paper || pdfPaper();
-  const d = new PdfDoc(recPdfFoot(), 'UAS Flight Checklist', { paper: paper, compact: layout === 'compact' });
-  d.h1('UAS Flight Checklists');
+  const d = new PdfDoc(recPdfFoot(), 'Drone Preflight Checklist', { paper: paper, compact: layout === 'compact' });
+  d.h1('Drone Preflight Checklist');
   const v = recVersion();
-  d.para('Free Drone Preflight Checklist' + (v ? ' · ' + v : ''), 9.5, { gray: 0.3 });
+  d.para('Free, with the weather built in' + (v ? ' · ' + v : ''), 9.5, { gray: 0.3 });
   d.gap(2); d.rule(d.y, 1.8, 0); d.gap(8);
   if (tabName) { d.ensure(24); d.text(pdfEnc(tabName), d.mx, d.y + 13, 13, true); d.y += 20; d.rule(d.y, 1.8, 0); }
   d.fieldLine([['Date', 0.5], ['Time', 0.5]]);

@@ -1,4 +1,4 @@
-# How to use the UAS Flight Checklist
+# How to use the Drone Preflight Checklist
 
 Short guides for eight things people ask about: finding your way around the three tabs, backing up and restoring your setup, saving different setups ("profiles"), using the app with no signal, saving a record of your preflight, printing the checklist, using it outside the USA, and checking TFRs and NOTAMs (USA only).
 

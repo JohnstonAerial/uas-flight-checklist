@@ -1,6 +1,6 @@
 {
-  "name": "UAS Flight Checklists",
-  "short_name": "UAS Checklist",
+  "name": "Drone Preflight Checklist",
+  "short_name": "Drone Checklist",
   "description": "Free drone preflight checklist with live weather conditions.",
   "start_url": "./",
   "scope": "./",

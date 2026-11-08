@@ -1,4 +1,4 @@
-# UAS Flight Checklists
+# Drone Preflight Checklist
 
 A free, mobile-friendly drone preflight checklist web app with live weather conditions built in. It works for recreational and commercial pilots in any country — hide the items that don't apply to you, add your own, put things in the order you fly them, and back it all up. No app to download, no subscription required — just open it in any browser and fly.
 
@@ -86,7 +86,7 @@ During flight
   [ ] Hover check at 10ft (3m) — confirm stability, no drift, no warnings
   ...
 
-UAS Flight Checklists v3.7.12 · checklist.johnstonaerial.com
+Drone Preflight Checklist v3.7.12 · checklist.johnstonaerial.com
 ```
 
 </details>
@@ -103,6 +103,13 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 - **Night note only when it matters** — the lights and training reminder under **I fly at night** always shows when night flying is on, and is an ordinary explanation (hidden with the others) when it is off. The setting now reads **No / Yes** so it fits on a phone.
 - **Steady text size on iPhone** — turning the phone sideways no longer enlarges small text.
 - **Small fixes on iPhone** — **Appearance** and **PDF layout** no longer overlap or get cut off, and the **Default reg. #** box no longer cuts off its hint.
+
+---
+
+## What's new in v4.4.4
+
+- **One name everywhere: Drone Preflight Checklist.** The page title, heading, the name under the icon on your Home Screen ("Drone Checklist"), and the title and footer on printed and PDF flight records all use it now. The line under the heading reads "Free, with the weather built in."
+- **Shared links show a preview.** A link to the checklist now carries a title and a short description, so it reads properly when you send it to someone. A Home Screen app you already added keeps its old name until you remove it and add it again.
 
 ---
 
