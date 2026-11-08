@@ -106,6 +106,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.4.5
+
+- **Easier to find in search.** A short plain-text description now sits at the bottom of the page, and the page tells search engines what it is. Nothing changes in how the app works.
+
+---
+
 ## What's new in v4.4.4
 
 - **One name everywhere: Drone Preflight Checklist.** The page title, heading, the name under the icon on your Home Screen ("Drone Checklist"), and the title and footer on printed and PDF flight records all use it now. The line under the heading reads "Free, with the weather built in."

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://checklist.johnstonaerial.com/sitemap.xml
