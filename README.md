@@ -106,6 +106,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.4.6
+
+- **New subtitle.** Under the heading it now reads "Weather, airspace and your checklist in one place."
+- **The link to Afterglow has a new name.** The button on **Conditions** and the link at the bottom of each tab now read **Afterglow sky forecast and planner**, because Afterglow now plans shoots as well as forecasting the sky.
+- **Plainer page description.** The text at the bottom of the page, and the description search engines and link previews show, now say "live weather and airspace" and mention the flight record. Nothing changes in how the app works.
+
+---
+
 ## What's new in v4.4.5
 
 - **Easier to find in search.** A short plain-text description now sits at the bottom of the page, and the page tells search engines what it is. Nothing changes in how the app works.
@@ -677,7 +685,7 @@ New checklist items, on top of v3.8. Each is a plain item you can hide in **Cust
 ## What's new in v3.8
 
 - **Golden hour on the weather card** — under the sunrise and sunset times you now see the two golden-hour windows for your flight site, for example **Golden hour 07:05 AM – 07:54 AM · 06:13 PM – 07:03 PM**. It is worked out on your device from where the sun is (between 4° below and 6° above the horizon), so it needs no extra connection, works in any country, follows your flight site's time zone and uses your device's 12 or 24 hour clock. Expect it to be within a few minutes of other sources. It is left out when the sun never reaches that range, for example in the polar winter.
-- **A link to AfterGlow** — under it, **Will the sky color up? AfterGlow sky forecast ›** opens [AfterGlow](https://afterglow.johnstonaerial.com), the free sunrise and sunset sky forecast, at the same place you are checking here. If you have not used AfterGlow before it remembers that place; if you already have a place saved there, it uses this one for that visit and leaves your saved place alone.
+- **A link to AfterGlow** — under it, **Will the sky color up? Afterglow sky forecast and planner ›** opens [AfterGlow](https://afterglow.johnstonaerial.com), the free sunrise and sunset sky forecast, at the same place you are checking here. If you have not used AfterGlow before it remembers that place; if you already have a place saved there, it uses this one for that visit and leaves your saved place alone.
 - **Golden hour on your saved record** — the saved flight record (text and PDF) carries a **Golden hour** line right after the sunrise and sunset line.
 
 ---

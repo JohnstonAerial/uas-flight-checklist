@@ -7,11 +7,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Drone Preflight Checklist</title>
 <link rel="canonical" href="https://checklist.johnstonaerial.com/">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Drone Preflight Checklist", "url": "https://checklist.johnstonaerial.com/", "description": "A free drone preflight checklist with the weather built in. It shows wind, gusts, clouds, visibility and radar for your flight spot, with a checklist you can customize, use offline, and save as a flight record. No account needed.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Johnston Aerial"}}</script>
-<meta name="description" content="A free drone preflight checklist with the weather built in: wind, clouds, airport reports and radar for your flight spot. Customizable, works offline, no account.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Drone Preflight Checklist", "url": "https://checklist.johnstonaerial.com/", "description": "A free drone preflight checklist with live weather and airspace for your flight spot: wind, gusts, clouds, visibility and radar. Customize it, use it offline, and save a flight record. No account needed.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Johnston Aerial"}}</script>
+<meta name="description" content="A free drone preflight checklist with live weather and airspace for your flight spot: wind, gusts, clouds, visibility and radar. Customize it, use it offline, and save a flight record. No account needed.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Drone Preflight Checklist">
-<meta property="og:description" content="A free drone preflight checklist with the weather built in: wind, clouds, airport reports and radar for your flight spot. Customizable, works offline, no account.">
+<meta property="og:description" content="A free drone preflight checklist with live weather and airspace for your flight spot: wind, gusts, clouds, visibility and radar. Customize it, use it offline, and save a flight record. No account needed.">
 <meta property="og:site_name" content="Johnston Aerial">
 <meta property="og:url" content="https://checklist.johnstonaerial.com/">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -1037,7 +1037,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>Drone Preflight Checklist</h1>
-      <p id="verTap">Free, with the weather built in · v4.4.5</p>
+      <p id="verTap">Weather, airspace and your checklist in one place · v4.4.6</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -1524,7 +1524,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
 </div>
 
 </div>
-<p class="about-seo" style="max-width:640px;margin:0 auto;padding:0 16px 28px;text-align:center;font-size:12px;line-height:1.55;color:var(--text-light)">A free drone preflight checklist with the weather built in. It shows wind, gusts, clouds, visibility and radar for your flight spot, with a checklist you can customize, use offline, and save as a flight record. No account needed.</p>
+<p class="about-seo" style="max-width:640px;margin:0 auto;padding:0 16px 28px;text-align:center;font-size:12px;line-height:1.55;color:var(--text-light)">A free drone preflight checklist with live weather and airspace for your flight spot: wind, gusts, clouds, visibility and radar. Customize it, use it offline, and save a flight record. No account needed.</p>
 <script>
 (function () { const e = document.getElementById('pc-ico'); if (e) e.innerHTML = PC_IMG; })();
 (function () { const e = document.getElementById('pin-ico'); if (e) e.innerHTML = PIN_IMG; })();
@@ -3321,7 +3321,7 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   bar.innerHTML = '<span class="eb-title">✎ Editing: <b class="eb-name"></b></span><button type="button" class="cust-btn primary" onclick="toggleEdit(this)">✓ Done</button><div class="eb-chips"></div>';
   panelEl.prepend(bar);
   const coffee = document.createElement('div'); coffee.className = 'coffee-note';
-  coffee.innerHTML = 'Built by a Part 107 pilot, for pilots. Free to use. If it helped you fly smarter, <span style="white-space:nowrap"><a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee</a> ' + COFFEE_IMG + '</span><br>Also from Johnston Aerial:<br><a href="https://afterglow.johnstonaerial.com/" target="_blank" rel="noopener">Afterglow sky forecast</a>';
+  coffee.innerHTML = 'Built by a Part 107 pilot, for pilots. Free to use. If it helped you fly smarter, <span style="white-space:nowrap"><a href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener">buy me a coffee</a> ' + COFFEE_IMG + '</span><br>Also from Johnston Aerial:<br><a href="https://afterglow.johnstonaerial.com/" target="_blank" rel="noopener">Afterglow sky forecast and planner</a>';
   panelEl.appendChild(coffee);
   panelEl.appendChild(help);
 });
@@ -4838,7 +4838,7 @@ async function renderWeather(lat, lon, attempt = 1) {
       try {
         const gs = wx.sunrise ? goldenHours(String(wx.sunrise).slice(0, 10), lat, lon, siteOff || 0) : [];
         const hm = (mins) => fmtT(String(wx.sunrise).slice(0, 10) + 'T' + String(Math.floor(mins / 60) % 24).padStart(2, '0') + ':' + String(mins % 60).padStart(2, '0'));
-        if (gs.length) goldenLine = '<div class="wx-golden"><span class="gh-t">' + GOLDEN_IMG + ' Golden hour</span> ' + gs.map(a => '<span class="gh-w">' + hm(a[0]) + ' – ' + hm(a[1]) + '</span>').join('<span class="gh-sep"> · </span>') + '</div><a class="wx-ag-btn" href="' + agUrl + '" target="_blank" rel="noopener" data-reuse="afterglow_tab">' + AG_ICON + '<span><b>AfterGlow sky forecast</b><small>Will the sky color up ' + agWhere + '? ›</small></span></a>';
+        if (gs.length) goldenLine = '<div class="wx-golden"><span class="gh-t">' + GOLDEN_IMG + ' Golden hour</span> ' + gs.map(a => '<span class="gh-w">' + hm(a[0]) + ' – ' + hm(a[1]) + '</span>').join('<span class="gh-sep"> · </span>') + '</div><a class="wx-ag-btn" href="' + agUrl + '" target="_blank" rel="noopener" data-reuse="afterglow_tab">' + AG_ICON + '<span><b>Afterglow sky forecast and planner</b><small>Will the sky color up ' + agWhere + '? ›</small></span></a>';
       } catch (e) {}
 
       // Ceiling from METAR (kept in feet; converted for display)
@@ -5557,7 +5557,7 @@ function buildChecklistPdf(panelEl, tabName, layout, paper) {
   const d = new PdfDoc(recPdfFoot(), 'Drone Preflight Checklist', { paper: paper, compact: layout === 'compact' });
   d.h1('Drone Preflight Checklist');
   const v = recVersion();
-  d.para('Free, with the weather built in' + (v ? ' · ' + v : ''), 9.5, { gray: 0.3 });
+  d.para('Weather, airspace and your checklist in one place' + (v ? ' · ' + v : ''), 9.5, { gray: 0.3 });
   d.gap(2); d.rule(d.y, 1.8, 0); d.gap(8);
   if (tabName) { d.ensure(24); d.text(pdfEnc(tabName), d.mx, d.y + 13, 13, true); d.y += 20; d.rule(d.y, 1.8, 0); }
   d.fieldLine([['Date', 0.5], ['Time', 0.5]]);
