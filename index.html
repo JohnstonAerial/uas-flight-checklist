@@ -1047,7 +1047,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>Drone Preflight Checklist</h1>
-      <p id="verTap">Weather, airspace and your checklist in one place · v4.4.10</p>
+      <p id="verTap">Weather, airspace and your checklist in one place · v4.4.11</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -3671,7 +3671,7 @@ function dayCaption(H, d, ctx) {
   if (!d.idx.length) return s + ' · no daylight hours left';
   if (!w) s += ' · no window figure';
   else if (w.kind === 'none') s += ' · No window';
-  else s += ' · ' + (w.kind === 'best' ? 'Best ' : 'Possible ') + hrf(w.from) + '–' + hrf(w.to) + ' · ' + (Math.round(w.minW) === Math.round(w.maxW) ? fmtSpeedNum(w.maxW) : fmtSpeedNum(w.minW) + '–' + fmtSpeedNum(w.maxW)) + ' ' + speedUnit();
+  else s += ' · ' + (w.kind === 'best' ? 'Best window ' : 'Possible window ') + hrf(w.from) + '–' + hrf(w.to) + ' · ' + (Math.round(w.minW) === Math.round(w.maxW) ? fmtSpeedNum(w.maxW) : fmtSpeedNum(w.minW) + '–' + fmtSpeedNum(w.maxW)) + ' ' + speedUnit();
   const fIdx = d.full && d.full.length ? d.full : d.idx, fpps = fIdx.map(i => (H.precipitation_probability || [])[i]).filter(v => v != null && isFinite(v));
   if (fpps.length) {
     s += ' · rain ' + Math.round(Math.max(...fpps)) + '%';
