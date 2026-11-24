@@ -95,6 +95,14 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.4.10
+
+- **Live air traffic nearby, and your choice of site.** The button under the weather now opens **Flightradar24** at your flight spot (it shows where flights are going from and to, and its app opens cleanly on a phone). If you prefer ADS-B Exchange, **⚙ Settings → Air traffic site** switches it. The choice is remembered on that device and saved with **Back up & restore**. It does not replace watching the sky.
+- **Rain on the 10-day strip counts the whole day.** The Rain chip and the line under the strip now use midnight to midnight, not only daylight, so a storm before sunrise no longer reads "<0.01". When most of the rain falls outside daylight the line says so, for example "rain 98% (about 1.31 in, mostly overnight before sunrise)". A day with a high chance but very little expected says "very little expected".
+- **Conditions layout.** The **Updated** line sits just under the forecast, the NOTAM airport chips and their note sit under the TFRs/NOTAMs row, the **Airspace** jump lands right under the header, and the footer and **Top** button no longer cover the end of the page.
+
+---
+
 ## What's new in v3.9.4
 
 - **A shorter Settings panel** — **⚙ Settings** is grouped into **Display**, **Limits**, **Your info** and **PDF**. Drop-down boxes are only as wide as their text and sit on the right, and the settings take roughly a third less room on a phone.
