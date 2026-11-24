@@ -57,6 +57,7 @@ const FLAME_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden
 const FILE_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8.5L19 7.5V21H6z" fill="#fff" stroke="#6b7a90" stroke-width="1.7"/><path d="M14.5 3v4.5H19" stroke="#6b7a90" stroke-width="1.5"/><path d="M8.6 12h7M8.6 15h7M8.6 18h4" stroke="#8aa4c4" stroke-width="1.5"/></svg>';
 const ID_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.4" fill="#fff" stroke="#6b7a90" stroke-width="1.7"/><circle cx="8.6" cy="11" r="2.1" fill="#8aa4c4"/><path d="M5.4 16.4c.6-1.6 1.8-2.2 3.2-2.2s2.6.6 3.2 2.2" stroke="#8aa4c4" stroke-width="1.5"/><path d="M14 9.5h5M14 12.5h5M14 15.5h3" stroke="#8aa4c4" stroke-width="1.5"/></svg>';
 const GLOBE_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10.5" fill="#fff" stroke="#1f5fae" stroke-width="2.2"/><ellipse cx="12" cy="12" rx="4.6" ry="10.5" stroke="#1f5fae" stroke-width="1.8"/><path d="M1.5 12h21M3.4 7h17.2M3.4 17h17.2" stroke="#1f5fae" stroke-width="1.8"/></svg>';
+const TRAFFIC_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.8 0 1.3.8 1.3 1.9v4.3l7 3.6v2l-7-1.9v3.6l2.1 1.6V20l-3.4-.8L8.6 20v-1.3l2.1-1.6v-3.6l-7 1.9v-2l7-3.6V4.9C10.7 3.8 11.2 3 12 3z" fill="#6b7a90"/></svg>';
 const LAYOUT_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="2.5" width="17" height="19" rx="2.2" fill="#fff" stroke="#394a63" stroke-width="2.2"/><rect x="6" y="5.5" width="5.2" height="13" rx="1" fill="#2f80ed"/><rect x="12.8" y="5.5" width="5.2" height="13" rx="1" fill="#2f80ed"/></svg>';
 const PAPER_IMG = '<svg class="wind-ico set-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="5.5" y="2.5" width="13" height="19" rx="1.8" fill="#fff" stroke="#394a63" stroke-width="2.2"/><path d="M9 6.5l3-3 3 3M12 3.5v7M9 17.5l3 3 3-3M12 20.5v-7" stroke="#2f80ed" stroke-width="2"/></svg>';
 const PRINT_IMG = '<svg class="rec-ico print-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="6.5" rx="1" fill="#fff" stroke="#94a3b8" stroke-width="1"/><rect x="2.5" y="8" width="19" height="9" rx="2.2" fill="#475569"/><rect x="6.5" y="13" width="11" height="8.5" rx="1" fill="#fff" stroke="#94a3b8" stroke-width="1"/><path d="M8.6 16h6.8M8.6 18.4h4.6" stroke="#9ca3af" stroke-width="1.2" stroke-linecap="round"/><circle cx="18.4" cy="10.6" r="1" fill="#F5B83D"/></svg>', PDF_IMG = '<svg class="rec-ico pdf-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 2.5h8.2l5 5v13a1.4 1.4 0 0 1-1.4 1.4H5.5a1.4 1.4 0 0 1-1.4-1.4V3.9a1.4 1.4 0 0 1 1.4-1.4z" fill="#fff" stroke="#94a3b8" stroke-width="1"/><path d="M13.7 2.5v5h5" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1" stroke-linejoin="round"/><rect x="3" y="12.2" width="14" height="6.4" rx="1.3" fill="#E8504A"/><text x="10" y="17.2" font-family="Arial,Helvetica,sans-serif" font-size="5.2" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg>', SAVEREC_IMG = '<svg class="rec-ico save-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="18" rx="2" fill="#f4f1ea" stroke="#94a3b8" stroke-width="1"/><rect x="8.6" y="2" width="6.8" height="3.8" rx="1.2" fill="#64748b"/><path d="M8 11h8M8 14.2h8M8 17.4h5" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/><path d="M13.5 8.2l1.2 1.2 2.2-2.4" stroke="#22a05a" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -1046,7 +1047,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>Drone Preflight Checklist</h1>
-      <p id="verTap">Weather, airspace and your checklist in one place · v4.4.8</p>
+      <p id="verTap">Weather, airspace and your checklist in one place · v4.4.10</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -1136,7 +1137,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
     <div class="wx-codesnote" id="wx-codesnote">NOTAMs copies the airport code to paste in its location box.<span class="cn2"> Tap a code to switch, or All.</span></div>
     <div class="wx-codes" id="wx-codes"></div>
     <a class="wx-tfrlist" href="https://atisalerts.com/tfrs" target="_blank" rel="noopener"><svg class="wx-bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l10 17.4a1 1 0 0 1-.9 1.5H2.9a1 1 0 0 1-.9-1.5z" fill="#ffc83d" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 9v5.2" stroke="#4a2a00" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17.4" r="1.3" fill="#4a2a00"/></svg> TFR list (unofficial)</a>
-    <a class="wx-traffic" id="wx-traffic" href="https://globe.adsbexchange.com/" target="_blank" rel="noopener"><svg class="wx-bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.8 0 1.3.8 1.3 1.9v4.3l7 3.6v2l-7-1.9v3.6l2.1 1.6V20l-3.4-.8L8.6 20v-1.3l2.1-1.6v-3.6l-7 1.9v-2l7-3.6V4.9C10.7 3.8 11.2 3 12 3z" fill="#f1f5f9"/></svg> Live air traffic nearby<span class="gl">ADS-B Exchange · does not replace watching the sky</span></a>
+    <a class="wx-traffic" id="wx-traffic" href="https://www.flightradar24.com/" target="_blank" rel="noopener"><svg class="wx-bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.8 0 1.3.8 1.3 1.9v4.3l7 3.6v2l-7-1.9v3.6l2.1 1.6V20l-3.4-.8L8.6 20v-1.3l2.1-1.6v-3.6l-7 1.9v-2l7-3.6V4.9C10.7 3.8 11.2 3 12 3z" fill="#f1f5f9"/></svg> Live air traffic nearby<span class="gl">Flightradar24 · does not replace watching the sky</span></a>
     <div class="wx-gridnote" id="wx-gridnote">Guide only. Check LAANC and TFRs before you fly. The unofficial TFR list can lag, so confirm on the FAA site.</div>
   </div>
 </div>
@@ -2985,7 +2986,7 @@ refreshTabs();
 
 // ── Move to another device: copy a code or save a file with your settings (and, optionally, your progress) ──
 const XFER_PROGRESS = 'uasChecklistProgress';
-const XFER_KEYS = ['uasDrones', 'uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindHts', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
+const XFER_KEYS = ['uasDrones', 'uasWindUnit', 'uasNoTrack', 'uasRegion', 'uasNight', 'uasKeepAwake', 'uasHideHints', 'wxUnits', 'uasProgressHours', 'uasTabs', 'uasCustomItems', 'uasCollapsedSections', 'wxSite', 'wxRecent', 'wxStripView', 'wxStripSpan', 'uasWindHts', 'uasWindLimits', 'uasKpLimits', 'uasTempLimits', 'uasFileName', 'uasPilot', 'uasDrone', 'uasRegNo', 'uasPdfLayout', 'uasPdfPaper', 'uasTraffic', 'uasTheme', 'uasPrintTipOff', 'uasEditTipOff', XFER_PROGRESS];
 // Share… shows where the browser can share but Save file does not already open a share sheet
 // (desktop browsers: Chrome/Edge have a folder dialog; Safari on a Mac may claim file sharing but not deliver it; touch devices already share from Save file)
 const XFER_HAS_SHARE = (() => {
@@ -3307,13 +3308,17 @@ document.querySelectorAll('.panel').forEach(panelEl => {
   thb.innerHTML = '<div class="pd-row"><span>'+APPEAR_IMG+' Appearance</span><div class="pd-seg" role="radiogroup" aria-label="Appearance"><button type="button" role="radio" data-th="auto">Auto</button><button type="button" role="radio" data-th="light">Light</button><button type="button" role="radio" data-th="dark">Dark</button></div></div>' +
     '<div class="pd-hint">Auto follows device settings. Choose Light or Dark to override it.</div>';
   thb.addEventListener('click', e => { const bt = e.target.closest('button[data-th]'); if (bt) themeSet(bt.dataset.th); });
+  const trb = document.createElement('div'); trb.className = 'pdfset trafficset';   // 4.4.9b: which site the Live air traffic button opens
+  trb.innerHTML = '<div class="pd-row"><span>'+TRAFFIC_IMG+' Air traffic site</span><div class="pd-seg" role="radiogroup" aria-label="Site the Live air traffic button opens"><button type="button" role="radio" data-tr="fr24">Flightradar24</button><button type="button" role="radio" data-tr="adsbx">ADS-B Exchange</button></div></div>' +
+    '<div class="pd-hint">Which site the Live air traffic button opens, at your flight spot. Opens in a new tab.</div>';
+  trb.addEventListener('click', e => { const bt = e.target.closest('button[data-tr]'); if (bt) trafficSet(bt.dataset.tr); });
   const grp = (t, f) => { const d = document.createElement('div'); d.className = 'set-grp' + (f ? ' first' : ''); d.textContent = t; return d; };
   const hb = document.createElement('button'); hb.type = 'button'; hb.className = 'set-hints'; hb.textContent = 'Hide explanations'; hb.setAttribute('aria-expanded', 'true');
   hb.onclick = () => hintsSet(!bodySet.classList.contains('hide-hints'));
   if (hintsHidden()) { bodySet.classList.add('hide-hints'); hb.textContent = 'ⓘ Show explanations'; hb.setAttribute('aria-expanded', 'false'); }
   const hb2 = hb.cloneNode(true); hb2.onclick = hb.onclick;
   if (hintsHidden()) bodyBak.classList.add('hide-hints');
-  bodySet.append(note, hb, grp('Display', true), thb, reg, cust, keep, grp('Limits'), wl, grp('Your info'), fnb, acb, grp('PDF'), pdb); bodyBak.append(makeXfer()); bodyBak.querySelector('.xfer-sub').after(hb2);
+  bodySet.append(note, hb, grp('Display', true), thb, trb, reg, cust, keep, grp('Limits'), wl, grp('Your info'), fnb, acb, grp('PDF'), pdb); bodyBak.append(makeXfer()); bodyBak.querySelector('.xfer-sub').after(hb2);
   wrap.append(heads, bkb, bodySet, bodyBak);
   card.before(wrap);
   const reset = card.querySelector('.reset-inline'), all = cust.querySelector('.sec-all');
@@ -3363,8 +3368,22 @@ function themeSet(t) {
   try { if (t === 'light' || t === 'dark') localStorage.setItem('uasTheme', JSON.stringify(t)); else localStorage.removeItem('uasTheme'); } catch (e) {}
   themeApply();
 }
+// 4.4.9b: Live air traffic button, choice of Flightradar24 (default) or ADS-B Exchange, remembered on this device
+var TR_LL = null;
+function trafficSite() { let v = null; try { v = localStorage.getItem('uasTraffic'); } catch (e) {} return v === 'adsbx' ? 'adsbx' : 'fr24'; }
+function trafficApply() {
+  const s = trafficSite(), el = document.getElementById('wx-traffic');
+  document.querySelectorAll('.trafficset button[data-tr]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.tr === s)));
+  if (!el) return;
+  const g = el.querySelector('.gl'); if (g) g.textContent = (s === 'adsbx' ? 'ADS-B Exchange' : 'Flightradar24') + ' \u00B7 does not replace watching the sky';
+  const ll = TR_LL;
+  el.href = s === 'adsbx' ? (ll ? 'https://globe.adsbexchange.com/?lat=' + ll[0] + '&lon=' + ll[1] + '&zoom=11' : 'https://globe.adsbexchange.com/')
+                          : (ll ? 'https://www.flightradar24.com/' + ll[0] + ',' + ll[1] + '/11' : 'https://www.flightradar24.com/');
+}
+function trafficSet(s) { try { if (s === 'adsbx') localStorage.setItem('uasTraffic', 'adsbx'); else localStorage.removeItem('uasTraffic'); } catch (e) {} trafficApply(); }
 function pdfSetSync() {
   themeApply();                                // show the saved PDF choices in every tab's Settings
+  trafficApply();
   if (typeof pdfLayout !== 'function') return;          // the PDF code loads after this block
   const L = pdfLayout(), P = pdfPaper();
   document.querySelectorAll('.pdfset button[data-k]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.k === 'layout' ? b.dataset.v === L : b.dataset.v === P)));
@@ -3569,15 +3588,16 @@ function dayHours(om, hIdx) {
   if (!H || !H.time || !D || !D.time) return [];
   const nt = nightOn(), out = [];
   for (let dd = 0; dd < D.time.length && dd < 10; dd++) {
-    const key = String(D.time[dd]).slice(0, 10), all = [], sv = D.sunrise && D.sunset && D.sunrise[dd] && D.sunset[dd] ? [new Date(D.sunrise[dd]).getTime(), new Date(D.sunset[dd]).getTime()] : null;
+    const key = String(D.time[dd]).slice(0, 10), all = [], full = [], sv = D.sunrise && D.sunset && D.sunrise[dd] && D.sunset[dd] ? [new Date(D.sunrise[dd]).getTime(), new Date(D.sunset[dd]).getTime()] : null;
     for (let i = 0; i < H.time.length; i++) {
       if (String(H.time[i]).slice(0, 10) !== key) continue;
       if (dd === 0 && i < hIdx) continue;
+      full.push(i);   // 4.4.10b: the whole calendar day, for rain (a storm before sunrise still counts)
       const t = new Date(H.time[i]).getTime();
       if (nt || !sv || (t + 3600000 > sv[0] && t < sv[1])) all.push(i);
     }
     const d = new Date(key + 'T12:00:00');
-    out.push({ dd, idx: all, label: dd === 0 ? 'Today' : d.toLocaleDateString([], { weekday: 'short' }) + ' ' + d.getDate() });
+    out.push({ dd, idx: all, full, label: dd === 0 ? 'Today' : d.toLocaleDateString([], { weekday: 'short' }) + ' ' + d.getDate() });
   }
   return out;
 }
@@ -3598,7 +3618,7 @@ function dayWindow(H, idx) {
   const seg = info.slice(r.a, r.b + 1);
   return { kind: g ? 'best' : 'possible', from: H.time[info[r.a].i], to: H.time[info[r.b].i], maxW: Math.max(...seg.map(x => x.w)), minW: Math.min(...seg.map(x => x.w)) };
 }
-function dayChip(H, idx, view, ctx) {
+function dayChip(H, idx, view, ctx, full) {
   const { metric, intl, cls } = ctx, nb = '<small>&nbsp;</small>', none = '<div class="hs-c hc-none">—' + nb + '</div>';
   const ok = (v) => v != null && isFinite(v);
   const vals = (arr) => arr ? idx.map(i => arr[i]).filter(ok) : [];
@@ -3634,9 +3654,12 @@ function dayChip(H, idx, view, ctx) {
     const v = vals(H.cloud_cover);
     if (v.length) { const a = v.reduce((s, x) => s + x, 0) / v.length; html = '<div class="hs-c hc-cloud" style="background:rgba(142,142,147,' + (0.12 + 0.88 * a / 100).toFixed(2) + ')">' + Math.round(a) + '%' + nb + '</div>'; }
   } else if (view === 'rain') {
-    if (ppMax !== null) {
-      const mm = vals(H.precipitation).reduce((s, x) => s + x, 0), c = ppMax >= 60 ? 'wx-alert' : ppMax >= 30 ? 'wx-warn' : 'wx-good';
-      html = '<div class="hs-c ' + cls[c] + '">' + Math.round(ppMax) + '%' + (mm >= (metric ? 0.1 : 0.13) ? '<small>' + (metric ? mm.toFixed(1) : (mm / 25.4).toFixed(2)) + '</small>' : nb) + '</div>';
+    // 4.4.10b: rain is counted over the whole calendar day (midnight to midnight), not just daylight, so an overnight storm shows up
+    const rIdx = full && full.length ? full : idx, rpps = rIdx.map(i => (H.precipitation_probability || [])[i]).filter(ok), rMax = rpps.length ? Math.max(...rpps) : null;
+    if (rMax !== null) {
+      const ppMax = rMax, mm = rIdx.map(i => (H.precipitation || [])[i]).filter(ok).reduce((s, x) => s + x, 0), c = ppMax >= 60 ? 'wx-alert' : ppMax >= 30 ? 'wx-warn' : 'wx-good';
+      // 4.4.10a: a notable chance with a tiny model amount shows "<0.01" (or "<0.1") instead of a blank under the percentage
+      html = '<div class="hs-c ' + cls[c] + '">' + Math.round(ppMax) + '%' + (mm >= (metric ? 0.1 : 0.13) ? '<small>' + (metric ? mm.toFixed(1) : (mm / 25.4).toFixed(2)) + '</small>' : (ppMax >= 30 ? '<small>' + (metric ? '&lt;0.1' : '&lt;0.01') + '</small>' : nb)) + '</div>';
     }
   }
   return { html };
@@ -3649,7 +3672,25 @@ function dayCaption(H, d, ctx) {
   if (!w) s += ' · no window figure';
   else if (w.kind === 'none') s += ' · No window';
   else s += ' · ' + (w.kind === 'best' ? 'Best ' : 'Possible ') + hrf(w.from) + '–' + hrf(w.to) + ' · ' + (Math.round(w.minW) === Math.round(w.maxW) ? fmtSpeedNum(w.maxW) : fmtSpeedNum(w.minW) + '–' + fmtSpeedNum(w.maxW)) + ' ' + speedUnit();
-  if (pps.length) s += ' · rain ' + Math.round(Math.max(...pps)) + '%';
+  const fIdx = d.full && d.full.length ? d.full : d.idx, fpps = fIdx.map(i => (H.precipitation_probability || [])[i]).filter(v => v != null && isFinite(v));
+  if (fpps.length) {
+    s += ' · rain ' + Math.round(Math.max(...fpps)) + '%';
+    // 4.4.10a/b: say how much the model expects (whole calendar day), or that it expects very little, so a high chance never looks like a missing number
+    const amt = i => { const v = (H.precipitation || [])[i]; return v != null && isFinite(v) ? v : 0; };
+    const mmDay = fIdx.reduce((t, i) => t + amt(i), 0), metricD = ctx && ctx.metric;
+    if (Math.max(...fpps) >= 30) {
+      if (mmDay >= (metricD ? 0.1 : 0.13)) {
+        // where does it fall? before sunrise / after sunset are outside the daylight hours in d.idx
+        let when = '';
+        if (d.idx.length && d.full) {
+          const a = d.idx[0], b = d.idx[d.idx.length - 1];
+          const pre = fIdx.filter(i => i < a).reduce((t, i) => t + amt(i), 0), post = fIdx.filter(i => i > b).reduce((t, i) => t + amt(i), 0), day = mmDay - pre - post;
+          if (day < mmDay * 0.25) when = pre >= mmDay * 0.5 ? ', mostly overnight before sunrise' : post >= mmDay * 0.5 ? ', mostly after sunset' : ', mostly overnight';
+        }
+        s += ' (about ' + (metricD ? mmDay.toFixed(1) + ' mm' : (mmDay / 25.4).toFixed(2) + ' in') + when + ')';
+      } else s += ' (very little expected)';
+    }
+  }
   // The selected tile above already shows the day, so the line starts at the useful part
   s = s.indexOf(d.label + ' · ') === 0 ? s.slice(d.label.length + 3) : s;
   return s;   // later days are marked by the note below the tiles and their lighter colour, so no "Rough guide" prefix (it made the line wrap)
@@ -3677,7 +3718,7 @@ function hourStripHtml(om, hIdx) {
   if (dayMode) {
     const ctx = { metric, intl, cls };
     cells = days.filter(d => d.idx.length).map(d => {   // today drops out once its daytime hours are over, instead of showing an empty dash
-      const c = dayChip(H, d.idx, view, ctx), sel = stripDay === d.dd;
+      const c = dayChip(H, d.idx, view, ctx, d.full), sel = stripDay === d.dd;
       return '<div class="hs-h hs-dy' + (sel ? ' sel' : '') + (d.dd >= 5 ? ' hs-f' + (d.dd - 4) : '') + '" data-k="' + d.dd + '" role="button" tabindex="0" aria-pressed="' + sel + '" aria-label="' + d.label + '" onclick="stripDayPick(' + d.dd + ')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();stripDayPick(' + d.dd + ')}"><div class="hs-t">' + d.label + '</div>' + c.html + '</div>';
     }).join('');
   }
@@ -3752,7 +3793,7 @@ function hourStripHtml(om, hIdx) {
       rain: 'Highest chance of rain in the day · amount below'
     }[view];
     const sd = days.find(d => d.dd === stripDay);
-    capTxt = sd ? dayCaption(H, sd, null) : dcap;
+    capTxt = sd ? dayCaption(H, sd, { metric }) : dcap;
     keyTxt = 'Tap a day\u00A0· later days are a rough guide';
   }
   const seg = '<span class="hs-seg" role="group" aria-label="Forecast range"><button type="button" class="' + (dayMode ? '' : 'on') + '" aria-pressed="' + (!dayMode) + '" onclick="stripSpanSet(\'12h\')">24 hours</button><button type="button" class="' + (dayMode ? 'on' : '') + '" aria-pressed="' + dayMode + '" onclick="stripSpanSet(\'10d\')">10 days</button></span>';
@@ -4851,8 +4892,7 @@ async function renderWeather(lat, lon, attempt = 1) {
       }
       const amEl = document.getElementById('wx-airmap');
       if (amEl && isFinite(Number(lat)) && isFinite(Number(lon))) amEl.href = 'https://skyvector.com/?ll=' + Number(lat).toFixed(4) + ',' + Number(lon).toFixed(4) + '&chart=301&zoom=1';
-      const trEl = document.getElementById('wx-traffic');
-      if (trEl && isFinite(Number(lat)) && isFinite(Number(lon))) trEl.href = 'https://globe.adsbexchange.com/?lat=' + Number(lat).toFixed(4) + '&lon=' + Number(lon).toFixed(4) + '&zoom=11';
+      if (isFinite(Number(lat)) && isFinite(Number(lon))) TR_LL = [Number(lat).toFixed(4), Number(lon).toFixed(4)]; trafficApply();   // 4.4.9b
       // 4.3.6b: say which place the AfterGlow link opens ("at Houston", "near Angier", or "here" when the spot is only coordinates or your own position)
       const agWhere = (() => {
         const n = (typeof site !== 'undefined' && site && site.name) ? String(site.name).trim() : '';
