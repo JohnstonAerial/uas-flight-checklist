@@ -95,6 +95,10 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.4.12
+
+- **Tap an hour for the whole picture.** In the **24 hours** forecast, tapping an hour now shows a line above the tiles with that hour and a verdict against your limits (**Within your limits**, **Close to your limits** or **Over your limits**, naming what is over), then every measure for that hour: wind and gusts, wind aloft, temperature, visibility, cloud cover and rain. The measure you are viewing comes first, and it works the same in every view. Tap the hour again to clear it. The **10 days** view still works the same way with its day summary.
+
 ## What's new in v4.4.10
 
 - **Live air traffic nearby, and your choice of site.** The button under the weather now opens **Flightradar24** at your flight spot (it shows where flights are going from and to, and its app opens cleanly on a phone). If you prefer ADS-B Exchange, **⚙ Settings → Air traffic site** switches it. The choice is remembered on that device and saved with **Back up & restore**. It does not replace watching the sky.
