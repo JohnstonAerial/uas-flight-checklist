@@ -299,6 +299,44 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .panel.editing .item.custom { flex-wrap: wrap; }
   .panel.editing .item.custom .cust-acts { display: flex; flex: 0 0 100%; justify-content: flex-end; gap: 8px; margin-top: 2px; }
   .item.custom .cust-acts .item-x { margin-left: 0; color: var(--del); border-color: var(--del); border-color: color-mix(in srgb, var(--del) 45%, transparent); }
+  /* 4.4.13a packs */
+  .panel.editing .item.pk-open { flex-wrap: wrap; }
+  .pk-form { flex: 0 0 100% !important; margin-top: 6px; }
+  .item-pk { display: none; margin-left: auto; }
+  .item-pkcp { display: none; margin-left: auto; }
+  .panel.editing .item-pkcp:not([hidden]) { display: inline-block; align-self: center; }
+  .item-pkcp:not([hidden]) + .item-pk { margin-left: 6px; }
+  .panel.editing .item:has(> .cust-copy) { flex-wrap: wrap; }
+  .item > .cust-copy { flex: 0 0 100%; }
+  .panel.editing .item-pk { display: inline-block; align-self: center; }
+  .item-pk + .item-x { margin-left: 6px; }
+  .item-pk.on { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .item.has-pk { flex-wrap: wrap; }
+  .pk-row { flex: 0 0 100%; box-sizing: border-box; padding: 2px 0 2px 34px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; cursor: default; }
+  .panel.editing .pk-row { display: none; }
+  .pk-chips[hidden], .pk-opts [hidden] { display: none !important; }
+  .pk-chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 100%; }
+  .pk-chip { font-family: inherit; display: flex; flex-direction: column; align-items: center; min-width: 58px; padding: 6px 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; -webkit-touch-callout: none; user-select: none; }
+  .pk-chip b { font-size: 14px; font-weight: 600; }
+  .pk-chip i { font-style: normal; font-size: 10.5px; color: var(--text-muted); }
+  .pk-chip.low { border-color: var(--blue); background: color-mix(in srgb, var(--blue) 12%, transparent); }
+  .pk-chip.low i { color: var(--blue); font-weight: 600; }
+  .pk-big { font-family: inherit; font-size: 14px; font-weight: 600; padding: 9px 16px; border-radius: 12px; border: 0; background: var(--blue); color: #fff; cursor: pointer; }
+  .pk-more, .pk-undo { font-family: inherit; font-size: 12px; background: none; border: 0; color: var(--link); padding: 6px 4px; cursor: pointer; }
+  .pk-done { font-size: 13px; color: var(--text-muted); }
+  .pk-opts { margin: 4px 0 8px; }
+  .pk-sw { display: flex !important; align-items: center; gap: 8px; font-size: 13px !important; color: var(--text) !important; margin: 6px 2px !important; }
+  .pk-sw input { width: auto !important; margin: 0 !important; }
+  .pk-sheet { position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,.45); display: flex; align-items: flex-end; justify-content: center; }
+  .pk-card { width: 100%; max-width: 520px; box-sizing: border-box; background: var(--card); border-radius: 18px 18px 0 0; padding: 18px 16px calc(18px + env(safe-area-inset-bottom)); max-height: 80vh; overflow: auto; }
+  .pk-card-h { font-size: 17px; font-weight: 700; }
+  .pk-card-s { font-size: 12px; color: var(--text-muted); margin: 4px 0 10px; }
+  .pk-line { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-top: 1px solid var(--border); }
+  .pk-ln { font-weight: 600; flex: 0 0 auto; min-width: 54px; }
+  .pk-ld { font-size: 11px; color: var(--text-muted); flex: 1; }
+  .pk-line button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--text); font-size: 20px; cursor: pointer; font-family: inherit; }
+  .pk-line b { min-width: 28px; text-align: center; font-size: 17px; }
+  .pk-card-done { width: 100%; margin-top: 12px; padding: 12px; border-radius: 12px; border: 0; font-family: inherit; font-size: 15px; }
   .item-ed { font-family: inherit; font-size: 11px; color: var(--link); background: transparent; border: 1px solid var(--border); border-color: color-mix(in srgb, var(--link) 45%, transparent); border-radius: 12px; padding: 3px 11px; cursor: pointer; }
   .item.custom.ce-open > .item-text, .item.custom.ce-open > .item-link, .item.custom.ce-open > .cust-acts { display: none !important; }
   .tab-ac-wrap { margin: 10px 0 4px; }
@@ -1053,7 +1091,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>Drone Preflight Checklist</h1>
-      <p id="verTap">Weather, airspace and your checklist in one place · v4.4.12</p>
+      <p id="verTap">Weather, airspace and your checklist in one place · v4.4.13</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
@@ -1719,13 +1757,14 @@ function itemKeys(panelEl) {
 function saveProgress() {
   const data = { savedAt: Date.now(), panels: {} };
   document.querySelectorAll('.panel').forEach(p => {
-    const keys = itemKeys(p), checked = [], flagged = [], na = [];
+    const keys = itemKeys(p), checked = [], flagged = [], na = [], picks = {};
     p.querySelectorAll('.item').forEach((it, i) => {
+      if (it.dataset.pkSel && it.classList.contains('checked')) picks[keys[i]] = it.dataset.pkSel;
       if (it.classList.contains('checked')) checked.push(keys[i]);
       else if (it.classList.contains('flagged')) flagged.push(keys[i]);
       else if (it.classList.contains('na')) na.push(keys[i]);
     });
-    if (checked.length || flagged.length || na.length) data.panels[p.id.replace('panel-', '')] = { checked, flagged, na };
+    if (checked.length || flagged.length || na.length) { const o = { checked, flagged, na }; if (Object.keys(picks).length) o.picks = picks; data.panels[p.id.replace('panel-', '')] = o; }
   });
   progSet(Object.keys(data.panels).length ? data : null);
 }
@@ -1739,7 +1778,7 @@ function restoreProgress() {
     if (!d) return;
     const keys = itemKeys(p), c = new Set(d.checked || []), f = new Set(d.flagged || []), nn = new Set(d.na || []);
     p.querySelectorAll('.item').forEach((it, i) => {
-      if (c.has(keys[i])) { it.classList.add('checked'); n++; }
+      if (c.has(keys[i])) { it.classList.add('checked'); n++; if (d.picks && d.picks[keys[i]]) it.dataset.pkSel = d.picks[keys[i]]; }
       else if (f.has(keys[i])) { it.classList.add('flagged'); n++; }
       else if (nn.has(keys[i])) { it.classList.add('na'); n++; }
     });
@@ -1907,6 +1946,7 @@ function openItemMenu(el) {
 
 function updateProgress(panel) {
   const p = document.getElementById('panel-' + panel);
+  if (typeof pkSyncPanel === 'function') pkSyncPanel(p);
   const items = p.querySelectorAll('.item:not(.is-hidden):not(.region-hidden)');
   const checked = p.querySelectorAll('.item.checked:not(.is-hidden):not(.region-hidden)').length;
   const flagged = p.querySelectorAll('.item.flagged:not(.is-hidden):not(.region-hidden)').length;
@@ -2365,7 +2405,15 @@ function addItemButton(it) {
     const cp = document.createElement('button'); cp.type = 'button'; cp.className = 'item-ed item-cp'; cp.textContent = 'Copy to\u2026';
     cp.setAttribute('onclick', 'itemCopy(event, this)');
     acts.appendChild(cp); acts.appendChild(ed); acts.appendChild(b); it.appendChild(acts);
-  } else it.appendChild(b);
+  } else {
+    if (PK_BUILTIN.test(itemTextOf(it))) {
+      const pb = document.createElement('button'); pb.type = 'button'; pb.className = 'item-ed item-pk'; pb.textContent = 'Pick list';
+      pb.setAttribute('onclick', 'pkOpen(event, this)');
+      const cb = document.createElement('button'); cb.type = 'button'; cb.className = 'item-ed item-pkcp'; cb.textContent = 'Copy to\u2026'; cb.hidden = true;
+      cb.setAttribute('onclick', 'itemCopy(event, this)'); it.appendChild(cb); it.appendChild(pb);
+    }
+    it.appendChild(b);
+  }
   labelItemButton(it);
 }
 function labelItemButton(it) {
@@ -2419,11 +2467,13 @@ function itemCopy(e, btn) {
   const old = it.querySelector(':scope > .cust-copy'); if (old) { old.remove(); return; }
   const panelEl = it.closest('.panel'), pid = panelEl.id.replace('panel-', '');
   const sec = sectionTitleOf(it.closest('.section')), text = itemTextOf(it);
-  const rec = custFor(panelEl.id).added.find(a => a.sec === sec && a.text === text); if (!rec) return;
+  let rec = custFor(panelEl.id).added.find(a => a.sec === sec && a.text === text), fromBuiltin = false;
+  if (!rec && !it.classList.contains('custom')) { const bp = pkCfgOf(it); if (bp) { rec = { sec: sec, text: text, pk: bp }; fromBuiltin = true; } }   // a built-in line with packs: copy the pick list
+  if (!rec) return;
   const box = document.createElement('div'); box.className = 'cust-copy';
   box.addEventListener('click', ev => ev.stopPropagation());
   box.addEventListener('pointerdown', ev => ev.stopPropagation());
-  const lab = document.createElement('div'); lab.className = 'cc-label'; lab.textContent = 'Copy this item to which tab?'; box.appendChild(lab);
+  const lab = document.createElement('div'); lab.className = 'cc-label'; lab.textContent = fromBuiltin ? 'Copy this pick list to which tab?' : 'Copy this item to which tab?'; box.appendChild(lab);
   const msg = document.createElement('div'); msg.className = 'cc-msg'; msg.hidden = true;
   tabEls.filter(t => t.dataset.pid && t.dataset.pid !== pid && !t.classList.contains('tab-hidden')).forEach(t => {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'item-ed'; b.textContent = tabName(t);
@@ -2433,8 +2483,32 @@ function itemCopy(e, btn) {
       const tsec = secs.find(x => sectionTitleOf(x) === rec.sec) || secs[0], tname = sectionTitleOf(tsec);
       const tc = custFor(tp.id);
       msg.hidden = false;
-      if (tc.added.some(a => a.sec === tname && a.text === rec.text)) { msg.className = 'cc-msg bad'; msg.textContent = 'That tab already has this item in ' + tname + '.'; return; }
-      const nr = { sec: tname, text: rec.text }; if (rec.url) nr.url = rec.url;
+      const dup = tc.added.find(a => a.sec === tname && a.text === rec.text);
+      if (fromBuiltin && !dup) {                       // put the list on the same built-in line over there, not a second line
+        const bt = [...baseKeyMap(tp).keys()].find(x => itemTextOf(x) === rec.text && !x.classList.contains('is-hidden'));
+        if (bt) {
+          msg.hidden = false;
+          if (pkCfgOf(bt)) { msg.className = 'cc-msg bad'; msg.textContent = tabName(t) + ' already has a pick list on this line. Open Pick list there to change it.'; return; }
+          pkSet(bt, pkCopy(rec.pk)); pkMarkBtn(bt); pkRender(bt);
+          msg.className = 'cc-msg'; msg.textContent = '\u2713 Pick list copied to ' + tabName(t) + ' (counts at 0).'; return;
+        }
+      }
+      if (dup) {
+        msg.hidden = false; msg.className = 'cc-msg bad'; msg.textContent = 'That tab already has this item in ' + tname + '.';
+        if (rec.pk) {                                  // offer to put the pack list on the copy that is already there
+          msg.textContent += dup.pk ? ' It already has its own pick list.' : '';
+          const go = document.createElement('button'); go.type = 'button'; go.className = 'item-ed'; go.style.marginLeft = '8px';
+          go.textContent = dup.pk ? 'Replace its pick list (counts reset)' : 'Add the pick list to it';
+          go.onclick = () => {
+            dup.pk = pkCopy(rec.pk); custSave();
+            tp.querySelectorAll('.item.custom').forEach(x => { if (itemTextOf(x) === dup.text && sectionTitleOf(x.closest('.section')) === dup.sec) pkRender(x); });
+            msg.className = 'cc-msg'; msg.textContent = '\u2713 Pick list added to the item on ' + tabName(t) + ' (' + tname + ').';
+          };
+          msg.appendChild(go);
+        }
+        return;
+      }
+      const nr = { sec: tname, text: rec.text }; if (rec.url) nr.url = rec.url; if (rec.pk) nr.pk = pkCopy(rec.pk);
       tc.added.push(nr);
       tsec.querySelector('.section-card').appendChild(makeItem(nr.text, nr.url));
       custSave(); refreshCust(tp); saveProgress();
@@ -2495,12 +2569,13 @@ function rebuildCust(panelEl) {            // redraw a tab's customizations from
   });
   baseKeyMap(panelEl).forEach((k, it) => { if ((c.hidden || []).includes(k)) it.classList.add('is-hidden'); });
   applyOrder(panelEl); refreshCust(panelEl);
+  panelEl.querySelectorAll('.item').forEach(it => { pkMarkBtn(it); pkRender(it); });
 }
 function cloneItems(srcPid) {            // what the source tab shows now, per section, in order: [{text, url}]
   const src = document.getElementById('panel-' + srcPid);
   return [...src.querySelectorAll('.section')].map(sec => [...sec.querySelectorAll('.section-card > .item')]
     .filter(it => !it.classList.contains('is-hidden'))
-    .map(it => { const a = it.querySelector(':scope > .item-link'); return { text: itemTextOf(it), url: a ? a.getAttribute('href') : '' }; }));
+    .map(it => { const a = it.querySelector(':scope > .item-link'); return { text: itemTextOf(it), url: a ? a.getAttribute('href') : '', pk: pkCopy(pkCfgOf(it)) }; }));
 }
 function cloneTab(panelEl, srcPid) {
   const data = cloneItems(srcPid), secs = [...panelEl.querySelectorAll('.section')], c = custFor(panelEl.id);
@@ -2511,13 +2586,14 @@ function cloneTab(panelEl, srcPid) {
     const sec = secs[Math.min(i, secs.length - 1)], name = sectionTitleOf(sec), card = sec.querySelector('.section-card');
     items.forEach(x => {
       if (c.added.some(a => a.sec === name && a.text === x.text)) return;
-      const rec = { sec: name, text: x.text }; if (x.url) rec.url = x.url;
+      const rec = { sec: name, text: x.text }; if (x.url) rec.url = x.url; if (x.pk) rec.pk = x.pk;
       c.added.push(rec); card.appendChild(makeItem(x.text, x.url));
     });
   });
   const sp = tabEls.find(x => x.dataset.pid === srcPid), tp = panelEl.id.replace('panel-', '');
   ['drone', 'reg', 'pilot'].forEach(k => { if (!tabsCfg[k]) tabsCfg[k] = {}; const v = tabsCfg[k][srcPid]; if (v) tabsCfg[k][tp] = v; else delete tabsCfg[k][tp]; });
   tabsSave(); refreshTabs();
+  panelEl.querySelectorAll('.item').forEach(it => { pkMarkBtn(it); pkRender(it); });
   custSave(); refreshCust(panelEl); saveProgress();
 }
 function itemEdit(e, btn) {
@@ -2528,7 +2604,9 @@ function itemEdit(e, btn) {
   const f = document.createElement('form'); f.className = 'cust-edit';
   f.innerHTML = '<label>Item</label><input type="text" class="ce-t" maxlength="140" autocomplete="off" enterkeyhint="done">' +
     '<label>Link or app address (optional)</label><input type="text" class="ce-u" maxlength="300" inputmode="url" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">' +
-    '<div class="ce-err" hidden></div><div class="ce-row"><button type="button" class="ce-cancel">Cancel</button><button type="submit" class="ce-save">Save</button></div>';
+    '<div class="pk-slot"></div><div class="ce-err" hidden></div><div class="ce-row"><button type="button" class="ce-cancel">Cancel</button><button type="submit" class="ce-save">Save</button></div>';
+  const pkOld = rec && rec.pk ? rec.pk : null, pkf = pkFields(pkOld);
+  f.querySelector('.pk-slot').appendChild(pkf);
   const ti = f.querySelector('.ce-t'), ui = f.querySelector('.ce-u'), err = f.querySelector('.ce-err');
   ti.value = oldText; ui.value = (rec && rec.url) || (it.querySelector(':scope > .item-link') ? it.querySelector(':scope > .item-link').getAttribute('href') : '');
   ui.setAttribute('list', 'link-lib'); ui.addEventListener('focus', fillLinkLib);
@@ -2546,16 +2624,197 @@ function itemEdit(e, btn) {
     if (raw && !lk) return fail(ui, 'Not a valid link. Try https://... or app://...');
     const c = custFor(panelEl.id);
     if (c.added.some(a => a !== rec && a.sec === sec && a.text === text)) return fail(ti, 'You already have this item in this section.');
+    const pkNew = pkf.read(pkOld);
+    if (pkf.querySelector('.pk-on').checked && !pkNew) return fail(pkf.querySelector('.pk-names'), 'Type at least one name for the list.');
     it.querySelector('.item-text').textContent = text;
     setItemLink(it, lk);
-    if (rec) { rec.text = text; if (lk) rec.url = lk; else delete rec.url; }
-    else c.added.push(lk ? { sec: sec, text: text, url: lk } : { sec: sec, text: text });
+    if (rec) { rec.text = text; if (lk) rec.url = lk; else delete rec.url; if (pkNew) rec.pk = pkNew; else delete rec.pk; }
+    else { const nr2 = lk ? { sec: sec, text: text, url: lk } : { sec: sec, text: text }; if (pkNew) nr2.pk = pkNew; c.added.push(nr2); }
     if (c.order && c.order[sec]) c.order[sec] = orderKeys(it.closest('.section-card')).map(p => p[0]);   // keep its place if you had reordered this section
-    close();
+    close(); pkRender(it);
     custSave(); refreshCust(panelEl); saveProgress();
   });
   it.classList.add('ce-open'); it.appendChild(f);
   ti.focus(); ti.setSelectionRange(ti.value.length, ti.value.length);
+}
+// ── 4.4.13a Pick lists (first called Packs): an optional "pick from a list" on an item (batteries, cards, filters…) ──
+// Setup lives in Customize (Pick list button on the built-in battery, SD card and filter lines; Edit form on items you added).
+// The saved config rides on the item: {nm:'Battery', l:[{n:'Blue', u:5, d:<ms>}], c:1 (count uses)}
+const PK_MAX = 12, PK_BUILTIN = /^(Battery installed|SD card inserted|Filters\b)/i;
+function pkDefaultName(t) { return /^SD card/i.test(t) ? 'SD card' : /^Filters/i.test(t) ? 'Filter' : 'Battery'; }
+function pkCfgOf(it) {
+  const panelEl = it.closest('.panel'); if (!panelEl) return null;
+  const c = custFor(panelEl.id);
+  if (it.classList.contains('custom')) { const r = c.added.find(a => a.sec === sectionTitleOf(it.closest('.section')) && a.text === itemTextOf(it)); return (r && r.pk) || null; }
+  const k = baseKeyMap(panelEl).get(it); return (c.pk && c.pk[k]) || null;
+}
+function pkSet(it, pk) {
+  const panelEl = it.closest('.panel'), c = custFor(panelEl.id);
+  if (it.classList.contains('custom')) {
+    const r = c.added.find(a => a.sec === sectionTitleOf(it.closest('.section')) && a.text === itemTextOf(it));
+    if (r) { if (pk) r.pk = pk; else delete r.pk; }
+  } else {
+    const k = baseKeyMap(panelEl).get(it); c.pk = c.pk || {};
+    if (pk) c.pk[k] = pk; else delete c.pk[k];
+  }
+  custSave();
+}
+function pkClean(nm, namesText, count, old, multi) {         // typed form → saved config (counts kept for names that stay)
+  const seen = new Set(), l = [];
+  String(namesText || '').split(/[,\n]/).map(s => s.replace(/\|/g, '').trim().slice(0, 14)).filter(Boolean).forEach(n => {
+    if (seen.has(n.toLowerCase()) || l.length >= PK_MAX) return;
+    seen.add(n.toLowerCase());
+    const o = old && old.l.find(x => x.n.toLowerCase() === n.toLowerCase());
+    l.push(o ? { n: n, u: o.u || 0, d: o.d || 0 } : { n: n, u: 0, d: 0 });
+  });
+  if (!l.length) return null;
+  const pk = { nm: String(nm || '').trim().slice(0, 20) || 'Pack', l: l };
+  if (count) pk.c = 1;
+  if (multi) pk.m = 1;
+  return pk;
+}
+function pkCopy(pk) { return pk ? { nm: pk.nm, l: pk.l.map(x => ({ n: x.n, u: 0, d: 0 })), c: pk.c ? 1 : undefined, m: pk.m ? 1 : undefined } : null; }   // for Copy to… and clone: names only, counts back to zero
+function pkFields(pk) {                                 // the options block shared by the Pick list button and the Edit form
+  const w = document.createElement('div'); w.className = 'pk-opts';
+  w.innerHTML = '<label class="pk-sw"><input type="checkbox" class="pk-on"> <span>Pick from a list</span></label>' +
+    '<div class="pk-body" hidden><label>Name on the record</label><input type="text" class="pk-nm" maxlength="20" placeholder="Battery, SD card, Filter…" autocomplete="off">' +
+    '<label>Names, separated by commas (up to ' + PK_MAX + ')</label><input type="text" class="pk-names" maxlength="160" placeholder="#1, #2, #3 or Red, Blue, Green" autocomplete="off" autocapitalize="words">' +
+    '<label class="pk-sw"><input type="checkbox" class="pk-cnt"> <span>Count uses (suggest the one used least)</span></label><label class="pk-sw"><input type="checkbox" class="pk-mul"> <span>Allow more than one per flight</span></label></div>';
+  const on = w.querySelector('.pk-on'), body = w.querySelector('.pk-body');
+  on.checked = !!pk; body.hidden = !pk;
+  on.onchange = () => { body.hidden = !on.checked; };
+  if (pk) { w.querySelector('.pk-nm').value = pk.nm; w.querySelector('.pk-names').value = pk.l.map(x => x.n).join(', '); w.querySelector('.pk-cnt').checked = !!pk.c; w.querySelector('.pk-mul').checked = !!pk.m; }
+  ['click', 'pointerdown'].forEach(t => w.addEventListener(t, ev => ev.stopPropagation()));
+  w.read = (old) => w.querySelector('.pk-on').checked ? pkClean(w.querySelector('.pk-nm').value, w.querySelector('.pk-names').value, w.querySelector('.pk-cnt').checked, old, w.querySelector('.pk-mul').checked) : null;
+  return w;
+}
+function pkOpen(e, btn) {                               // Pick list button on a built-in line
+  e.stopPropagation();
+  const it = btn.closest('.item'); if (!it) return;
+  const old = it.querySelector(':scope > .pk-form'); if (old) { old.remove(); it.classList.remove('pk-open'); return; }
+  const cur = pkCfgOf(it) || (PK_BUILTIN.test(itemTextOf(it)) ? null : null);
+  const f = document.createElement('form'); f.className = 'cust-edit pk-form';
+  const fl = pkFields(cur); if (!cur) { fl.querySelector('.pk-nm').value = pkDefaultName(itemTextOf(it)); }
+  f.appendChild(fl);
+  f.insertAdjacentHTML('beforeend', '<div class="ce-err" hidden></div><div class="ce-row"><button type="button" class="ce-cancel">Cancel</button><button type="submit" class="ce-save">Save</button></div>');
+  ['click', 'pointerdown'].forEach(t => f.addEventListener(t, ev => ev.stopPropagation()));
+  it.classList.add('pk-open');
+  f.querySelector('.ce-cancel').onclick = () => { f.remove(); it.classList.remove('pk-open'); };
+  f.addEventListener('submit', ev => {
+    ev.preventDefault();
+    const pk = fl.read(cur);
+    if (fl.querySelector('.pk-on').checked && !pk) { const er = f.querySelector('.ce-err'); er.textContent = 'Type at least one name.'; er.hidden = false; return; }
+    pkSet(it, pk); f.remove(); it.classList.remove('pk-open'); pkMarkBtn(it); pkRender(it);
+  });
+  it.appendChild(f);
+}
+function pkMarkBtn(it) { const b = it.querySelector('.item-pk'); if (b) b.classList.toggle('on', !!pkCfgOf(it)); const c = it.querySelector('.item-pkcp'); if (c) c.hidden = !pkCfgOf(it); }
+function pkFmtDate(ms) { return ms ? new Date(ms).toLocaleDateString([], { month: 'short', day: 'numeric' }) : ''; }
+function pkLowest(pk) { let b = null; pk.l.forEach(x => { if (!b || (x.u || 0) < (b.u || 0)) b = x; }); return b; }
+function pkRender(it) {
+  const old = it.querySelector(':scope > .pk-row'); if (old) old.remove();
+  const pk = pkCfgOf(it);
+  it.classList.toggle('has-pk', !!pk);
+  if (!pk) { delete it.dataset.pkSel; return; }
+  if (!it.classList.contains('checked')) { delete it.dataset.pkSel; delete it.dataset.pkAdd; }
+  if (it.classList.contains('na') || it.classList.contains('is-hidden')) return;
+  const row = document.createElement('div'); row.className = 'pk-row';
+  ['click', 'pointerdown'].forEach(t => row.addEventListener(t, ev => ev.stopPropagation()));
+  const selL = pkSelList(it), curL = selL.map(n => pk.l.find(x => x.n === n)).filter(Boolean), cur = curL.length && !(pk.m && it.dataset.pkAdd);
+  const uses = (x) => (x.u || 0) + (x.u === 1 ? ' use' : ' uses');
+  if (cur) {
+    row.innerHTML = '<span class="pk-done"></span><button type="button" class="pk-undo">Undo</button>' + (pk.m && curL.length < pk.l.length ? '<button type="button" class="pk-more pk-add">+ Add another</button>' : '');
+    row.querySelector('.pk-done').textContent = '✓ Using ' + curL.map(x => x.n + (pk.c ? ' (' + uses(x) + ')' : '')).join(' + ');
+    row.querySelector('.pk-undo').onclick = () => pkUndo(it);
+    const ad = row.querySelector('.pk-add'); if (ad) ad.onclick = () => { it.dataset.pkAdd = '1'; pkRender(it); };
+  } else {
+    const pool = { l: pk.l.filter(x => !selL.includes(x.n)) }, low = pk.c && pool.l.length ? pkLowest(pool) : null, grid = document.createElement('div'); grid.className = 'pk-chips';
+    const chip = (x) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pk-chip' + (low && x === low ? ' low' : '');
+      b.innerHTML = '<b></b>' + (pk.c ? '<i></i>' : '');
+      b.querySelector('b').textContent = x.n;
+      if (pk.c) b.querySelector('i').textContent = (low && x === low ? 'fewest · ' : '') + uses(x);
+      b.onclick = () => pkPick(it, x.n);
+      let t = null;                                    // press and hold: set real counts
+      b.addEventListener('pointerdown', ev => { ev.stopPropagation(); if (!pk.c) return; clearTimeout(t); t = setTimeout(() => { t = null; b.dataset.held = '1'; pkSheet(it); }, 500); });
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach(n => b.addEventListener(n, () => { clearTimeout(t); t = null; }));
+      b.addEventListener('click', ev => { if (b.dataset.held) { ev.stopImmediatePropagation(); delete b.dataset.held; } }, true);
+      b.addEventListener('contextmenu', ev => { ev.preventDefault(); if (pk.c) pkSheet(it); });
+      return b;
+    };
+    if (pk.c && pool.l.length > 5) {                      // many packs: one big suggestion, the rest on request
+      const big = document.createElement('button'); big.type = 'button'; big.className = 'pk-big';
+      big.textContent = 'Use ' + low.n + ' · ' + uses(low); big.onclick = () => pkPick(it, low.n);
+      const more = document.createElement('button'); more.type = 'button'; more.className = 'pk-more'; more.textContent = 'Pick another';
+      const all = document.createElement('div'); all.className = 'pk-chips'; all.hidden = true;
+      pool.l.slice().sort((a, b) => (a.u || 0) - (b.u || 0)).forEach(x => all.appendChild(chip(x)));
+      more.onclick = () => { all.hidden = !all.hidden; };
+      row.appendChild(big); row.appendChild(more); row.appendChild(all);
+    } else { pool.l.forEach(x => grid.appendChild(chip(x))); row.appendChild(grid); }
+    if (pk.c) { const ec = document.createElement('button'); ec.type = 'button'; ec.className = 'pk-more'; ec.textContent = 'Edit counts'; ec.onclick = () => pkSheet(it); row.appendChild(ec); }
+  }
+  const acts = it.querySelector(':scope > .cust-acts'), form = it.querySelector(':scope > .cust-edit, :scope > .cust-copy');
+  it.appendChild(row);
+}
+function pkSelList(it) { return (it.dataset.pkSel || '').split('|').filter(Boolean); }
+function pkPick(it, name) {
+  const pk = pkCfgOf(it); if (!pk) return;
+  const x = pk.l.find(y => y.n === name); if (!x) return;
+  const L = pkSelList(it);
+  if (L.includes(name)) return;
+  if (pk.m) L.push(name);
+  else { const prev = L[0] && pk.l.find(y => y.n === L[0]); if (pk.c && prev) prev.u = Math.max(0, (prev.u || 0) - 1); L.length = 0; L.push(name); }
+  if (pk.c) { x.u = (x.u || 0) + 1; x.d = Date.now(); }
+  it.dataset.pkSel = L.join('|'); delete it.dataset.pkAdd;
+  it.classList.remove('flagged', 'na'); it.classList.add('checked');
+  pkSet(it, pk); updateProgress(current); saveProgress(); autoAdvance(it);
+}
+function pkUndo(it) {
+  const pk = pkCfgOf(it), L = pkSelList(it); if (!pk || !L.length) return;
+  const name = L.pop(), x = pk.l.find(y => y.n === name);
+  if (x && pk.c) x.u = Math.max(0, (x.u || 0) - 1);
+  delete it.dataset.pkAdd;
+  if (L.length) it.dataset.pkSel = L.join('|'); else { delete it.dataset.pkSel; it.classList.remove('checked'); }
+  pkSet(it, pk); updateProgress(current); saveProgress();
+}
+function pkSheet(it) {                                  // real counts: − / + per pack
+  const pk = pkCfgOf(it); if (!pk) return;
+  document.querySelectorAll('.pk-sheet').forEach(s => s.remove());
+  const ov = document.createElement('div'); ov.className = 'pk-sheet';
+  const card = document.createElement('div'); card.className = 'pk-card';
+  card.innerHTML = '<div class="pk-card-h"></div><div class="pk-card-s">Set each count to match what the battery itself says. Changes save as you tap.</div><div class="pk-card-l"></div><button type="button" class="ce-save pk-card-done">Done</button>';
+  card.querySelector('.pk-card-h').textContent = pk.nm + ' counts';
+  const list = card.querySelector('.pk-card-l');
+  const draw = () => {
+    list.innerHTML = '';
+    pk.l.forEach(x => {
+      const r = document.createElement('div'); r.className = 'pk-line';
+      r.innerHTML = '<span class="pk-ln"></span><span class="pk-ld"></span><button type="button" aria-label="One less">−</button><b></b><button type="button" aria-label="One more">+</button>';
+      r.querySelector('.pk-ln').textContent = x.n;
+      r.querySelector('.pk-ld').textContent = x.d ? 'Updated ' + pkFmtDate(x.d) : '';
+      r.querySelector('b').textContent = x.u || 0;
+      const [m, p] = r.querySelectorAll('button');
+      m.onclick = () => { x.u = Math.max(0, (x.u || 0) - 1); x.d = Date.now(); pkSet(it, pk); draw(); };
+      p.onclick = () => { x.u = (x.u || 0) + 1; x.d = Date.now(); pkSet(it, pk); draw(); };
+      list.appendChild(r);
+    });
+  };
+  draw();
+  const close = () => { ov.remove(); pkRender(it); };
+  card.querySelector('.pk-card-done').onclick = close;
+  ov.addEventListener('click', ev => { if (ev.target === ov) close(); });
+  ov.appendChild(card); document.body.appendChild(ov);
+}
+function pkSyncPanel(p) { p.querySelectorAll('.item').forEach(it => { if (it.classList.contains('has-pk') || it.querySelector(':scope > .pk-row')) pkRender(it); }); }
+function pkRecordPairs() {                              // [name, pick] per ticked item that has a pick, for the record header
+  const out = [], p = document.getElementById('panel-' + current); if (!p) return out;
+  p.querySelectorAll('.item.checked:not(.is-hidden)').forEach(it => {
+    const pk = pkCfgOf(it); if (pk && it.dataset.pkSel) out.push([pk.nm, pkSelList(it).join(', ')]);
+  });
+  return out;
+}
+function pkInitAll() {
+  document.querySelectorAll('.panel').forEach(p => p.querySelectorAll('.item').forEach(it => { pkMarkBtn(it); if (pkCfgOf(it)) pkRender(it); }));
 }
 function addCustomItem(e, form, quiet) {
   if (e) e.preventDefault();
@@ -3408,6 +3667,7 @@ setKeepHours(keepHours());
 })();
 
 restoreProgress();
+pkInitAll();
 if (restoredAt) {
   document.querySelectorAll('.flag-hint').forEach(h => {
     h.textContent = 'Progress restored (saved ' + ageText(Date.now() - restoredAt) + ') · tap Uncheck all to start fresh';
@@ -5437,6 +5697,7 @@ function buildRecord(o) {
   const tab = recNoEmoji(recTabName()); if (tab) L.push(B('Checklist', tab));
   const pl = acPilot(); if (pl) L.push(B('Pilot', pl));
   const ac = acPair(); if (ac) L.push(B(ac[0], ac[1]));
+  pkRecordPairs().forEach(p => L.push(B(p[0], p[1])));
   if (o.laanc) L.push(B('Airspace authorization', o.laanc));
   if (o.flightTime) L.push(B('Flight time', o.flightTime));
   if (o.observer) L.push(B('Visual observer', o.observer));
@@ -5665,7 +5926,7 @@ function buildRecordPdf(o) {
   d.para(new Date().toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }), 10.5, { gray: 0.3 });
   d.gap(6);
   const co = o.coords ? recCoords() : '', tab = recNoEmoji(recTabName());
-  [['Customer', o.customer], ['Site', o.site], ['Coordinates', co], ['Checklist', tab], ['Pilot', acPilot()], acPair() || ['', ''], ['Airspace authorization', o.laanc], ['Flight time', o.flightTime], ['Visual observer', o.observer]]
+  [['Customer', o.customer], ['Site', o.site], ['Coordinates', co], ['Checklist', tab], ['Pilot', acPilot()], acPair() || ['', '']].concat(pkRecordPairs(), [['Airspace authorization', o.laanc], ['Flight time', o.flightTime], ['Visual observer', o.observer]])
     .forEach(p => { if (p[1]) d.kv(p[0], p[1]); });
   if (o.weather) { d.h2('Conditions'); recWeatherLines().forEach(l => { d.para(l, 10.5); d.gap(1.5); }); }
   const c = recCollect(document.getElementById('panel-' + current), o.unchecked);

@@ -95,6 +95,12 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.4.13
+
+- **Pick lists: which battery, SD card or filter.** Turn it on for the **Battery installed**, **SD card inserted** or **Filters** line (or any line you added) and you pick from your own list as you tick it, for example **#1, #2, #3**, or **Red, Blue, Green**, or **ND16, CPL**. Switch on **Count uses** and each battery shows how many times you used it and which has the fewest, so you can rotate them evenly. Switch on **Allow more than one per flight** for two batteries or two filters in the same flight. Press and hold a name (or tap **Edit counts**) to set the real counts. **Save flight record** adds a line such as **Battery: #3, #2, #1** or **Filter: ND16, CPL** (names only), and leaves it out when you didn't pick anything or marked the line N/A. Nothing changes for you unless you turn it on: tap **Customize**, then **Pick list** on the line. **Copy to…** and **Clone** carry the names to other tabs with the counts back at zero, and **Back up & restore** includes them. See [Pick a battery, card or filter](HOW-TO.md#pick-a-battery-card-or-filter).
+
+---
+
 ## What's new in v4.4.12
 
 - **Tap an hour for the whole picture.** In the **24 hours** forecast, tapping an hour now shows a line above the tiles with that hour and a verdict against your limits (**Within your limits**, **Close to your limits** or **Over your limits**, naming what is over), then every measure for that hour: wind and gusts, wind aloft, temperature, visibility, cloud cover and rain. The measure you are viewing comes first, and it works the same in every view. Tap the hour again to clear it. The **10 days** view still works the same way with its day summary.

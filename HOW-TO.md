@@ -1,12 +1,13 @@
 # How to use the Drone Preflight Checklist
 
-Short guides for eight things people ask about: finding your way around the three tabs, backing up and restoring your setup, saving different setups ("profiles"), using the app with no signal, saving a record of your preflight, printing the checklist, using it outside the USA, and checking TFRs and NOTAMs (USA only).
+Short guides for nine things people ask about: finding your way around the three tabs, backing up and restoring your setup, saving different setups ("profiles"), using the app with no signal, saving a record of your preflight, picking which battery, card or filter you used, printing the checklist, using it outside the USA, and checking TFRs and NOTAMs (USA only).
 
 - [Find your way around](#find-your-way-around)
 - [Back up and restore your setup](#back-up-and-restore-your-setup)
 - [Make your own profiles](#make-your-own-profiles)
 - [Use it with no signal](#use-it-with-no-signal)
 - [Save a flight record](#save-a-flight-record)
+- [Pick a battery, card or filter](#pick-a-battery-card-or-filter)
 - [Print it and use a pencil](#print-it-and-use-a-pencil)
 - [Use it outside the USA](#use-it-outside-the-usa)
 - [Check TFRs and NOTAMs before you fly (USA only)](#check-tfrs-and-notams-before-you-fly-usa)
@@ -212,6 +213,35 @@ If you close the Share sheet without choosing anything, the Save record box stay
 Prefer to paste it into a note or email? Tap **Copy as text instead**. The record is copied to your clipboard and no file is made. That doesn't change which button is filled.
 
 If the Share sheet doesn't open, the app shows a box with **Share…** and **Download** buttons instead. On a Mac or other computer, a PDF always offers that box first, because the Mac share sheet has no Print or Save to Files. **Download** saves the PDF to your Downloads folder, and you can open it there to print. On an iPad the box has **View** and **Share…** instead, and **Share…** includes **Save to Files**.
+
+---
+
+## Pick a battery, card or filter
+
+Do you rotate batteries, swap SD cards or change filters during a flight? A **pick list** lets you tap which one you used, and puts it on your flight record. It is off until you set it up, so the checklist looks the same for everyone else.
+
+**Set it up**
+
+1. Tap **✎ Customize** at the top of the **✅ Checklist** tab.
+2. Find the **Battery installed**, **SD card inserted** or **Filters** line and tap **Pick list**. (On a line you added yourself, tap **Edit** instead.)
+3. Turn on **Pick from a list**. Type a short **Name on the record** (for example **Battery**) and your names separated by commas, up to 12: **#1, #2, #3**, or **Red, Blue, Green**, or **ND8, ND16, CPL**.
+4. Optional: **Count uses** shows how many times you picked each one and marks the one used least. **Allow more than one per flight** lets you add a second battery or filter.
+5. Tap **Save**, then **✓ Done**.
+
+**Use it**
+
+- The names appear under the line. Tap one: the line is ticked and the name is saved with this flight. **Undo** takes it back.
+- With **Allow more than one per flight**, tap **+ Add another**. The record lists them in the order you picked them.
+- With **Count uses**, every pick adds one use. Press and hold a name, or tap **Edit counts**, to match each count to what the battery itself reports. The **−** and **+** buttons save as you tap.
+- **Uncheck all** clears the picks for the next flight. The counts stay.
+
+**On the record**
+
+**Save flight record** adds one line per list after the drone line, for example **Battery: #3, #2, #1**, **SD card: B** or **Filter: ND16, CPL**. It shows names only, never counts. A line is left out if you didn't pick anything, if you unticked the item, or if you marked it **N/A** for that flight.
+
+**Other tabs and backups**
+
+Each tab has its own list, so your Mavic's batteries and your Neo's stay separate. On a line that has a list, **Copy to…** sends the names to another tab with every count back at zero. If that tab already has the line, you are offered **Add the pick list to it**. **Clone another tab onto this one…** copies lists too. **Back up & restore** includes your names and counts.
 
 ---
 
