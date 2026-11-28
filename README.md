@@ -95,6 +95,11 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.4.15
+
+- **Text size: Normal or Large.** In **Settings → Preferences**, under **Appearance**, the new **Text size** row makes all the text about 20% bigger on every screen. It is remembered on that device and included in **Back up & restore**. Saved PDFs and flight records still use the PDF layout choice.
+- **The title no longer touches Help.** At Large text on a narrow phone the title wraps to two lines and keeps a gap from the **Help** button.
+
 ## What's new in v4.4.14
 
 - **Customize help covers pick lists.** The help panel in **Customize** now explains **Pick list** and that **Copy to…** copies a list.

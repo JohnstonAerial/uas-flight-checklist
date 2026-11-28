@@ -22,6 +22,8 @@ The app has three main buttons at the very top, in the blue bar under the title:
 - **Checklist** (*Checks & log*) is your checklist. The row under the buttons shows your tabs (General, Mapping and Commercial, and your own). **✎ Customize** is beside the percentage at the top. **Print**, **PDF** and **Save flight record** are in a card at the bottom, and the blue **↓ Log the flight** button under your tabs jumps you there.
 - **Settings** (*Back up*, or *Back up & restore* on a wider screen) has a two-part row under the buttons: **Preferences** and **Back up & restore**. A small red dot on the button means a backup is due. The **Back up & restore** link in the footer of every tab takes you straight to the backup half.
 
+**Make the text bigger.** Open **Settings → Preferences** and, under **Appearance**, set **Text size** to **Large**. Everything in the app gets about 20% bigger, and the app remembers it on that device. Set it back to **Normal** the same way. It is included in **Back up & restore**. Saved PDFs and flight records are not affected; they use **PDF layout** in the same Settings screen.
+
 On a long page, a small **↑ Top** button appears at the bottom right after you scroll a little. Tap it to go back to the top, where the three buttons are.
 
 The app remembers the tab you used last on that device. Tapping **Customize** in Settings takes you to the checklist so you can edit it. Backing up and restoring work the same from any tab, because they save everything the app has stored on that device.
