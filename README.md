@@ -95,6 +95,10 @@ Items you flagged are listed as **NEEDS ATTENTION**, items you hid are left out,
 
 ---
 
+## What's new in v4.4.16
+
+- **Large text fits narrow screens.** With **Text size: Large** (and especially with Safari's page zoom turned up), a few things ran past the edge of the screen. **Back up & restore** now fits its button, the **Uncheck all / Expand / Collapse** row wraps instead of pushing the page sideways, and the **Limits** boxes in Settings drop under their label when there is no room.
+
 ## What's new in v4.4.15
 
 - **Text size: Normal or Large.** In **Settings → Preferences**, under **Appearance**, the new **Text size** row makes all the text about 20% bigger on every screen. It is remembered on that device and included in **Back up & restore**. Saved PDFs and flight records still use the PDF layout choice.

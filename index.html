@@ -402,10 +402,10 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .progress-card { flex-wrap: wrap; padding: 12px 14px; gap: 10px; }
   .progress-info { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; row-gap: 8px; }
   .progress-info .progress-label { margin-top: 0; flex: 1 1 0; min-width: 7.5em; }
-  .pc-mini { display: flex; justify-content: space-between; align-items: center; flex: 1 1 100%; border-top: 1px solid var(--border); padding-top: 6px; margin-top: 2px; }
+  .pc-mini { display: flex; flex-wrap: wrap; gap: 2px 8px; justify-content: space-between; align-items: center; flex: 1 1 100%; border-top: 1px solid var(--border); padding-top: 6px; margin-top: 2px; }
   .pc-mini .reset-inline::before { content: '\21BA\00a0'; } .pc-mini .sec-all::before { content: '\21D5\00a0'; }
   .pc-mini .reset-inline, .pc-mini .sec-all { width: auto; margin: 0; padding: 4px 2px; font-size: 13px; min-height: 36px; white-space: nowrap; text-align: center; border-radius: 0; color: var(--text-muted); background: transparent; border: 0; font-family: inherit; cursor: pointer; }
-  .pc-mini .sec-split { display: inline-flex; padding: 0; min-height: 0; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .pc-mini .sec-split { margin-left: auto; display: inline-flex; padding: 0; min-height: 0; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
   .pc-mini .sec-split::before { content: none; }
   .pc-mini .sec-split button { font-family: inherit; font-size: 13px; color: var(--text-muted); background: transparent; border: 0; padding: 4px 12px; min-height: 34px; white-space: nowrap; cursor: pointer; }
   .pc-mini .sec-split button + button { border-left: 1px solid var(--border); }
@@ -569,9 +569,9 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .panel.editing .body-set .cust-row .tab-edit { justify-content: flex-start; }
   .panel.editing .body-set .cust-row .cust-help { margin-top: 0; }
   .body-set .wl-block { max-width: none; margin: 0; padding: 8px 16px; border-top: 0; text-align: left; }
-  .body-set .wl-row { flex-wrap: nowrap; justify-content: space-between; font-size: 14px; color: var(--text); margin: 0 0 4px; }
+  .body-set .wl-row { flex-wrap: wrap; row-gap: 4px; justify-content: space-between; font-size: 14px; color: var(--text); margin: 0 0 4px; }
   .body-set .wl-row > span:first-child { white-space: nowrap; }
-  .wl-ctl { display: flex; align-items: center; gap: 6px; }
+  .wl-ctl { display: flex; align-items: center; gap: 6px; margin-left: auto; }   /* 4.4.16b: the limit boxes drop under the label when there is no room (Large text on a narrow phone) */
   .wl-hint { font-size: 11px; }
   .body-set .wl-block .wl-row { margin-bottom: 8px; }
   .body-set .wl-block .wl-hint { margin: 2px 0 16px; }
@@ -820,6 +820,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   .tabs, .tabs-cond, .tabs-set { box-sizing: border-box; height: 68px; overflow-y: hidden; }
   .tabs-cond .tc, .ts { height: 100%; box-sizing: border-box; }
   .ts .tab-lbl { white-space: nowrap; }
+  .tabs-set .ts { flex: 1 1 auto; }   /* 4.4.16a: widths follow the label, so Back up & restore fits at Large text */
   .ts { flex: 1 1 0; min-width: 0; font-family: inherit; background: none; border: 0; border-bottom: 3px solid transparent; padding: 8px 8px 9px; text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 0.2px; color: rgba(255,255,255,0.85); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 1px; }
   .ts .gear-ico, .ts .bak-ico, .ts .pc-ico, .ts .air-ico { display: block; width: 28px; height: 28px; margin: 0 auto; vertical-align: baseline; }
   .ts .tab-lbl { line-height: 1.2; }
@@ -1092,7 +1093,7 @@ try { var t = JSON.parse(localStorage.getItem('uasTheme') || '""'); if (t === 'l
   <div class="header-top">
     <div>
       <h1>Drone Preflight Checklist</h1>
-      <p id="verTap">Weather, airspace and your checklist in one place · v4.4.15</p>
+      <p id="verTap">Weather, airspace and your checklist in one place · v4.4.16</p>
     </div>
     <div class="hdr-actions">
       <a class="hdr-help hdr-coffee" href="https://buymeacoffee.com/JohnstonAerial" target="_blank" rel="noopener" aria-label="Buy me a coffee (opens in a new tab)"><svg class="hlp-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5.5A5 5 0 0 1 12 19.5H9A5 5 0 0 1 4 14.5z" fill="#F5B83D"/><path d="M17 10.5h1.6a2.6 2.6 0 0 1 0 5.2H16.6" fill="none" stroke="#F5B83D" stroke-width="1.8"/><path d="M8 3.2c-.8 1 .8 1.6 0 2.8M12 3.2c-.8 1 .8 1.6 0 2.8" stroke="#b8c0cc" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Buy me a coffee</a>
